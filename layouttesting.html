@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fariz Abdul Aziz</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Karla:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+  :root {
+    --glass-bg: rgba(255,255,255,0.15);
+    --glass-border: rgba(255,255,255,0.25);
+    --accent: #c32030;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0;
+    background: linear-gradient(135deg,#f8f9fa,#eceff4);
+    font-size: 18px;
+    color: #333;
+  }
+
+  /* Glass Header */
+  .glass-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    backdrop-filter: blur(24px) saturate(180%);
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 4000;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  }
+
+  .left-section, .center-section, .right-section {
+    display: flex;
+    align-items: center;
+  }
+  .left-section { 
+    flex: 1; 
+    gap: 12px; 
+  }
+  .center-section { 
+    flex: 2; 
+    justify-content: center;
+    display: flex;
+  }
+  .right-section { 
+    flex: 1; 
+    justify-content: flex-end; 
+  }
+  .logo { 
+    height: 28px;
+    width: auto;
+  }
+
+  .hamburger, .search-btn, .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+  }
+  .hamburger svg, .search-btn svg, .close-btn svg {
+    width: 26px;
+    height: 26px;
+    stroke: #222;
+    transition: transform 0.3s ease;
+  }
+  .hamburger:hover svg, .close-btn:hover svg { transform: scale(1.1) rotate(90deg); }
+
+  /* Navigation */
+  .main-nav > ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .main-nav a {
+    text-decoration: none;
+    color: #111;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 6px 0;
+    position: relative;
+    transition: color 0.3s, transform 0.25s;
+    white-space: nowrap;
+  }
+  .main-nav a::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+  .main-nav a:hover::after { width: 100%; }
+  .main-nav a:hover { color: var(--accent); transform: translateY(-2px); }
+
+  .main-nav .has-dropdown { position: relative; }
+  .dropdown {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 130%;
+    left: 0;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+    list-style: none;
+    min-width: 180px;
+    padding: 12px 0;
+    transform: translateY(10px) scale(0.98);
+    transition: all 0.25s ease;
+  }
+  .dropdown li { padding: 10px 18px; }
+  .dropdown li a { color: #111; text-decoration: none; display: block; font-size: 0.9rem; }
+  .dropdown li:hover { background: rgba(255,255,255,0.4); }
+  .main-nav .has-dropdown:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Search Field */
+  #searchField {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: all 0.3s ease;
+    margin-left: 12px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    width: 180px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(14px);
+    font-size: 0.9rem;
+  }
+  #searchField.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+  /* Sidebar */
+  .side-menu {
+    position: fixed;
+    top: 0; left: 0;
+    width: 300px; height: 100%;
+    background: #ffffffca;
+    backdrop-filter: blur(28px) saturate(180%);
+    border-right: 1px solid var(--glass-border);
+    box-shadow: 4px 0 30px rgba(0,0,0,0.2);
+    padding: 24px;
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    z-index: 5000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+  }
+  .side-menu.open { transform: translateX(0); opacity: 1; }
+  .side-menu ul { list-style: none; margin: 80px 0 40px; padding: 0; }
+  .side-menu li { margin-bottom: 20px; }
+  .side-menu a {
+    text-decoration: none;
+    color: #111;
+    font-weight: 600;
+    font-size: 1.4rem;
+    position: relative;
+  }
+  .side-menu a::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+  .side-menu a:hover::after { width: 100%; }
+  .menu-footer {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #333;
+    border-top: 1px solid var(--glass-border);
+    padding: 20px 0;
+  }
+
+  .highlight {
+    color: #c32030;
+    font-weight: 600;
+  }
+
+  /* Profile Wrapper (no container) */
+  .profile-section {
+    display: flex;
+    margin-top: 65px; /* clear the glass header */
+    height: calc(100vh - 65px); /* full viewport minus header */
+    overflow: hidden; /* prevent double scroll */
+  }
+
+  /* Left Column */
+  .left-col {
+    width: 500px;
+    position: fixed;
+    top: 65px; /* below header */
+    left: 0;
+    bottom: 0;
+    background: #fff; /* or keep gradient */
+  }
+
+  .left-col::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -10px; /* push it outside a bit */
+    width: 10px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.15), transparent);
+    pointer-events: none; /* just decorative */
+  }
+
+  .profile-photo {
+    padding-right: 20px;
+    background: linear-gradient(
+      to bottom,
+      rgba(31, 37, 39, 0) 0%,
+      rgba(96, 107, 110, 0.56) 100%
+    )
+  }
+
+  .profile-photo img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    z-index: 1;
+  }
+
+  .practice-areas {
+    margin-top: 35px;
+    margin-left: 20px;
+  }
+
+  .practice-areas h2 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tag {
+    background: #eceff4;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+
+  /* Right Column */
+  .right-col {
+    margin-left: 500px; /* push aside for fixed left */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Top row: name + contacts */
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    background-color: #c32030;
+    padding-left: 30px;
+    padding-top: 20px;
+    padding-right: 40px;
+    flex-shrink: 0; /* don’t shrink */
+    position: sticky;
+    z-index: 100;
+  }
+
+  .identity {
+    margin-right: 40px;
+  }
+
+  .identity h1 {
+    font-size: 2.5rem;
+    margin: 0 0 15px;
+    color: #f5f5f5;
+  }
+
+  .identity h3 {
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 450;
+    color: #c0c0c0;
+  }
+
+  .contacts p {
+    margin: 0 0 20px;
+    font-size: 1rem;
+    color: #e9e9e9;
+  }
+
+  .contacts a {
+    color: #e9e9e9;
+    text-decoration: none;
+  }
+
+  .download-btn {
+    display: inline-block;
+    margin-top: 10px;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-weight: 600;
+    text-decoration: none;
+    border: solid 1px #e9e9e9;
+  }
+
+  .download-btn:hover { 
+    background: #e9e9e9;
+    color: #c32030; 
+  }
+
+  /* About + content */
+  .about-section-2 {
+    margin-top: 10px;
+    padding: 40px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px;
+  }
+
+  /* Apply to the element you want to scroll */
+  .scrollable-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .about-section-2 h2 {
+    font-size: 1.3rem;
+    margin: 0 0 30px;
+    position: relative;
+    color: #c32030;
+    font-weight: 700;
+  }
+
+  .about-section-2 h2::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: #c32030;
+    margin-top: 10px;
+    border-radius: 2px;
+  }
+
+  /* --- Content Text --- */
+  .about-section-2 .content {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #444;
+  }
+
+  .accordion {
+    margin: 20px 0;
+  }
+
+  .accordion-item {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    margin-top: 15px;
+  }
+
+  .accordion-header {
+    padding: 18px 24px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    background: #fafafa;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .accordion-header:hover {
+    background: #f0f0f0;
+  }
+
+  .accordion-header.active {
+    background: #c32020;
+    color: #fff;
+  }
+
+  .accordion-header.active i {
+    transform: rotate(180deg);
+    color: #fff;
+  }
+
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 24px;
+    background: #fff;
+  }
+
+  .accordion-content ul {
+    margin: 15px 0;
+    padding-left: 20px;
+    line-height: 1.6;
+  }
+
+  .accordion-content li {
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .accordion-content li::before {
+    content: "•";
+    position: absolute;
+    left: -14px;
+    color: #c32020;
+    font-weight: bold;
+  }
+
+  /* Desktop/Tablet */
+  .practice-areas.mobile-only {
+    display: none;
+  }
+
+  .carousel-container {
+    position: relative;
+    width: auto;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    margin-right: 50px;
+    margin-top: 0px;
+  }
+
+  .carousel-track-container {
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .card {
+    flex: 0 0 calc(25% - 20px); /* 4 cards per row, minus margin */
+    margin: 0 10px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card h3 {
+    margin: 10px;
+    font-size: 1.1rem;
+  }
+
+  .card p {
+    margin: 0 10px 15px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  @media (max-width: 1024px) {
+    .card {
+      flex: 0 0 calc(50% - 20px); /* 2 cards per row */
+    }
+  }
+
+  @media (max-width: 600px) {
+    .card {
+      flex: 0 0 100%; /* 1 card per row */
+      margin: 0 5px;
+    }
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 45px;
+    color: #c32030;
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 10; /* make sure it's above cards */
+  }
+
+  .carousel-btn.prev {
+    left: -20px;
+  }
+
+  .carousel-btn.next {
+    right: -20px;
+  }
+
+  .carousel-btn i {
+    pointer-events: none; /* make clicks go through icon */
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+
+  @media (max-width: 1024px) {
+    .profile-section {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .left-col {
+      position: relative;
+      width: 100%;
+      top: 0;
+      left: 0;
+      bottom: auto;
+      box-shadow: none;
+    }
+
+    .left-col::after {
+      display: none; /* remove gradient divider */
+    }
+
+    .profile-photo img {
+      width: auto;
+      max-height: 900px;
+      border-radius: 0;
+    }
+
+    .profile-photo {
+      display: flex;
+      justify-content: center !important;
+    }
+
+        /* Hide the original one in the left column */
+    .left-col .practice-areas {
+      display: none;
+    }
+
+    /* Show the mobile copy */
+    .practice-areas.mobile-only {
+      display: block;
+      margin: 20px;
+    }
+
+    .right-col {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    .top-row {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .identity h1 {
+      font-size: 2rem;
+    }
+
+    .identity h3 {
+      font-size: 1.1rem;
+    }
+
+    .contacts {
+      margin-top: 20px;
+    }
+
+    .about-section-2 {
+      padding: 20px;
+    }
+  }
+
+  /* Mobile: reorder sequence */
+  @media (max-width: 600px) {
+    .profile-section {
+      flex-direction: column;
+    }
+
+      /* Hide the original one in the left column */
+    .left-col .practice-areas {
+      display: none;
+    }
+
+    /* Show the mobile copy */
+    .practice-areas.mobile-only {
+      display: block;
+      margin: 20px;
+    }
+
+    /* Reset fixed/side layout for mobile */
+    .left-col {
+      order: 1;
+      width: 100%;
+      position: relative;
+      margin: 0;
+    }
+
+    .profile-photo {
+      order: 1;
+    }
+
+    .right-col {
+      order: 2;
+      margin-left: 0;
+      width: 100%;
+    }
+
+    .top-row {
+      order: -1;
+      width: 100%;
+    }
+
+    .practice-areas {
+      margin: 20px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<header class="glass-header">
+  <div class="left-section">
+    <button class="hamburger" id="hamburgerBtn">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+    <img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/skrine-logo-fill.svg" alt="Skrine Logo" class="logo">
+  </div>
+  <div class="center-section">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#">People</a></li>
+        <li class="has-dropdown">
+          <a href="#">Capabilities</a>
+          <ul class="dropdown">
+            <li><a href="#">Practice Areas</a></li>
+            <li><a href="#">Industries</a></li>
+            <li><a href="#">Regional Desks</a></li>
+            <li><a href="#">One-Stop Centre</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="#">Insights</a>
+          <ul class="dropdown">
+            <li><a href="#">Alerts</a></li>
+            <li><a href="#">Publications</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="#">Careers</a>
+          <ul class="dropdown">
+            <li><a href="#">Lawyer</a></li>
+            <li><a href="#">Pupil</a></li>
+            <li><a href="#">Attachment</a></li>
+            <li><a href="#">Office Support</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="right-section">
+    <button class="search-btn" id="searchBtn">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7" stroke-width="2"/>
+        <line x1="16.65" y1="16.65" x2="21" y2="21" stroke-width="2"/>
+      </svg>
+    </button>
+    <input type="text" id="searchField" placeholder="Search">
+  </div>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="side-menu" id="sideMenu">
+  <div>
+    <button class="close-btn" id="closeMenu">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/>
+        <line x1="6" y1="6" x2="18" y2="18" stroke-width="2"/>
+      </svg>
+    </button>
+    <ul>
+      <li><a href="#">Our Story</a></li>
+      <li><a href="#">Global Network</a></li>
+      <li><a href="#">Life at Skrine</a></li>
+    </ul>
+  </div>
+  <footer class="menu-footer">
+    <p>Tel: +60 3-2081 3999</p>
+    <p>Email: info@skrine.com</p>
+    <p>Address: Skrine, Kuala Lumpur, Malaysia</p>
+  </footer>
+</aside>
+<section class="profile-section">
+  <!-- Left Column -->
+  <div class="left-col">
+    <div class="profile-photo">
+      <img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/Fariz-Abdul-Aziz-3.png" alt="Profile Image">
+    </div>
+    <div class="practice-areas">
+      <h2>Key Practice Areas</h2>
+      <div class="tags">
+        <span class="tag">Oil & Gas, Energy</span>
+        <span class="tag">Mergers & Acquisitions</span>
+        <span class="tag">Maritime and Shipping Advisory</span>
+        <span class="tag">Projects Infrastructure</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="right-col">
+    <!-- Top Row -->
+    <div class="top-row">
+      <div class="identity">
+        <h1>Fariz Abdul Aziz</h1>
+        <h3>Partner</h3>
+      </div>
+      <div class="contacts">
+        <p>
+          <i class="fa-solid fa-phone" style="margin-right: 8px; color: #fdfdfd;"></i>
+          +603 2081 3999 (ext. 906)
+        </p>
+        <p>
+          <i class="fa-solid fa-envelope" style="margin-right: 8px; color: #fdfdfd;"></i>
+          <a href="mailto:janet@skrine.com">fariz.aziz@skrine.com</a>
+        </p>
+        <a href="#" class="download-btn">
+          <i class="fa-solid fa-file-pdf" style="margin-right: 6px;"></i> Download Profile (PDF)
+        </a>
+      </div>
+    </div>
+
+    <div class="practice-areas mobile-only">
+      <h2>Key Practice Areas</h2>
+      <div class="tags">
+        <span class="tag">Oil & Gas, Energy</span>
+        <span class="tag">Mergers & Acquisitions</span>
+        <span class="tag">Maritime and Shipping Advisory</span>
+        <span class="tag">Projects Infrastructure</span>
+      </div>
+    </div>
+
+    <!-- About & Content -->
+    <div class="about-section-2 scrollable-content">
+      <h2>About</h2>
+      <div class="content">
+        <p>
+          Fariz is a corporate transactional partner, focusing on domestic and cross border mergers & acquisitions (M&A), joint ventures, privatisations, foreign investment, private equity investments and advisory services. Key industries which Fariz is active in include oil & gas, petrochemicals, power, shipping and insurance.
+        </p>
+        <p>
+          He regularly represents leading foreign multinationals on their inward bound transactions, divestments as well as domestic operations. Fariz also advises Malaysian entities on their outward investment.
+        </p>
+        <p>
+          Fariz previously served as a Facilitator for the Prime Minister’s Department’s Performance Management & Delivery Unit’s (PEMANDU) Corridors & Cities Lab, covering the Manufacturing and Oil, Gas & Petrochemical Entry Point Projects in the East Coast Economic Region.
+        </p>
+      </div>
+
+      <hr>
+
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Oil &amp; Gas, and Energy</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="accordion-content">
+            <ul>
+              <li>Acted for Murphy Oil Corporation on Malaysian law aspects of the sale of its Malaysian E&amp;P business comprising participating interest in 7 production sharing contracts to PTT Exploration and Production Public Company (PTTEP) and country exit with a transaction value of USD2.13 billion.</li>
+              <li>Acted for Halliburton on its sale of interest in Halliburton Bayan Petroleum Sdn Bhd to Dialog Group Berhad.</li>
+              <li>Acted as Malaysian counsel for OMV Aktiengesellschaft (“OMV”) on Malaysian law aspects of OMV’s strategic joint-venture partnership with Sapura Energy Berhad which involves OMV acquiring a 50% share of Sapura’s exploration and production business in a transaction with a reported value of up to USD975 million.</li>
+              <li>Acted as lead counsel for Halliburton in the partial disposal of its interest in Halliburton Bayan Petroleum Sdn Bhd, an independent technical services contractor to Dialog Group Berhad.</li>
+              <li>Acted for 5 bidders in connection with their bids under the Energy Commission Malaysia’s Large Scale Solar Photovoltaic Plant Program Phase 3.</li>
+              <li>Advised BP on its entry into a long term storage agreement with Dialog Terminals Sdn Bhd and Pengerang Terminals (Five) Sdn Bhd.</li>
+              <li>Acted as Malaysian counsel for Santos in connection with the disposal its south east Asian assets to London-listed Ophir Energy.</li>
+              <li>Acted as Malaysian counsel for Carlyle International Energy Fund in connection with its acquisition of an interest in Compañía Española de Petróleos, S.A.U (CEPSA), a Spanish integrated oil &amp; gas company wholly owned by Mubadala Investment Company PJSC.</li>
+              <li>Acted as lead counsel for Reach Energy Berhad on its USD154.9 million acquisition of a 60% indirect interest in five subsoil assets in Kazakhstan.</li>
+              <li>Acted as Malaysian counsel for PTT plc, the national oil company of Thailand on the Malaysian law aspects of its acquisition of a 10 percent stake in liquefaction plant MLNG Train 9.</li>
+              <li>Advised numerous international oil & gas E&P companies on matters relating to PSC/JOA negotiations, farm-ins, government liaison, procurement, sole risk projects and other matters relating to their domestic operations.</li>
+              <li>Advised various international trading corporations on trading petroleum products and various other commodities in Malaysia.</li>
+              <li>Advised the Energy Commission on the establishment of the end-user electricity tariff stabilisation fund.</li>
+              <li>Acted as Malaysian counsel for Murphy Oil Corporation in respect of the sale of 30% of its oil & gas assets in Malaysia to PT Pertamina in a deal valued at USD2 billion.</li>
+              <li>Advised Halliburton on its joint venture with Dialog Group Berhad and subsequent entry by the joint venture entity into an oilfield services agreement with PETRONAS Carigali, valued at USD1.2 billion in order to enhance the oil recovery at the Bayan Field, offshore of Malaysia.</li>
+              <li>Acted as Malaysian counsel for Newfield Exploration Company in respect of its disposal of its oil & gas assets in Malaysia to SapuraKencana Petroleum Berhad for USD896 million.</li>
+              <li>Advised GE Oil and Gas in respect of its joint venture with SapuraKencana (now known as Sapura Energy) for the establishment of SapuraKencana GE Oil & Gas Services Sdn Bhd for the provision of after-sale services of rotating oil and gas equipment that GE’s Oil and Gas business division has sold or will sell to its customers.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Megers &amp; Acquisitions</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="accordion-content">
+            <ul>
+              <li>Acted for BP plc, on Malaysian aspects of its USD5 billion sale of its global aromatics, acetyls and related businesses to INEOS</li>
+              <li>Acted as lead counsel for HK-listed Hope Education Group in respect of its acquisition of Inti Education Holdings from NASDAQ-listed Laureate Education, Inc for a purchase price of USD 140 million. Inti Holdings (through its subsidiaries) owns and operates amongst others, INTI International University, INTI International College Penang, INTI College Sabah, INTI College Nilai, INTI International College Subang and INTI International College Kuala Lumpur.</li>
+              <li>Acted as lead counsel for Zurich General Takaful Malaysia’s acquisition of the entire general takaful business of HSBC Amanah Takaful (Malaysia) Berhad.</li>
+              <li>Acted as Malaysian counsel for Constantia Flexibles, on the sale of its global labels division to Multi-Color Corporation for an enterprise value of approximately €1.15 billion (USD1.3 billion).</li>
+              <li>Advised Permodalan Nasional Berhad, the Malaysian government’s investment vehicle in connection with its acquisition of the SILK Highway.</li>
+              <li>Acted as Malaysian counsel for Essentra Plc in respect of the acquisition of the entire assets and liabilities of Abric Berhad, a leading global manufacturer of security seals.</li>
+              <li>Acted for Ekuiti Nasional Berhad, a government linked private equity firm on the sale of its strategic stake in Tranglo, a licensed cross border payment platform provider to TNG Fintech.</li>
+              <li>Acted as lead counsel for Ekuiti Nasional Berhad, a government linked private equity firm in its acquisition of a 70% stake in Flexi Versa Group Sdn Bhd for an enterprise value of RM330 million.</li>
+              <li>Acted as lead counsel for Ekuiti Nasional Berhad, a government linked private equity firm in its acquisition of the Davex Group, a luminaire designer, consultancy and manufacturer with operations in Malaysia, Singapore and Vietnam.</li>
+              <li>Acted for Ekuiti Nasional Berhad, a government linked private equity firm in its acquisition of a strategic stake in Al-Ikhsan Sports, a multi-brand sports apparel retailer.</li>
+              <li>Advised Syarikat Takaful Malaysia on all aspects of its restructuring of its composite takaful business into distinct operating entities for family and general takaful respectively.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Maritime and Shipping Advisory</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="accordion-content">
+            <ul>
+              <li>Advised HESS Exploration and Production Malaysia on its sale and bareboat charter-back arrangement with MISC Berhad in respect of the floating, storage and offloading facility (FSO) known as FSO Mekar Bergading which resulted in MISC acquiring ownership of the FSO from HESS in a deal with a reported contract value of USD441 million (RM1.78 billion).</li>
+              <li>Advised on the sale of five offshore support vessels from a foreign shipyard to a domestic oil and gas service provider.</li>
+              <li>Advised on the establishment, operating structure, flagging, licensing and operational structure for FPSO leasing into Malaysia via Labuan.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Projects and Infrastructure</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="accordion-content">
+            <ul>
+              <li>Advised Elpis Sp. z o.o. in its development of an oxy-alkylates production facility in Kertih.</li>
+              <li>Advised Versalis, a subsidiary of ENI, which entered into a joint-venture with a PETRONAS subsidiary, the Petronas Refinery and Petrochemical Corporation, for the development of an Elastomer Plant within the proposed Refinery and Petrochemical Integrated Development (RAPID) complex in Pengerang, Johor. Under the agreement the JV company will use Versalis’ technology licence and technical know-how to produce and market synthetic rubbers from four separate elastomer plants, it proposes to build within RAPID.</li>
+              <li>Advised Itochu Corporation, in a joint-venture with a PETRONAS subsidiary, for the development of petrochemical plant within the proposed RAPID complex in Pengerang, Johor.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Qualifications & Professional Affiliations</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="accordion-content">
+            <ul>
+              <li><strong>Qualifications:</strong></li>
+              <ul>
+                <li>Advocate and Solicitor, High Court of Malaya (2008)</li>
+                <li>Barrister-at-Law (Lincoln’s Inn) (2007)</li>
+                <li>LL.B (Hons), King’s College London (2006) </li>
+              </ul>
+              <li><strong>Professional Affiliations:</strong></li>
+              <ul>
+                <li>Member, Honourable Society of Lincolns Inn</li>
+                <li>Member, Association of International Petroleum Negotiators (AIPN)</li>
+                <li>Adjunct Lecturer for Universiti Teknologi Petronas</li>
+              </ul>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Publications &amp; Talks</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="accordion-content">
+            <ul>
+              <li><strong>Authored the following articles:</strong></li>
+              <ul>
+                <li>Panellist and Presenter on Financing, Contracting and Best Practice Approaches to Decommissioning Planning” at SPE’s Virtual Symposium: Decommissioning and Abandonment, 1st December 2021</li>
+                <li>Co-Author, Malaysian Chapter of the Energy Regulation and Markets Review (8th Edition) (2020)</li>
+                <li>Author, Malaysian Chapter of The Oil & Gas Review (4th Edition) (2016)</li>
+                <li>Co-Author, Malaysian Chapter of The Mergers & Acquisitions Review 2014 (8th Edition)</li>
+                <li>Author, Malaysian Chapter of The International Comparative Legal Guide to: Oil & Gas Regulation 2014 (9th Edition)</li>
+              </ul>
+            </ul>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header">
+            <span>Accolades</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="accordion-content">
+            <ul>
+              <li>Ranked Band 2 in Projects, Infrastructure & Energy, and Band 3 in Corporate M&amp;A by Chambers Asia Pacific 2024 – 2025</li>
+              <li>Named as ‘Distinguished Practitioner’ in Corporate M&amp;A and Energy by asialaw 2024</li>
+              <li>Ranked Band 2 in Projects, Infrastructure & Energy, and Band 4 in Corporate M&amp;A by Chambers Asia Pacific 2023</li>
+              <li>Named as ‘Notable Practitioner’ in Energy by asialaw 2022 – 2023</li>
+              <li>Listed as “Highly Regarded” in Corporate M&amp;A by IFLR 1000 2022 – 2024</li>
+              <li>Named as “Leading Individuals” in Corporate M&amp;A, and Projects &amp; Energy by Legal 500 Asia-Pacific 2020 - 2025</li>
+              <li>Ranked Band 2 in Projects, Infrastructure & Energy, and Band 4 in Corporate M&amp;A by Chambers Asia Pacific 2022</li>
+              <li>Named as the “Lawyer of the Year: Malaysia (Client Service Award)” at the asialaw Awards 2020</li>
+              <li>Listed as “Up and Coming” in Projects, Infrastructure & Energy, and Corporate M&amp;A by Chambers Asia Pacific 2020 – 2021</li>
+              <li>Listed as “Notable Practitioner” for Corporate M&amp;A by IFLR 1000 2019 – 2021</li>
+              <li>“Fariz Abdul Aziz is an exceptional partner, well versed in the complex oil and gas industry.” - Legal 500 Asia Pacific 2025</li>
+              <li>“Fariz Abdul Aziz is exceptional and brings with him not just the legal expertise but also the commercial acumen.” - Legal 500 Asia Pacific 2024</li>
+              <li>“Fariz is recognised for delivering high-quality legal services. His attention to detail, thorough understanding of complex legal issues and dedication to his clients' needs are factors contributing to the superior level of service he provides.” - Chambers Asia Pacific 2024</li>
+              <li>“Fariz has excellent analytical skills and always gives well-reasoned arguments and solutions for complicated matters. He is well versed in the oil and gas industry and always provides creative solutions for clients.” - Chambers Asia Pacific 2024</li>
+              <li>“Fariz Abdul Aziz is an expert in his field, knowing how to mitigate legal issues not only from a purely legalistic manner but taking commercial aspects into consideration.” - Legal 500 Asia Pacific 2023</li>
+              <li>“An in-depth knowledge of the subject, familiarity with oil and gas as a business. An excellent communicator.” – asialaw 2023</li>
+              <li>“Knowledgeable and experienced. Able to provide workarounds and practical solutions.” – asialaw 2023</li>
+              <li>"Fariz is responsive and attentive to all our queries and concerns. He is also willing to go the extra mile in advising on related matters." - Chambers Asia Pacific 2023</li>
+              <li>"Fariz is very much the top oil and gas lawyer in the market, which is confirmed by the international firms who chose to work with him and his domestic client base. I think very highly of him - he is very diligent and responsive." - Chambers Asia Pacific 2023</li>
+              <li>“Deep industry and country knowledge. Provides straight-to-the-point advice. Prepared to offer pragmatic solutions. Always available. Very responsive despite time difference.” – asialaw 2022</li>
+              <li>“Fariz was always available for a call/meeting throughout the process and provided good counsel.” - Legal 500 Asia Pacific 2021</li>
+              <li>“Fariz Abdul Aziz consistently provides valuable and significant contributions and also provides excellent service in coordinating any other specialist advice which we need from Skrine during the course of a transaction.” - Legal 500 Asia Pacific 2021</li>
+              <li>“Fariz Aziz is brilliant. He has such wide experience and his advices are extremely clear.” - Legal 500 Asia Pacific 2021</li>
+              <li>“Fariz Aziz is very user friendly, promptly responding to questions, delivering strong country and energy sector knowledge.” - Legal 500 Asia Pacific 2021</li>
+              <li>"It is seamless working with him." - Chambers Asia Pacific 2021</li>
+              <li>“Very well known for his oil and gas work” – Who’s Who Legal Asia Pacific 2021 (Energy - South East Asia)</li>
+              <li>“The efficient, well-organised and very proactive, Fariz Abdul Aziz knows the Malaysian upstream sector very well” - Legal 500 Asia Pacific 2019</li>
+              <li>“He has particular expertise in oil and gas development and M&amp;A work. We highly regard him and view him as the lawyer of choice in the oil and gas space in Malaysia.” – IFLR 1000 2019</li>
+              <li>“Extensive contacts and up to date knowledge of the oil and gas industry in Malaysia” and that “He is always available to attend to queries” – asialaw Profiles 2018</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="latest-insights-header" style="margin-top: 30px; font-size: 1.8rem; font-weight: 600; color: #333; text-align: center; margin-bottom: 0;">
+        <h3>Latest Insights</h3>
+      </div>
+      <!-- Wrapper -->
+      <div class="carousel-container">
+        <button class="carousel-btn prev" style="width:40px; height:45px; color:#c32030;"><i class="fa-solid fa-chevron-left"></i></button>
+
+        <div class="carousel-track-container">
+          <ul class="carousel-track">
+            <li class="card">
+              <img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/Lex-Mundi-ASEAN-GCC-Brochure.jpg" alt="Image 1">
+              <h3>Card Title 1</h3>
+              <p>Some description for card 1.</p>
+            </li>
+            <li class="card">
+              <img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/QA-Guide-Data-Protection-in-the-Scope-of-Employment.jpeg" alt="Image 2">
+              <h3>Card Title 2</h3>
+              <p>Some description for card 2.</p>
+            </li>
+            <li class="card">
+              <img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/7.png" alt="Image 3">
+              <h3>Card Title 3</h3>
+              <p>Some description for card 3.</p>
+            </li>
+            <li class="card">
+              <img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/Panoramic-Labour-Employment-2025-.png" alt="Image 4">
+              <h3>Card Title 4</h3>
+              <p>Some description for card 4.</p>
+            </li>
+            <li class="card">
+              <img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/Lex-Mundi-ASEAN-GCC-Brochure.jpg" alt="Image 5">
+              <h3>Card Title 5</h3>
+              <p>Some description for card 5.</p>
+            </li>
+            <li class="card">
+              <img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/QA-Guide-Data-Protection-in-the-Scope-of-Employment.jpeg" alt="Image 6">
+              <h3>Card Title 6</h3>
+              <p>Some description for card 6.</p>
+            </li>
+          </ul>
+        </div>
+        <button class="carousel-btn next" style="width:40px; height:45px; color:#c32030;""><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const sideMenu = document.getElementById('sideMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  const overlay = document.getElementById('overlay');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchField = document.getElementById('searchField');
+
+  hamburgerBtn.addEventListener('click', () => {
+    sideMenu.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  });
+  
+  closeMenu.addEventListener('click', () => {
+    sideMenu.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  });
+  
+  overlay.addEventListener('click', () => {
+    sideMenu.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  });
+  
+  searchBtn.addEventListener('click', () => {
+    searchField.classList.toggle('show');
+    if(searchField.classList.contains('show')) searchField.focus();
+  });
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const accordion = header.closest('.accordion'); // the container
+      const allHeaders = accordion.querySelectorAll('.accordion-header');
+
+      // Close all other items
+      allHeaders.forEach(h => {
+        if (h !== header) {
+          h.classList.remove('active');
+          h.nextElementSibling.style.maxHeight = null;
+        }
+      });
+
+      // Toggle the clicked one
+      header.classList.toggle('active');
+      const content = header.nextElementSibling;
+      if (header.classList.contains('active')) {
+        content.style.maxHeight = content.scrollHeight + "px";
+      } else {
+        content.style.maxHeight = null;
+      }
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const track = document.querySelector('.carousel-track');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const cards = Array.from(track.children);
+
+    let index = 0;
+    const visibleCards = 4; // how many cards show at once
+    const cardWidth = cards[0].getBoundingClientRect().width + 20;
+    const maxIndex = cards.length - visibleCards;
+    let autoSlideInterval;
+
+    // function to move carousel
+    function moveCarousel(newIndex) {
+      index = newIndex;
+      track.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
+
+    // next slide
+    function nextSlide() {
+      if (index < maxIndex) {
+        moveCarousel(index + 1);
+      } else {
+        moveCarousel(0); // loop back to start
+      }
+    }
+
+    // prev slide
+    function prevSlide() {
+      if (index > 0) {
+        moveCarousel(index - 1);
+      } else {
+        moveCarousel(maxIndex); // go to last group
+      }
+    }
+
+    // auto slide
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(nextSlide, 3000); // every 3s
+    }
+
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+    }
+
+    // button events
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      stopAutoSlide();
+      startAutoSlide(); // restart auto-slide after manual move
+    });
+
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      stopAutoSlide();
+      startAutoSlide();
+    });
+
+    // start auto-slide on page load
+    startAutoSlide();
+  });
+</script>
+</body>
+</html>
