@@ -240,3 +240,7 @@
     }
   });
 });
+
+document.getElementById("filterToggle").addEventListener("click", () => {
+  document.querySelector(".sidebar").classList.toggle("open");
+});
