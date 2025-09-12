@@ -160,10 +160,50 @@
           <div class="profile-name">Lim Koon Huan</div>
         </div>
         <div class="profile-card">
+          <img src="Ashok.png" alt="Ashok Kumar Mahadev Ranai">
+          <div class="profile-name">Ashok Kumar Mahadev Ranai</div>
+        </div>
+        <div class="profile-card">
+          <img src="Preetha.png" alt="Preetha Pillai">
+          <div class="profile-name">Preetha Pillai</div>
+        </div>
+        <div class="profile-card">
+          <img src="Claudia.png" alt="Claudia Cheah Pek Yee">
+          <div class="profile-name">Claudia Cheah Pek Yee</div>
+        </div>
+        <div class="profile-card">
+          <img src="Loo Peh Fern.png" alt="Loo Peh Fern">
+          <div class="profile-name">Loo Peh Fern</div>
+        </div>
+        <div class="profile-card">
+          <img src="Leela.png" alt="Leela Devi Baskaran">
+          <div class="profile-name">Leela Devi Baskaran</div>
+        </div>
+        <div class="profile-card">
+          <img src="Vijay.png" alt="Vijay Raj">
+          <div class="profile-name">Vijay Raj</div>
+        </div>
+        <div class="profile-card">
+          <img src="Kuek Pei Yee.png" alt="Kuek Pei Yee">
+          <div class="profile-name">Kuek Pei Yee</div>
+        </div>
+        <div class="profile-card">
+          <img src="Teh Hong Koon.png" alt="Teh Hong Koon">
+          <div class="profile-name">Teh Hong Koon</div>
+        </div>
+        <div class="profile-card">
+          <img src="Richard.png" alt="Richard Khoo Boo Hin">
+          <div class="profile-name">Richard Khoo Boo Hin</div>
+        </div>
+        <div class="profile-card">
           <a href="fariz.html">
             <img src="Fariz.png" alt="Fariz Abdul Aziz">
             <div class="profile-name">Fariz Abdul Aziz</div>
           </a>
+        </div>
+        <div class="profile-card">
+          <img src="Jillian.png" alt="Jillian Chia Yan Ping">
+          <div class="profile-name">Jillian Chia Yan Ping</div>
         </div>
       </div>
     </main>
@@ -173,39 +213,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script>
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const sideMenu = document.getElementById('sideMenu');
-  const closeMenu = document.getElementById('closeMenu');
-  const overlay = document.getElementById('overlay');
-  const searchBtn = document.getElementById('searchBtn');
-  const searchField = document.getElementById('searchField');
-
-  hamburgerBtn.addEventListener('click', () => {
-    sideMenu.classList.add('open');
-    overlay.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  });
-  
-  closeMenu.addEventListener('click', () => {
-    sideMenu.classList.remove('open');
-    overlay.classList.remove('show');
-    document.body.style.overflow = 'auto';
-  });
-  
-  overlay.addEventListener('click', () => {
-    sideMenu.classList.remove('open');
-    overlay.classList.remove('show');
-    document.body.style.overflow = 'auto';
-  });
-  
-  searchBtn.addEventListener('click', () => {
-    searchField.classList.toggle('show');
-    if(searchField.classList.contains('show')) searchField.focus();
-  });
-
-  gsap.registerPlugin(ScrollTrigger);
-
-</script>
+<script src="script.js"></script>
 </body>
 </html>
