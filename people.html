@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>People</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Karla:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="glass-header">
+  <div class="left-section">
+    <button class="hamburger" id="hamburgerBtn">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+    <a href="index.html"><img src="https://magnusdigital.my/skrine/wp-content/uploads/2025/08/skrine-logo-fill.svg" alt="Skrine Logo" class="logo"></a>
+  </div>
+  <div class="center-section">
+    <nav class="main-nav">
+      <ul>
+        <li><a href="fariz.html">People</a></li>
+        <li class="has-dropdown">
+          <a href="#">Capabilities</a>
+          <ul class="dropdown">
+            <li><a href="#">Practice Areas</a></li>
+            <li><a href="#">Industries</a></li>
+            <li><a href="#">Regional Desks</a></li>
+            <li><a href="#">One-Stop Centre</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="#">Insights</a>
+          <ul class="dropdown">
+            <li><a href="#">Alerts</a></li>
+            <li><a href="#">Publications</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="#">Careers</a>
+          <ul class="dropdown">
+            <li><a href="#">Lawyer</a></li>
+            <li><a href="#">Pupil</a></li>
+            <li><a href="#">Attachment</a></li>
+            <li><a href="#">Office Support</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="right-section">
+    <button class="search-btn" id="searchBtn">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7" stroke-width="2"/>
+        <line x1="16.65" y1="16.65" x2="21" y2="21" stroke-width="2"/>
+      </svg>
+    </button>
+    <input type="text" id="searchField" placeholder="Search">
+  </div>
+</header>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="side-menu" id="sideMenu">
+  <div>
+    <button class="close-btn" id="closeMenu">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/>
+        <line x1="6" y1="6" x2="18" y2="18" stroke-width="2"/>
+      </svg>
+    </button>
+    <ul>
+      <li><a href="#">Our Story</a></li>
+      <li><a href="#">Global Network</a></li>
+      <li><a href="#">Life at Skrine</a></li>
+    </ul>
+  </div>
+  <footer class="menu-footer">
+    <p>Tel: +60 3-2081 3999</p>
+    <p>Email: info@skrine.com</p>
+    <p>Address: Skrine, Kuala Lumpur, Malaysia</p>
+  </footer>
+</aside>
+<section>
+  <div class="header">
+    <h1>Meet Our Professionals</h1>
+    <p>Gain access to decades of legal experience and a team dedicated to achieving the best outcomes for your business.</p>
+  </div>
+</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const sideMenu = document.getElementById('sideMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  const overlay = document.getElementById('overlay');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchField = document.getElementById('searchField');
+
+  hamburgerBtn.addEventListener('click', () => {
+    sideMenu.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  });
+  
+  closeMenu.addEventListener('click', () => {
+    sideMenu.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  });
+  
+  overlay.addEventListener('click', () => {
+    sideMenu.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = 'auto';
+  });
+  
+  searchBtn.addEventListener('click', () => {
+    searchField.classList.toggle('show');
+    if(searchField.classList.contains('show')) searchField.focus();
+  });
+
+  gsap.registerPlugin(ScrollTrigger);
+
+</script>
+</body>
+</html>
