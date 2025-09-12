@@ -145,7 +145,7 @@ body {
   position: absolute;
   top: 130%;
   left: 0;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.915);
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--glass-border);
   border-radius: 14px;
@@ -320,7 +320,10 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   padding-bottom: 20px;
-  background-color: #c32030;
+  /* background-color: #c32030; */
+  background: 
+    linear-gradient(rgba(146, 0, 0, 0.889), rgba(179, 0, 0, 0.905)),
+    url('profile-background.jpg') center/cover no-repeat;
   padding-left: 30px;
   padding-top: 20px;
   padding-right: 40px;
@@ -711,7 +714,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   color: white;
-  background-image: url('https://raw.githubusercontent.com/winterx04/skr-background-assets/main/background.png');
+  background-image: url('skrine\ wallpaper.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -933,7 +936,7 @@ body {
 /* People */
 .header {
   background: 
-    linear-gradient(rgba(66, 66, 66, 0.8), rgba(66, 66, 66, 0.6)),
+    linear-gradient(rgba(44, 44, 44, 0.8), rgba(54, 54, 54, 0.6)),
     url('https://magnusdigital.my/skrine/wp-content/uploads/2025/08/bg-people.webp') center/cover no-repeat;
   color: white;
   padding: 60px 20px;
@@ -959,8 +962,11 @@ body {
   position: sticky;
   top: 60px;
   max-width: 350px;
-  background: #c9c9c9;
+  /* background: #c9c9c9; */
   /* background: rgba(255, 255, 255, 0.275); */
+  background: 
+    linear-gradient(rgba(44, 44, 44, 0.097), rgba(54, 54, 54, 0.064)),
+    url('profile-background.jpg') center/cover no-repeat;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
