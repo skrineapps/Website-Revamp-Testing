@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <!-- Abstract acrylic-pour artwork in the Skrine palette:
+       #c32030 (Pantone 200C) · #ecedec · #cecbcc · #959897 · #757575 -->
+  <defs>
+    <!-- large, slow swirls: the "poured paint" flow -->
+    <filter id="pour" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0018 0.0032" numOctaves="2" seed="11" result="flow"/>
+      <feDisplacementMap in="SourceGraphic" in2="flow" scale="420" xChannelSelector="R" yChannelSelector="G" result="poured"/>
+      <!-- soften so edges read as wet paint, not pixels -->
+      <feGaussianBlur in="poured" stdDeviation="2.4"/>
+    </filter>
+
+    <!-- small "cells" that form when silicone is added to acrylic -->
+    <filter id="cells" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- canvas grain -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="g"/>
+      <feColorMatrix in="g" type="matrix"
+        values="0 0 0 0 0.45
+                0 0 0 0 0.45
+                0 0 0 0 0.45
+                0 0 0 0.55 0"/>
+    </filter>
+
+    <radialGradient id="sheen" cx="0.22" cy="0.18" r="0.7">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="0.6" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#ecedec"/>
+
+  <!-- the pour: bands of colour, then distorted by the filter -->
+  <g filter="url(#pour)">
+    <g transform="rotate(-24 800 450)">
+      <rect x="-700" y="-700" width="3000" height="520" fill="#9a1825"/>
+      <rect x="-700" y="-180" width="3000" height="150" fill="#c32030"/>
+      <rect x="-700" y="-30"  width="3000" height="34"  fill="#ffffff"/>
+      <rect x="-700" y="4"    width="3000" height="120" fill="#c32030"/>
+      <rect x="-700" y="124"  width="3000" height="60"  fill="#757575"/>
+      <rect x="-700" y="184"  width="3000" height="18"  fill="#ffffff"/>
+      <rect x="-700" y="202"  width="3000" height="90"  fill="#959897"/>
+      <rect x="-700" y="292"  width="3000" height="140" fill="#c32030"/>
+      <rect x="-700" y="432"  width="3000" height="22"  fill="#ecedec"/>
+      <rect x="-700" y="454"  width="3000" height="70"  fill="#cecbcc"/>
+      <rect x="-700" y="524"  width="3000" height="40"  fill="#c32030"/>
+      <rect x="-700" y="564"  width="3000" height="110" fill="#ffffff"/>
+      <rect x="-700" y="674"  width="3000" height="30"  fill="#959897"/>
+      <rect x="-700" y="704"  width="3000" height="180" fill="#ecedec"/>
+      <rect x="-700" y="884"  width="3000" height="16"  fill="#c32030"/>
+      <rect x="-700" y="900"  width="3000" height="120" fill="#cecbcc"/>
+      <rect x="-700" y="1020" width="3000" height="900" fill="#f4f4f4"/>
+    </g>
+  </g>
+
+  <!-- acrylic cells scattered through the red flow -->
+  <!-- cells: light pools with a darker rim, as silicone leaves in acrylic -->
+  <g filter="url(#cells)" opacity="0.7">
+    <g fill="#ecedec" stroke="#757575" stroke-width="1.5" stroke-opacity="0.6">
+      <circle cx="330" cy="420" r="11"/><circle cx="352" cy="404" r="5"/><circle cx="312" cy="440" r="4"/>
+      <circle cx="560" cy="330" r="7"/><circle cx="574" cy="346" r="3"/>
+      <circle cx="210" cy="600" r="9"/><circle cx="232" cy="586" r="4"/>
+      <circle cx="760" cy="260" r="5"/>
+    </g>
+  </g>
+
+  <rect width="1600" height="900" fill="url(#sheen)"/>
+  <rect width="1600" height="900" filter="url(#grain)" opacity="0.18" style="mix-blend-mode:multiply"/>
+</svg>

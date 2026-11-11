@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>People | Skrine</title>
+  <meta name="description" content="Meet Skrine's partners, consultants and associates.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/people.css">
+</head>
+<body class="page-people">
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header is-scrolled" id="siteHeader">
+    <div class="header-inner">
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="index.html" class="brand" aria-label="Skrine home">
+        <img src="images/skrine-logo.png" alt="Skrine" class="brand-logo" width="475" height="94">
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <ul>
+          <li><a href="people.html" aria-current="page">People</a></li>
+          <li><a href="#">Capabilities</a></li>
+          <li><a href="#">Join Us</a></li>
+          <li><a href="#">Insights</a></li>
+        </ul>
+      </nav>
+
+      <button class="icon-btn search-toggle" id="searchToggle" aria-label="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <form class="search-bar" id="searchBar" role="search" onsubmit="return false;">
+      <input type="search" placeholder="Search people, practices, insights…" aria-label="Search the site">
+      <button type="submit" aria-label="Submit search"><i class="fa-solid fa-arrow-right"></i></button>
+    </form>
+  </header>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <nav class="drawer" id="mobileNav" aria-label="Menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="people.html">People</a></li>
+      <li><a href="#">Capabilities</a></li>
+      <li><a href="#">Join Us</a></li>
+      <li><a href="#">Insights</a></li>
+    </ul>
+  </nav>
+
+  <main class="people-page">
+
+    <header class="people-hero reveal">
+      <h1 class="people-title">People</h1>
+      <p class="people-intro">Gain access to decades of legal experience and a team dedicated to achieving the best outcomes for your business.</p>
+    </header>
+
+    <div class="people-layout">
+
+      <!-- ===== Sidebar: search + filters ===== -->
+      <aside class="people-sidebar" id="peopleSidebar" aria-label="Search and filter people">
+        <label class="people-search">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" id="peopleSearch" placeholder="Search" aria-label="Search people by name or practice area" autocomplete="off">
+        </label>
+
+        <button class="filters-toggle" id="filtersToggle" aria-expanded="false" aria-controls="filtersPanel">
+          <i class="fa-solid fa-sliders"></i> Filters <span class="filters-count" id="filtersCount" hidden></span>
+        </button>
+
+        <div class="filters-panel" id="filtersPanel">
+          <fieldset class="filter-group">
+            <legend>Practice Areas</legend>
+            <div class="filter-options" id="practiceFilters"></div>
+          </fieldset>
+
+          <fieldset class="filter-group">
+            <legend>Industry</legend>
+            <div class="filter-options" id="industryFilters"></div>
+          </fieldset>
+
+          <button class="filters-clear" id="filtersClear" type="button" hidden>
+            <i class="fa-solid fa-xmark"></i> Clear filters
+          </button>
+        </div>
+      </aside>
+
+      <!-- ===== Directory ===== -->
+      <div class="people-main">
+        <nav class="role-tabs" aria-label="Filter by role" id="roleTabs">
+          <button type="button" data-role="partners" aria-pressed="false">Partners</button>
+          <button type="button" data-role="consultants" aria-pressed="false">Consultants</button>
+          <button type="button" data-role="seniorAssociates" aria-pressed="false">Senior Associates</button>
+          <button type="button" data-role="associates" aria-pressed="false">Associates</button>
+        </nav>
+
+        <p class="results-line" id="resultsLine" aria-live="polite"></p>
+
+        <section class="people-group" id="group-partners" data-role="partners">
+          <h2 class="group-title">Partners</h2>
+          <div class="photo-grid" id="grid-partners"></div>
+        </section>
+
+        <section class="people-group" id="group-consultants" data-role="consultants">
+          <h2 class="group-title">Consultants</h2>
+          <div class="photo-grid photo-grid--consultants" id="grid-consultants"></div>
+        </section>
+
+        <section class="people-group" id="group-seniorAssociates" data-role="seniorAssociates">
+          <h2 class="group-title">Senior Associates</h2>
+          <div class="mini-grid" id="grid-seniorAssociates"></div>
+        </section>
+
+        <section class="people-group" id="group-associates" data-role="associates">
+          <h2 class="group-title">Associates</h2>
+          <div class="mini-grid" id="grid-associates"></div>
+        </section>
+
+        <div class="people-empty" id="peopleEmpty" hidden>
+          <i class="fa-regular fa-face-meh"></i>
+          <p>No one matches your search.</p>
+          <button type="button" class="btn btn--outline" id="emptyReset">Reset search &amp; filters</button>
+        </div>
+
+        <noscript><p class="people-empty">Please enable JavaScript to view the people directory.</p></noscript>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ PERSON MODAL ============ -->
+  <dialog class="person-modal" id="personModal" aria-labelledby="pmName">
+    <div class="pm-card" tabindex="-1" autofocus>
+      <button type="button" class="pm-close" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      <p class="pm-role" id="pmRole"></p>
+      <h2 class="pm-name" id="pmName"></h2>
+      <div class="pm-body" id="pmBody"></div>
+      <footer class="pm-footer">
+        <div class="pm-nav">
+          <button type="button" id="pmPrev" aria-label="Previous person"><i class="fa-solid fa-chevron-left"></i></button>
+          <span id="pmCount"></span>
+          <button type="button" id="pmNext" aria-label="Next person"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-member">
+        <span class="member-label">Proud to be a<br>member of</span>
+        <img src="images/lexmundi.svg" alt="Lex Mundi — Bringing the best together" class="member-logo">
+      </div>
+
+      <div class="footer-connect">
+        <span>Connect with us</span>
+        <a href="#" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" aria-label="WeChat"><i class="fa-brands fa-weixin"></i></a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      © 1963 – <span id="year">2026</span> Skrine. All rights reserved
+      <span class="sep">|</span> <a href="#">Disclaimer</a>
+      <span class="sep">|</span> <a href="#">PDPA Notice</a>
+    </p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/people-data.js"></script>
+  <script src="js/people.js"></script>
+</body>
+</html>

@@ -323,7 +323,7 @@ body {
   /* background-color: #c32030; */
   background: 
     linear-gradient(rgba(146, 0, 0, 0.889), rgba(179, 0, 0, 0.905)),
-    url('profile-background.jpg') center/cover no-repeat;
+    url('../images/profile-background.jpg') center/cover no-repeat;
   padding-left: 30px;
   padding-top: 20px;
   padding-right: 40px;
@@ -747,7 +747,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   color: white;
-  background-image: url('skrine\ wallpaper.png');
+  background-image: url('../images/skrine-wallpaper.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -999,7 +999,7 @@ body {
   /* background: rgba(255, 255, 255, 0.275); */
   background: 
     linear-gradient(rgba(44, 44, 44, 0.097), rgba(54, 54, 54, 0.064)),
-    url('profile-background.jpg') center/cover no-repeat;
+    url('../images/profile-background.jpg') center/cover no-repeat;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
