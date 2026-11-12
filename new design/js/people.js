@@ -80,8 +80,19 @@
   }
 
   /* ---------- card builders ---------- */
+  // profile page slug (same rule as js/profile.js); only people in profiles-data.js get a link
+  function profileSlug(name) {
+    return name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  }
+
   function photoCard(p, role) {
-    var card = el("article", "photo-card reveal" + (role === "consultants" ? " photo-card--consultant" : ""));
+    var slug = profileSlug(p.name);
+    var linked = !!(window.SKRINE_PROFILES && window.SKRINE_PROFILES[slug]);
+    var card = el(linked ? "a" : "article", "photo-card reveal" + (role === "consultants" ? " photo-card--consultant" : "") + (linked ? " photo-card--link" : ""));
+    if (linked) {
+      card.href = "profile.html?p=" + encodeURIComponent(slug);
+      card.setAttribute("aria-label", p.name + (p.division ? ", " + p.division : "") + " — view profile");
+    }
     card.setAttribute("data-tilt", "");
     var inner = el("div", "photo-card-inner");
 
@@ -102,6 +113,11 @@
     info.appendChild(el("h3", "photo-card-name", p.name));
     // name + division; no division means name only
     if (p.division) info.appendChild(el("p", "photo-card-area", p.division));
+    if (linked) {
+      var cta = el("span", "photo-card-cta");
+      cta.innerHTML = 'View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+      info.appendChild(cta);
+    }
     inner.appendChild(info);
 
     card.appendChild(inner);
