@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News | Skrine</title>
+  <meta name="description" content="News from Skrine.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/insights.css">
+  <link rel="stylesheet" href="css/article.css">
+</head>
+<body class="page-inner">
+  <!-- ============ HEADER ============ -->
+  <header class="site-header is-scrolled" id="siteHeader">
+    <div class="header-inner">
+      <a href="../index.html" class="brand" aria-label="Skrine home">
+        <img src="images/skrine-logo.png" alt="Skrine" class="brand-logo" width="475" height="94">
+      </a>
+
+      <nav class="main-nav" id="primaryNav" aria-label="Primary">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="people.html" class="nav-link">People</a>
+          </li>
+
+          <li class="nav-item has-menu">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false"  aria-controls="menu-capabilities">
+              Capabilities <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-capabilities">
+              <li><a href="capabilities.html">Practice Areas</a></li>
+              <li><a href="sectors.html">Sectors</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-menu">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="menu-insights" aria-current="page">
+              Insights <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-insights">
+              <li><a href="alerts.html">Alerts</a></li>
+              <li><a href="articles.html">Articles</a></li>
+              <li><a href="publications.html">Publications</a></li>
+              <li><a href="news-events.html">News &amp; Events</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-menu">
+            <a href="#" class="nav-link">Career</a>
+            <button type="button" class="nav-caret-btn nav-trigger" aria-expanded="false" aria-controls="menu-career" aria-label="Career menu">
+              <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-career">
+              <li><a href="#">Professional Development</a></li>
+              <li><a href="#">Social Responsibility</a></li>
+              <li><a href="#">Sports &amp; Social</a></li>
+              <li><a href="#">Skrine Dragons</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="icon-btn search-toggle" id="searchToggle" aria-label="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+
+      <button class="icon-btn nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <form class="search-bar" id="searchBar" role="search" onsubmit="return false;">
+      <input type="search" placeholder="Search people, practices, insights…" aria-label="Search the site">
+      <button type="submit" aria-label="Submit search"><i class="fa-solid fa-arrow-right"></i></button>
+    </form>
+  </header>
+
+  <div class="ar-progress" aria-hidden="true"><span id="arProgress"></span></div>
+
+  <main class="page-main ar-main nw-main" id="article">
+    <nav class="ar-crumbs" aria-label="Breadcrumb">
+      <a href="news-events.html">Insights</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <a href="news-events.html">News &amp; Events</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <span id="nwCrumbCat" aria-current="page"></span>
+    </nav>
+
+    <header class="nw-head reveal">
+      <p class="ar-tags" id="nwTags"></p>
+      <h1 class="ar-title" id="nwTitle"></h1>
+      <div class="nw-people" id="nwPeople"></div>
+    </header>
+
+    <figure class="nw-hero reveal" id="nwHero"></figure>
+
+    <div class="nw-layout">
+      <article class="ar-body nw-body" id="nwBody" aria-labelledby="nwTitle"></article>
+      <aside class="nw-side" aria-label="Story details">
+        <dl class="nw-facts" id="nwFacts"></dl>
+        <div class="ar-share" id="arShare">
+          <p class="ar-rail-label">Share</p>
+          <div class="ar-share-row"></div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="nw-gallery" id="nwGallery" aria-labelledby="nwGalleryTitle" hidden>
+      <div class="ar-related-head">
+        <h2 id="nwGalleryTitle">Gallery</h2>
+        <span class="nw-gallery-count" id="nwGalleryCount"></span>
+      </div>
+      <div class="nw-grid" id="nwGrid"></div>
+    </section>
+
+    <section class="ar-related" id="arRelated" aria-labelledby="arRelatedTitle" hidden>
+      <div class="ar-related-head">
+        <h2 id="arRelatedTitle">More news</h2>
+        <a class="ar-all" href="news-events.html">All news &amp; events <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+      <div class="ar-related-grid" id="arRelatedGrid"></div>
+    </section>
+
+    <section class="ar-missing" id="arMissing" hidden>
+      <h1 class="page-title">Story not found</h1>
+      <p class="page-intro">We couldn't find that story. Browse everything on the News &amp; Events page.</p>
+      <a class="btn btn--outline" href="news-events.html">Go to News &amp; Events <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </section>
+  </main>
+
+  <!-- ===== Photo viewer ===== -->
+  <dialog class="nw-lightbox" id="nwLightbox" aria-label="Photo viewer">
+    <button type="button" class="nw-lb-close" data-close aria-label="Close"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    <button type="button" class="nw-lb-nav nw-lb-prev" id="nwPrev" aria-label="Previous photo"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+    <figure class="nw-lb-stage"><img id="nwLbImg" alt=""><figcaption id="nwLbCount"></figcaption></figure>
+    <button type="button" class="nw-lb-nav nw-lb-next" id="nwNext" aria-label="Next photo"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+  </dialog>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-member">
+        <span class="member-label">Proud to be a<br>member of</span>
+        <img src="images/lexmundi.svg" alt="Lex Mundi — Bringing the best together" class="member-logo">
+      </div>
+
+      <div class="footer-connect">
+        <span>Connect with us</span>
+        <a href="#" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" aria-label="WeChat"><i class="fa-brands fa-weixin"></i></a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      © 1963 – <span id="year">2026</span> Skrine. All rights reserved
+      <span class="sep">|</span> <a href="#">Disclaimer</a>
+      <span class="sep">|</span> <a href="#">PDPA Notice</a>
+    </p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/people-data.js"></script>
+  <script src="js/profiles-data.js"></script>
+  <script src="js/news-data.js"></script>
+  <script src="js/news-full-data.js"></script>
+  <script src="js/article-common.js"></script>
+  <script src="js/news-page.js"></script>
+</body>
+</html>

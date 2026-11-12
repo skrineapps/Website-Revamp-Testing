@@ -127,6 +127,14 @@
 
   /* Uniform preview card; the full details open in the person modal. */
   function miniCard(p, role) {
+    // associates: name only, no "View details" and no pop-up
+    if (role === "associates") {
+      var plain = el("article", "mini-card mini-card--static reveal");
+      plain.appendChild(el("span", "mini-card-role", ROLE_LABEL[role]));
+      plain.appendChild(el("span", "mini-card-name", p.name));
+      return plain;
+    }
+
     var card = el("button", "mini-card reveal");
     card.type = "button";
     card.setAttribute("data-tilt", "");
@@ -165,7 +173,7 @@
       p._el.style.setProperty("--delay", ((i % 4) * 0.08) + "s");
       grid.appendChild(p._el);
       FX.observeReveal(p._el);
-      FX.attachTilt(p._el);
+      if (role !== "associates") FX.attachTilt(p._el); // associate cards don't open anything
       everyone.push(p);
     });
   });

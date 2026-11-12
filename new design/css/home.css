@@ -36,7 +36,7 @@
 .deal-feature-art {
   position: absolute;
   inset: -10%;
-  background: url("../images/hero-acrylic.svg") center / cover no-repeat;
+  background: url("../images/hero-palette.jpg") center / cover no-repeat;
   opacity: 0.22;
   mix-blend-mode: screen;
   filter: grayscale(0.3);
@@ -137,7 +137,7 @@
   padding: 18px 22px 18px 26px;
   text-align: left;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(206, 203, 204, 0.5);
   transition: background 0.35s, box-shadow 0.35s, transform 0.35s var(--ease);
 }
@@ -516,4 +516,107 @@
   .award-rosette { width: 76px; height: 76px; top: 30px; right: 0; }
   .award-lead:first-child .award-rosette { right: 0; }
   .award-mark { width: 54px; height: 54px; }
+}
+
+/* =========================================================
+   Background art for the sections below the hero
+   Layered, soft-edged decoration so the page reads as one
+   continuous piece (no hard colour blocks):
+   ::before  acrylic-style colour washes + a fine texture
+   ::after   a large outline watermark word (data-watermark)
+   Both drift slightly on scroll (--drift, set in home.js).
+   ========================================================= */
+.section--art { isolation: isolate; overflow: clip; } /* art stays inside its own section while drifting */
+.section--art > * { position: relative; z-index: 1; }
+
+.section--art::before,
+.section--art::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate3d(0, var(--drift, 0px), 0);
+  will-change: transform;
+}
+
+/* watermark word */
+.section--art::after {
+  content: attr(data-watermark);
+  top: 40px;
+  font: 900 clamp(120px, 17vw, 260px)/0.9 var(--font-display);
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(195, 32, 48, 0.13);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* --- Legal Updates: red + grey washes, dot grid --- */
+.section--updates::before {
+  inset: -10% -5%;
+  background:
+    radial-gradient(38% 46% at 88% 62%, rgba(195, 32, 48, 0.16), transparent 70%),
+    radial-gradient(30% 40% at 6% 30%, rgba(149, 152, 151, 0.22), transparent 70%),
+    radial-gradient(circle at 1px 1px, rgba(117, 117, 117, 0.22) 1px, transparent 1.6px) 0 0 / 22px 22px;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 55%, #000 40%, transparent 85%);
+  mask-image: radial-gradient(70% 60% at 50% 55%, #000 40%, transparent 85%);
+}
+.section--updates::after { left: -2vw; }
+
+/* --- Deals: deep charcoal glow + diagonal fine lines behind the feature card --- */
+.section--deals::before {
+  inset: 0 -5%;
+  background:
+    radial-gradient(42% 55% at 22% 58%, rgba(42, 42, 42, 0.13), transparent 72%),
+    radial-gradient(34% 44% at 30% 70%, rgba(195, 32, 48, 0.18), transparent 70%),
+    radial-gradient(28% 36% at 92% 22%, rgba(206, 203, 204, 0.5), transparent 70%),
+    repeating-linear-gradient(135deg, rgba(117, 117, 117, 0.08) 0 1px, transparent 1px 14px);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+.section--deals::after { right: -3vw; top: 20px; }
+
+/* --- In the Spotlight: grey wash, concentric arcs --- */
+.section--spotlight::before {
+  inset: -6% -5%;
+  background:
+    radial-gradient(40% 50% at 85% 28%, rgba(149, 152, 151, 0.24), transparent 70%),
+    radial-gradient(30% 38% at 10% 80%, rgba(195, 32, 48, 0.12), transparent 70%),
+    repeating-radial-gradient(circle at 0% 100%, transparent 0 46px, rgba(195, 32, 48, 0.07) 46px 47px);
+  -webkit-mask-image: radial-gradient(80% 70% at 40% 60%, #000 35%, transparent 85%);
+  mask-image: radial-gradient(80% 70% at 40% 60%, #000 35%, transparent 85%);
+}
+.section--spotlight::after { left: -2vw; }
+
+/* --- Upcoming Events: a thin red timeline + soft washes --- */
+.section--events::before {
+  inset: 0 -5%;
+  background:
+    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(195, 32, 48, 0.12) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    radial-gradient(36% 48% at 4% 50%, rgba(195, 32, 48, 0.14), transparent 70%),
+    radial-gradient(34% 46% at 96% 40%, rgba(149, 152, 151, 0.24), transparent 70%),
+    radial-gradient(circle at 1px 1px, rgba(117, 117, 117, 0.2) 1px, transparent 1.6px) 0 0 / 26px 26px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+.section--events::after { right: -3vw; }
+
+/* --- Global Network: latitude rings behind the globe --- */
+.section--network::before {
+  inset: -4% -5%;
+  background:
+    repeating-radial-gradient(circle at 72% 52%, transparent 0 58px, rgba(117, 117, 117, 0.09) 58px 59px),
+    radial-gradient(34% 50% at 72% 52%, rgba(195, 32, 48, 0.12), transparent 70%),
+    radial-gradient(30% 40% at 8% 20%, rgba(206, 203, 204, 0.55), transparent 70%);
+  -webkit-mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 80%);
+}
+.section--network::after { left: -2vw; top: auto; bottom: 10px; }
+
+@media (max-width: 760px) {
+  .section--art::after { font-size: 34vw; -webkit-text-stroke-width: 1px; }
+  .section--events::before { background-position: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section--art::before, .section--art::after { transform: none; }
 }

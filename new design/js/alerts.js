@@ -49,6 +49,13 @@
 
   ALERTS.forEach(function (a) { a._hay = norm([a.title, a.label, a.topic, a.practice, a.authors, a.excerpt].join(" ")); });
 
+  // full-content page (alert.html) when one exists; slug rule matches js/article-common.js
+  var FULL = window.SKRINE_ALERTS_FULL || {};
+  function slugify(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80).replace(/-$/, "");
+  }
+  function fullHref(a) { var s = slugify(a.title); return FULL[s] ? "alert.html?a=" + encodeURIComponent(s) : "#"; }
+
   function tags(a) {
     var wrap = el("p", "alert-tags");
     if (a.label) wrap.appendChild(el("span", "alert-tag alert-tag--label", a.label));
@@ -62,7 +69,7 @@
   ALERTS.slice(0, LATEST).forEach(function (a, i) {
     var lead = i === 0;
     var card = el("a", "latest-card reveal" + (lead ? " latest-card--lead" : ""));
-    card.href = "#";
+    card.href = fullHref(a);
     card.style.setProperty("--delay", (i * 0.08) + "s");
     if (lead) card.setAttribute("data-tilt", "");
     var top = el("div", "latest-top");
@@ -137,7 +144,7 @@
   function row(a) {
     var p = parts(a.date);
     var r = el("a", "alert-row reveal");
-    r.href = "#";
+    r.href = fullHref(a);
     var date = el("time", "alert-date");
     date.dateTime = a.date;
     date.appendChild(el("span", "alert-day", p.d));

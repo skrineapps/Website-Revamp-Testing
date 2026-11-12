@@ -81,6 +81,17 @@
   }
   function catTag(c) { return el("span", "alert-tag ne-cat-tag", c); }
 
+  // full story page (news.html) when one exists; slug rule matches js/article-common.js
+  var FULL = window.SKRINE_NEWS_FULL || {};
+  function slugify(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80).replace(/-$/, "");
+  }
+  function openStory(n) {
+    var s = slugify(n.title);
+    if (FULL[s]) location.href = "news.html?n=" + encodeURIComponent(s);
+    else openModal(n);
+  }
+
   NEWS.forEach(function (n) { n._hay = norm([n.title, n.category, n.people.join(" "), n.summary].join(" ")); });
 
   /* ---------- Tabs (page nav) ---------- */
@@ -128,7 +139,7 @@
     if (lead && n.summary) body.appendChild(el("span", "ne-head-summary", n.summary));
     if (lead && n.people.length) body.appendChild(stack(n.people, 5));
     c.appendChild(body);
-    c.addEventListener("click", function () { openModal(n); });
+    c.addEventListener("click", function () { openStory(n); });
     headEl.appendChild(c);
     FX.observeReveal(c);
   });
@@ -175,7 +186,7 @@
     if (n.summary) body.appendChild(el("span", "ne-card-summary", n.summary));
     if (n.people.length) body.appendChild(stack(n.people, 4));
     c.appendChild(body);
-    c.addEventListener("click", function () { openModal(n); });
+    c.addEventListener("click", function () { openStory(n); });
     return c;
   }
 

@@ -386,3 +386,28 @@
     }
   }
 })();
+
+/* ---------- Background art drift ----------
+   The decorative layers behind each section move a little slower
+   than the page as you scroll (a soft depth effect). */
+(function () {
+  "use strict";
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var secs = Array.prototype.slice.call(document.querySelectorAll(".section--art"));
+  if (!secs.length) return;
+  var ticking = false;
+  function update() {
+    var vh = window.innerHeight;
+    secs.forEach(function (s) {
+      var r = s.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      // 0 when the section is centred in the viewport
+      var off = (r.top + r.height / 2 - vh / 2) * -0.08;
+      s.style.setProperty("--drift", off.toFixed(1) + "px");
+    });
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();

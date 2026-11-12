@@ -346,6 +346,10 @@
 .mini-card:hover,
 .mini-card:focus-visible { box-shadow: 0 22px 44px rgba(0, 0, 0, 0.14); border-left-color: var(--red); }
 .mini-card[hidden] { display: none; }
+/* associates: plain name card, nothing to open */
+.mini-card--static { height: auto; min-height: 104px; justify-content: center; cursor: default; }
+.mini-card--static:hover { box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06); border-left-color: var(--red); }
+.mini-card--static:hover .mini-card-name { color: var(--ink); }
 
 .mini-card-role {
   font-family: var(--font-alt);

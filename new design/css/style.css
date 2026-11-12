@@ -256,11 +256,11 @@ body.header-hidden { --sticky-top: 0px; }
   background: #fbfbfb;
 }
 
-/* abstract acrylic-pour artwork, drifting very slowly on its own */
+/* palette-knife painting in the brand colours, drifting very slowly on its own */
 .hero-bg {
   position: absolute;
   inset: -6%;
-  background: url("../images/hero-acrylic.svg") center / cover no-repeat;
+  background: url("../images/hero-palette.jpg") center / cover no-repeat;
   animation: paintDrift 38s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -271,10 +271,11 @@ body.header-hidden { --sticky-top: 0px; }
   100% { transform: scale(1.04) translate3d(1%, -1.2%, 0) rotate(-0.4deg); }
 }
 
+/* light veil at the top so the menu stays clear over the painting */
 .hero-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 30%);
+  background: linear-gradient(180deg, rgba(251, 251, 251, 0.7) 0%, rgba(251, 251, 251, 0.15) 22%, rgba(251, 251, 251, 0) 40%);
 }
 
 /* melt the artwork into the page below — no hard edge */
@@ -289,7 +290,7 @@ body.header-hidden { --sticky-top: 0px; }
   pointer-events: none;
   z-index: 1;
 }
-.hero-panel, .scroll-cue { z-index: 2; }
+.hero-panel, .scroll-cue { z-index: 3; }
 
 /* the grey diagonal sweep from the mockup */
 .hero-diagonal {
@@ -300,80 +301,167 @@ body.header-hidden { --sticky-top: 0px; }
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   clip-path: polygon(38% 100%, 100% 22%, 100% 100%);
+  display: none; /* the frosted text panel replaces this sweep over the palette-knife painting */
 }
 
+/* ---------- Hero text: a slab of paint on the painting ---------- */
 .hero-panel {
   position: absolute;
-  right: clamp(16px, 4vw, 64px);
-  bottom: clamp(48px, 9vh, 96px);
-  width: min(760px, calc(100% - 32px));
-  text-align: right;
+  right: clamp(16px, 5vw, 88px);
+  bottom: clamp(56px, 10vh, 110px);
+  width: min(680px, calc(100% - 32px));
+  padding: clamp(36px, 4vw, 56px) clamp(32px, 4vw, 60px) clamp(32px, 3.6vw, 48px);
+  text-align: left;
   isolation: isolate;
 }
-/* soft light pool behind the text so it reads over the paint */
-.hero-panel::before {
-  content: "";
+
+/* ---------- Geometric plane behind the hero text ----------
+   Same off-white as the page, so it rises out of the Legal Updates
+   section below without a seam. A translucent grey facet behind it and
+   a thin red line along its angled edge give it depth. */
+.hero-geo {
   position: absolute;
-  inset: -90px -120px -70px -160px;
-  z-index: -1;
-  background: radial-gradient(ellipse 60% 58% at 62% 52%, rgba(251, 251, 251, 0.94) 0%, rgba(251, 251, 251, 0.8) 45%, rgba(251, 251, 251, 0) 75%);
+  right: 0;
+  bottom: 0;
+  width: min(68vw, 1060px);
+  height: 78%;
+  z-index: 2;
   pointer-events: none;
+  animation: geoRise 1.1s var(--ease) 0.05s both;
+}
+.hero-geo-facet {
+  position: absolute;
+  inset: -12% 0 0 -18%;
+  background: linear-gradient(160deg, rgba(236, 237, 236, 0.78) 0%, rgba(206, 203, 204, 0.55) 60%, rgba(251, 251, 251, 0.9) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  clip-path: polygon(38% 0, 100% 0, 100% 100%, 4% 100%, 14% 58%);
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+/* the red line: a copy of the plane's shape, nudged up and left so only
+   a thin edge shows. It fades out towards the bottom, so the plane meets
+   Legal Updates without a hard line. */
+.hero-geo-line,
+.hero-geo-plane { clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%, 7% 52%); }
+.hero-geo-line {
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform: translate(-3px, -3px);
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 95%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 95%);
+}
+.hero-geo-edge {
+  position: absolute;
+  inset: 0;
+  filter: drop-shadow(0 -16px 34px rgba(30, 30, 30, 0.14));
+}
+.hero-geo-plane {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(117, 117, 117, 0.2) 1px, transparent 1.6px) 0 0 / 22px 22px,
+    linear-gradient(180deg, #f6f6f5 0%, #fbfbfb 55%);
+}
+@keyframes geoRise {
+  from { opacity: 0; transform: translateY(60px); }
+  to   { opacity: 1; transform: none; }
 }
 
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  font: 700 12.5px var(--font-body);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--grey-700);
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 0.3s forwards;
+}
+.hero-eyebrow span { width: 34px; height: 2px; background: var(--red); }
+
+/* three words, stacked */
 .hero-tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(24px, 2.7vw, 40px);
-  line-height: 1.25;
-  color: var(--red);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0 0.35em;
+  font-size: clamp(40px, 4.6vw, 76px);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  perspective: 800px;
 }
-.hero-tagline i { font-style: normal; color: var(--red); }
-.hero-tagline span,
-.hero-tagline i {
+.ht-word {
+  position: relative;
   display: inline-block;
   opacity: 0;
   transform: translateY(30px) rotateX(-70deg);
   transform-origin: bottom center;
   animation: flipIn 0.9s var(--ease) forwards;
 }
-.hero-tagline > :nth-child(1) { animation-delay: 0.2s; }
-.hero-tagline > :nth-child(2) { animation-delay: 0.35s; }
-.hero-tagline > :nth-child(3) { animation-delay: 0.5s; }
-.hero-tagline > :nth-child(4) { animation-delay: 0.65s; }
-.hero-tagline > :nth-child(5) { animation-delay: 0.8s; }
+.ht-word:nth-child(1) { animation-delay: 0.45s; }
+.ht-word:nth-child(2) { animation-delay: 0.6s; color: var(--grey-700); }
+.ht-word:nth-child(3) { animation-delay: 0.75s; }
+
+/* "Ingenuity." — knocked out of a red palette-knife stroke that sweeps in */
+.ht-word--swatch { margin-top: 0.08em; padding: 0.04em 0.28em 0.1em 0.2em; margin-left: -0.2em; }
+.ht-swatch {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(175deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(90deg, #a5121f 0%, var(--red) 35%, #d0293a 70%, var(--red) 100%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cfilter id='g' x='-5%25' y='-10%25' width='110%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.3' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='16'/%3E%3C/filter%3E%3Crect x='8' y='9' width='384' height='82' fill='black' filter='url(%23g)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cfilter id='g' x='-5%25' y='-10%25' width='110%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.3' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='16'/%3E%3C/filter%3E%3Crect x='8' y='9' width='384' height='82' fill='black' filter='url(%23g)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: swatchIn 0.75s cubic-bezier(0.7, 0, 0.2, 1) 1.15s forwards;
+}
+.ht-text { color: var(--ink); animation: swatchText 0.35s ease 1.45s forwards; }
+@keyframes swatchIn { to { transform: scaleX(1); } }
+@keyframes swatchText { to { color: var(--white); } }
 
 .hero-sub {
-  margin-top: 8px;
-  font-family: var(--font-body);
-  font-size: clamp(16px, 1.5vw, 22px);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--grey-700);
+  margin-top: 20px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(16px, 1.35vw, 20px);
+  color: var(--ink-soft);
   opacity: 0;
-  animation: fadeUp 0.9s var(--ease) 1s forwards;
+  animation: fadeUp 0.9s var(--ease) 1.5s forwards;
 }
 
-.hero-actions {
-  margin-top: 26px;
+/* buttons + rosettes share one row under a hairline */
+.hero-foot {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 14px;
-  opacity: 0;
-  animation: fadeUp 0.8s var(--ease) 1.15s forwards;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px 24px;
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(117, 117, 117, 0.25);
 }
-.hero-actions .btn--outline { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(4px); }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeUp 0.8s var(--ease) 1.65s forwards;
+}
+.hero-actions .btn { padding: 12px 22px; font-size: 14.5px; }
+.hero-actions .btn--outline { background: rgba(255, 255, 255, 0.55); }
 
 .hero-rosettes {
-  margin-top: 26px;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  gap: 22px;
+  gap: 16px;
   perspective: 600px;
 }
 .hero-rosettes li {
@@ -381,9 +469,9 @@ body.header-hidden { --sticky-top: 0px; }
   animation: fadeUp 0.8s var(--ease) forwards;
   transition: transform 0.6s var(--ease), filter 0.6s var(--ease);
 }
-.hero-rosettes li:nth-child(1) { animation-delay: 1.35s; }
-.hero-rosettes li:nth-child(2) { animation-delay: 1.5s; }
-.hero-rosettes img { height: 96px; width: auto; }
+.hero-rosettes li:nth-child(1) { animation-delay: 1.8s; }
+.hero-rosettes li:nth-child(2) { animation-delay: 1.95s; }
+.hero-rosettes img { height: 58px; width: auto; }
 .hero-rosettes li:nth-child(2) img { border-radius: 4px; box-shadow: var(--shadow-sm); }
 .hero-rosettes li:hover { transform: rotateY(-14deg) translateY(-4px); filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.15)); }
 
@@ -1013,9 +1101,16 @@ main {
     background: rgba(255, 255, 255, 0.78);
     clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%);
   }
+  .hero-panel { right: 12px; left: 12px; width: auto; bottom: 28px; padding: 34px 26px 28px; }
+  /* phone: the plane spans the width with an angled top */
+  .hero-geo { width: 100%; height: 76%; }
+  .hero-geo-plane, .hero-geo-line { clip-path: polygon(0 9%, 100% 0, 100% 100%, 0 100%); }
+  .hero-geo-line { transform: translate(0, -3px); }
+  .hero-geo-facet { inset: -5% 0 0 0; clip-path: polygon(0 0, 100% 6%, 100% 100%, 0 100%); }
+  .hero-tagline { font-size: clamp(36px, 11vw, 46px); }
   .hero-actions { gap: 10px; }
-  .hero-actions .btn { padding: 11px 20px; font-size: 14px; }
-  .hero-rosettes img { height: 72px; }
+  .hero-actions .btn { padding: 11px 18px; font-size: 14px; }
+  .hero-rosettes img { height: 56px; }
   .scroll-cue { display: none; }
 
   .carousel-stage { height: 450px; }
