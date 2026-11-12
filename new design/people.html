@@ -13,30 +13,68 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/people.css">
 </head>
-<body class="page-people">
+<body class="page-people page-inner">
 
   <!-- ============ HEADER ============ -->
   <header class="site-header is-scrolled" id="siteHeader">
     <div class="header-inner">
-      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
-        <span></span><span></span><span></span>
-      </button>
-
       <a href="index.html" class="brand" aria-label="Skrine home">
         <img src="images/skrine-logo.png" alt="Skrine" class="brand-logo" width="475" height="94">
       </a>
 
-      <nav class="main-nav" aria-label="Primary">
-        <ul>
-          <li><a href="people.html" aria-current="page">People</a></li>
-          <li><a href="#">Capabilities</a></li>
-          <li><a href="#">Join Us</a></li>
-          <li><a href="#">Insights</a></li>
+      <nav class="main-nav" id="primaryNav" aria-label="Primary">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="people.html" class="nav-link" aria-current="page">People</a>
+          </li>
+
+          <li class="nav-item has-menu">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="menu-capabilities">
+              Capabilities <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-capabilities">
+              <li><a href="capabilities.html">Practice Areas</a></li>
+              <li><a href="sectors.html">Sectors</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-menu">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="menu-insights">
+              Insights <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-insights">
+              <li><a href="alerts.html">Alerts</a></li>
+              <li><a href="articles.html">Articles</a></li>
+              <li><a href="publications.html">Publications</a></li>
+              <li><a href="news-events.html">News &amp; Events</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-menu">
+            <a href="#" class="nav-link">Career</a>
+            <button type="button" class="nav-caret-btn nav-trigger" aria-expanded="false" aria-controls="menu-career" aria-label="Career menu">
+              <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-career">
+              <li><a href="#">Professional Development</a></li>
+              <li><a href="#">Social Responsibility</a></li>
+              <li><a href="#">Sports &amp; Social</a></li>
+              <li><a href="#">Skrine Dragons</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
         </ul>
       </nav>
 
       <button class="icon-btn search-toggle" id="searchToggle" aria-label="Search">
         <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+
+      <button class="icon-btn nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
+        <span></span><span></span><span></span>
       </button>
     </div>
 
@@ -46,22 +84,12 @@
     </form>
   </header>
 
-  <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <nav class="drawer" id="mobileNav" aria-label="Menu">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="people.html">People</a></li>
-      <li><a href="#">Capabilities</a></li>
-      <li><a href="#">Join Us</a></li>
-      <li><a href="#">Insights</a></li>
-    </ul>
-  </nav>
+  <main class="people-page page-main">
 
-  <main class="people-page">
-
-    <header class="people-hero reveal">
-      <h1 class="people-title">People</h1>
-      <p class="people-intro">Gain access to decades of legal experience and a team dedicated to achieving the best outcomes for your business.</p>
+    <header class="page-head reveal">
+      <p class="eyebrow">Our People</p>
+      <h1 class="page-title">People</h1>
+      <p class="page-intro">Gain access to decades of legal experience and a team dedicated to achieving the best outcomes for your business.</p>
     </header>
 
     <div class="people-layout">

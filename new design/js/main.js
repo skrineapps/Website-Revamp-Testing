@@ -1,7 +1,7 @@
 /* =========================================================
-   SKRINE — Home page interactions
-   - Header state, hamburger drawer, search toggle
-   - 3D coverflow carousel for Deals & Transactions
+   SKRINE — Shared site interactions
+   - Header state, top-nav dropdowns, search toggle
+   - 3D coverflow carousel (Legal Updates)
    - Scroll-triggered reveals
    - Subtle 3D tilt on cards
    ========================================================= */
@@ -23,33 +23,82 @@
     var y = window.scrollY;
     header.classList.toggle("is-scrolled", y > 40);
     var goingDown = y > lastY && y > 300;
-    header.classList.toggle("is-hidden", goingDown && !document.body.classList.contains("drawer-open"));
+    var menuOpen = !!document.querySelector(".nav-item.is-open") || header.classList.contains("nav-open");
+    var hide = goingDown && !menuOpen;
+    header.classList.toggle("is-hidden", hide);
+    // pinned bars and sidebars move up into the space the header leaves
+    document.body.classList.toggle("header-hidden", hide);
     lastY = y;
   }
 
-  /* ---------- Drawer ---------- */
-  var menuToggle = document.getElementById("menuToggle");
-  var drawer = document.getElementById("mobileNav");
-  var backdrop = document.getElementById("drawerBackdrop");
+  /* ---------- Top-nav dropdowns ----------
+     Hover opens them on desktop (CSS); the buttons toggle them for
+     touch and keyboard users. */
+  var navItems = document.querySelectorAll(".nav-item.has-menu");
 
-  function setDrawer(open) {
-    drawer.classList.toggle("is-open", open);
-    backdrop.classList.toggle("is-open", open);
-    document.body.classList.toggle("drawer-open", open);
-    menuToggle.setAttribute("aria-expanded", String(open));
-    menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  function closeMenus(except) {
+    navItems.forEach(function (item) {
+      if (item === except) return;
+      item.classList.remove("is-open");
+      var t = item.querySelector(".nav-trigger");
+      if (t) t.setAttribute("aria-expanded", "false");
+    });
   }
 
-  menuToggle.addEventListener("click", function () {
-    setDrawer(!drawer.classList.contains("is-open"));
+  navItems.forEach(function (item) {
+    var trigger = item.querySelector(".nav-trigger");
+    trigger.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = !item.classList.contains("is-open");
+      closeMenus(item);
+      item.classList.toggle("is-open", open);
+      trigger.setAttribute("aria-expanded", String(open));
+    });
+    // leaving the menu with the keyboard closes it
+    item.addEventListener("focusout", function (e) {
+      if (!item.contains(e.relatedTarget)) {
+        item.classList.remove("is-open");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
   });
-  backdrop.addEventListener("click", function () { setDrawer(false); });
-  drawer.addEventListener("click", function (e) {
-    if (e.target.closest("a")) setDrawer(false);
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".nav-item.has-menu")) closeMenus();
   });
+
+  /* ---------- Burger (tablet & phone) ---------- */
+  var navToggle = document.getElementById("navToggle");
+  var primaryNav = document.getElementById("primaryNav");
+
+  function setNav(open) {
+    header.classList.toggle("nav-open", open);
+    document.body.classList.toggle("nav-open", open);
+    navToggle.setAttribute("aria-expanded", String(open));
+    navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    if (!open) closeMenus();
+  }
+
+  if (navToggle && primaryNav) {
+    navToggle.addEventListener("click", function () {
+      setNav(!header.classList.contains("nav-open"));
+    });
+    // following a link closes the panel
+    primaryNav.addEventListener("click", function (e) {
+      if (e.target.closest("a")) setNav(false);
+    });
+    // back to desktop width: reset
+    window.matchMedia("(min-width: 861px)").addEventListener("change", function (mq) {
+      if (mq.matches) setNav(false);
+    });
+  }
+
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
-      setDrawer(false);
+      var open = document.querySelector(".nav-item.is-open .nav-trigger");
+      closeMenus();
+      if (open) open.focus();
+      if (header.classList.contains("nav-open")) { setNav(false); navToggle.focus(); }
       searchBar.classList.remove("is-open");
     }
   });
@@ -145,10 +194,11 @@
   // shared with page scripts that render content later (e.g. people.js)
   window.SkrineFX = { observeReveal: observeReveal, attachTilt: attachTilt };
 
-  /* ---------- Deals: 3D coverflow carousel ---------- */
-  var carousel = document.getElementById("dealsCarousel");
-  if (carousel) {
-    var cards = Array.prototype.slice.call(carousel.querySelectorAll(".deal-card"));
+  /* ---------- 3D coverflow carousel (any .carousel on the page) ---------- */
+  document.querySelectorAll(".carousel").forEach(initCarousel);
+
+  function initCarousel(carousel) {
+    var cards = Array.prototype.slice.call(carousel.querySelectorAll(".slide-card"));
     var dotsWrap = carousel.querySelector(".carousel-dots");
     var stage = carousel.querySelector(".carousel-stage");
     var index = 0;
@@ -161,7 +211,7 @@
       var b = document.createElement("button");
       b.type = "button";
       b.setAttribute("role", "tab");
-      b.setAttribute("aria-label", "Deal " + (i + 1));
+      b.setAttribute("aria-label", "Slide " + (i + 1));
       b.addEventListener("click", function () { go(i); restart(); });
       dotsWrap.appendChild(b);
       return b;

@@ -3,33 +3,9 @@
    Builds on css/style.css (colours, fonts, header, footer).
    ========================================================= */
 
-/* header is always solid on inner pages */
-.page-people .site-header { background: rgba(255, 255, 255, 0.95); box-shadow: var(--shadow-sm); }
-
-.people-page {
-  padding: calc(var(--header-h) + clamp(32px, 5vw, 72px)) clamp(16px, 4vw, 64px) clamp(64px, 8vw, 120px);
-}
-
-/* ---------- Title ---------- */
-.people-hero { max-width: 1520px; margin: 0 auto clamp(32px, 4vw, 56px); }
-.people-title {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(44px, 6vw, 84px);
-  line-height: 1.05;
-  color: var(--red);
-}
-.people-intro {
-  margin-top: 14px;
-  max-width: 620px;
-  font-size: clamp(16px, 1.3vw, 19px);
-  color: var(--ink-soft);
-}
 
 /* ---------- Layout ---------- */
 .people-layout {
-  max-width: 1520px;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
   gap: clamp(28px, 4vw, 72px);
@@ -39,7 +15,7 @@
 /* ---------- Sidebar ---------- */
 .people-sidebar {
   position: sticky;
-  top: calc(var(--header-h) + 24px);
+  top: calc(var(--sticky-top) + 24px);
   max-height: calc(100vh - var(--header-h) - 48px);
   overflow-y: auto;
   padding-right: 10px;

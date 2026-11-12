@@ -1,0 +1,519 @@
+/* =========================================================
+   SKRINE — Home page sections
+   Deals & Transactions · Global Network · Awards
+   Builds on css/style.css.
+   ========================================================= */
+
+.section-deck {
+  margin-top: 14px;
+  font-size: clamp(16px, 1.3vw, 19px);
+  color: var(--ink-soft);
+}
+
+/* ---------- Deals & Transactions ---------- */
+.deals-board {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: stretch;
+}
+
+.deal-feature {
+  position: relative;
+  min-height: 520px;
+  border-radius: 24px;
+  overflow: hidden;
+  color: var(--white);
+  background: linear-gradient(150deg, #2b0a10 0%, #6e0f19 45%, var(--red) 100%);
+  box-shadow: var(--shadow-lg);
+  isolation: isolate;
+}
+/* the hero's acrylic artwork, toned down, as a backdrop */
+.deal-feature-art {
+  position: absolute;
+  inset: -10%;
+  background: url("../images/hero-acrylic.svg") center / cover no-repeat;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  filter: grayscale(0.3);
+  animation: paintDrift 40s ease-in-out infinite alternate;
+  z-index: -1;
+}
+.deal-feature::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 6, 9, 0.85) 0%, rgba(20, 6, 9, 0.2) 55%, transparent 80%);
+  z-index: -1;
+}
+
+.deal-feature-content {
+  position: relative;
+  height: 100%;
+  padding: clamp(28px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  transform: translateZ(30px);
+  transition: opacity 0.26s var(--ease), transform 0.26s var(--ease);
+}
+.deal-feature-content.is-leaving { opacity: 0; transform: translateZ(30px) translateY(12px); }
+
+.deal-sector {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
+}
+
+.deal-figure {
+  margin-top: auto;
+  padding-top: 40px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+.deal-figure-num { font-size: clamp(56px, 7.5vw, 112px); }
+.deal-figure-unit { font-size: clamp(24px, 2.6vw, 38px); font-weight: 700; opacity: 0.85; }
+.deal-figure-label {
+  margin-top: 8px;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.deal-headline {
+  margin-top: 26px;
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 1.9vw, 27px);
+  line-height: 1.3;
+}
+.deal-summary {
+  margin-top: 12px;
+  max-width: 60ch;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
+.deal-meta {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: var(--font-alt);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+}
+.deal-team::before { content: "Skrine team  "; font-weight: 700; color: var(--white); white-space: pre; }
+
+/* list of deals */
+.deal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.deal-list button {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "figure sector" "client client";
+  gap: 4px 12px;
+  padding: 18px 22px 18px 26px;
+  text-align: left;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(206, 203, 204, 0.5);
+  transition: background 0.35s, box-shadow 0.35s, transform 0.35s var(--ease);
+}
+.deal-list button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--red);
+  transform: scaleY(0);
+  transition: transform 0.35s var(--ease);
+}
+.deal-list button:hover { background: var(--white); transform: translateX(-4px); }
+.deal-list button[aria-selected="true"] { background: var(--white); box-shadow: var(--shadow-md); }
+.deal-list button[aria-selected="true"]::before { transform: scaleY(1); }
+
+.dl-figure {
+  grid-area: figure;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--grey-500);
+  transition: color 0.35s;
+}
+.deal-list button[aria-selected="true"] .dl-figure,
+.deal-list button:hover .dl-figure { color: var(--red); }
+.dl-client { grid-area: client; font-weight: 700; font-size: 15.5px; color: var(--ink); }
+.dl-sector {
+  grid-area: sector;
+  align-self: center;
+  font-family: var(--font-alt);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey-500);
+}
+
+/* ---------- Global Network ---------- */
+.network-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+}
+
+.section-title--left { text-align: left; }
+.section-title--left::after { margin-left: 0; }
+.network-copy .eyebrow { text-align: left; }
+
+.network-lead {
+  margin-top: 24px;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.55;
+  color: var(--ink);
+}
+.network-lead strong { color: var(--red); }
+
+.network-stats {
+  margin: 30px 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--grey-300);
+  border-bottom: 1px solid var(--grey-300);
+}
+.network-stats li { padding: 20px 12px 18px 0; }
+.network-stats li + li { padding-left: 20px; border-left: 1px solid var(--grey-300); }
+.ns-num {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1;
+  color: var(--red);
+}
+.ns-label {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-700);
+}
+
+.network-body { font-size: 16px; line-height: 1.7; color: var(--ink-soft); }
+
+.network-desks {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.nd-label {
+  margin-right: 6px;
+  font-family: var(--font-alt);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-700);
+}
+.nd-chip {
+  padding: 8px 16px;
+  border-radius: 22px;
+  border: 1.5px solid var(--red);
+  color: var(--red);
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+.nd-chip:hover { background: var(--red); color: var(--white); transform: translateY(-2px); }
+.nd-chip span { font-weight: 500; margin-left: 4px; }
+
+.network-logo { margin-top: 30px; height: 96px; width: auto; opacity: 0.9; }
+
+.network-globe {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  justify-self: center;
+  aspect-ratio: 1;
+}
+.network-globe canvas { width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+.network-globe canvas:active { cursor: grabbing; }
+.globe-pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: -42px 0 0 14px;
+  padding: 5px 12px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* ---------- Awards (dark, engraved, foil) ---------- */
+.awards {
+  --foil-1: #cecbcc;
+  --foil-2: #ecedec;
+  --foil-3: #ffffff;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(110px, 14vw, 180px) clamp(16px, 4vw, 64px) clamp(80px, 10vw, 140px);
+  color: var(--grey-100);
+  background:
+    radial-gradient(1400px 900px at 50% -10%, #d23a48 0%, var(--red) 42%, var(--red-dark) 100%);
+}
+/* melt the page into the dark section */
+.awards::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 90px;
+  background: linear-gradient(#fbfbfb 0%, rgba(251, 251, 251, 0.55) 30%, rgba(251, 251, 251, 0.12) 65%, rgba(251, 251, 251, 0) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.awards-guilloche {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(560px circle at var(--gx, 70%) var(--gy, 40%), #000 0%, rgba(0, 0, 0, 0.4) 45%, rgba(0, 0, 0, 0.14) 75%);
+  mask-image: radial-gradient(560px circle at var(--gx, 70%) var(--gy, 40%), #000 0%, rgba(0, 0, 0, 0.4) 45%, rgba(0, 0, 0, 0.14) 75%);
+}
+
+.awards-inner { position: relative; z-index: 2; max-width: var(--container); margin: 0 auto; }
+
+/* platinum foil text: sheen moves with the pointer */
+.foil {
+  --fx: 50%;
+  background: linear-gradient(100deg,
+    var(--foil-1) 0%, var(--foil-2) 22%, var(--foil-3) 38%,
+    var(--foil-2) calc(var(--fx) - 5%), var(--foil-3) var(--fx), var(--foil-2) calc(var(--fx) + 5%),
+    var(--foil-2) 72%, var(--foil-1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.awards-head { margin-bottom: clamp(40px, 5vw, 64px); }
+.eyebrow--foil { color: rgba(255, 255, 255, 0.8); }
+.awards-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(48px, 7vw, 104px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.awards-deck {
+  margin-top: 16px;
+  max-width: 40ch;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(17px, 1.5vw, 21px);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.award-src {
+  display: block;
+  font-family: var(--font-alt);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.awards-lead {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid rgba(236, 237, 236, 0.35);
+}
+.award-lead { padding: 40px 40px 44px 0; border-bottom: 1px solid rgba(236, 237, 236, 0.25); }
+.award-lead + .award-lead { padding-left: 40px; border-left: 1px solid rgba(236, 237, 236, 0.25); }
+
+.award-big {
+  margin: 16px 0 22px;
+  display: flex;
+  align-items: baseline;
+  gap: 22px;
+}
+.award-big > .foil {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(80px, 10vw, 150px);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+}
+.award-big-label {
+  max-width: 11em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.3;
+  color: var(--grey-100);
+}
+.award-list { font-family: var(--font-body); font-size: 15.5px; line-height: 1.75; color: rgba(255, 255, 255, 0.82); }
+.award-note { margin-top: 18px; font-family: var(--font-body); font-weight: 600; font-size: 18px; color: var(--white); }
+.award-note .foil { font-family: var(--font-display); font-weight: 900; font-size: 26px; margin-right: 4px; }
+
+.award-banner {
+  padding: 40px 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 30px;
+  border-bottom: 1px solid rgba(236, 237, 236, 0.25);
+}
+.award-banner .award-src { max-width: 20em; line-height: 1.5; }
+.award-banner-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 54px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-align: right;
+}
+
+.award-rest {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.award-rest li {
+  padding: 26px 20px 28px 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--white);
+  border-bottom: 1px solid rgba(236, 237, 236, 0.25);
+  transition: background 0.4s;
+}
+.award-rest li + li { padding-left: 20px; border-left: 1px solid rgba(236, 237, 236, 0.18); }
+.award-rest li:hover { background: rgba(255, 255, 255, 0.04); }
+.award-rest .award-src { margin-bottom: 10px; font-size: 11.5px; }
+
+.awards-cta { margin-top: 56px; text-align: center; }
+.btn--foil {
+  border: 1.5px solid rgba(236, 237, 236, 0.6);
+  color: var(--white);
+}
+.btn--foil:hover { background: var(--white); color: var(--red); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .deals-board { grid-template-columns: 1fr; }
+  .deal-feature { min-height: 460px; }
+  .deal-list { flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
+  .deal-list li { flex: 0 0 240px; scroll-snap-align: start; }
+  .deal-list button:hover { transform: none; }
+
+  .network-wrap { grid-template-columns: 1fr; }
+  .network-globe { max-width: 420px; order: -1; }
+
+  .award-rest { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .award-rest li:nth-child(3n + 1) { padding-left: 0; border-left: 0; }
+}
+
+@media (max-width: 760px) {
+  .awards-lead { grid-template-columns: 1fr; }
+  .award-lead + .award-lead { padding-left: 0; border-left: 0; }
+  .award-banner { flex-direction: column; }
+  .award-banner-title { text-align: left; }
+  .award-rest { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .award-rest li:nth-child(3n + 1) { padding-left: 20px; border-left: 1px solid rgba(236, 237, 236, 0.18); }
+  .award-rest li:nth-child(odd) { padding-left: 0; border-left: 0; }
+}
+
+@media (max-width: 640px) {
+  .deal-feature { min-height: 0; border-radius: 18px; }
+  .deal-figure { padding-top: 28px; }
+  .network-stats li + li { padding-left: 12px; }
+  .ns-label { font-size: 11px; letter-spacing: 0.06em; }
+}
+
+/* ---------- Award rosettes & logos ---------- */
+.award-lead { position: relative; }
+.award-rosette {
+  position: absolute;
+  top: 34px;
+  right: 40px;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  padding: 8px;
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 14px 30px rgba(60, 8, 16, 0.35);
+  transform: perspective(600px) rotate(-4deg);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.award-lead:first-child .award-rosette { right: 40px; }
+.award-lead + .award-lead .award-rosette { right: 0; }
+.award-rosette img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.award-rosette--badge { padding: 0; overflow: hidden; background: #0d2340; transform: perspective(600px) rotate(4deg); }
+.award-rosette--badge img { width: 100%; height: 100%; object-fit: cover; }
+.award-lead:hover .award-rosette { transform: perspective(600px) rotateY(-14deg) translateY(-4px); box-shadow: 0 22px 40px rgba(60, 8, 16, 0.45); }
+
+.award-mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 14px;
+  padding: 6px;
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: 0 8px 18px rgba(60, 8, 16, 0.3);
+  transition: transform 0.45s var(--ease);
+}
+.award-mark img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.award-rest li:hover .award-mark { transform: perspective(500px) rotateY(-16deg) translateY(-3px); }
+
+@media (max-width: 760px) {
+  .award-rosette { width: 76px; height: 76px; top: 30px; right: 0; }
+  .award-lead:first-child .award-rosette { right: 0; }
+  .award-mark { width: 54px; height: 54px; }
+}

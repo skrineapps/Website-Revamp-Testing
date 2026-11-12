@@ -11,31 +11,70 @@
   <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
 
   <!-- ============ HEADER ============ -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
-        <span></span><span></span><span></span>
-      </button>
-
       <a href="index.html" class="brand" aria-label="Skrine home">
         <img src="images/skrine-logo.png" alt="Skrine" class="brand-logo" width="475" height="94">
       </a>
 
-      <nav class="main-nav" aria-label="Primary">
-        <ul>
-          <li><a href="people.html">People</a></li>
-          <li><a href="#">Capabilities</a></li>
-          <li><a href="#">Join Us</a></li>
-          <li><a href="#">Insights</a></li>
+      <nav class="main-nav" id="primaryNav" aria-label="Primary">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="people.html" class="nav-link">People</a>
+          </li>
+
+          <li class="nav-item has-menu">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="menu-capabilities">
+              Capabilities <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-capabilities">
+              <li><a href="capabilities.html">Practice Areas</a></li>
+              <li><a href="sectors.html">Sectors</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-menu">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="menu-insights">
+              Insights <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-insights">
+              <li><a href="alerts.html">Alerts</a></li>
+              <li><a href="articles.html">Articles</a></li>
+              <li><a href="publications.html">Publications</a></li>
+              <li><a href="news-events.html">News &amp; Events</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-menu">
+            <a href="#" class="nav-link">Career</a>
+            <button type="button" class="nav-caret-btn nav-trigger" aria-expanded="false" aria-controls="menu-career" aria-label="Career menu">
+              <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-career">
+              <li><a href="#">Professional Development</a></li>
+              <li><a href="#">Social Responsibility</a></li>
+              <li><a href="#">Sports &amp; Social</a></li>
+              <li><a href="#">Skrine Dragons</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
         </ul>
       </nav>
 
       <button class="icon-btn search-toggle" id="searchToggle" aria-label="Search">
         <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+
+      <button class="icon-btn nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
+        <span></span><span></span><span></span>
       </button>
     </div>
 
@@ -44,21 +83,6 @@
       <button type="submit" aria-label="Submit search"><i class="fa-solid fa-arrow-right"></i></button>
     </form>
   </header>
-
-  <!-- Mobile / hamburger drawer -->
-  <div class="drawer-backdrop" id="drawerBackdrop"></div>
-  <nav class="drawer" id="mobileNav" aria-label="Menu">
-    <ul>
-      <li><a href="people.html">People</a></li>
-      <li><a href="#">Capabilities</a></li>
-      <li><a href="#">Join Us</a></li>
-      <li><a href="#">Insights</a></li>
-      <li><a href="#deals">Deals &amp; Transactions</a></li>
-      <li><a href="#spotlight">In the Spotlight</a></li>
-      <li><a href="#awards">Awards</a></li>
-      <li><a href="#events">Upcoming Events</a></li>
-    </ul>
-  </nav>
 
   <main>
 
@@ -85,94 +109,157 @@
         </ul>
       </div>
 
-      <a href="#deals" class="scroll-cue" aria-label="Scroll to content">
+      <a href="#updates" class="scroll-cue" aria-label="Scroll to content">
         <span></span>
       </a>
     </section>
 
-    <!-- ============ DEALS & TRANSACTIONS ============ -->
-    <section class="section section--deals" id="deals">
+    <!-- ============ LEGAL UPDATES ============ -->
+    <section class="section section--updates" id="updates">
       <header class="section-head reveal">
-        <p class="eyebrow">Recent Mandates</p>
-        <h2 class="section-title">Deals &amp; Transactions</h2>
+        <p class="eyebrow">Alerts &amp; Insights</p>
+        <h2 class="section-title">Legal Updates</h2>
       </header>
 
-      <div class="carousel reveal" id="dealsCarousel" aria-roledescription="carousel" aria-label="Deals and transactions">
-        <button class="carousel-arrow prev" aria-label="Previous deal"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="carousel reveal" id="updatesCarousel" aria-roledescription="carousel" aria-label="Legal updates">
+        <button class="carousel-arrow prev" aria-label="Previous update"><i class="fa-solid fa-chevron-left"></i></button>
 
         <div class="carousel-stage">
           <ul class="carousel-track">
-            <li class="deal-card">
-              <div class="deal-art art-energy">
-                <span class="deal-tag">Energy &amp; Natural Resources</span>
-                <i class="fa-solid fa-oil-well"></i>
+            <li class="slide-card">
+              <div class="slide-art art-1">
+                <span class="slide-tag">Tax</span>
+                <i class="fa-solid fa-file-invoice-dollar"></i>
               </div>
-              <div class="deal-body">
-                <h3>Skrine advises TotalEnergies on Lang Lebah and B14 gas fields</h3>
-                <p>Skrine advised TotalEnergies on its acquisition of a 30% operated interest in the Lang Lebah and B14 gas fields offshore Sarawak.</p>
-                <time>Transaction News</time>
-              </div>
-            </li>
-            <li class="deal-card">
-              <div class="deal-art art-banking">
-                <span class="deal-tag">Banking &amp; Finance</span>
-                <i class="fa-solid fa-building-columns"></i>
-              </div>
-              <div class="deal-body">
-                <h3>Syndicated financing for a renewable energy portfolio</h3>
-                <p>Acted for the mandated lead arrangers on a multi-tranche syndicated facility supporting a regional solar portfolio.</p>
-                <time>Placeholder — replace with deal</time>
+              <div class="slide-body">
+                <h3>Principal Hub Tax Incentives Rules Amended to Remove Distinction between New Companies</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-11">11 Nov 2026</time>
               </div>
             </li>
-            <li class="deal-card">
-              <div class="deal-art art-corporate">
-                <span class="deal-tag">Corporate / M&amp;A</span>
-                <i class="fa-solid fa-handshake"></i>
+            <li class="slide-card">
+              <div class="slide-art art-2">
+                <span class="slide-tag">Employment</span>
+                <i class="fa-solid fa-user-tie"></i>
               </div>
-              <div class="deal-body">
-                <h3>Cross-border acquisition of a Malaysian manufacturer</h3>
-                <p>Advised a foreign strategic investor on the acquisition, regulatory approvals and post-completion integration.</p>
-                <time>Placeholder — replace with deal</time>
-              </div>
-            </li>
-            <li class="deal-card">
-              <div class="deal-art art-capital">
-                <span class="deal-tag">Capital Markets</span>
-                <i class="fa-solid fa-chart-line"></i>
-              </div>
-              <div class="deal-body">
-                <h3>Initial public offering on the Main Market of Bursa Malaysia</h3>
-                <p>Acted as Malaysian legal counsel to the principal adviser and underwriter on the IPO.</p>
-                <time>Placeholder — replace with deal</time>
+              <div class="slide-body">
+                <h3>Starting Basic Salary Guidelines to be Introduced from June 2027</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-06">06 Nov 2026</time>
               </div>
             </li>
-            <li class="deal-card">
-              <div class="deal-art art-islamic">
-                <span class="deal-tag">Islamic Finance</span>
+            <li class="slide-card">
+              <div class="slide-art art-3">
+                <span class="slide-tag">Regulatory Compliance</span>
                 <i class="fa-solid fa-scale-balanced"></i>
               </div>
-              <div class="deal-body">
-                <h3>Sukuk Wakalah programme for an infrastructure issuer</h3>
-                <p>Advised on the structuring and documentation of a multi-currency Sukuk Wakalah programme.</p>
-                <time>Placeholder — replace with deal</time>
+              <div class="slide-body">
+                <h3>2026 Updates to Malaysia's Food Laws and Regulations</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-05">05 Nov 2026</time>
               </div>
             </li>
-            <li class="deal-card">
-              <div class="deal-art art-realestate">
-                <span class="deal-tag">Real Estate</span>
+            <li class="slide-card">
+              <div class="slide-art art-4">
+                <span class="slide-tag">Maritime &amp; Shipping</span>
+                <i class="fa-solid fa-ship"></i>
+              </div>
+              <div class="slide-body">
+                <h3>Misdelivery of Cargo: When does a Release Instruction become Conversion?</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-04">04 Nov 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-5">
+                <span class="slide-tag">Corporate</span>
+                <i class="fa-solid fa-building"></i>
+              </div>
+              <div class="slide-body">
+                <h3>New Directions and revised Guidelines on Company Names issued</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-03">03 Nov 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-6">
+                <span class="slide-tag">Banking &amp; Finance</span>
+                <i class="fa-solid fa-building-columns"></i>
+              </div>
+              <div class="slide-body">
+                <h3>Bank Negara Malaysia issues Revised Policy Document on Framework on Electronic Trading Platforms</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-10-30">30 Oct 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-1">
+                <span class="slide-tag">Real Estate</span>
                 <i class="fa-solid fa-city"></i>
               </div>
-              <div class="deal-body">
-                <h3>Disposal of a Grade-A office tower in Kuala Lumpur</h3>
-                <p>Acted for the vendor on the disposal, including tenancy due diligence and completion mechanics.</p>
-                <time>Placeholder — replace with deal</time>
+              <div class="slide-body">
+                <h3>Court of Appeal Clarifies Distinction Between Late Delivery and Defective Delivery of Vacant Possession</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-10-29">29 Oct 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-2">
+                <span class="slide-tag">Construction</span>
+                <i class="fa-solid fa-helmet-safety"></i>
+              </div>
+              <div class="slide-body">
+                <h3>First Move or Final Outcome: Does a Winding-Up Order Preserve an Overturned Adjudication Decision?</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-10-28">28 Oct 2026</time>
               </div>
             </li>
           </ul>
         </div>
 
-        <button class="carousel-arrow next" aria-label="Next deal"><i class="fa-solid fa-chevron-right"></i></button>
-        <div class="carousel-dots" role="tablist" aria-label="Choose deal"></div>
+        <button class="carousel-arrow next" aria-label="Next update"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="carousel-dots" role="tablist" aria-label="Choose update"></div>
+      </div>
+
+      <div class="section-cta reveal">
+        <a href="#" class="btn btn--outline">All Legal Updates <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </section>
+
+    <!-- ============ DEALS & TRANSACTIONS ============ -->
+    <section class="section section--deals" id="deals">
+      <header class="section-head reveal">
+        <p class="eyebrow">Transaction News</p>
+        <h2 class="section-title">Deals &amp; Transactions</h2>
+        <p class="section-deck">Landmark mandates shaping Malaysia's industries.</p>
+      </header>
+
+      <div class="deals-board reveal" id="dealsBoard">
+        <!-- Filled from the deal list below; the first deal is shown without JavaScript -->
+        <article class="deal-feature" id="dealFeature" data-tilt aria-live="polite">
+          <div class="deal-feature-art" aria-hidden="true"></div>
+          <div class="deal-feature-content">
+            <p class="deal-sector">Oil &amp; Gas · Energy</p>
+            <p class="deal-figure"><span class="deal-figure-num">6.5</span> <span class="deal-figure-unit">tcf</span></p>
+            <p class="deal-figure-label">of gas resources across the Lang Lebah and B14 fields</p>
+            <h3 class="deal-headline">TotalEnergies acquires a 30% operated interest in the Lang Lebah and B14 gas fields offshore Sarawak</h3>
+            <p class="deal-summary">Skrine acted as Malaysian legal counsel to TotalEnergies on its arrangements with PETRONAS Carigali, PTTEP and KUFPEC. Lang Lebah is one of Malaysia's largest offshore gas discoveries.</p>
+            <p class="deal-meta"><span class="deal-team">Fariz Abdul Aziz · Samson Kong</span><time>06 Nov 2026</time></p>
+          </div>
+        </article>
+
+        <ol class="deal-list" role="tablist" aria-label="Choose a transaction">
+          <li><button type="button" role="tab" aria-selected="true" data-deal="0"><span class="dl-figure">6.5 tcf</span><span class="dl-client">TotalEnergies</span><span class="dl-sector">Oil &amp; Gas</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="1"><span class="dl-figure">RM4.0bn</span><span class="dl-client">AME Elite × UEM Sunrise</span><span class="dl-sector">Real Estate</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="2"><span class="dl-figure">US$2.325bn</span><span class="dl-client">AirTrunk</span><span class="dl-sector">Banking &amp; Finance</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="3"><span class="dl-figure">US$1.08bn</span><span class="dl-client">Thermo Fisher</span><span class="dl-sector">Corporate / M&amp;A</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="4"><span class="dl-figure">8 jurisdictions</span><span class="dl-client">Allianz Global Investors</span><span class="dl-sector">Corporate / M&amp;A</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="5"><span class="dl-figure">US$643m</span><span class="dl-client">Carlsberg × Sapporo</span><span class="dl-sector">Corporate / M&amp;A</span></button></li>
+        </ol>
+      </div>
+
+      <div class="section-cta reveal">
+        <a href="#" class="btn btn--outline">All Transaction News <i class="fa-solid fa-arrow-right"></i></a>
       </div>
     </section>
 
@@ -251,67 +338,6 @@
       </div>
     </section>
 
-    <!-- ============ AWARDS ============ -->
-    <section class="section section--awards" id="awards">
-      <header class="section-head reveal">
-        <p class="eyebrow">Recognition</p>
-        <h2 class="section-title">Awards</h2>
-      </header>
-
-      <div class="awards-grid">
-        <a href="https://www.skrine.com/profile/award/chambers-asia-pacific" class="award-card reveal" data-tilt>
-          <div class="award-logo"><img src="images/chambers-2026.png" alt="Chambers Asia-Pacific 2026 logo" loading="lazy"></div>
-          <p class="award-year">2026</p>
-          <h3>Chambers Asia-Pacific</h3>
-          <p class="award-source">Top Ranked</p>
-        </a>
-
-        <a href="https://www.skrine.com/profile/award/legal-500-asia-pacific" class="award-card reveal" data-tilt>
-          <div class="award-logo"><img src="images/legal500-2026.png" alt="Legal 500 Asia Pacific 2026 logo" loading="lazy"></div>
-          <p class="award-year">2026</p>
-          <h3>Legal 500 Asia-Pacific</h3>
-          <p class="award-source">Top Tier Firm</p>
-        </a>
-
-        <a href="https://www.skrine.com/profile/award/iflr-1000" class="award-card reveal" data-tilt>
-          <div class="award-logo"><img src="images/awards/iflr1000.png" alt="IFLR1000 logo" loading="lazy"></div>
-          <p class="award-year">2023</p>
-          <h3>IFLR 1000</h3>
-          <p class="award-source">Top-Tier Firm</p>
-        </a>
-
-        <a href="https://www.skrine.com/profile/award/asialaw-profiles" class="award-card reveal" data-tilt>
-          <div class="award-logo"><img src="images/awards/asialaw.png" alt="asialaw Profiles logo" loading="lazy"></div>
-          <p class="award-year">2023</p>
-          <h3>Asialaw Profiles</h3>
-          <p class="award-source">Outstanding Firm</p>
-        </a>
-
-        <a href="https://www.skrine.com/profile/award/benchmark-litigation" class="award-card reveal" data-tilt>
-          <div class="award-logo"><img src="images/awards/benchmark.png" alt="Benchmark Litigation logo" loading="lazy"></div>
-          <p class="award-year">2023</p>
-          <h3>Benchmark Litigation Asia-Pacific</h3>
-          <p class="award-source">Top-Tier Firm</p>
-        </a>
-
-        <a href="https://www.skrine.com/profile/award/whos-who-legal" class="award-card reveal" data-tilt>
-          <div class="award-logo"><img src="images/awards/whoswholegal.png" alt="Who's Who Legal Awards 2019 logo" loading="lazy"></div>
-          <p class="award-year">2019</p>
-          <h3>Who's Who Legal</h3>
-          <p class="award-source">Malaysia Law Firm of the Year</p>
-        </a>
-
-        <a href="https://www.skrine.com/profile/award/gar-100" class="award-card reveal" data-tilt>
-          <div class="award-logo"><img src="images/awards/gar100.png" alt="GAR 100 logo" loading="lazy"></div>
-          <p class="award-year">Global Arbitration Review</p>
-          <h3>GAR 100</h3>
-        </a>
-      </div>
-
-      <div class="section-cta reveal">
-        <a href="https://www.skrine.com/profile/award" class="btn btn--outline">All Recognitions <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </section>
 
     <!-- ============ UPCOMING EVENTS ============ -->
     <section class="section section--events" id="events">
@@ -360,6 +386,85 @@
       </div>
     </section>
 
+
+    <!-- ============ GLOBAL NETWORK ============ -->
+    <section class="section section--network" id="network">
+      <div class="network-wrap">
+        <div class="network-copy reveal">
+          <p class="eyebrow">Global Network</p>
+          <h2 class="section-title section-title--left">Local expertise, global reach</h2>
+          <p class="network-lead">Skrine is the exclusive member firm in Malaysia for <strong>Lex Mundi</strong> — the world's leading network of independent law firms.</p>
+
+          <ul class="network-stats">
+            <li><span class="ns-num"><span class="count-up" data-to="21000">21,000</span>+</span><span class="ns-label">lawyers</span></li>
+            <li><span class="ns-num"><span class="count-up" data-to="100">100</span>+</span><span class="ns-label">countries</span></li>
+            <li><span class="ns-num">1</span><span class="ns-label">point of contact</span></li>
+          </ul>
+
+          <p class="network-body">Our membership positions us to seamlessly handle cross-border transactions and disputes, giving clients preferred access to in-depth experience worldwide — tapping into the best law practices and resources available internationally.</p>
+
+          <div class="network-desks">
+            <span class="nd-label">Regional Desks</span>
+            <a href="#" class="nd-chip">China Desk <span lang="zh">中国服务组</span></a>
+            <a href="#" class="nd-chip">India Desk</a>
+          </div>
+
+          <img src="images/lexmundi.svg" alt="Lex Mundi — Bringing the best together" class="network-logo">
+        </div>
+
+        <div class="network-globe reveal" aria-hidden="true">
+          <canvas id="globe"></canvas>
+          <span class="globe-pin">Kuala Lumpur</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AWARDS ============ -->
+    <section class="awards" id="awards">
+      <canvas class="awards-guilloche" id="guilloche" aria-hidden="true"></canvas>
+      <div class="awards-inner">
+        <header class="awards-head reveal">
+          <p class="eyebrow eyebrow--foil">Recognition</p>
+          <h2 class="awards-title foil">Awards</h2>
+          <p class="awards-deck">Ranked by the directories our clients trust — year after year.</p>
+        </header>
+
+        <div class="awards-lead">
+          <article class="award-lead reveal">
+            <span class="award-rosette"><img src="images/chambers-2026.png" alt="Chambers Asia-Pacific 2026 — Top Ranked" loading="lazy"></span>
+            <p class="award-src">Chambers Asia-Pacific · 2026 Guide</p>
+            <p class="award-big"><span class="foil count-up" data-to="11">11</span><span class="award-big-label">practice areas ranked</span></p>
+            <p class="award-list">Construction · Employment &amp; Industrial Relations · Intellectual Property · Projects, Infrastructure &amp; Energy · TMT · Competition &amp; Antitrust · Corporate/M&amp;A · Dispute Resolution · Shipping · Real Estate · Banking &amp; Finance</p>
+            <p class="award-note"><span class="foil">18</span> partners individually ranked</p>
+          </article>
+
+          <article class="award-lead reveal">
+            <span class="award-rosette award-rosette--badge"><img src="images/legal500-2026.png" alt="Legal 500 Asia Pacific 2026 — Top Tier Firm" loading="lazy"></span>
+            <p class="award-src">Legal 500 Asia-Pacific · 2026 Edition</p>
+            <p class="award-big"><span class="foil count-up" data-to="11">11</span><span class="award-big-label">practice areas in Tier&nbsp;1 &amp; Tier&nbsp;2</span></p>
+            <p class="award-list">Hall of Fame: To' Puan Janet Looi (Corporate and M&amp;A) · Charmayne Ong (Intellectual Property and TMT)</p>
+          </article>
+        </div>
+
+        <article class="award-banner reveal">
+          <p class="award-src">Chambers Asia-Pacific &amp; Greater China Region Awards 2024</p>
+          <p class="award-banner-title foil">“Malaysia Law Firm of the Year”</p>
+        </article>
+
+        <ul class="award-rest">
+          <li class="reveal"><span class="award-mark"><img src="images/awards/iflr1000.png" alt="IFLR1000 logo" loading="lazy"></span><span class="award-src">IFLR1000 · 2023</span>Top-Tier Firm</li>
+          <li class="reveal"><span class="award-mark"><img src="images/awards/asialaw.png" alt="asialaw Profiles logo" loading="lazy"></span><span class="award-src">asialaw Profiles · 2023</span>Outstanding Firm</li>
+          <li class="reveal"><span class="award-mark"><img src="images/awards/benchmark.png" alt="Benchmark Litigation logo" loading="lazy"></span><span class="award-src">Benchmark Litigation Asia-Pacific · 2023</span>Top-Tier Firm</li>
+          <li class="reveal"><span class="award-mark"><img src="images/awards/whoswholegal.png" alt="Who's Who Legal logo" loading="lazy"></span><span class="award-src">Who's Who Legal · 2019</span>Malaysia Law Firm of the Year</li>
+          <li class="reveal"><span class="award-mark"><img src="images/awards/gar100.png" alt="GAR 100 logo" loading="lazy"></span><span class="award-src">Global Arbitration Review</span>GAR 100</li>
+        </ul>
+
+        <div class="awards-cta reveal">
+          <a href="#" class="btn btn--foil">All Recognitions <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ============ FOOTER ============ -->
@@ -385,5 +490,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/globe-land.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>
