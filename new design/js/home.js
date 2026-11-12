@@ -266,7 +266,13 @@
     // illustrative partner nodes spread over the continents (not specific member cities)
     var NODES = [];
     var nodeSource = LAND.length ? LAND : DOTS;
-    for (var n = 0; n < 24; n++) NODES.push(nodeSource[(n * 977 + 131) % nodeSource.length]);
+    // partner nodes: spread over the land, but only within reach of KL
+    // (routes to the far side of the world would just loop round the globe)
+    for (var n = 0; NODES.length < 20 && n < 400; n++) {
+      var cand = nodeSource[(n * 977 + 131) % nodeSource.length];
+      var cd = cand[0] * HUB[0] + cand[1] * HUB[1] + cand[2] * HUB[2];
+      if (cd > 0.05 && cd < 0.97) NODES.push(cand);
+    }
 
     // Regional desks: each gets a marker, a bold route from KL and a label.
     // The globe turns to show KL and the active desk together.
@@ -305,30 +311,56 @@
       return { x: size / 2 + x * R, y: size / 2 - y2 * R, z: z2 };
     }
 
+    // A route between two points on the globe: follows the great circle,
+    // lifted off the surface towards the middle, and hidden where it passes
+    // behind the sphere (so lines never cut across the globe).
+    var ARC_STEPS = 40;
+    function arcPoint(a, b, ang, u, h) {
+      var s = Math.sin(ang) || 1;
+      var wa = Math.sin((1 - u) * ang) / s, wb = Math.sin(u * ang) / s;
+      var lift = 1 + h * Math.sin(Math.PI * u);
+      return [(a[0] * wa + b[0] * wb) * lift, (a[1] * wa + b[1] * wb) * lift, (a[2] * wa + b[2] * wb) * lift];
+    }
+    function onShow(p) {
+      // in front of the sphere, or outside its outline on screen
+      if (p.z >= 0) return true;
+      var dx = p.x - size / 2, dy = p.y - size / 2, R = size * 0.44;
+      return dx * dx + dy * dy > R * R;
+    }
     function arc(a, b, t, strong) {
-      // great-circle-ish arc lifted off the surface
-      var m = [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
-      var len = Math.hypot(m[0], m[1], m[2]) || 1;
-      var lift = strong ? 1.25 : 1.35;
-      m = [m[0] / len * lift, m[1] / len * lift, m[2] / len * lift];
-      var pa = project(a), pb = project(b), pm = project(m);
-      if (pa.z < -0.15 && pb.z < -0.15) return;
+      var dot = Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2]));
+      var ang = Math.acos(dot);
+      if (ang < 0.01) return;
+      var h = Math.min(0.16, 0.03 + ang * 0.09);          // longer routes arc a little higher
+      var pts = [];
+      for (var i = 0; i <= ARC_STEPS; i++) {
+        var pr = project(arcPoint(a, b, ang, i / ARC_STEPS, h));
+        pr.v = onShow(pr);
+        pts.push(pr);
+      }
+      gctx.lineWidth = strong ? 2.6 : 1.1;
+      gctx.lineCap = "round";
       gctx.beginPath();
-      gctx.moveTo(pa.x, pa.y);
-      gctx.quadraticCurveTo(pm.x, pm.y, pb.x, pb.y);
+      var drawing = false, depth = 0, n = 0;
+      for (var k = 0; k < pts.length; k++) {
+        var q = pts[k];
+        if (!q.v) { drawing = false; continue; }
+        if (drawing) gctx.lineTo(q.x, q.y); else { gctx.moveTo(q.x, q.y); drawing = true; }
+        depth += q.z; n++;
+      }
+      if (!n) return;
       gctx.strokeStyle = strong
         ? "rgba(195, 32, 48, 0.95)"
-        : "rgba(195, 32, 48, " + (0.1 + 0.16 * Math.max(0, (pa.z + pb.z) / 2)) + ")";
-      gctx.lineWidth = strong ? 2.6 : 1.1;
+        : "rgba(195, 32, 48, " + (0.12 + 0.18 * Math.max(0, depth / n)) + ")";
       gctx.stroke();
-      // pulses travelling along the arc (three on a desk route)
+      // pulses travelling along the route (three on a desk route)
       var count = strong ? 3 : 1;
       for (var c = 0; c < count; c++) {
         var u = (t * (strong ? 1.6 : 1) + c / count) % 1;
-        var qx = (1 - u) * (1 - u) * pa.x + 2 * (1 - u) * u * pm.x + u * u * pb.x;
-        var qy = (1 - u) * (1 - u) * pa.y + 2 * (1 - u) * u * pm.y + u * u * pb.y;
+        var pp = project(arcPoint(a, b, ang, u, h));
+        if (!onShow(pp)) continue;
         gctx.beginPath();
-        gctx.arc(qx, qy, strong ? 3.4 : 2.2, 0, Math.PI * 2);
+        gctx.arc(pp.x, pp.y, strong ? 3.4 : 2.2, 0, Math.PI * 2);
         gctx.fillStyle = strong ? "#c32030" : "rgba(195, 32, 48, 0.7)";
         gctx.fill();
       }

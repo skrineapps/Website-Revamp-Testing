@@ -72,19 +72,32 @@
     card.href = fullHref(a);
     card.style.setProperty("--delay", (i * 0.08) + "s");
     if (lead) card.setAttribute("data-tilt", "");
+    // photo matched to the alert's subject (js/topic-images.js)
+    if (window.SkrineTopicImage) {
+      var ph = el("span", "latest-photo");
+      var img = el("img");
+      img.src = window.SkrineTopicImage(a.topic, a.title, a.practice);
+      img.alt = "";
+      img.loading = lead ? "eager" : "lazy";
+      ph.appendChild(img);
+      card.appendChild(ph);
+      card.classList.add("has-photo");
+    }
+    var body = el("div", "latest-body");
     var top = el("div", "latest-top");
     if (lead) top.appendChild(el("span", "latest-badge", "Newest"));
     top.appendChild(el("time", "latest-date", longDate(a.date)));
-    card.appendChild(top);
-    card.appendChild(tags(a));
-    card.appendChild(el("h3", "latest-title", a.title));
-    if (lead && a.excerpt) card.appendChild(el("p", "latest-excerpt", a.excerpt));
+    body.appendChild(top);
+    body.appendChild(tags(a));
+    body.appendChild(el("h3", "latest-title", a.title));
+    if (lead && a.excerpt) body.appendChild(el("p", "latest-excerpt", a.excerpt));
     var foot = el("div", "latest-foot");
     if (lead && a.authors) foot.appendChild(el("span", "alert-authors", "By " + a.authors));
     var cta = el("span", "alert-read");
     cta.innerHTML = 'Read alert <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
     foot.appendChild(cta);
-    card.appendChild(foot);
+    body.appendChild(foot);
+    card.appendChild(body);
     latestEl.appendChild(card);
     FX.observeReveal(card);
     if (lead) FX.attachTilt(card);

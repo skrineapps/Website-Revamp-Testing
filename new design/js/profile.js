@@ -196,9 +196,8 @@
   actions.appendChild(vc);
 
   var statsEl = document.getElementById("pfStats");
-  var matterCount = P.experience.reduce(function (n, e) { return n + e.matters.length; }, 0);
   var talkCount = P.talks.reduce(function (n, t) { return n + t.items.length; }, 0);
-  [[matterCount, "Selected matters"], [P.rankings.length + P.quotes.length, "Recognitions"], [talkCount, "Publications & talks"]]
+  [[talkCount, "Publications & talks"]]
     .filter(function (s) { return s[0] > 0; })
     .forEach(function (s) {
       var d = el("div", "pf-stat");

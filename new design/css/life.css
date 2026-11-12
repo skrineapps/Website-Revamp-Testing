@@ -1,0 +1,242 @@
+/* =========================================================
+   SKRINE — Life at Skrine section pages
+   (Skrine Dragons · Sports & Social · Professional Development ·
+    Social Responsibility). Uses css/career-kit.css.
+   ========================================================= */
+
+.life {
+  --gutter: clamp(16px, 4vw, 64px);
+  overflow-x: clip;
+  background:
+    radial-gradient(ellipse 55% 8% at 0% 30%, rgba(195, 32, 48, 0.06), transparent 70%),
+    radial-gradient(ellipse 50% 8% at 100% 55%, rgba(206, 203, 204, 0.5), transparent 70%),
+    #fbfbfb;
+}
+.life-wrap { max-width: var(--page-max); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+/* ---------- Heading: same as the individual Practice Area / Sector pages ---------- */
+.life-top {
+  max-width: calc(var(--page-max) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: calc(var(--header-h) + clamp(40px, 5vw, 72px)) var(--gutter) 0;
+}
+.life-top .pa-hero { height: clamp(240px, 30vw, 420px); }
+
+/* ---------- Stats ---------- */
+.life-stats { margin-top: clamp(40px, 5vw, 64px); }
+
+/* ---------- Feature: photo frame + polaroids, copy ---------- */
+.life-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(36px, 5.5vw, 88px);
+  align-items: center;
+  padding-top: clamp(72px, 9vw, 120px);
+  padding-bottom: clamp(56px, 7vw, 96px);
+}
+.life-feature .kit-wm { top: clamp(30px, 4vw, 60px); }
+.life-feature-copy > p:not(.kit-eyebrow) { margin-top: 16px; font-size: 16.5px; line-height: 1.75; color: var(--ink-soft); }
+.life-feature-copy strong { color: var(--ink); }
+.life-quote {
+  margin: 22px 0 6px;
+  padding-left: 20px;
+  border-left: 4px solid var(--red);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(21px, 2vw, 27px);
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* PD: person panel over the photo */
+.life-lead {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 420px;
+  margin: -50px 0 0 clamp(16px, 3vw, 40px);
+  padding: 16px 20px 16px 16px;
+  isolation: isolate;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.life-lead::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(251, 251, 251, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-left: 4px solid var(--red);
+  box-shadow: var(--shadow-md);
+}
+.life-lead img { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; object-position: top; background: var(--grey-100); flex: 0 0 auto; }
+.life-lead small { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); }
+.life-lead strong { display: block; margin: 2px 0 4px; font-family: var(--font-display); font-size: 17px; color: var(--ink); }
+
+/* ---------- Bands (numbered lists, routes) ---------- */
+.life-band { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(56px, 7vw, 96px); }
+.life-band header { margin-bottom: clamp(26px, 3vw, 40px); }
+
+/* Dragons: race route, a dotted line with stops */
+.life-route {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px 0;
+  padding-top: 10px;
+}
+.life-route li {
+  position: relative;
+  flex: 1 1 140px;
+  padding-top: 34px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(18px, 1.7vw, 24px);
+  color: var(--ink);
+}
+.life-route li::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  border-top: 2px dashed var(--grey-300);
+}
+.life-route li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 4px solid var(--red);
+  box-shadow: 0 0 0 6px rgba(195, 32, 48, 0.12);
+}
+.life-route li.is-world { flex-basis: 100%; }
+.life-route li.is-world span {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+  padding: 2px 16px 4px 12px;
+  color: var(--white);
+}
+.life-route li.is-world span::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red);
+  -webkit-mask: var(--brush-mask) center / 100% 100% no-repeat;
+  mask: var(--brush-mask) center / 100% 100% no-repeat;
+}
+.life-route li.is-world::before { border-top-style: solid; border-color: var(--red); }
+
+.life-regatta { margin-bottom: clamp(40px, 5vw, 72px); }
+
+/* ---------- Stories ---------- */
+.life-stories { padding: clamp(72px, 9vw, 120px) 0 clamp(64px, 8vw, 110px); border-top: 1px solid var(--grey-300); }
+.life-stories .kit-wm { top: 40px; }
+.life-stories-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: clamp(32px, 4vw, 52px); }
+.life-count { font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey-700); padding-bottom: 6px; border-bottom: 2px solid var(--red); }
+.life-count b { font: 900 22px var(--font-display); letter-spacing: 0; color: var(--red); margin-right: 4px; }
+
+/* latest story */
+.life-latest {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+  color: var(--ink);
+}
+.life-latest-media img { aspect-ratio: 16 / 10; transition: transform 1s var(--ease); }
+.life-latest:hover .life-latest-media img { transform: scale(1.02); }
+.life-latest-body { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.life-latest-body time { font-weight: 700; color: var(--red); }
+.life-latest-title { font: 900 clamp(26px, 2.8vw, 40px)/1.2 var(--font-display); }
+.life-latest:hover .kit-link { gap: 16px; border-color: var(--red); }
+
+/* editorial grid: photo, number + date, title (no boxes) */
+.life-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(34px, 4vw, 52px) clamp(22px, 3vw, 40px); }
+.life-item { display: flex; flex-direction: column; color: var(--ink); }
+.life-item-media { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 10px; background: var(--grey-100); }
+.life-item-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease), filter 0.5s; }
+.life-item-media::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.life-item:hover .life-item-media img { transform: scale(1.05); }
+.life-item:hover .life-item-media::after { transform: scaleX(1); }
+.life-item-meta { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--grey-300); }
+.life-item-meta::before { content: ""; width: 24px; height: 2px; background: var(--red); transition: width 0.4s var(--ease); }
+.life-item:hover .life-item-meta::before { width: 40px; }
+.life-item-meta time { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red); }
+.life-item-title { margin-top: 12px; font: 700 18px/1.4 var(--font-display); transition: color 0.3s; }
+.life-item:hover .life-item-title { color: var(--red); }
+
+/* talk posters are wide graphics: show them whole */
+[data-life="development"] .life-item-media,
+[data-life="development"] .life-latest-media img { aspect-ratio: 1200 / 627; }
+
+/* ---------- More of life at Skrine ---------- */
+.life-more { padding-top: clamp(64px, 8vw, 110px); padding-bottom: clamp(64px, 8vw, 110px); border-top: 1px solid var(--grey-300); }
+.life-more header { margin-bottom: clamp(30px, 4vw, 48px); }
+.life-more-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(26px, 4vw, 56px); padding: 10px clamp(8px, 2vw, 24px) 0; }
+.life-more-card { display: block; padding-bottom: 54px; color: var(--ink); }
+.life-more-card .life-more-name { position: absolute; left: 12px; right: 12px; bottom: 26px; font: 900 22px/1.15 var(--font-display); }
+.life-more-card figcaption { bottom: 8px; color: var(--red); }
+.life-more .kit-painted { margin-top: clamp(56px, 7vw, 90px); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .life-feature, .life-latest { grid-template-columns: 1fr; }
+  .life-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .life-more-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .life-grid, .life-more-grid { grid-template-columns: 1fr; }
+  .life-route li { flex-basis: 50%; }
+  .life-lead { margin-left: 8px; margin-right: 8px; }
+}
+
+/* ---------- Career touch on the standard heading ---------- */
+/* chapter number at the end of the breadcrumb */
+.life-chapter { margin-left: 6px; padding-left: 14px; border-left: 1px solid var(--grey-300); font-weight: 700; color: var(--grey-500); }
+.life-chapter b { font: 900 14px var(--font-display); letter-spacing: 0; color: var(--red); }
+/* a short red brush stroke under the title instead of a plain rule */
+.life-head .page-title::after {
+  content: "";
+  display: block;
+  width: clamp(90px, 9vw, 140px);
+  height: 12px;
+  margin-top: 12px;
+  background: var(--red);
+  -webkit-mask: var(--brush-mask) center / 100% 100% no-repeat;
+  mask: var(--brush-mask) center / 100% 100% no-repeat;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.8s cubic-bezier(0.7, 0, 0.2, 1) 0.3s;
+}
+.life-head.is-visible .page-title::after { transform: scaleX(1); }
+.life-head .page-intro { font-family: var(--font-display); font-style: italic; color: var(--grey-700); }
+/* a polaroid pinned to the banner's corner */
+.life-banner { position: relative; margin-bottom: 30px; }
+.life-pin { --r: 4deg; position: absolute; right: clamp(16px, 4vw, 56px); bottom: -34px; width: clamp(150px, 17vw, 240px); z-index: 2; }
+@media (max-width: 640px) {
+  .life-pin { width: 120px; right: 10px; bottom: -24px; padding: 5px 5px 20px; }
+  .life-pin figcaption { font-size: 10px; bottom: 4px; }
+}

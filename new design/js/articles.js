@@ -97,6 +97,13 @@
     if (!s) return;
     var q = splitQuestion(s);
     featureEl.setAttribute("data-tilt", "");
+    if (window.SkrineTopicImage) {
+      var fimg = el("img", "shot-feature-photo");
+      fimg.src = window.SkrineTopicImage(s.topic, s.title);
+      fimg.alt = "";
+      featureEl.appendChild(fimg);
+      featureEl.classList.add("has-photo");
+    }
     var mark = el("span", "shot-feature-mark", "?");
     mark.setAttribute("aria-hidden", "true");
     featureEl.appendChild(mark);
@@ -135,6 +142,17 @@
     flip.setAttribute("aria-label", s.title + (s.contacts.length ? " — show who to ask" : ""));
 
     var front = el("span", "shot-face shot-front");
+    // photo strip matched to the question's subject (js/topic-images.js)
+    if (window.SkrineTopicImage) {
+      var ph = el("span", "shot-photo");
+      var pimg = el("img");
+      pimg.src = window.SkrineTopicImage(s.topic, s.title);
+      pimg.alt = "";
+      pimg.loading = "lazy";
+      ph.appendChild(pimg);
+      front.appendChild(ph);
+      front.classList.add("has-photo");
+    }
     var meta = el("span", "shot-meta");
     if (s.topic) meta.appendChild(el("span", "alert-tag", s.topic));
     meta.appendChild(el("time", "shot-date", fmtDate(s.date)));

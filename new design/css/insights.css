@@ -1037,3 +1037,64 @@ body.modal-open { overflow: hidden; }
   .ne-card, .ne-head, .ne-tab { transition: none; }
   .ne-card:hover, .ne-head:hover { transform: none; }
 }
+
+/* =========================================================
+   Photos on alert and SkrineShot cards (js/topic-images.js picks
+   a practice-area / sector photo matched to each item's subject)
+   ========================================================= */
+.latest-body { display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 0; }
+.latest-card--lead .latest-body { gap: 14px; }
+
+/* newest alert: full photo under a dark wash instead of the red gradient */
+.latest-card--lead.has-photo { background: #1d0b0e; }
+.latest-card--lead.has-photo::before { display: none; }
+.latest-card--lead .latest-photo { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.latest-card--lead .latest-photo img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.03); transition: transform 1.2s var(--ease); }
+.latest-card--lead:hover .latest-photo img { transform: scale(1.07); }
+.latest-card--lead .latest-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(20, 6, 9, 0.94) 0%, rgba(20, 6, 9, 0.72) 45%, rgba(20, 6, 9, 0.35) 100%),
+    linear-gradient(90deg, rgba(110, 15, 25, 0.35), transparent 70%);
+}
+
+/* the other latest alerts: photo down the left side */
+.latest-card.has-photo:not(.latest-card--lead) { flex-direction: row; gap: 0; padding: 0; overflow: hidden; }
+.latest-card:not(.latest-card--lead) .latest-photo { position: relative; flex: 0 0 clamp(120px, 12vw, 170px); overflow: hidden; background: var(--grey-100); }
+.latest-card:not(.latest-card--lead) .latest-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
+.latest-card:not(.latest-card--lead):hover .latest-photo img { transform: scale(1.06); }
+.latest-card.has-photo:not(.latest-card--lead) .latest-body { padding: 20px 22px; }
+
+/* featured SkrineShot: photo under a dark wash */
+.shot-feature.has-photo { background: #1d0b0e; }
+.shot-feature.has-photo::before {
+  inset: 0;
+  z-index: -1;
+  opacity: 1;
+  mix-blend-mode: normal;
+  background:
+    linear-gradient(90deg, rgba(20, 6, 9, 0.94) 0%, rgba(20, 6, 9, 0.78) 50%, rgba(20, 6, 9, 0.4) 100%),
+    linear-gradient(to top, rgba(110, 15, 25, 0.45), transparent 60%);
+}
+.shot-feature-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+
+/* SkrineShot cards: a photo strip across the top of the front face */
+.shot-card:has(.shot-front.has-photo) { height: 380px; }
+.shot-front.has-photo .shot-photo {
+  display: block;
+  position: relative;
+  height: 118px;
+  margin: -24px -24px 16px;
+  overflow: hidden;
+  background: var(--grey-100);
+}
+.shot-front.has-photo .shot-photo img { width: 100%; height: 100%; object-fit: cover; }
+.shot-front.has-photo .shot-photo::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--red); }
+.shot-front.has-photo .shot-lead { margin-top: 12px; }
+.shot-front.has-photo .shot-q { -webkit-line-clamp: 4; }
+
+@media (max-width: 640px) {
+  .latest-card:not(.latest-card--lead) .latest-photo { flex-basis: 96px; }
+}

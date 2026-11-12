@@ -1,0 +1,306 @@
+/* =========================================================
+   SKRINE — Career kit
+   Shared pieces for the Careers page and the Life at Skrine pages,
+   built from the home page's own vocabulary: the palette-knife
+   painting, the red brush stroke, outline watermark words,
+   hairline stat rows and the frosted panel with a red edge.
+   ========================================================= */
+
+:root {
+  /* the brush-stroke mask used by "Ingenuity." on the home hero */
+  --brush-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cfilter id='g' x='-5%25' y='-10%25' width='110%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.3' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='16'/%3E%3C/filter%3E%3Crect x='8' y='9' width='384' height='82' fill='black' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Brush stroke behind a word ---------- */
+.brush {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+  padding: 0 0.22em 0.04em 0.16em;
+  margin: 0 -0.08em;
+  color: var(--white);
+}
+.brush::before {
+  content: "";
+  position: absolute;
+  inset: 0.04em 0 -0.02em;
+  z-index: -1;
+  background:
+    linear-gradient(175deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(90deg, #a5121f 0%, var(--red) 35%, #d0293a 70%, var(--red) 100%);
+  -webkit-mask: var(--brush-mask) center / 100% 100% no-repeat;
+  mask: var(--brush-mask) center / 100% 100% no-repeat;
+  transform-origin: left center;
+  animation: kitBrush 0.75s cubic-bezier(0.7, 0, 0.2, 1) 0.5s both;
+}
+.reveal .brush::before { animation-play-state: paused; }
+.reveal.is-visible .brush::before { animation-play-state: running; }
+@keyframes kitBrush { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.brush--ink::before { background: linear-gradient(90deg, #1f1f1f, #3a3a3a 60%, #2a2a2a); }
+
+/* small brush label (e.g. "Where many of our partners began") */
+.brush-tag {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+  padding: 5px 14px 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.brush-tag::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red);
+  -webkit-mask: var(--brush-mask) center / 100% 100% no-repeat;
+  mask: var(--brush-mask) center / 100% 100% no-repeat;
+}
+
+/* ---------- Eyebrow with the red rule (as on the hero) ---------- */
+.kit-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font: 700 12.5px var(--font-body);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--grey-700);
+}
+.kit-eyebrow::before { content: ""; width: 34px; height: 2px; background: var(--red); flex: 0 0 auto; }
+.kit-eyebrow--light { color: rgba(255, 255, 255, 0.8); }
+
+.kit-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.12;
+  color: var(--ink);
+}
+.kit-title em { font-style: normal; color: var(--red); }
+
+/* ---------- Outline watermark word ---------- */
+.kit-art { position: relative; isolation: isolate; }
+.kit-wm {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  font: 900 clamp(110px, 16vw, 250px)/0.9 var(--font-display);
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(195, 32, 48, 0.12);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.kit-wm--right { right: -2vw; }
+.kit-wm--left { left: -2vw; }
+
+/* soft dot grid, as behind Legal Updates */
+.kit-dots::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(circle at 1px 1px, rgba(117, 117, 117, 0.2) 1px, transparent 1.6px) 0 0 / 22px 22px;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 50%, #000 30%, transparent 85%);
+  mask-image: radial-gradient(70% 60% at 50% 50%, #000 30%, transparent 85%);
+  pointer-events: none;
+}
+
+/* ---------- Stat row (like the Global Network stats) ---------- */
+.kit-stats {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  border-top: 1px solid var(--grey-300);
+  border-bottom: 1px solid var(--grey-300);
+}
+.kit-stats li { padding: 26px 18px 22px 0; }
+.kit-stats li + li { padding-left: 26px; border-left: 1px solid var(--grey-300); }
+.kit-stat-num { display: block; font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 3.8vw, 54px); line-height: 1; color: var(--red); }
+.kit-stat-label { display: block; margin-top: 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.45; color: var(--grey-700); }
+
+/* ---------- Numbered editorial list (instead of icon cards) ---------- */
+.kit-list { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); column-gap: clamp(24px, 3.5vw, 56px); }
+.kit-list > li {
+  position: relative;
+  padding: 26px 0 30px;
+  border-top: 1px solid var(--grey-300);
+}
+.kit-list > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.kit-list > li:hover::before { transform: scaleX(1); }
+.kit-num {
+  display: block;
+  font: 900 52px/1 var(--font-display);
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--red);
+  transition: color 0.4s;
+}
+.kit-list > li:hover .kit-num { color: var(--red); }
+.kit-list h3::before { content: ""; display: block; width: 28px; height: 3px; margin-bottom: 16px; background: var(--red); transition: width 0.4s var(--ease); }
+.kit-list > li:hover h3::before { width: 48px; }
+.kit-list h3 { margin-top: 0; font-family: var(--font-display); font-weight: 700; font-size: 21px; line-height: 1.3; color: var(--ink); }
+.kit-list p { margin-top: 8px; font-size: 15.5px; line-height: 1.65; color: var(--ink-soft); }
+
+/* simple dash list */
+.kit-dash { display: grid; gap: 12px; margin-top: 18px; }
+.kit-dash li { position: relative; padding-left: 30px; font-size: 16px; line-height: 1.6; color: var(--ink-soft); }
+.kit-dash li::before { content: ""; position: absolute; left: 0; top: 0.78em; width: 18px; height: 2px; background: var(--red); }
+.kit-dash strong { color: var(--ink); }
+
+/* inline list with red slashes */
+.kit-inline { display: flex; flex-wrap: wrap; gap: 6px 0; margin-top: 18px; font-family: var(--font-display); font-weight: 700; font-size: clamp(17px, 1.5vw, 20px); color: var(--ink); }
+.kit-inline li:not(:last-child)::after { content: "/"; margin: 0 14px; color: var(--red); font-weight: 400; }
+
+/* ---------- Photos ---------- */
+/* main photo with an offset red block behind it */
+.kit-frame { position: relative; z-index: 0; margin: 0 18px 18px 0; }
+.kit-frame::before {
+  content: "";
+  position: absolute;
+  inset: 18px -18px -18px 18px;
+  z-index: -1;
+  border-radius: 14px;
+  background: var(--red);
+}
+.kit-frame--grey::before { background: var(--grey-300); }
+.kit-frame img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; box-shadow: var(--shadow-md); }
+
+/* polaroids: white border, slight tilt, straighten on hover */
+.kit-polaroid {
+  position: relative;
+  margin: 0;
+  padding: 8px 8px 30px;
+  background: var(--white);
+  box-shadow: 0 10px 26px rgba(30, 30, 30, 0.16);
+  transform: rotate(var(--r, -3deg));
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.kit-polaroid:hover { transform: rotate(0deg) scale(1.04); box-shadow: var(--shadow-lg); z-index: 3; }
+.kit-polaroid img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.kit-polaroid figcaption {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  font: italic 400 12.5px/1.2 var(--font-display);
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* a red "tape" strip on top */
+.kit-polaroid::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 64px;
+  height: 18px;
+  margin-left: -32px;
+  background: rgba(195, 32, 48, 0.82);
+  -webkit-mask: var(--brush-mask) center / 100% 100% no-repeat;
+  mask: var(--brush-mask) center / 100% 100% no-repeat;
+  transform: rotate(-4deg);
+}
+.kit-stack { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 28px; padding: 0 6px; }
+.kit-stack .kit-polaroid:nth-child(1) { --r: -4deg; }
+.kit-stack .kit-polaroid:nth-child(2) { --r: 2.5deg; margin-top: 14px; }
+.kit-stack .kit-polaroid:nth-child(3) { --r: -1.5deg; }
+
+/* ---------- Filmstrip marquee ---------- */
+.kit-marquee { position: relative; overflow: hidden; padding: 34px 0 40px; }
+.kit-marquee-track { display: flex; gap: 26px; width: max-content; animation: kitMarquee 60s linear infinite; }
+.kit-marquee:hover .kit-marquee-track { animation-play-state: paused; }
+.kit-marquee .kit-polaroid { width: 250px; flex: 0 0 auto; }
+.kit-marquee .kit-polaroid:nth-child(odd) { --r: -2.5deg; }
+.kit-marquee .kit-polaroid:nth-child(even) { --r: 2deg; margin-top: 16px; }
+@keyframes kitMarquee { to { transform: translateX(-50%); } }
+
+/* ---------- Painted panel (the home hero, in miniature) ---------- */
+.kit-painted {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 24px;
+  padding: clamp(36px, 5vw, 72px);
+  display: flex;
+  justify-content: flex-end;
+}
+.kit-painted::before {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  z-index: -2;
+  background: url("../images/hero-palette.jpg") center / cover no-repeat;
+  animation: paintDrift 38s ease-in-out infinite alternate;
+}
+.kit-panel {
+  position: relative;
+  width: min(620px, 100%);
+  padding: clamp(28px, 3.6vw, 48px);
+  isolation: isolate;
+}
+.kit-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(251, 251, 251, 0.74);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border-left: 4px solid var(--red);
+  box-shadow: 0 18px 44px rgba(30, 30, 30, 0.14);
+}
+.kit-panel h2 { font-family: var(--font-display); font-weight: 900; font-size: clamp(28px, 3vw, 44px); line-height: 1.15; color: var(--ink); }
+.kit-panel p { margin-top: 14px; font-size: 16px; line-height: 1.7; color: var(--ink-soft); }
+.kit-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+.btn--ghost { border: 2px solid var(--ink); color: var(--ink); }
+.btn--ghost:hover { background: var(--ink); color: var(--white); }
+
+/* ---------- "Recent moments" list ---------- */
+.kit-moments-head { margin-top: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey-700); }
+.kit-moments { margin-top: 10px; border-top: 1px solid var(--grey-300); }
+.kit-moments li { display: grid; grid-template-columns: 104px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--grey-300); font-size: 15px; font-weight: 700; color: var(--ink); }
+.kit-moments time { font-size: 13px; color: var(--red); padding-top: 1px; }
+
+.kit-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; font-weight: 700; color: var(--red); border-bottom: 2px solid transparent; padding-bottom: 2px; transition: gap 0.3s, border-color 0.3s; }
+.kit-link:hover { gap: 16px; border-color: var(--red); }
+
+/* column counts set per list (data-cols); the media queries below take over on small screens */
+.kit-stats[data-cols="3"], .kit-list[data-cols="3"] { --cols: 3; }
+.kit-stats[data-cols="4"], .kit-list[data-cols="4"] { --cols: 4; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .kit-list, .kit-list[data-cols] { --cols: 2; }
+  .kit-stats, .kit-stats[data-cols] { --cols: 2; }
+  .kit-stats li:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .kit-stats li:nth-child(n + 3) { border-top: 1px solid var(--grey-300); }
+  .kit-painted { justify-content: stretch; }
+}
+@media (max-width: 640px) {
+  .kit-list, .kit-list[data-cols] { --cols: 1; }
+  .kit-marquee .kit-polaroid { width: 190px; }
+  .kit-moments li { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kit-marquee-track { animation: none; }
+  .brush::before { animation: none; }
+}
