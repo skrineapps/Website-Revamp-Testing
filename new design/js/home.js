@@ -4,7 +4,8 @@
    - Global Network: rotating dotted globe (canvas)
    - Awards: engraved guilloché background + foil sheen
    - Count-up figures
-   Sources: deal details from skrine.com Transaction News (Jul–Nov 2026).
+   Sources: skrine.com > Insights > Latest, items titled "Transaction News: …"
+   (detail pages under /insights/alerts/). Checked against the site Nov 2026.
    ========================================================= */
 (function () {
   "use strict";
@@ -15,58 +16,70 @@
   /* ---------- Deals & Transactions ---------- */
   var DEALS = [
     {
+      // source: https://www.skrine.com/insights/alerts/november-2026/transaction-news-skrine-advises-totalenergies-on-i
       sector: "Oil & Gas · Energy",
       num: "6.5", unit: "tcf",
-      label: "of gas resources across the Lang Lebah and B14 fields",
+      label: "more than 6.5 trillion cubic feet of gas resources across the Lang Lebah and B14 fields",
       headline: "TotalEnergies acquires a 30% operated interest in the Lang Lebah and B14 gas fields offshore Sarawak",
       summary: "Skrine acted as Malaysian legal counsel to TotalEnergies on its arrangements with PETRONAS Carigali, PTTEP and KUFPEC. Lang Lebah is one of Malaysia's largest offshore gas discoveries.",
       team: "Fariz Abdul Aziz · Samson Kong",
-      date: "06 Nov 2026"
+      date: "06 Nov 2026",
+      img: "new%20design/images/sectors/oil-and-gas-and-energy.jpg"
     },
     {
+      // source: https://www.skrine.com/insights/alerts/november-2026/transaction-news-ame-elite-enters-into-joint-ventu
       sector: "Real Estate · Industrial",
       num: "RM4.0", unit: "bn",
       label: "estimated gross development value",
       headline: "AME Elite and UEM Sunrise form a joint venture for an industrial development in the Johor-Singapore Special Economic Zone",
       summary: "Skrine acted as legal counsel to AME Development on the 50:50 joint venture to develop 402.1 acres of freehold industrial land in Gerbang Nusajaya, Iskandar Puteri.",
-      team: "Partners including Sheba Gumis",
-      date: "03 Nov 2026"
+      team: "Sheba Gumis · Jesy Ooi · Engy Tan",
+      date: "03 Nov 2026",
+      img: "new%20design/images/sectors/real-estate.jpg"
     },
     {
+      // source: https://www.skrine.com/insights/alerts/july-2026/transaction-news-airtrunk-secures-us2-325-billion
       sector: "Banking & Finance · Data Centres",
       num: "US$2.325", unit: "bn",
       label: "green financing from 30 financial institutions",
       headline: "AirTrunk secures the largest green project financing for a single data centre in Malaysia",
       summary: "Skrine acted as Malaysian counsel for AirTrunk on the financing for its JHB2 hyperscale data centre campus in Johor Bahru — AirTrunk's largest single-asset financing to date.",
       team: "Lee Ai Hsian · Javene Fan · Chong Zhi Shin",
-      date: "31 Jul 2026"
+      date: "31 Jul 2026",
+      img: "new%20design/images/sectors/telecommunications-media-and-technology.jpg"
     },
     {
+      // source: https://www.skrine.com/insights/alerts/august-2026/transaction-news-thermo-fisher-sells-microbiology
       sector: "Corporate / M&A · Healthcare",
       num: "US$1.08", unit: "bn",
       label: "sale of Thermo Fisher's microbiology business",
       headline: "Thermo Fisher sells its microbiology business to private equity firm Astorg",
       summary: "Skrine acted as Malaysian counsel for Thermo Fisher Scientific on the sale, which included its shareholding in its Malaysian subsidiary.",
       team: "Sheba Gumis · Joey Tiw · Faith Chan",
-      date: "17 Aug 2026"
+      date: "17 Aug 2026",
+      img: "new%20design/images/sectors/healthcare-biotechnology-and-pharmaceuticals.jpg"
     },
     {
+      // source: https://www.skrine.com/insights/alerts/august-2026/transaction-news-allianz-to-acquire-uob-asset-mana
       sector: "Corporate / M&A · Asset Management",
       num: "8", unit: "jurisdictions",
       label: "in one regional acquisition",
       headline: "Allianz Global Investors to acquire UOB Asset Management's operations across Asia",
       summary: "Skrine, as part of the global team led by Freshfields, advised AllianzGI on the Malaysian law and regulatory aspects, including due diligence and regulatory approvals.",
-      team: "Team including Tan Wei Xian",
-      date: "11 Aug 2026"
+      team: "To' Puan Janet Looi · Tan Wei Xian",
+      date: "11 Aug 2026",
+      img: "new%20design/images/sectors/financial-institutions.jpg"
     },
     {
+      // source: https://www.skrine.com/insights/alerts/july-2026/transaction-news-carlsberg-and-sapporo-to-form-str
       sector: "Corporate / M&A · Consumer",
       num: "US$643", unit: "m",
       label: "for Sapporo's 25% stake in the regional joint venture",
       headline: "Carlsberg and Sapporo form a strategic partnership across Southeast Asia and Hong Kong",
       summary: "Skrine acted as Malaysian counsel for Carlsberg on the joint venture and the internal cross-border restructuring behind it.",
       team: "To' Puan Janet Looi · Tan Wei Xian · Kyra Iman Yaacob",
-      date: "22 Jul 2026"
+      date: "22 Jul 2026",
+      img: "new%20design/images/sectors/industrial-and-manufacturing.jpg"
     }
   ];
 
@@ -74,6 +87,9 @@
   if (board) {
     var feature = document.getElementById("dealFeature");
     var content = feature.querySelector(".deal-feature-content");
+    var art = feature.querySelector(".deal-feature-art");
+    // warm the cache so the photo swap doesn't flash
+    DEALS.forEach(function (d) { new Image().src = d.img; });
     var tabs = Array.prototype.slice.call(board.querySelectorAll(".deal-list button"));
     var current = 0;
     var rotate = null;
@@ -86,7 +102,10 @@
       current = (i + DEALS.length) % DEALS.length;
       var d = DEALS[current];
       content.classList.add("is-leaving");
+      art.classList.add("is-leaving");
       setTimeout(function () {
+        art.style.backgroundImage = "url(\"" + d.img + "\")";
+        art.classList.remove("is-leaving");
         q(".deal-sector").textContent = d.sector;
         q(".deal-figure-num").textContent = d.num;
         q(".deal-figure-unit").textContent = d.unit;
@@ -126,6 +145,75 @@
     board.addEventListener("mouseleave", restartRotate);
     board.addEventListener("focusin", function () { clearInterval(rotate); });
     restartRotate();
+  }
+
+  /* ---------- News & Events: everything visible at once ----------
+     Left: the latest story, large. Right: upcoming events (or skrine.com's
+     "no upcoming events" state) above the next few stories.
+     Data: js/news-data.js — SKRINE_NEWS and SKRINE_UPCOMING, from skrine.com. */
+  var neBoard = document.getElementById("newsEvents");
+  if (neBoard && window.SKRINE_NEWS && window.SKRINE_NEWS.length) {
+    var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var IMG = "new%20design/images/news/";
+    var LIST_URL = "new%20design/news-events.html";
+    var todayISO = new Date().toISOString().slice(0, 10);
+    var UP = (window.SKRINE_UPCOMING || [])
+      .filter(function (e) { return (e.endDate || e.date) >= todayISO; })
+      .sort(function (x, y) { return x.date < y.date ? -1 : 1; })
+      .slice(0, 3);
+    var NEWS5 = window.SKRINE_NEWS.slice(0, 5);
+
+    function esc(s) {
+      return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+    }
+    function fmt(iso) { var d = iso.split("-"); return d[2] + " " + MON[Number(d[1]) - 1] + " " + d[0]; }
+
+    var f = NEWS5[0];
+    var html =
+      '<a href="' + LIST_URL + '#latest" class="ne-feature">' +
+        (f.image ? '<img src="' + IMG + esc(f.image) + '" alt="" class="ne-feature-img">' : "") +
+        '<div class="ne-feature-body">' +
+          '<p class="ne-kicker"><span>Latest News</span>' + esc(f.category) + " · " + fmt(f.date) + "</p>" +
+          "<h3>" + esc(f.title) + "</h3>" +
+          (f.summary ? '<p class="ne-feature-sum">' + esc(f.summary) + "</p>" : "") +
+          '<span class="ne-more">Read the story <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>' +
+        "</div>" +
+      "</a>";
+
+    html += '<div class="ne-side">';
+
+    // upcoming events
+    html += '<section class="ne-up" aria-labelledby="neUpHead"><h3 class="ne-side-head" id="neUpHead">Upcoming Events</h3>';
+    if (UP.length) {
+      html += '<ul class="ne-up-rows">';
+      UP.forEach(function (e) {
+        var d = e.date.split("-");
+        html += '<li><a href="' + (e.register || LIST_URL + "#upcoming") + '" class="ne-up-row">' +
+          '<span class="ne-up-date"><b>' + d[2] + "</b>" + MON[Number(d[1]) - 1] + "</span>" +
+          '<span class="ne-up-text"><small>' + esc([e.type, e.location, e.time].filter(Boolean).join(" · ")) + "</small>" + esc(e.title) + "</span>" +
+          "</a></li>";
+      });
+      html += "</ul>";
+    } else {
+      html += '<div class="ne-up-none">' +
+        '<span class="ne-up-icon"><i class="fa-regular fa-calendar" aria-hidden="true"></i></span>' +
+        "<p><strong>No upcoming events right now.</strong> Our lawyers speak regularly at conferences, seminars and webinars — new events will appear here.</p>" +
+        '<a href="' + LIST_URL + '#upcoming" class="ne-up-link">Get notified <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>' +
+      "</div>";
+    }
+    html += "</section>";
+
+    // more news
+    html += '<section class="ne-list" aria-labelledby="neListHead"><h3 class="ne-side-head" id="neListHead">More News</h3><ul>';
+    NEWS5.slice(1).forEach(function (n) {
+      html += '<li><a href="' + LIST_URL + '#latest" class="ne-row">' +
+        (n.image ? '<img src="' + IMG + esc(n.image) + '" alt="" loading="lazy">' : '<span class="ne-row-noimg"></span>') +
+        '<span class="ne-row-text"><small>' + esc(n.category) + " · " + fmt(n.date) + "</small>" + esc(n.title) + "</span>" +
+        "</a></li>";
+    });
+    html += "</ul></section></div>";
+
+    neBoard.innerHTML = html;
   }
 
   /* ---------- Count-up figures ---------- */
@@ -180,9 +268,25 @@
     var nodeSource = LAND.length ? LAND : DOTS;
     for (var n = 0; n < 24; n++) NODES.push(nodeSource[(n * 977 + 131) % nodeSource.length]);
 
-    // start with Asia facing us, Kuala Lumpur just left of centre; spin west to east
-    var rotY = Math.atan2(HUB[0], HUB[2]) + 0.45, rotX = 0.18, targetX = 0.18, dragV = 0;
-    var size = 0, dpr = 1, pin = globe.parentElement.querySelector(".globe-pin");
+    // Regional desks: each gets a marker, a bold route from KL and a label.
+    // The globe turns to show KL and the active desk together.
+    var DESKS = {
+      china: { pos: fromLatLon(31.23, 121.47) },  // Shanghai
+      india: { pos: fromLatLon(19.08, 72.88) },   // Mumbai
+      mena:  { pos: fromLatLon(25.2, 55.27) }     // Dubai
+    };
+    Object.keys(DESKS).forEach(function (k) {
+      var d = DESKS[k], p = d.pos;
+      var m = [p[0] + HUB[0], p[1] + HUB[1], p[2] + HUB[2]];
+      d.focusY = Math.atan2(m[0], m[2]);                       // centre the KL–desk midpoint
+      d.focusX = Math.asin(m[1] / Math.hypot(m[0], m[1], m[2])) * 0.9 + 0.05;
+      d.pin = globe.parentElement.querySelector('.globe-pin--desk[data-desk="' + k + '"]');
+    });
+    var activeDesk = "china", lastUserSpin = -1e9;
+
+    // start with Asia facing us, Kuala Lumpur just left of centre
+    var rotY = DESKS.china.focusY, rotX = DESKS.china.focusX, targetX = rotX, dragV = 0;
+    var size = 0, dpr = 1, pin = globe.parentElement.querySelector(".globe-pin:not(.globe-pin--desk)");
 
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -201,28 +305,57 @@
       return { x: size / 2 + x * R, y: size / 2 - y2 * R, z: z2 };
     }
 
-    function arc(a, b, t) {
+    function arc(a, b, t, strong) {
       // great-circle-ish arc lifted off the surface
       var m = [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
       var len = Math.hypot(m[0], m[1], m[2]) || 1;
-      var lift = 1.35;
+      var lift = strong ? 1.25 : 1.35;
       m = [m[0] / len * lift, m[1] / len * lift, m[2] / len * lift];
       var pa = project(a), pb = project(b), pm = project(m);
       if (pa.z < -0.15 && pb.z < -0.15) return;
       gctx.beginPath();
       gctx.moveTo(pa.x, pa.y);
       gctx.quadraticCurveTo(pm.x, pm.y, pb.x, pb.y);
-      gctx.strokeStyle = "rgba(195, 32, 48, " + (0.18 + 0.25 * Math.max(0, (pa.z + pb.z) / 2)) + ")";
-      gctx.lineWidth = 1.2;
+      gctx.strokeStyle = strong
+        ? "rgba(195, 32, 48, 0.95)"
+        : "rgba(195, 32, 48, " + (0.1 + 0.16 * Math.max(0, (pa.z + pb.z) / 2)) + ")";
+      gctx.lineWidth = strong ? 2.6 : 1.1;
       gctx.stroke();
-      // a pulse travelling along the arc
-      var u = t % 1;
-      var qx = (1 - u) * (1 - u) * pa.x + 2 * (1 - u) * u * pm.x + u * u * pb.x;
-      var qy = (1 - u) * (1 - u) * pa.y + 2 * (1 - u) * u * pm.y + u * u * pb.y;
+      // pulses travelling along the arc (three on a desk route)
+      var count = strong ? 3 : 1;
+      for (var c = 0; c < count; c++) {
+        var u = (t * (strong ? 1.6 : 1) + c / count) % 1;
+        var qx = (1 - u) * (1 - u) * pa.x + 2 * (1 - u) * u * pm.x + u * u * pb.x;
+        var qy = (1 - u) * (1 - u) * pa.y + 2 * (1 - u) * u * pm.y + u * u * pb.y;
+        gctx.beginPath();
+        gctx.arc(qx, qy, strong ? 3.4 : 2.2, 0, Math.PI * 2);
+        gctx.fillStyle = strong ? "#c32030" : "rgba(195, 32, 48, 0.7)";
+        gctx.fill();
+      }
+    }
+
+    function deskMarker(d, isActive, time) {
+      var p = project(d.pos);
+      if (d.pin) {
+        d.pin.style.transform = "translate(" + p.x + "px," + p.y + "px)";
+        d.pin.style.opacity = p.z > 0.12 ? (isActive ? 1 : 0.75) : 0;
+      }
+      if (p.z < 0) return;
+      if (isActive) {
+        var pl = (time % 1500) / 1500;
+        gctx.beginPath();
+        gctx.arc(p.x, p.y, 6 + pl * 18, 0, Math.PI * 2);
+        gctx.strokeStyle = "rgba(195, 32, 48, " + (0.7 * (1 - pl)) + ")";
+        gctx.lineWidth = 2;
+        gctx.stroke();
+      }
       gctx.beginPath();
-      gctx.arc(qx, qy, 2.4, 0, Math.PI * 2);
-      gctx.fillStyle = "rgba(195, 32, 48, 0.9)";
+      gctx.arc(p.x, p.y, isActive ? 6 : 4.5, 0, Math.PI * 2);
+      gctx.fillStyle = "#fff";
       gctx.fill();
+      gctx.lineWidth = isActive ? 3 : 2;
+      gctx.strokeStyle = isActive ? "#c32030" : "#757575";
+      gctx.stroke();
     }
 
     var visible = true;
@@ -233,7 +366,15 @@
     function frame(time) {
       requestAnimationFrame(frame);
       if (!visible || !size) return;
-      rotY -= (reduceMotion ? 0 : 0.0016) + dragV;
+      if (activeDesk && time - lastUserSpin > 4000) {
+        // glide to the active desk (shortest way round)
+        var goal = DESKS[activeDesk].focusY;
+        var diff = Math.atan2(Math.sin(goal - rotY), Math.cos(goal - rotY));
+        rotY += reduceMotion ? diff : diff * 0.045;
+        targetX = DESKS[activeDesk].focusX;
+      } else {
+        rotY -= (reduceMotion ? 0 : 0.0016) + dragV;
+      }
       dragV *= 0.94;
       rotX += (targetX - rotX) * 0.05;
 
@@ -273,6 +414,9 @@
 
       var t = time / 2600;
       for (var a = 0; a < NODES.length; a++) arc(HUB, NODES[a], t + a * 0.137);
+      Object.keys(DESKS).forEach(function (k) {
+        if (k === activeDesk) arc(HUB, DESKS[k].pos, t, true);
+      });
 
       NODES.forEach(function (nd) {
         var p = project(nd);
@@ -295,6 +439,8 @@
       gctx.fillStyle = "#c32030";
       gctx.fill();
 
+      Object.keys(DESKS).forEach(function (k) { deskMarker(DESKS[k], k === activeDesk, time); });
+
       if (pin) {
         pin.style.transform = "translate(" + h.x + "px," + h.y + "px)";
         pin.style.opacity = h.z > 0.1 ? 1 : 0;
@@ -303,16 +449,36 @@
 
     // gentle drag to spin
     var lastX = null;
-    globe.addEventListener("pointerdown", function (e) { lastX = e.clientX; globe.setPointerCapture(e.pointerId); });
+    globe.addEventListener("pointerdown", function (e) { lastX = e.clientX; lastUserSpin = performance.now(); globe.setPointerCapture(e.pointerId); });
     globe.addEventListener("pointermove", function (e) {
-      if (lastX !== null) { dragV = (e.clientX - lastX) * 0.0012; lastX = e.clientX; }
-      else if (finePointer) {
-        var r = globe.getBoundingClientRect();
-        targetX = 0.18 + ((e.clientY - r.top) / r.height - 0.5) * 0.4;
-      }
+      if (lastX !== null) { dragV = (e.clientX - lastX) * 0.0012; lastX = e.clientX; lastUserSpin = performance.now(); }
     });
     globe.addEventListener("pointerup", function () { lastX = null; });
-    globe.addEventListener("pointerleave", function () { targetX = 0.18; });
+
+    // desk cards: cycle on their own; hover, focus or tap picks one
+    var deskCards = Array.prototype.slice.call(document.querySelectorAll(".nd-card"));
+    var deskOrder = deskCards.map(function (c) { return c.dataset.desk; });
+    var deskTimer = null, deskHold = false;
+    function setDesk(k) {
+      activeDesk = k;
+      lastUserSpin = -1e9;
+      deskCards.forEach(function (c) { c.classList.toggle("is-active", c.dataset.desk === k); });
+    }
+    function cycleDesks() {
+      clearInterval(deskTimer);
+      if (reduceMotion) return;
+      deskTimer = setInterval(function () {
+        if (deskHold || !visible) return;
+        setDesk(deskOrder[(deskOrder.indexOf(activeDesk) + 1) % deskOrder.length]);
+      }, 4500);
+    }
+    deskCards.forEach(function (c) {
+      c.addEventListener("pointerenter", function () { deskHold = true; setDesk(c.dataset.desk); });
+      c.addEventListener("pointerleave", function () { deskHold = false; cycleDesks(); });
+      c.addEventListener("focus", function () { deskHold = true; setDesk(c.dataset.desk); });
+      c.addEventListener("blur", function () { deskHold = false; cycleDesks(); });
+    });
+    cycleDesks();
 
     resize();
     window.addEventListener("resize", resize);

@@ -32,22 +32,23 @@
   box-shadow: var(--shadow-lg);
   isolation: isolate;
 }
-/* the hero's acrylic artwork, toned down, as a backdrop */
+/* sector photo for the current deal (set in home.js), drifting slowly */
 .deal-feature-art {
   position: absolute;
-  inset: -10%;
+  inset: -6%;
   background: url("../images/hero-palette.jpg") center / cover no-repeat;
-  opacity: 0.22;
-  mix-blend-mode: screen;
-  filter: grayscale(0.3);
+  opacity: 1;
+  transition: opacity 0.26s var(--ease);
   animation: paintDrift 40s ease-in-out infinite alternate;
   z-index: -1;
 }
+.deal-feature-art.is-leaving { opacity: 0.25; }
+/* dark wash so the white text stays readable over any photo */
 .deal-feature::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(20, 6, 9, 0.85) 0%, rgba(20, 6, 9, 0.2) 55%, transparent 80%);
+  background: linear-gradient(to top, rgba(20, 6, 9, 0.92) 0%, rgba(20, 6, 9, 0.62) 50%, rgba(40, 8, 14, 0.3) 100%);
   z-index: -1;
 }
 
@@ -234,35 +235,89 @@
 
 .network-body { font-size: 16px; line-height: 1.7; color: var(--ink-soft); }
 
-.network-desks {
-  margin-top: 26px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
+/* ---------- Regional desks: cards that drive the globe ---------- */
+.network-desks { margin-top: 30px; }
 .nd-label {
-  margin-right: 6px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-bottom: 14px;
   font-family: var(--font-alt);
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--grey-700);
-}
-.nd-chip {
-  padding: 8px 16px;
-  border-radius: 22px;
-  border: 1.5px solid var(--red);
   color: var(--red);
-  font-weight: 700;
-  font-size: 14px;
-  transition: background 0.3s, color 0.3s, transform 0.3s var(--ease);
 }
-.nd-chip:hover { background: var(--red); color: var(--white); transform: translateY(-2px); }
-.nd-chip span { font-weight: 500; margin-left: 4px; }
+.nd-label span { font-family: var(--font-body); font-weight: 500; letter-spacing: 0; text-transform: none; font-size: 14px; color: var(--grey-700); }
+.nd-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.nd-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 150px;
+  padding: 18px 18px 16px;
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), color 0.4s;
+}
+/* red fill that sweeps up when the card is active */
+.nd-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(150deg, var(--red), var(--red-dark));
+  transform: translateY(101%);
+  transition: transform 0.5s var(--ease);
+}
+/* progress bar along the bottom while the desks cycle */
+.nd-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.nd-card.is-active { color: var(--white); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.nd-card.is-active::before { transform: none; }
+.nd-card.is-active::after { animation: ndProgress 4.5s linear forwards; }
+.nd-card:hover::after, .nd-card:focus-visible::after { animation: none; }
+@keyframes ndProgress { to { transform: scaleX(1); } }
 
-.network-logo { margin-top: 30px; height: 96px; width: auto; opacity: 0.9; }
+.nd-region { font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-500); transition: color 0.4s; }
+.nd-name { font-family: var(--font-display); font-weight: 900; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.15; }
+.nd-local { font-size: 13px; line-height: 1.35; color: var(--grey-700); transition: color 0.4s; }
+.nd-go {
+  margin-top: auto;
+  padding-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red);
+  transition: color 0.4s, gap 0.3s;
+}
+.nd-card.is-active .nd-region,
+.nd-card.is-active .nd-local { color: rgba(255, 255, 255, 0.8); }
+.nd-card.is-active .nd-go { color: var(--white); gap: 12px; }
+
+.network-logo { margin-top: 34px; height: 68px; width: auto; opacity: 0.95; }
 
 .network-globe {
   position: relative;
@@ -288,6 +343,13 @@
   white-space: nowrap;
   pointer-events: none;
   transition: opacity 0.3s;
+}
+.globe-pin--desk {
+  margin: -40px 0 0 12px;
+  background: var(--white);
+  color: var(--red);
+  border: 1.5px solid var(--red);
+  box-shadow: var(--shadow-sm);
 }
 
 /* ---------- Awards (dark, engraved, foil) ---------- */
@@ -470,6 +532,8 @@
   .deal-feature { min-height: 0; border-radius: 18px; }
   .deal-figure { padding-top: 28px; }
   .network-stats li + li { padding-left: 12px; }
+  .nd-cards { grid-template-columns: 1fr; }
+  .nd-card { min-height: 0; }
   .ns-label { font-size: 11px; letter-spacing: 0.06em; }
 }
 
@@ -552,16 +616,22 @@
 }
 
 /* --- Legal Updates: red + grey washes, dot grid --- */
+/* starts fully transparent at the top edge so it grows out of the hero's fade without a seam */
 .section--updates::before {
-  inset: -10% -5%;
+  inset: 0 -5% -10%;
   background:
     radial-gradient(38% 46% at 88% 62%, rgba(195, 32, 48, 0.16), transparent 70%),
-    radial-gradient(30% 40% at 6% 30%, rgba(149, 152, 151, 0.22), transparent 70%),
+    radial-gradient(30% 40% at 6% 40%, rgba(149, 152, 151, 0.22), transparent 70%),
     radial-gradient(circle at 1px 1px, rgba(117, 117, 117, 0.22) 1px, transparent 1.6px) 0 0 / 22px 22px;
-  -webkit-mask-image: radial-gradient(70% 60% at 50% 55%, #000 40%, transparent 85%);
-  mask-image: radial-gradient(70% 60% at 50% 55%, #000 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(70% 62% at 50% 62%, #000 35%, transparent 95%);
+  mask-image: radial-gradient(70% 62% at 50% 62%, #000 35%, transparent 95%);
 }
-.section--updates::after { left: -2vw; }
+.section--updates::after {
+  left: -2vw;
+  top: 90px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
+}
 
 /* --- Deals: deep charcoal glow + diagonal fine lines behind the feature card --- */
 .section--deals::before {
@@ -588,11 +658,10 @@
 }
 .section--spotlight::after { left: -2vw; }
 
-/* --- Upcoming Events: a thin red timeline + soft washes --- */
+/* --- News & Events: soft washes + dot grid --- */
 .section--events::before {
   inset: 0 -5%;
   background:
-    linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(195, 32, 48, 0.12) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
     radial-gradient(36% 48% at 4% 50%, rgba(195, 32, 48, 0.14), transparent 70%),
     radial-gradient(34% 46% at 96% 40%, rgba(149, 152, 151, 0.24), transparent 70%),
     radial-gradient(circle at 1px 1px, rgba(117, 117, 117, 0.2) 1px, transparent 1.6px) 0 0 / 26px 26px;
