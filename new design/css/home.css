@@ -606,6 +606,7 @@
   transform: translate3d(0, var(--drift, 0px), 0);
   will-change: transform;
 }
+.section--art::before { transform: translate3d(0, calc(var(--drift, 0px) * 0.5), 0); }
 
 /* watermark word */
 .section--art::after {
@@ -619,16 +620,21 @@
   user-select: none;
 }
 
-/* --- Legal Updates: red + grey washes, dot grid --- */
-/* starts fully transparent at the top edge so it grows out of the hero's fade without a seam */
+/* Two materials, both made from the hero painting (images/bg/):
+   - paint-wash.jpg     the painting heavily blurred: soft red/grey light
+   - canvas-relief.jpg  the painting's ridges in light greys: art-paper texture
+   Sections alternate "paint glow" and "canvas field" for rhythm.
+   Every layer is feathered with a mask, so there are no hard-edged blocks. */
+
+/* --- Legal Updates: paint glow behind the carousel --- */
+/* starts fully transparent at the top edge so it grows out of the hero without a seam */
 .section--updates::before {
-  inset: 0 -5% -10%;
-  background:
-    radial-gradient(38% 46% at 88% 62%, rgba(195, 32, 48, 0.16), transparent 70%),
-    radial-gradient(30% 40% at 6% 40%, rgba(149, 152, 151, 0.22), transparent 70%),
-    radial-gradient(circle at 1px 1px, rgba(117, 117, 117, 0.22) 1px, transparent 1.6px) 0 0 / 22px 22px;
-  -webkit-mask-image: radial-gradient(70% 62% at 50% 62%, #000 35%, transparent 95%);
-  mask-image: radial-gradient(70% 62% at 50% 62%, #000 35%, transparent 95%);
+  inset: 8% -6% 0;
+  background: url("../images/bg/paint-wash.jpg") 60% 50% / cover no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(60% 44% at 50% 55%, #000 20%, transparent 78%);
+  mask-image: radial-gradient(60% 44% at 50% 55%, #000 20%, transparent 78%);
 }
 .section--updates::after {
   left: -2vw;
@@ -637,58 +643,52 @@
   mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
 }
 
-/* --- Deals: deep charcoal glow + diagonal fine lines behind the feature card --- */
+/* --- Deals: canvas field — a soft grey, textured band, feathered top and bottom --- */
 .section--deals::before {
-  inset: 0 -5%;
-  background:
-    radial-gradient(42% 55% at 22% 58%, rgba(42, 42, 42, 0.13), transparent 72%),
-    radial-gradient(34% 44% at 30% 70%, rgba(195, 32, 48, 0.18), transparent 70%),
-    radial-gradient(28% 36% at 92% 22%, rgba(206, 203, 204, 0.5), transparent 70%),
-    repeating-linear-gradient(135deg, rgba(117, 117, 117, 0.08) 0 1px, transparent 1px 14px);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  inset: -18% -5%;
+  background: url("../images/bg/canvas-relief.jpg") 50% 40% / 170% auto no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.22;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, #000 36%, #000 64%, transparent 85%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, #000 36%, #000 64%, transparent 85%, transparent 100%);
 }
 .section--deals::after { right: -3vw; top: 20px; }
 
-/* --- In the Spotlight: grey wash, concentric arcs --- */
+/* --- In the Spotlight: paint glow, off to the left behind the feature card --- */
 .section--spotlight::before {
-  inset: -6% -5%;
-  background:
-    radial-gradient(40% 50% at 85% 28%, rgba(149, 152, 151, 0.24), transparent 70%),
-    radial-gradient(30% 38% at 10% 80%, rgba(195, 32, 48, 0.12), transparent 70%),
-    repeating-radial-gradient(circle at 0% 100%, transparent 0 46px, rgba(195, 32, 48, 0.07) 46px 47px);
-  -webkit-mask-image: radial-gradient(80% 70% at 40% 60%, #000 35%, transparent 85%);
-  mask-image: radial-gradient(80% 70% at 40% 60%, #000 35%, transparent 85%);
+  inset: 0 -5%;
+  background: url("../images/bg/paint-wash.jpg") 20% 60% / 140% auto no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.48;
+  -webkit-mask-image: radial-gradient(48% 52% at 26% 58%, #000 20%, transparent 72%), radial-gradient(28% 26% at 88% 36%, rgba(0, 0, 0, 0.6) 10%, transparent 70%);
+  mask-image: radial-gradient(48% 52% at 26% 58%, #000 20%, transparent 72%), radial-gradient(28% 26% at 88% 36%, rgba(0, 0, 0, 0.6) 10%, transparent 70%);
 }
 .section--spotlight::after { left: -2vw; }
 
-/* --- News & Events: soft washes + dot grid --- */
+/* --- News & Events: canvas field again --- */
 .section--events::before {
-  inset: 0 -5%;
-  background:
-    radial-gradient(36% 48% at 4% 50%, rgba(195, 32, 48, 0.14), transparent 70%),
-    radial-gradient(34% 46% at 96% 40%, rgba(149, 152, 151, 0.24), transparent 70%),
-    radial-gradient(circle at 1px 1px, rgba(117, 117, 117, 0.2) 1px, transparent 1.6px) 0 0 / 26px 26px;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  inset: -18% -5%;
+  background: url("../images/bg/canvas-relief.jpg") 30% 70% / 170% auto no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.2;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, #000 36%, #000 64%, transparent 85%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, #000 36%, #000 64%, transparent 85%, transparent 100%);
 }
 .section--events::after { right: -3vw; }
 
-/* --- Global Network: latitude rings behind the globe --- */
+/* --- Global Network: paint glow behind the globe --- */
 .section--network::before {
   inset: -4% -5%;
-  background:
-    repeating-radial-gradient(circle at 72% 52%, transparent 0 58px, rgba(117, 117, 117, 0.09) 58px 59px),
-    radial-gradient(34% 50% at 72% 52%, rgba(195, 32, 48, 0.12), transparent 70%),
-    radial-gradient(30% 40% at 8% 20%, rgba(206, 203, 204, 0.55), transparent 70%);
-  -webkit-mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 80%);
-  mask-image: radial-gradient(60% 70% at 70% 52%, #000 30%, transparent 80%);
+  background: url("../images/bg/paint-wash.jpg") 70% 45% / cover no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(46% 56% at 70% 52%, #000 18%, transparent 76%);
+  mask-image: radial-gradient(46% 56% at 70% 52%, #000 18%, transparent 76%);
 }
 .section--network::after { left: -2vw; top: auto; bottom: 10px; }
 
 @media (max-width: 760px) {
   .section--art::after { font-size: 34vw; -webkit-text-stroke-width: 1px; }
-  .section--events::before { background-position: 0 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .section--art::before, .section--art::after { transform: none; }

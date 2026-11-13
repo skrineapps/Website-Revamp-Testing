@@ -195,17 +195,6 @@
   });
   actions.appendChild(vc);
 
-  var statsEl = document.getElementById("pfStats");
-  var talkCount = P.talks.reduce(function (n, t) { return n + t.items.length; }, 0);
-  [[talkCount, "Publications & talks"]]
-    .filter(function (s) { return s[0] > 0; })
-    .forEach(function (s) {
-      var d = el("div", "pf-stat");
-      d.appendChild(el("dt", null, s[1]));
-      d.appendChild(el("dd", null, String(s[0])));
-      statsEl.appendChild(d);
-    });
-  if (!statsEl.children.length) statsEl.remove();
 
   var fig = document.getElementById("pfPortrait");
   fig.appendChild(portrait(slug, P.name, "pf-portrait-frame"));

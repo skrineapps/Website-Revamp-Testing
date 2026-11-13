@@ -496,6 +496,40 @@ main {
 .page-main > * { max-width: var(--page-max); margin-left: auto; margin-right: auto; }
 .page-inner .site-header { background: rgba(255, 255, 255, 0.95); box-shadow: var(--shadow-sm); }
 
+/* Every inner page opens on the same material as the home page: a feathered
+   canvas-relief field across the top (behind the page heading) with a soft
+   paint glow on the right. Sits behind the content; no hard edges. */
+.page-main, main.contact, main.life { position: relative; isolation: isolate; }
+.page-main::before, main.contact::before, main.life::before,
+.page-main::after, main.contact::after, main.life::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  max-width: none;
+  pointer-events: none;
+}
+.page-main::before, main.contact::before, main.life::before {
+  height: clamp(420px, 52vw, 640px);
+  background: url("../images/bg/canvas-relief.jpg") 60% 30% / 150% auto no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.2;
+  -webkit-mask-image: radial-gradient(70% 95% at 85% 0%, #000 25%, transparent 80%);
+  mask-image: radial-gradient(70% 95% at 85% 0%, #000 25%, transparent 80%);
+}
+.page-main::after, main.contact::after, main.life::after {
+  left: auto;
+  width: min(60vw, 820px);
+  height: clamp(380px, 46vw, 600px);
+  background: url("../images/bg/paint-wash.jpg") 70% 40% / cover no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.42;
+  -webkit-mask-image: radial-gradient(60% 60% at 70% 35%, #000 15%, transparent 72%);
+  mask-image: radial-gradient(60% 60% at 70% 35%, #000 15%, transparent 72%);
+}
+
 .page-head { margin-bottom: clamp(32px, 4vw, 52px); }
 .page-head .eyebrow { text-align: left; }
 .page-title {

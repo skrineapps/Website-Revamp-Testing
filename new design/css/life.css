@@ -234,9 +234,44 @@
 .life-head.is-visible .page-title::after { transform: scaleX(1); }
 .life-head .page-intro { font-family: var(--font-display); font-style: italic; color: var(--grey-700); }
 /* a polaroid pinned to the banner's corner */
-.life-banner { position: relative; margin-bottom: 30px; }
+.life-banner { position: relative; margin-bottom: 30px; isolation: isolate; }
+
+/* Career banner: same photo, a touch of the home hero's geometry —
+   the bottom-right corner is cut away, a thin red copy of the shape
+   peeks out behind it, and the chapter number overlaps the corner. */
+.life-banner .pa-hero {
+  box-shadow: none;
+  clip-path: polygon(0 0, 100% 0, 100% 74%, 92% 100%, 0 100%);
+}
+.life-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 24px;
+  background: var(--red);
+  clip-path: polygon(0 0, 100% 0, 100% 74%, 92% 100%, 0 100%);
+  transform: translate(10px, 10px);
+  pointer-events: none;
+}
+.life-banner::before {
+  content: attr(data-chapter);
+  position: absolute;
+  left: clamp(18px, 3vw, 40px);
+  bottom: clamp(-58px, -4.4vw, -34px);
+  z-index: 3;
+  font: 900 clamp(76px, 9vw, 132px)/1 var(--font-display);
+  letter-spacing: -0.03em;
+  color: #fbfbfb;
+  -webkit-text-stroke: 2px var(--red);
+  paint-order: stroke fill;
+  text-shadow: 0 12px 24px rgba(30, 30, 30, 0.12);
+  pointer-events: none;
+}
 .life-pin { --r: 4deg; position: absolute; right: clamp(16px, 4vw, 56px); bottom: -34px; width: clamp(150px, 17vw, 240px); z-index: 2; }
 @media (max-width: 640px) {
   .life-pin { width: 120px; right: 10px; bottom: -24px; padding: 5px 5px 20px; }
+  .life-banner::after { transform: translate(6px, 6px); }
+  .life-banner::before { font-size: 64px; bottom: -28px; -webkit-text-stroke-width: 1.5px; }
   .life-pin figcaption { font-size: 10px; bottom: 4px; }
 }
