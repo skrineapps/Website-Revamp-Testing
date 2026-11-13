@@ -16,6 +16,18 @@
   /* ---------- Deals & Transactions ---------- */
   var DEALS = [
     {
+      // sources: ITR World Tax, Skrine (Malaysia) firm review — https://www.internationaltaxreview.com/itrworldtax/firms/skrine-malaysia
+      // and Nimalan Devaraja's skrine.com profile (reported case: The Customs and Tax Administration of The Kingdom of Denmark v Timothy Paul Murphy [2022] MLJU 2956)
+      sector: "Tax · Dispute Resolution",
+      num: "RM1", unit: "bn",
+      label: "sought in civil recovery suits in Malaysia",
+      headline: "Skrine leads Denmark's tax authority in civil suits to recover approximately RM1 billion",
+      summary: "Skrine acted as lead counsel for the Customs and Tax Administration of the Kingdom of Denmark, plaintiff in civil suits against multiple Malaysian entities and related individuals, and successfully resisted an application to set aside service of the writ out of jurisdiction.",
+      team: "Preetha Pillai · Nimalan Devaraja",
+      date: "Cross-border recovery",
+      img: "new%20design/images/practice/fraud-and-asset-recovery.jpg"
+    },
+    {
       // source: https://www.skrine.com/insights/alerts/november-2026/transaction-news-skrine-advises-totalenergies-on-i
       sector: "Oil & Gas · Energy",
       num: "6.5", unit: "tcf",

@@ -196,9 +196,10 @@
 .life-more { padding-top: clamp(64px, 8vw, 110px); padding-bottom: clamp(64px, 8vw, 110px); border-top: 1px solid var(--grey-300); }
 .life-more header { margin-bottom: clamp(30px, 4vw, 48px); }
 .life-more-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(26px, 4vw, 56px); padding: 10px clamp(8px, 2vw, 24px) 0; }
-.life-more-card { display: block; padding-bottom: 54px; color: var(--ink); }
-.life-more-card .life-more-name { position: absolute; left: 12px; right: 12px; bottom: 26px; font: 900 22px/1.15 var(--font-display); }
-.life-more-card figcaption { bottom: 8px; color: var(--red); }
+/* title + tagline sit under the photo in normal flow, so a two-line title never covers it */
+.life-more-card { display: block; padding-bottom: 18px; color: var(--ink); }
+.life-more-card .life-more-name { display: block; margin-top: 14px; padding: 0 4px; font: 900 22px/1.15 var(--font-display); }
+.life-more-card figcaption { position: static; margin-top: 6px; padding: 0 4px; color: var(--red); }
 .life-more .kit-painted { margin-top: clamp(56px, 7vw, 90px); }
 
 /* ---------- Responsive ---------- */
