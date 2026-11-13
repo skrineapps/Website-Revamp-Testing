@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers | Skrine</title>
+  <meta name="description" content="Open roles at Skrine.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/insights.css">
+  <link rel="stylesheet" href="css/article.css">
+  <link rel="stylesheet" href="css/job.css">
+</head>
+<body class="page-inner" data-life="dragons">
+  <!-- ============ HEADER ============ -->
+  <header class="site-header is-scrolled" id="siteHeader">
+    <div class="header-inner">
+      <a href="../index.html" class="brand" aria-label="Skrine home">
+        <img src="images/skrine-logo.png" alt="Skrine" class="brand-logo" width="475" height="94">
+      </a>
+
+      <nav class="main-nav" id="primaryNav" aria-label="Primary">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="people.html" class="nav-link">People</a>
+          </li>
+
+          <li class="nav-item has-menu">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="menu-capabilities">
+              Capabilities <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-capabilities">
+              <li><a href="capabilities.html">Practice Areas</a></li>
+              <li><a href="sectors.html">Sectors</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-menu">
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="menu-insights">
+              Insights <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-insights">
+              <li><a href="alerts.html">Alerts</a></li>
+              <li><a href="articles.html">Articles</a></li>
+              <li><a href="publications.html">Publications</a></li>
+              <li><a href="news-events.html">News &amp; Events</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item has-menu">
+            <a href="careers.html" class="nav-link" aria-current="page">Career</a>
+            <button type="button" class="nav-caret-btn nav-trigger" aria-expanded="false" aria-controls="menu-career" aria-label="Career menu">
+              <i class="fa-solid fa-chevron-down nav-caret" aria-hidden="true"></i>
+            </button>
+            <ul class="nav-menu" id="menu-career">
+              <li><a href="professional-development.html">Professional Development</a></li>
+              <li><a href="social-responsibility.html">Social Responsibility</a></li>
+              <li><a href="sports-social.html">Sports &amp; Social</a></li>
+              <li><a href="skrine-dragons.html">Skrine Dragons</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="contact.html" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="icon-btn search-toggle" id="searchToggle" aria-label="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+
+      <button class="icon-btn nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <form class="search-bar" id="searchBar" role="search" onsubmit="return false;">
+      <input type="search" placeholder="Search people, practices, insights…" aria-label="Search the site">
+      <button type="submit" aria-label="Submit search"><i class="fa-solid fa-arrow-right"></i></button>
+    </form>
+  </header>
+
+  <main class="page-main jb-main" id="job">
+    <nav class="ar-crumbs" aria-label="Breadcrumb">
+      <a href="careers.html">Career</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <a href="careers.html#join">Join us</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <span id="jbCrumb" aria-current="page"></span>
+    </nav>
+
+    <header class="jb-head reveal">
+      <p class="ar-tags"><span class="alert-tag alert-tag--label" id="jbGroup"></span></p>
+      <h1 class="ar-title" id="jbTitle"></h1>
+      <ul class="jb-meta" id="jbMeta"></ul>
+      <div class="jb-intro" id="jbIntro"></div>
+    </header>
+
+    <div class="jb-layout">
+      <article class="jb-body" id="jbBody" aria-labelledby="jbTitle"></article>
+
+      <aside class="jb-side" aria-label="Apply">
+        <div class="jb-card">
+          <p class="jb-card-eyebrow">Interested?</p>
+          <p class="jb-card-title" id="jbCardTitle"></p>
+          <dl class="jb-card-facts" id="jbCardFacts"></dl>
+          <a class="btn btn--solid jb-card-btn" href="#apply">Apply now <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+          <p class="jb-card-note">Only shortlisted candidates will be notified.</p>
+        </div>
+        <div class="ar-share" id="arShare">
+          <p class="ar-rail-label">Share this role</p>
+          <div class="ar-share-row"></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ===== Application (front-end only: nothing is sent) ===== -->
+    <section class="jb-apply reveal" id="apply" aria-labelledby="jbApplyTitle">
+      <div class="jb-apply-head">
+        <p class="eyebrow">Apply</p>
+        <h2 id="jbApplyTitle">Apply for <span id="jbApplyRole"></span></h2>
+      </div>
+
+      <ol class="jb-steps" aria-label="Application steps">
+        <li class="jb-step-pill is-current" data-step="1"><span>1</span>Data protection</li>
+        <li class="jb-step-pill" data-step="2"><span>2</span>Your details</li>
+        <li class="jb-step-pill" data-step="3"><span>3</span>Review &amp; submit</li>
+      </ol>
+
+      <form class="jb-form" id="jbForm" novalidate>
+        <!-- Step 1 -->
+        <fieldset class="jb-pane is-current" data-pane="1">
+          <legend class="jb-pane-title">Before you begin</legend>
+          <p class="jb-pane-lead">By continuing, you agree that you have read Skrine&rsquo;s Personal Data Protection Notice for applicants and consent to the processing of your personal data in accordance with the Notice.</p>
+          <a class="jb-notice" href="#" onclick="return false;"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Personal Data Protection Notice <span>PDF</span></a>
+          <label class="jb-check">
+            <input type="checkbox" id="jbConsent" required>
+            <span class="jb-check-box" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
+            <span>I have read and agree to Skrine&rsquo;s Personal Data Protection Notice.</span>
+          </label>
+          <p class="jb-error" id="jbConsentErr" hidden>Please agree to the notice to continue.</p>
+          <div class="jb-actions">
+            <button type="button" class="btn btn--solid" data-next="2">Continue <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </fieldset>
+
+        <!-- Step 2 -->
+        <fieldset class="jb-pane" data-pane="2">
+          <legend class="jb-pane-title">Your details</legend>
+          <div class="jb-grid">
+            <label class="jb-field"><span>Full name <b>*</b></span><input type="text" name="name" autocomplete="name" required></label>
+            <label class="jb-field"><span>Email address <b>*</b></span><input type="email" name="email" autocomplete="email" required></label>
+            <label class="jb-field"><span>Phone number <b>*</b></span><input type="tel" name="phone" autocomplete="tel" required></label>
+            <label class="jb-field"><span id="jbExpLabel">Years of experience</span>
+              <select name="experience">
+                <option value="">Select</option>
+                <option>No experience yet</option>
+                <option>Less than 1 year</option>
+                <option>1 – 3 years</option>
+                <option>4 – 6 years</option>
+                <option>7 years or more</option>
+              </select>
+            </label>
+            <label class="jb-field jb-field--full"><span>Current or most recent position</span><input type="text" name="current" autocomplete="organization-title"></label>
+          </div>
+
+          <div class="jb-drop" id="jbDrop">
+            <input type="file" id="jbCv" name="cv" accept=".pdf,.doc,.docx" required>
+            <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+            <p class="jb-drop-main"><strong>Upload your CV</strong> <b>*</b> &mdash; drag it here or <u>browse</u></p>
+            <p class="jb-drop-sub">PDF or Word, up to 5 MB</p>
+            <p class="jb-drop-file" id="jbCvName" hidden></p>
+          </div>
+
+          <label class="jb-field jb-field--full"><span>Cover note</span><textarea name="note" rows="5" placeholder="Tell us briefly why you would like to join Skrine."></textarea></label>
+          <p class="jb-error" id="jbDetailsErr" hidden>Please fill in the required fields and upload your CV.</p>
+          <div class="jb-actions">
+            <button type="button" class="btn btn--outline" data-back="1"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back</button>
+            <button type="button" class="btn btn--solid" data-next="3">Review application <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </fieldset>
+
+        <!-- Step 3 -->
+        <fieldset class="jb-pane" data-pane="3">
+          <legend class="jb-pane-title">Review your application</legend>
+          <dl class="jb-review" id="jbReview"></dl>
+          <div class="jb-actions">
+            <button type="button" class="btn btn--outline" data-back="2"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Edit details</button>
+            <button type="submit" class="btn btn--solid">Submit application <i class="fa-solid fa-paper-plane" aria-hidden="true"></i></button>
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- Shown after submitting -->
+      <div class="jb-done" id="jbDone" hidden tabindex="-1">
+        <span class="jb-done-icon" aria-hidden="true"><i class="fa-solid fa-check"></i></span>
+        <h3>Thank you, <span id="jbDoneName"></span>.</h3>
+        <p>Your application for <strong id="jbDoneRole"></strong> has been received. Our HR team reviews every application; only shortlisted candidates will be contacted.</p>
+        <a class="btn btn--outline" href="careers.html#join">See other roles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+    <section class="ar-related jb-more" id="jbMore" aria-labelledby="jbMoreTitle" hidden>
+      <div class="ar-related-head">
+        <h2 id="jbMoreTitle">Other open roles</h2>
+        <a class="ar-all" href="careers.html#join">All roles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+      <ul class="jb-more-list" id="jbMoreList"></ul>
+    </section>
+
+    <section class="ar-missing" id="arMissing" hidden>
+      <h1 class="page-title">Role not found</h1>
+      <p class="page-intro">This role may have been filled. See our current openings on the Careers page.</p>
+      <a class="btn btn--outline" href="careers.html#join">Open roles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-member">
+        <span class="member-label">Proud to be a<br>member of</span>
+        <img src="images/lexmundi.svg" alt="Lex Mundi — Bringing the best together" class="member-logo">
+      </div>
+
+      <div class="footer-connect">
+        <span>Connect with us</span>
+        <a href="#" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" aria-label="WeChat"><i class="fa-brands fa-weixin"></i></a>
+      </div>
+    </div>
+    <p class="footer-legal">
+      © 1963 – <span id="year">2026</span> Skrine. All rights reserved
+      <span class="sep">|</span> <a href="#">Disclaimer</a>
+      <span class="sep">|</span> <a href="#">PDPA Notice</a>
+    </p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/people-data.js"></script>
+  <script src="js/profiles-data.js"></script>
+  <script src="js/jobs-data.js"></script>
+  <script src="js/article-common.js"></script>
+  <script src="js/job.js"></script>
+</body>
+</html>

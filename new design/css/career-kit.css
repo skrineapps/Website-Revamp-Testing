@@ -306,3 +306,9 @@
   .kit-marquee-track { animation: none; }
   .brush::before { animation: none; }
 }
+
+/* moments that open a story */
+.kit-moments li > a { grid-column: 1 / -1; display: grid; grid-template-columns: 104px 1fr auto; gap: 12px; align-items: baseline; color: inherit; transition: color 0.2s; }
+.kit-moments li > a::after { content: "\f061"; font: 900 12px "Font Awesome 6 Free"; color: var(--grey-500); transition: transform 0.3s var(--ease), color 0.2s; }
+.kit-moments li > a:hover { color: var(--red); }
+.kit-moments li > a:hover::after { color: var(--red); transform: translateX(4px); }

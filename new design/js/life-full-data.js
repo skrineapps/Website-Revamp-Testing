@@ -1117,5 +1117,52 @@ window.SKRINE_LIFE_FULL = {
    "<p>In the second part of the workshop, the students were given a problem scenario and were asked to identify the different rights engaged in the situation. They then argued against each other, role-playing as opposing lawyers, about where the correct balance should be struck between the competing rights. This was a lively session with many insightful arguments from the students.</p>",
    "<p>A big thank you to all Skrinees and to Project ID who helped tremendously in making this online workshop a success!</p>"
   ]
+ },
+ "long-service-gratuity-2019": {
+  "slug": "long-service-gratuity-2019",
+  "section": "awards",
+  "title": "Long Service Gratuity 2019",
+  "date": "2019-09-15",
+  "gallery": [],
+  "videos": [],
+  "body": [
+   "<p>Skrine handed out the Long Service Gratuity to its valued members in recognition of their services during the Skrine&rsquo;s Beach Getaway that was held from 14 to 16 September 2019.</p>",
+   "<p>Below are the names of the recipients for 2019:</p>",
+   "<h2>30 Years Gratuity</h2>",
+   "<ol><li>Tan Suit Mui</li><li>Wong Lee Fan</li><li>Jasmee Bin Mohd Yusoff</li><li>Liu Foong Ming</li><li>Senesh Bte Osman</li><li>Umadevi A/P Veswanathan</li><li>Ng Ah Kee @ Ong Ah Kee</li><li>Eddy Shah Bin Md Ramlay</li><li>Hanizah Bte Mahyuddin</li><li>Mohd Shah Bin Othman</li><li>M Jegatheswaran A/L Maheswaran</li><li>Tan Choon Yong</li><li>Yap Tai Lan</li></ol>",
+   "<h2>25 Years Gratuity</h2>",
+   "<ol><li>Kaladevi A/P Kumarasamy</li><li>Poon Meng Fong</li><li>Haron Bin Mohd Soid</li></ol>",
+   "<h2>20 Years Gratuity</h2>",
+   "<ol><li>Hardeep Singh A/L Nerinder Singh</li></ol>"
+  ]
+ },
+ "skrine-academic-sporting-award-2019": {
+  "slug": "skrine-academic-sporting-award-2019",
+  "section": "awards",
+  "title": "Skrine Academic & Sporting Award 2019",
+  "date": "2019-05-02",
+  "gallery": [
+   "gallery/awards/skrine-academic-sporting-award-2019/01.jpg",
+   "gallery/awards/skrine-academic-sporting-award-2019/02.jpg"
+  ],
+  "videos": [],
+  "body": [
+   "<p>On 2 May 2019, in conjunction with the firm&rsquo;s 55<sup>th</sup> Anniversary celebration, the firm handed out its Skrine Awards Skrine to two of our staff, for their children&rsquo;s excellent achievements in academic and sports.</p>",
+   "<p>For the Skrine Awards: Sports, the award was given to Library department&rsquo;s Masniza Zakaria&rsquo;s daughter. Her daughter, Nabila Natasya, won a bronze medal for the triple jump event, at her school&rsquo;s sports event.</p>",
+   "<p>For the Skrine Awards: Academic, the award was given to Trademark department&rsquo;s Bavani Muthusamy&rsquo;s son. Her son, Shachin Sivakumar, achieved 5As and 1B for UPSR examination.</p>"
+  ]
+ },
+ "long-service-awards-2019": {
+  "slug": "long-service-awards-2019",
+  "section": "awards",
+  "title": "Long Service Awards 2019",
+  "date": "2019-01-05",
+  "gallery": [],
+  "videos": [],
+  "body": [
+   "<p>On 8 January 2019, in conjunction with the firm&rsquo;s brand launch, Skrine handed out the Long Service Awards to its valued members in recognition of their services.</p>",
+   "<p>Below are the names of the Long Service Awards recipients for 2019.</p>",
+   "<ul><li>K Manogaran A/L M Ganesan (30 years)</li><li>Rajesvary A/P Perianan (25 years)</li><li>Nur Aminah Ang Binti Abdullah (25 years)</li><li>Suresh A/L Ragavan (25 years)</li><li>Thilagavathy A/P Devaraj (25 years)</li><li>Low Kim Kee (25 years)</li><li>Umarani A/P Ramachristna (25 years)</li><li>Sukhdev Singh S/O Sewa Singh (25 years)</li><li>Hazlyne Bin Ibrahim (20 years)</li><li>Zulkeply Bin Kasih Ahmad (20 years)</li></ul>"
+  ]
  }
 };

@@ -17,7 +17,8 @@
     dragons: { label: "Skrine Dragons", page: "skrine-dragons.html" },
     socials: { label: "Sports & Social", page: "sports-social.html" },
     development: { label: "Professional Development", page: "professional-development.html" },
-    responsibility: { label: "Social Responsibility", page: "social-responsibility.html" }
+    responsibility: { label: "Social Responsibility", page: "social-responsibility.html" },
+    awards: { label: "Skrine Awards", page: "careers.html#awards" }
   };
   var el = A.el;
 

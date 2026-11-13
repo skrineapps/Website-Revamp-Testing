@@ -5,6 +5,7 @@
      socials        /more/life-at-skrine/socials-and-sports
      development    /more/life-at-skrine/professional-development (first 2 pages)
      responsibility /more/social-responsibility (first 2 pages)
+     awards         /more/life-at-skrine/skrine-awards
    slug opens our own story page (life-story.html?n=<slug>, content in
    js/life-full-data.js); url is the original skrine.com source; image is the card photo.
    ========================================================= */
@@ -449,6 +450,27 @@ window.SKRINE_LIFE = {
    "url": "https://www.skrine.com/more/social-responsibility/november-2021/skrine-x-project-id-know-your-rights",
    "image": "images/life/responsibility/2021-11-skrine-x-project-id-know-your-rights.jpg",
    "slug": "skrine-x-project-id-know-your-rights"
+  }
+ ],
+ "awards": [
+  {
+   "title": "Long Service Gratuity 2019",
+   "date": "2019-09-15",
+   "url": "https://www.skrine.com/more/life-at-skrine/skrine-awards/october-2019/long-service-gratuity",
+   "slug": "long-service-gratuity-2019"
+  },
+  {
+   "title": "Skrine Academic & Sporting Award 2019",
+   "date": "2019-05-02",
+   "url": "https://www.skrine.com/more/life-at-skrine/skrine-awards/may-2019/skrine-academic-sporting-award-2019",
+   "slug": "skrine-academic-sporting-award-2019",
+   "image": "images/life/gallery/awards/skrine-academic-sporting-award-2019/01.jpg"
+  },
+  {
+   "title": "Long Service Awards 2019",
+   "date": "2019-01-05",
+   "url": "https://www.skrine.com/more/life-at-skrine/skrine-awards/january-2019/long-service-awards-2019",
+   "slug": "long-service-awards-2019"
   }
  ]
 };
