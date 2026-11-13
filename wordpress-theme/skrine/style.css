@@ -1,0 +1,10 @@
+/*
+Theme Name:  Skrine (New Design)
+Description: Proof of concept: the new Skrine homepage as a WordPress theme, with every section editable. Lists (News, Alerts, Legal Updates, Deals, Spotlight, Awards) have their own admin menus; Alerts has its own list and article pages. Everything else is under Appearance > Customize > Skrine Pages.
+Version:     0.3.0
+Requires at least: 6.0
+Requires PHP: 7.4
+Text Domain: skrine
+*/
+
+/* The design's styles are in assets/css/. This file only names the theme. */

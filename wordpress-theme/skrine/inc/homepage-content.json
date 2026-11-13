@@ -1,0 +1,274 @@
+{
+ "updates": [
+  {
+   "title": "Principal Hub Tax Incentives Rules Amended to Remove Distinction between New Companies",
+   "tag": "Tax",
+   "image": "images/practice/tax-and-revenue.jpg",
+   "date": "2026-11-11",
+   "link": "#"
+  },
+  {
+   "title": "Starting Basic Salary Guidelines to be Introduced from June 2027",
+   "tag": "Employment",
+   "image": "images/practice/employment.jpg",
+   "date": "2026-11-06",
+   "link": "#"
+  },
+  {
+   "title": "2026 Updates to Malaysia's Food Laws and Regulations",
+   "tag": "Regulatory Compliance",
+   "image": "images/practice/regulatory-compliance.jpg",
+   "date": "2026-11-05",
+   "link": "#"
+  },
+  {
+   "title": "Misdelivery of Cargo: When does a Release Instruction become Conversion?",
+   "tag": "Maritime & Shipping",
+   "image": "images/practice/maritime-and-shipping.jpg",
+   "date": "2026-11-04",
+   "link": "#"
+  },
+  {
+   "title": "New Directions and revised Guidelines on Company Names issued",
+   "tag": "Corporate",
+   "image": "images/practice/corporate.jpg",
+   "date": "2026-11-03",
+   "link": "#"
+  },
+  {
+   "title": "Bank Negara Malaysia issues Revised Policy Document on Framework on Electronic Trading Platforms",
+   "tag": "Banking & Finance",
+   "image": "images/practice/banking-and-finance.jpg",
+   "date": "2026-10-30",
+   "link": "#"
+  },
+  {
+   "title": "Court of Appeal Clarifies Distinction Between Late Delivery and Defective Delivery of Vacant Possession",
+   "tag": "Real Estate",
+   "image": "images/practice/real-estate.jpg",
+   "date": "2026-10-29",
+   "link": "#"
+  },
+  {
+   "title": "First Move or Final Outcome: Does a Winding-Up Order Preserve an Overturned Adjudication Decision?",
+   "tag": "Construction",
+   "image": "images/practice/construction-and-engineering.jpg",
+   "date": "2026-10-28",
+   "link": "#"
+  }
+ ],
+ "deals": [
+  {
+   "title": "Skrine leads Denmark's tax authority in civil suits to recover approximately RM1 billion",
+   "summary": "Skrine acted as lead counsel for the Customs and Tax Administration of the Kingdom of Denmark, plaintiff in civil suits against multiple Malaysian entities and related individuals, and successfully resisted an application to set aside service of the writ out of jurisdiction.",
+   "sector": "Tax · Dispute Resolution",
+   "num": "RM1",
+   "unit": "bn",
+   "label": "sought in civil recovery suits in Malaysia",
+   "team": "Preetha Pillai · Nimalan Devaraja",
+   "date_label": "Cross-border recovery",
+   "image": "images/practice/fraud-and-asset-recovery.jpg",
+   "list_figure": "RM1bn",
+   "list_client": "Kingdom of Denmark",
+   "list_sector": "Tax · Disputes"
+  },
+  {
+   "title": "TotalEnergies acquires a 30% operated interest in the Lang Lebah and B14 gas fields offshore Sarawak",
+   "summary": "Skrine acted as Malaysian legal counsel to TotalEnergies on its arrangements with PETRONAS Carigali, PTTEP and KUFPEC. Lang Lebah is one of Malaysia's largest offshore gas discoveries.",
+   "sector": "Oil & Gas · Energy",
+   "num": "6.5",
+   "unit": "tcf",
+   "label": "more than 6.5 trillion cubic feet of gas resources across the Lang Lebah and B14 fields",
+   "team": "Fariz Abdul Aziz · Samson Kong",
+   "date_label": "06 Nov 2026",
+   "image": "images/sectors/oil-and-gas-and-energy.jpg",
+   "list_figure": "6.5 tcf",
+   "list_client": "TotalEnergies",
+   "list_sector": "Oil & Gas"
+  },
+  {
+   "title": "AME Elite and UEM Sunrise form a joint venture for an industrial development in the Johor-Singapore Special Economic Zone",
+   "summary": "Skrine acted as legal counsel to AME Development on the 50:50 joint venture to develop 402.1 acres of freehold industrial land in Gerbang Nusajaya, Iskandar Puteri.",
+   "sector": "Real Estate · Industrial",
+   "num": "RM4.0",
+   "unit": "bn",
+   "label": "estimated gross development value",
+   "team": "Sheba Gumis · Jesy Ooi · Engy Tan",
+   "date_label": "03 Nov 2026",
+   "image": "images/sectors/real-estate.jpg",
+   "list_figure": "RM4.0bn",
+   "list_client": "AME Elite × UEM Sunrise",
+   "list_sector": "Real Estate"
+  },
+  {
+   "title": "AirTrunk secures the largest green project financing for a single data centre in Malaysia",
+   "summary": "Skrine acted as Malaysian counsel for AirTrunk on the financing for its JHB2 hyperscale data centre campus in Johor Bahru — AirTrunk's largest single-asset financing to date.",
+   "sector": "Banking & Finance · Data Centres",
+   "num": "US$2.325",
+   "unit": "bn",
+   "label": "green financing from 30 financial institutions",
+   "team": "Lee Ai Hsian · Javene Fan · Chong Zhi Shin",
+   "date_label": "31 Jul 2026",
+   "image": "images/sectors/telecommunications-media-and-technology.jpg",
+   "list_figure": "US$2.325bn",
+   "list_client": "AirTrunk",
+   "list_sector": "Banking & Finance"
+  },
+  {
+   "title": "Thermo Fisher sells its microbiology business to private equity firm Astorg",
+   "summary": "Skrine acted as Malaysian counsel for Thermo Fisher Scientific on the sale, which included its shareholding in its Malaysian subsidiary.",
+   "sector": "Corporate / M&A · Healthcare",
+   "num": "US$1.08",
+   "unit": "bn",
+   "label": "sale of Thermo Fisher's microbiology business",
+   "team": "Sheba Gumis · Joey Tiw · Faith Chan",
+   "date_label": "17 Aug 2026",
+   "image": "images/sectors/healthcare-biotechnology-and-pharmaceuticals.jpg",
+   "list_figure": "US$1.08bn",
+   "list_client": "Thermo Fisher",
+   "list_sector": "Corporate / M&A"
+  },
+  {
+   "title": "Allianz Global Investors to acquire UOB Asset Management's operations across Asia",
+   "summary": "Skrine, as part of the global team led by Freshfields, advised AllianzGI on the Malaysian law and regulatory aspects, including due diligence and regulatory approvals.",
+   "sector": "Corporate / M&A · Asset Management",
+   "num": "8",
+   "unit": "jurisdictions",
+   "label": "in one regional acquisition",
+   "team": "To' Puan Janet Looi · Tan Wei Xian",
+   "date_label": "11 Aug 2026",
+   "image": "images/sectors/financial-institutions.jpg",
+   "list_figure": "8 jurisdictions",
+   "list_client": "Allianz Global Investors",
+   "list_sector": "Corporate / M&A"
+  },
+  {
+   "title": "Carlsberg and Sapporo form a strategic partnership across Southeast Asia and Hong Kong",
+   "summary": "Skrine acted as Malaysian counsel for Carlsberg on the joint venture and the internal cross-border restructuring behind it.",
+   "sector": "Corporate / M&A · Consumer",
+   "num": "US$643",
+   "unit": "m",
+   "label": "for Sapporo's 25% stake in the regional joint venture",
+   "team": "To' Puan Janet Looi · Tan Wei Xian · Kyra Iman Yaacob",
+   "date_label": "22 Jul 2026",
+   "image": "images/sectors/industrial-and-manufacturing.jpg",
+   "list_figure": "US$643m",
+   "list_client": "Carlsberg × Sapporo",
+   "list_sector": "Corporate / M&A"
+  }
+ ],
+ "spotlight": [
+  {
+   "title": "Lexology In-Depth: Intellectual Property – Edition 15",
+   "type": "publication",
+   "featured": true,
+   "image": "images/publications/lexology-in-depth-intellectual-property-edition-15-0.png",
+   "image_alt": "Lexology In-Depth: Intellectual Property, Edition 15",
+   "date": "2026-04-02",
+   "meta": "",
+   "link": "/publications/"
+  },
+  {
+   "title": "Malaysia’s Cross-Border Insolvency Act 2026 Comes into Operation",
+   "type": "alert",
+   "featured": false,
+   "image": "images/practice/restructuring-and-insolvency.jpg",
+   "image_alt": "",
+   "date": "2026-09-21",
+   "meta": "Restructuring & Insolvency · Sharon Chong and Charmaine Lionel",
+   "link": "/alerts/malaysias-cross-border-insolvency-act-2026-comes-into-operation/"
+  },
+  {
+   "title": "IEL's Guide to Workplace Investigations",
+   "type": "publication",
+   "featured": false,
+   "image": "images/publications/iels-guide-to-workplace-investigations-1.png",
+   "image_alt": "IEL's Guide to Workplace Investigations",
+   "date": "2025-11-27",
+   "meta": "",
+   "link": "/publications/"
+  },
+  {
+   "title": "Snapshots of the 2027 Malaysian Budget",
+   "type": "alert",
+   "featured": false,
+   "image": "images/practice/tax-and-revenue.jpg",
+   "image_alt": "",
+   "date": "2026-10-23",
+   "meta": "Corporate · Tan Wei Liang and Chong Cai Yi",
+   "link": "/alerts/"
+  },
+  {
+   "title": "Timor-Leste – A Strategic Gateway for Investment",
+   "type": "publication",
+   "featured": false,
+   "image": "images/publications/timor-leste-a-strategic-gateway-for-investment-2.jpg",
+   "image_alt": "Map of Timor-Leste",
+   "date": "2025-10-30",
+   "meta": "",
+   "link": "/publications/"
+  },
+  {
+   "title": "Bank Negara Malaysia launches SSDS+ for the issue of tokenised bonds and sukuk",
+   "type": "alert",
+   "featured": false,
+   "image": "images/practice/banking-and-finance.jpg",
+   "image_alt": "",
+   "date": "2026-10-22",
+   "meta": "Fintech · Lee Ai Hsian",
+   "link": "/alerts/"
+  },
+  {
+   "title": "Updated Annotated Statute of Malaysia – Occupational Safety and Health Act 1994",
+   "type": "publication",
+   "featured": false,
+   "image": "images/publications/updated-annotated-statue-of-malaysia-occupational-safety-and-health-ac-3.jpg",
+   "image_alt": "Annotated Statutes of Malaysia: Occupational Safety and Health Act 1994",
+   "date": "2025-10-03",
+   "meta": "",
+   "link": "/publications/"
+  },
+  {
+   "title": "Data Protection Law Over Borders – Comparative Guide",
+   "type": "publication",
+   "featured": false,
+   "image": "images/publications/data-protection-law-over-borders-data-protection-8.jpg",
+   "image_alt": "Global Legal Post: Data Protection comparative guide",
+   "date": "2025-02-27",
+   "meta": "",
+   "link": "/publications/"
+  }
+ ],
+ "awards": [
+  {
+   "image": "images/awards/iflr1000.png",
+   "image_alt": "IFLR1000 logo",
+   "source": "IFLR1000 · 2023",
+   "title": "Top-Tier Firm"
+  },
+  {
+   "image": "images/awards/asialaw.png",
+   "image_alt": "asialaw Profiles logo",
+   "source": "asialaw Profiles · 2023",
+   "title": "Outstanding Firm"
+  },
+  {
+   "image": "images/awards/benchmark.png",
+   "image_alt": "Benchmark Litigation logo",
+   "source": "Benchmark Litigation Asia-Pacific · 2023",
+   "title": "Top-Tier Firm"
+  },
+  {
+   "image": "images/awards/whoswholegal.png",
+   "image_alt": "Who's Who Legal logo",
+   "source": "Who's Who Legal · 2019",
+   "title": "Malaysia Law Firm of the Year"
+  },
+  {
+   "image": "images/awards/gar100.png",
+   "image_alt": "GAR 100 logo",
+   "source": "Global Arbitration Review",
+   "title": "GAR 100"
+  }
+ ]
+}

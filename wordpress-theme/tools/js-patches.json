@@ -1,0 +1,89 @@
+{
+ "_about": "Adjustments the build makes to the theme's COPIES of the design's scripts (never the originals in 'new design'). Each pair is [find, replace]; the build stops if a 'find' text is missing, i.e. the original script has changed.",
+ "home.js": [
+  [
+   "  var finePointer = window.matchMedia(\"(hover: hover) and (pointer: fine)\").matches;",
+   "  var finePointer = window.matchMedia(\"(hover: hover) and (pointer: fine)\").matches;\n  var BASE = window.SKRINE_BASE || \"new%20design/\";"
+  ],
+  [
+   "  var DEALS = [",
+   "  var DEALS = window.SKRINE_DEALS || ["
+  ],
+  [
+   "img: \"new%20design/",
+   "img: BASE + \""
+  ],
+  [
+   "var IMG = \"new%20design/images/news/\";",
+   "var IMG = BASE + \"images/news/\";"
+  ],
+  [
+   "var LIST_URL = \"new%20design/news-events.html\";",
+   "var LIST_URL = window.SKRINE_NEWS_URL || BASE + \"news-events.html\";\n    function imgSrc(src) { return /^(https?:)?\\/\\//.test(src) ? src : IMG + src; }"
+  ],
+  [
+   "'<img src=\"' + IMG + esc(f.image) + '\"",
+   "'<img src=\"' + esc(imgSrc(f.image)) + '\""
+  ],
+  [
+   "'<img src=\"' + IMG + esc(n.image) + '\"",
+   "'<img src=\"' + esc(imgSrc(n.image)) + '\""
+  ],
+  [
+   "'<a href=\"' + LIST_URL + '#latest\" class=\"ne-feature\">'",
+   "'<a href=\"' + esc(f.url || LIST_URL + \"#latest\") + '\" class=\"ne-feature\">'"
+  ],
+  [
+   "'<li><a href=\"' + LIST_URL + '#latest\" class=\"ne-row\">'",
+   "'<li><a href=\"' + esc(n.url || LIST_URL + \"#latest\") + '\" class=\"ne-row\">'"
+  ]
+ ],
+ "alerts.js": [
+  [
+   "function fullHref(a) { var s = slugify(a.title);",
+   "function fullHref(a) { if (a.url) return a.url; var s = slugify(a.title);"
+  ],
+  [
+   "img.src = window.SkrineTopicImage(a.topic, a.title, a.practice);",
+   "img.src = a.image || window.SkrineTopicImage(a.topic, a.title, a.practice);"
+  ]
+ ],
+ "alert-page.js": [
+  [
+   "var slug = new URLSearchParams(location.search).get(\"a\") || \"\";",
+   "var slug = window.SKRINE_ALERT_SLUG || new URLSearchParams(location.search).get(\"a\") || \"\";"
+  ],
+  [
+   "a.href = \"alert.html?a=\" + encodeURIComponent(x[0]);",
+   "a.href = FULL[x[0]].url || \"alert.html?a=\" + encodeURIComponent(x[0]);"
+  ],
+  [
+   "href: FULL[s] ? \"alert.html?a=\" + encodeURIComponent(s) : \"alerts.html\",",
+   "href: a.url || (FULL[s] ? \"alert.html?a=\" + encodeURIComponent(s) : \"alerts.html\"),"
+  ],
+  [
+   "full: !!FULL[s] })",
+   "full: a.full != null ? a.full : !!FULL[s] })"
+  ],
+  [
+   "dt.innerHTML = 'This alert",
+   "dt.innerHTML = window.SKRINE_ALERT_DISCLAIMER || 'This alert"
+  ]
+ ],
+ "article-common.js": [
+  [
+   "var PHOTO_DIR = \"../current design/images/people/\";",
+   "var PHOTO_DIR = window.SKRINE_BASE ? window.SKRINE_BASE + \"images/people/\" : \"../current design/images/people/\";"
+  ],
+  [
+   "href: PROFILES[slug] ? \"profile.html?p=\" + encodeURIComponent(slug) : null,",
+   "href: PROFILES[slug] ? (window.SKRINE_PROFILE_URL || \"profile.html?p=\") + encodeURIComponent(slug) : null,"
+  ]
+ ],
+ "topic-images.js": [
+  [
+   "var P = \"images/practice/\", S = \"images/sectors/\";",
+   "var B = window.SKRINE_BASE || \"\"; var P = B + \"images/practice/\", S = B + \"images/sectors/\";"
+  ]
+ ]
+}
