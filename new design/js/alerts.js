@@ -56,6 +56,14 @@
   }
   function fullHref(a) { var s = slugify(a.title); return FULL[s] ? "alert.html?a=" + encodeURIComponent(s) : "#"; }
 
+  // "By A and B", each name opening their profile (js/people-links.js); the card itself is a link
+  function byLine(tag, authors) {
+    var p = el(tag, "alert-authors", "By ");
+    if (window.SkrinePeople) p.appendChild(window.SkrinePeople.linkList(authors, true));
+    else p.appendChild(document.createTextNode(authors));
+    return p;
+  }
+
   function tags(a) {
     var wrap = el("p", "alert-tags");
     if (a.label) wrap.appendChild(el("span", "alert-tag alert-tag--label", a.label));
@@ -76,7 +84,7 @@
     if (window.SkrineTopicImage) {
       var ph = el("span", "latest-photo");
       var img = el("img");
-      img.src = window.SkrineTopicImage(a.topic, a.title, a.practice);
+      img.src = a.image || window.SkrineTopicImage(a.topic, a.title, a.practice);
       img.alt = "";
       img.loading = lead ? "eager" : "lazy";
       ph.appendChild(img);
@@ -92,7 +100,7 @@
     body.appendChild(el("h3", "latest-title", a.title));
     if (lead && a.excerpt) body.appendChild(el("p", "latest-excerpt", a.excerpt));
     var foot = el("div", "latest-foot");
-    if (lead && a.authors) foot.appendChild(el("span", "alert-authors", "By " + a.authors));
+    if (lead && a.authors) foot.appendChild(byLine("span", a.authors));
     var cta = el("span", "alert-read");
     cta.innerHTML = 'Read alert <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
     foot.appendChild(cta);
@@ -166,7 +174,7 @@
     var body = el("div", "alert-body");
     body.appendChild(tags(a));
     body.appendChild(el("h4", "alert-title", a.title));
-    if (a.authors) body.appendChild(el("p", "alert-authors", "By " + a.authors));
+    if (a.authors) body.appendChild(byLine("p", a.authors));
     r.appendChild(body);
     var arrow = el("span", "alert-arrow");
     arrow.innerHTML = '<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';

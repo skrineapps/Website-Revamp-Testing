@@ -1,0 +1,285 @@
+<!-- =====================================================================
+     SKRINE — Landing page · Part 1: Hero
+     Paste into an Elementor "HTML" widget (section set to Full Width,
+     no padding). Everything is self-contained: fonts, CSS, icons.
+
+     To change later:
+       • Images  → background: --sk-img-bg at the top of the <style>;
+                   badges: the two <img src="…"> near the bottom
+                   (upload to Media Library and paste the new URLs)
+       • Buttons → the two href="…" on "Our Story" / "Explore Services"
+       • "Scroll" → links to #updates (give the next section that CSS ID)
+     ===================================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Merriweather:ital,wght@0,900;1,400&display=swap" rel="stylesheet">
+
+<style>
+  .sk-hero {
+    --sk-img-bg: url("https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/hero-palette.jpg");
+    --sk-red: #c32030;
+    --sk-red-dark: #9a1825;
+    --sk-grey-700: #757575;
+    --sk-ink: #2a2a2a;
+    --sk-ink-soft: #555555;
+    --sk-display: "Merriweather", Georgia, serif;
+    --sk-body: "Karla", Arial, sans-serif;
+    --sk-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+    position: relative;
+    height: 100vh;
+    min-height: 620px;
+    overflow: hidden;
+    perspective: 1200px;
+    background: transparent;
+    font-family: var(--sk-body);
+    color: var(--sk-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  .sk-hero *, .sk-hero *::before, .sk-hero *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .sk-hero ul { list-style: none; }
+  .sk-hero a { text-decoration: none; }
+  .sk-hero img { display: block; max-width: 100%; }
+
+  /* palette-knife painting, drifting slowly, fading out at the bottom */
+  .sk-hero .sk-bg {
+    position: absolute;
+    inset: -6%;
+    background: var(--sk-img-bg) center / cover no-repeat;
+    animation: skPaintDrift 38s ease-in-out infinite alternate;
+    will-change: transform;
+    -webkit-mask-image: linear-gradient(180deg, #000 45%, rgba(0, 0, 0, 0.35) 68%, transparent 84%);
+    mask-image: linear-gradient(180deg, #000 45%, rgba(0, 0, 0, 0.35) 68%, transparent 84%);
+  }
+  .sk-hero .sk-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(251, 251, 251, 0.7) 0%, rgba(251, 251, 251, 0.15) 22%, rgba(251, 251, 251, 0) 40%);
+  }
+
+  /* frosted text panel with the red rule */
+  .sk-hero .sk-panel {
+    position: absolute;
+    z-index: 3;
+    right: clamp(16px, 5vw, 88px);
+    bottom: clamp(56px, 10vh, 110px);
+    width: min(680px, calc(100% - 32px));
+    padding: clamp(36px, 4vw, 56px) clamp(32px, 4vw, 60px) clamp(32px, 3.6vw, 48px);
+    text-align: left;
+    isolation: isolate;
+  }
+  .sk-hero .sk-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(251, 251, 251, 0.62);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+    backdrop-filter: blur(10px) saturate(1.1);
+    border-left: 4px solid var(--sk-red);
+    box-shadow: 0 18px 44px rgba(30, 30, 30, 0.12);
+    animation: skGeoRise 1.1s var(--sk-ease) 0.05s both;
+  }
+
+  .sk-hero .sk-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    font: 700 12.5px/1.4 var(--sk-body);
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--sk-grey-700);
+    opacity: 0;
+    animation: skFadeUp 0.8s var(--sk-ease) 0.3s forwards;
+  }
+  .sk-hero .sk-eyebrow span { width: 34px; height: 2px; background: var(--sk-red); }
+
+  .sk-hero .sk-tagline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: var(--sk-display);
+    font-weight: 900;
+    font-style: normal;
+    font-size: clamp(40px, 4.6vw, 76px);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    text-transform: none;
+    color: var(--sk-ink);
+    perspective: 800px;
+  }
+  .sk-hero .sk-word {
+    position: relative;
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px) rotateX(-70deg);
+    transform-origin: bottom center;
+    animation: skFlipIn 0.9s var(--sk-ease) forwards;
+  }
+  .sk-hero .sk-word:nth-child(1) { animation-delay: 0.45s; }
+  .sk-hero .sk-word:nth-child(2) { animation-delay: 0.6s; color: var(--sk-grey-700); }
+  .sk-hero .sk-word:nth-child(3) { animation-delay: 0.75s; }
+
+  /* "Ingenuity." knocked out of a red brush stroke */
+  .sk-hero .sk-word--swatch { margin-top: 0.08em; padding: 0.04em 0.28em 0.1em 0.2em; margin-left: -0.2em; }
+  .sk-hero .sk-swatch {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(175deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 40%),
+      linear-gradient(90deg, #a5121f 0%, var(--sk-red) 35%, #d0293a 70%, var(--sk-red) 100%);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cfilter id='g' x='-5%25' y='-10%25' width='110%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.3' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='16'/%3E%3C/filter%3E%3Crect x='8' y='9' width='384' height='82' fill='black' filter='url(%23g)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cfilter id='g' x='-5%25' y='-10%25' width='110%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.3' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='16'/%3E%3C/filter%3E%3Crect x='8' y='9' width='384' height='82' fill='black' filter='url(%23g)'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: skSwatchIn 0.75s cubic-bezier(0.7, 0, 0.2, 1) 1.15s forwards;
+  }
+  .sk-hero .sk-text { color: var(--sk-ink); animation: skSwatchText 0.35s ease 1.45s forwards; }
+
+  .sk-hero .sk-sub {
+    margin-top: 20px;
+    font-family: var(--sk-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(16px, 1.35vw, 20px);
+    line-height: 1.5;
+    color: var(--sk-ink-soft);
+    opacity: 0;
+    animation: skFadeUp 0.9s var(--sk-ease) 1.5s forwards;
+  }
+
+  /* buttons + award badges under a hairline */
+  .sk-hero .sk-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px 24px;
+    margin-top: 26px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(117, 117, 117, 0.25);
+  }
+  .sk-hero .sk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    opacity: 0;
+    animation: skFadeUp 0.8s var(--sk-ease) 1.65s forwards;
+  }
+  .sk-hero .sk-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    border-radius: 40px;
+    border: 2px solid var(--sk-red);
+    font: 700 14.5px/1.2 var(--sk-body);
+    letter-spacing: 0.04em;
+    transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--sk-ease), box-shadow 0.3s;
+  }
+  .sk-hero .sk-btn svg { width: 14px; height: 14px; flex: none; transition: transform 0.3s var(--sk-ease); }
+  .sk-hero .sk-btn:hover svg { transform: translateX(4px); }
+  .sk-hero .sk-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14); }
+  .sk-hero .sk-btn--solid { background: var(--sk-red); color: #fff; }
+  .sk-hero .sk-btn--solid:hover { background: var(--sk-red-dark); border-color: var(--sk-red-dark); color: #fff; }
+  .sk-hero .sk-btn--outline { background: rgba(255, 255, 255, 0.55); color: var(--sk-red); }
+  .sk-hero .sk-btn--outline:hover { background: var(--sk-red); color: #fff; }
+
+  .sk-hero .sk-badges { display: flex; align-items: center; gap: 16px; perspective: 600px; }
+  .sk-hero .sk-badges li {
+    opacity: 0;
+    animation: skFadeUp 0.8s var(--sk-ease) forwards;
+    transition: transform 0.6s var(--sk-ease), filter 0.6s var(--sk-ease);
+  }
+  .sk-hero .sk-badges li:nth-child(1) { animation-delay: 1.8s; }
+  .sk-hero .sk-badges li:nth-child(2) { animation-delay: 1.95s; }
+  .sk-hero .sk-badges img { height: 58px; width: auto; }
+  .sk-hero .sk-badges li:nth-child(2) img { border-radius: 4px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08); }
+  .sk-hero .sk-badges li:hover { transform: rotateY(-14deg) translateY(-4px); filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.15)); }
+
+  /* vertical "SCROLL" cue in the left gutter */
+  .sk-hero .sk-scroll {
+    position: absolute;
+    z-index: 3;
+    left: clamp(16px, 5vw, 88px);
+    bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font: 700 10.5px var(--sk-body);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    color: var(--sk-grey-700);
+    transition: color 0.25s;
+  }
+  .sk-hero .sk-scroll:hover { color: var(--sk-red); }
+  .sk-hero .sk-scroll span { position: relative; width: 1px; height: 56px; background: rgba(117, 117, 117, 0.35); overflow: hidden; }
+  .sk-hero .sk-scroll span::after {
+    content: "";
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 40%;
+    background: var(--sk-red);
+    animation: skScrollCue 2s var(--sk-ease) infinite;
+  }
+
+  @keyframes skPaintDrift {
+    0%   { transform: scale(1.02) translate3d(0, 0, 0) rotate(0deg); }
+    50%  { transform: scale(1.07) translate3d(-1.5%, 1%, 0) rotate(0.6deg); }
+    100% { transform: scale(1.04) translate3d(1%, -1.2%, 0) rotate(-0.4deg); }
+  }
+  @keyframes skGeoRise { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; } }
+  @keyframes skFadeUp  { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes skFlipIn  { to { opacity: 1; transform: none; } }
+  @keyframes skSwatchIn { to { transform: scaleX(1); } }
+  @keyframes skSwatchText { to { color: #fff; } }
+  @keyframes skScrollCue { 0% { transform: translateY(-100%); } 100% { transform: translateY(250%); } }
+
+  @media (max-width: 640px) {
+    .sk-hero { min-height: 560px; }
+    .sk-hero .sk-panel { right: 12px; left: 12px; width: auto; bottom: 56px; padding: 34px 26px 28px; }
+    .sk-hero .sk-panel::before { background: rgba(251, 251, 251, 0.72); box-shadow: 0 10px 24px rgba(30, 30, 30, 0.08); }
+    .sk-hero .sk-tagline { font-size: clamp(36px, 11vw, 46px); }
+    .sk-hero .sk-actions { gap: 10px; }
+    .sk-hero .sk-btn { padding: 11px 18px; font-size: 14px; }
+    .sk-hero .sk-badges img { height: 56px; }
+    .sk-hero .sk-scroll { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sk-hero *, .sk-hero *::before, .sk-hero *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; }
+  }
+</style>
+
+<section class="sk-hero">
+  <div class="sk-bg" aria-hidden="true"></div>
+  <div class="sk-shade" aria-hidden="true"></div>
+
+  <div class="sk-panel">
+    <p class="sk-eyebrow"><span></span>Skrine &middot; Since 1963</p>
+    <h1 class="sk-tagline">
+      <span class="sk-word">Wisdom.</span>
+      <span class="sk-word">Fortitude.</span>
+      <span class="sk-word sk-word--swatch"><span class="sk-swatch" aria-hidden="true"></span><span class="sk-text">Ingenuity.</span></span>
+    </h1>
+    <p class="sk-sub">Our Heritage, Your Legacy</p>
+
+    <div class="sk-foot">
+      <div class="sk-actions">
+        <a href="/our-story/" class="sk-btn sk-btn--solid">Our Story
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+        <a href="/practice-areas/" class="sk-btn sk-btn--outline">Explore Services
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      </div>
+
+      <ul class="sk-badges" aria-label="Recognitions">
+        <li><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/chambers-2026.png" alt="Chambers Asia-Pacific 2026 &ndash; Top Ranked" width="320" height="269"></li>
+        <li><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/legal500-2026.png" alt="Legal 500 Asia Pacific 2026 &ndash; Top Tier Firm" width="290" height="320"></li>
+      </ul>
+    </div>
+  </div>
+
+  <a href="#updates" class="sk-scroll" aria-label="Scroll to content">Scroll<span aria-hidden="true"></span></a>
+</section>

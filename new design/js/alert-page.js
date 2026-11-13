@@ -61,7 +61,7 @@
 
   /* ---------- body ---------- */
   var body = document.getElementById("arBody");
-  body.innerHTML = D.body.join("");
+  A.fillBody(body, D.body);
 
   // subheadings get ids for the "On this page" list
   var heads = body.querySelectorAll("h2");

@@ -12,6 +12,8 @@
   var PEOPLE = window.SKRINE_PEOPLE || {};
   var PROFILES = window.SKRINE_PROFILES || {};
   var PHOTO_DIR = "../current design/images/people/";
+  // a file name in that folder, or a full URL (WordPress media library)
+  function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var ROLE = { partners: "Partner", consultants: "Consultant", seniorAssociates: "Senior Associate", associates: "Associate" };
 
@@ -49,6 +51,11 @@
     scan(function (k) { return k === key || k.indexOf(key) === 0 || key.indexOf(k) === 0; });
     // credits often use the full name ("Nurul Syafinas binti Ibrahim" → "Syafinas Ibrahim")
     if (!found) scan(function (k) { var ks = k.split("-"); return ks.length > 1 && ks.every(function (w) { return words.indexOf(w) > -1; }); });
+    // shortened names and one-letter spelling differences (js/people-links.js)
+    if (!found && window.SkrinePeople) {
+      var f = window.SkrinePeople.find(name);
+      if (f) { found = f.person; roleKey = f.group; }
+    }
     var nm = found ? found.name : name;
     var withPhoto = roleKey === "partners" || roleKey === "consultants";
     var slug = profileSlug(nm);
@@ -56,8 +63,9 @@
       name: nm,
       role: roleKey ? ROLE[roleKey] : "",
       division: found && found.division || "",
-      photo: withPhoto ? PHOTO_DIR + encodeURIComponent(found.photo || nm + ".png") : null,
-      href: PROFILES[slug] ? "profile.html?p=" + encodeURIComponent(slug) : null,
+      photo: withPhoto ? photoUrl(found.photo || nm + ".png") : null,
+      // partners/consultants → profile; other Skrine lawyers → the People page, filtered to them
+      href: PROFILES[slug] ? "profile.html?p=" + encodeURIComponent(slug) : found ? "people.html?q=" + encodeURIComponent(nm) : null,
     };
   }
   function initials(name) {
@@ -90,7 +98,6 @@
     t.appendChild(el("span", "ar-person-name", p.name));
     if (p.role) t.appendChild(el("span", "ar-person-role", p.role + (p.division && p.role === "Partner" ? " · " + p.division : "")));
     c.appendChild(t);
-    if (p.href) c.appendChild(icon("fa-solid fa-arrow-right ar-person-go"));
     return c;
   }
 
@@ -171,6 +178,19 @@
   window.SkrineArticle = {
     el: el, icon: icon, slugify: slugify, longDate: longDate, shortDate: shortDate,
     person: person, personChip: personChip, avatar: avatar,
-    progress: progress, share: share, relatedCard: relatedCard,
+    progress: progress, share: share, relatedCard: relatedCard, fillBody: fillBody,
   };
+
+  // article text from the editor: plain tables (pasted from Word, classic editor) get a
+  // scrolling wrapper so they don't squash on phones; WordPress table blocks already have one
+  function fillBody(target, parts) {
+    target.innerHTML = parts.join("");
+    Array.prototype.forEach.call(target.querySelectorAll("table"), function (t) {
+      if (t.closest(".wp-block-table, .ar-table")) return;
+      var wrap = document.createElement("div");
+      wrap.className = "ar-table";
+      t.parentNode.insertBefore(wrap, t);
+      wrap.appendChild(t);
+    });
+  }
 })();

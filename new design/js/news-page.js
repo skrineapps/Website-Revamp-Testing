@@ -15,6 +15,8 @@
   var ALL = (window.SKRINE_NEWS || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
   var FX = window.SkrineFX || { observeReveal: function (n) { n.classList.add("is-visible"); } };
   var IMG = "images/news/";
+  // a file name in images/news/, or a full URL (WordPress media library)
+  function src(v) { return /^(https?:)?\/\//.test(v) ? v : IMG + v; }
   var el = A.el;
 
   var slug = new URLSearchParams(location.search).get("n") || "";
@@ -56,12 +58,12 @@
   // hero: first gallery photo (larger) or the listing thumbnail
   var photos = D.gallery.length ? D.gallery : (D.image ? [D.image] : []);
   var hero = document.getElementById("nwHero");
-  if (photos.length) hero.appendChild(frame(IMG + photos[0], "nw-hero-frame"));
+  if (photos.length) hero.appendChild(frame(src(photos[0]),"nw-hero-frame"));
   else hero.remove();
 
   /* ---------- body + side ---------- */
   var body = document.getElementById("nwBody");
-  body.innerHTML = D.body.join("");
+  A.fillBody(body, D.body);
   // Chinese sections: tag the language so the right font and line breaking apply
   body.querySelectorAll("p, h2").forEach(function (n) { if (/[一-鿿]{4,}/.test(n.textContent)) n.lang = "zh"; });
 
@@ -95,7 +97,7 @@
       b.type = "button";
       b.setAttribute("aria-label", "Open photo " + (i + 1) + " of " + D.gallery.length);
       var img = el("img");
-      img.src = IMG + g;
+      img.src = src(g);
       img.alt = "";
       img.loading = "lazy";
       b.appendChild(img);
@@ -112,7 +114,7 @@
     var cur = 0, last = null;
     function show(i) {
       cur = (i + D.gallery.length) % D.gallery.length;
-      lbImg.src = IMG + D.gallery[cur];
+      lbImg.src = src(D.gallery[cur]);
       lbImg.alt = D.title + " — photo " + (cur + 1);
       lbCount.textContent = (cur + 1) + " / " + D.gallery.length;
     }
@@ -150,7 +152,7 @@
   var rg = document.getElementById("arRelatedGrid");
   related.forEach(function (n) {
     var s = A.slugify(n.title);
-    var c = A.relatedCard({ href: FULL[s] ? "news.html?n=" + encodeURIComponent(s) : "news-events.html", image: n.image ? IMG + n.image : null, meta: n.category + " · " + A.shortDate(n.date), title: n.title, full: !!FULL[s] });
+    var c = A.relatedCard({ href: FULL[s] ? "news.html?n=" + encodeURIComponent(s) : "news-events.html", image: n.image ? src(n.image) : null, meta: n.category + " · " + A.shortDate(n.date), title: n.title, full: !!FULL[s] });
     rg.appendChild(c);
     FX.observeReveal(c);
   });

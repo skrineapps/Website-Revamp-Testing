@@ -13,6 +13,8 @@
   var FX = window.SkrineFX || { observeReveal: function (el) { el.classList.add("is-visible"); }, attachTilt: function () {} };
   var COVER_DIR = "images/publications/";
   var PHOTO_DIR = "../current design/images/people/";
+  // a file name in that folder, or a full URL (WordPress media library)
+  function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   var listEl = document.getElementById("pubList");
@@ -44,7 +46,7 @@
     var file = photoByName[name];
     if (file) {
       var img = el("img");
-      img.src = PHOTO_DIR + encodeURIComponent(file);
+      img.src = photoUrl(file);
       img.alt = "";
       img.loading = "lazy";
       img.addEventListener("error", function () { img.replaceWith(el("span", null, initials(name))); });
@@ -66,7 +68,7 @@
   // the whole cover is shown (covers differ in shape and carry their own titles);
   // a blurred copy of it fills the space behind
   function cover(p) {
-    var url = COVER_DIR + encodeURIComponent(p.cover);
+    var url = /^(https?:)?\/\//.test(p.cover) ? p.cover : COVER_DIR + encodeURIComponent(p.cover);
     var frame = el("span", "pub-cover");
     // absolute address: a url() inside a CSS variable resolves against the stylesheet otherwise
     frame.style.setProperty("--cover", 'url("' + new URL(url, document.baseURI).href + '")');
@@ -102,7 +104,10 @@
     if (p.authors.length) {
       var by = el("div", "pub-spot-authors");
       by.appendChild(avatarStack(p.authors, 5));
-      by.appendChild(el("span", "pub-authors-names", p.authors.join(", ")));
+      var namesEl = el("span", "pub-authors-names");
+      if (window.SkrinePeople) namesEl.appendChild(window.SkrinePeople.linkList(p.authors));
+      else namesEl.textContent = p.authors.join(", ");
+      by.appendChild(namesEl);
       body.appendChild(by);
     }
     body.appendChild(actions(p));
@@ -278,7 +283,7 @@
       p.authors.forEach(function (n) {
         var li = el("li");
         li.appendChild(avatar(n));
-        li.appendChild(el("span", null, n));
+        li.appendChild(window.SkrinePeople ? window.SkrinePeople.link(n) : el("span", null, n));
         ul.appendChild(li);
       });
       au.appendChild(ul);

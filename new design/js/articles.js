@@ -13,6 +13,8 @@
   var PEOPLE = window.SKRINE_PEOPLE || {};
   var FX = window.SkrineFX || { observeReveal: function (el) { el.classList.add("is-visible"); }, attachTilt: function () {} };
   var PHOTO_DIR = "../current design/images/people/";
+  // a file name in that folder, or a full URL (WordPress media library)
+  function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var PAGE = 12;
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -67,7 +69,7 @@
     var file = photoFor(name);
     if (file) {
       var img = el("img");
-      img.src = PHOTO_DIR + encodeURIComponent(file);
+      img.src = photoUrl(file);
       img.alt = "";
       img.loading = "lazy";
       img.addEventListener("error", function () { img.replaceWith(el("span", null, initials(name))); });
@@ -82,7 +84,8 @@
     names.forEach(function (n) {
       var li = el("li");
       li.appendChild(avatar(n));
-      li.appendChild(el("span", "shot-contact-name", n));
+      // the back of a SkrineShot is a button, so names are click targets rather than links
+      li.appendChild(window.SkrinePeople ? window.SkrinePeople.link(n, "shot-contact-name", true) : el("span", "shot-contact-name", n));
       ul.appendChild(li);
     });
     return ul;

@@ -15,6 +15,8 @@
   var PEOPLE = window.SKRINE_PEOPLE || {};
   var NEWS = (window.SKRINE_NEWS || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
   var PHOTO_DIR = "../current design/images/people/";
+  // a file name in that folder, or a full URL (WordPress media library)
+  function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   // design switch keeps the same person
@@ -67,7 +69,7 @@
   /* ---------- left: photo + practice areas ---------- */
   var photo = document.getElementById("pcPhoto");
   var img = el("img");
-  img.src = PHOTO_DIR + encodeURIComponent(entry.person.photo || P.name + ".png");
+  img.src = photoUrl(entry.person.photo || P.name + ".png");
   img.alt = "Portrait of " + P.name;
   img.addEventListener("error", function () {
     var m = el("span", "pc-monogram", initials(P.name));
@@ -269,7 +271,7 @@
       var media = el("span", "pc-card-media");
       if (n.image) {
         var im = el("img");
-        im.src = "images/news/" + encodeURIComponent(n.image);
+        im.src = /^(https?:)?\/\//.test(n.image) ? n.image : "images/news/" + encodeURIComponent(n.image);
         im.alt = "";
         im.loading = "lazy";
         media.appendChild(im);

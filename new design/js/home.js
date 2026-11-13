@@ -13,8 +13,9 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  /* ---------- Deals & Transactions ---------- */
-  var DEALS = [
+  /* ---------- Deals & Transactions ----------
+     WordPress supplies window.SKRINE_DEALS (Deals in wp-admin); the list below is the static fallback. */
+  var DEALS = (window.SKRINE_DEALS && window.SKRINE_DEALS.length) ? window.SKRINE_DEALS : [
     {
       // sources: ITR World Tax, Skrine (Malaysia) firm review — https://www.internationaltaxreview.com/itrworldtax/firms/skrine-malaysia
       // and Nimalan Devaraja's skrine.com profile (reported case: The Customs and Tax Administration of The Kingdom of Denmark v Timothy Paul Murphy [2022] MLJU 2956)
@@ -179,11 +180,13 @@
       return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
     }
     function fmt(iso) { var d = iso.split("-"); return d[2] + " " + MON[Number(d[1]) - 1] + " " + d[0]; }
+    // a file name in images/news/, or a full URL (WordPress media library)
+    function img(v) { return /^(https?:)?\/\//.test(v) ? esc(v) : IMG + esc(v); }
 
     var f = NEWS5[0];
     var html =
       '<a href="' + LIST_URL + '#latest" class="ne-feature">' +
-        (f.image ? '<img src="' + IMG + esc(f.image) + '" alt="" class="ne-feature-img">' : "") +
+        (f.image ? '<img src="' + img(f.image) + '" alt="" class="ne-feature-img">' : "") +
         '<div class="ne-feature-body">' +
           '<p class="ne-kicker"><span>Latest News</span>' + esc(f.category) + " · " + fmt(f.date) + "</p>" +
           "<h3>" + esc(f.title) + "</h3>" +
@@ -219,7 +222,7 @@
     html += '<section class="ne-list" aria-labelledby="neListHead"><h3 class="ne-side-head" id="neListHead">More News</h3><ul>';
     NEWS5.slice(1).forEach(function (n) {
       html += '<li><a href="' + LIST_URL + '#latest" class="ne-row">' +
-        (n.image ? '<img src="' + IMG + esc(n.image) + '" alt="" loading="lazy">' : '<span class="ne-row-noimg"></span>') +
+        (n.image ? '<img src="' + img(n.image) + '" alt="" loading="lazy">' : '<span class="ne-row-noimg"></span>') +
         '<span class="ne-row-text"><small>' + esc(n.category) + " · " + fmt(n.date) + "</small>" + esc(n.title) + "</span>" +
         "</a></li>";
     });

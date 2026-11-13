@@ -17,6 +17,8 @@
   var NEWS = (window.SKRINE_NEWS || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
   var FX = window.SkrineFX || { observeReveal: function (el) { el.classList.add("is-visible"); }, attachTilt: function () {} };
   var PHOTO_DIR = "../current design/images/people/";
+  // a file name in that folder, or a full URL (WordPress media library)
+  function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var MATTERS_SHOWN = 6;
   var LIST_SHOWN = 6;
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -58,7 +60,7 @@
   function portrait(slug, name, cls) {
     var wrap = el("span", cls);
     var img = el("img");
-    img.src = PHOTO_DIR + encodeURIComponent(photoFile(slug, name));
+    img.src = photoUrl(photoFile(slug, name));
     img.alt = "Portrait of " + name;
     img.decoding = "async";
     img.addEventListener("error", function () {
@@ -377,7 +379,7 @@
       var media = el("span", "pf-news-media");
       if (n.image) {
         var img = el("img");
-        img.src = "images/news/" + encodeURIComponent(n.image);
+        img.src = /^(https?:)?\/\//.test(n.image) ? n.image : "images/news/" + encodeURIComponent(n.image);
         img.alt = "";
         img.loading = "lazy";
         media.appendChild(img);

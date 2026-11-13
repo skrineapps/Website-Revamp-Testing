@@ -1,0 +1,22 @@
+.skrine-fields th { width: 190px; }
+.skrine-gallery-preview { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.skrine-gallery-preview img { width: 72px; height: 72px; object-fit: cover; border-radius: 4px; }
+
+.skrine-people-chips { display: flex; flex-direction: column; gap: 6px; margin: 0 0 8px; max-width: 560px; }
+.skrine-chip { display: flex; align-items: center; gap: 10px; margin: 0; padding: 6px 8px 6px 12px; background: #fff; border: 1px solid #c3c4c7; border-left: 3px solid #c32030; border-radius: 4px; cursor: grab; }
+.skrine-chip.is-external { border-left-color: #c3c4c7; }
+.skrine-chip.is-dragging { opacity: 0.5; }
+.skrine-chip-name { font-weight: 600; }
+.skrine-chip-note { flex: 1; color: #646970; font-size: 12px; }
+.skrine-chip-remove { border: 0; background: none; font-size: 18px; line-height: 1; color: #646970; cursor: pointer; padding: 0 4px; }
+.skrine-chip-remove:hover { color: #c32030; }
+
+.skrine-import { max-width: 760px; }
+.skrine-progress ol { margin-left: 1.4em; }
+.skrine-progress li { margin: 8px 0; color: #646970; }
+.skrine-progress li.is-running, .skrine-progress li.is-done { color: #1d2327; }
+.skrine-progress li.is-done .skrine-step-label::after { content: " \2713"; color: #00a32a; }
+.skrine-progress li.is-failed { color: #c32030; }
+.skrine-progress progress { width: 260px; vertical-align: middle; accent-color: #c32030; }
+.skrine-step-label { display: inline-block; min-width: 190px; }
+#skrineStatus { font-weight: 600; }

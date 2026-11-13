@@ -13,6 +13,8 @@
   var ROLES = ["partners", "consultants", "seniorAssociates", "associates"];
   var PHOTO_ROLES = { partners: true, consultants: true };
   var PHOTO_DIR = "../current design/images/people/";
+  // a file name in that folder, or a full URL (WordPress media library)
+  function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var ROLE_LABEL = { partners: "Partner", consultants: "Consultant", seniorAssociates: "Senior Associate", associates: "Associate" };
 
   /* Each filter matches a person when any of their listed practice areas
@@ -97,7 +99,7 @@
     var inner = el("div", "photo-card-inner");
 
     var img = el("img", "photo-card-img");
-    img.src = PHOTO_DIR + encodeURIComponent(p.photo || p.name + ".png");
+    img.src = photoUrl(p.photo || p.name + ".png");
     img.alt = "Portrait of " + p.name;
     img.loading = "lazy";
     img.decoding = "async";
@@ -297,6 +299,18 @@
     apply();
   });
   document.getElementById("emptyReset").addEventListener("click", resetAll);
+
+  /* ---------- people.html?q=Name ----------
+     Name links from alerts, news and publications (js/people-links.js) arrive here
+     for lawyers without a profile page: show that person straight away. */
+  var arriving = new URLSearchParams(location.search).get("q");
+  if (arriving) {
+    searchInput.value = arriving;
+    state.q = arriving;
+    apply();
+    var hit = everyone.filter(function (p) { return !p._el.hidden; })[0];
+    if (hit) setTimeout(function () { hit._el.scrollIntoView({ behavior: "smooth", block: "center" }); }, 350);
+  }
 
   /* mobile: collapsible filters */
   var filtersToggle = document.getElementById("filtersToggle");

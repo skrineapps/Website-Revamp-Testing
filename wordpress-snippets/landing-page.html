@@ -1,0 +1,1489 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+.sk-home :where(h1,h2,h3,h4,h5,h6,p,ul,ol,li,figure,blockquote,dl,dd) { margin: 0; padding: 0; border: 0; background: none; font-family: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; line-height: inherit; text-align: inherit; }
+.sk-home :where(ul,ol) { list-style: none; }
+.sk-home :where(img,svg,video) { border: 0; border-radius: 0; box-shadow: none; padding: 0; margin: 0; max-width: 100%; }
+.sk-home :where(a) { color: inherit; text-decoration: none; background: none; box-shadow: none; }
+.sk-home :where(button,[type=button],[type=submit]) { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; color: inherit; font: inherit; text-transform: none; letter-spacing: inherit; box-shadow: none; min-height: 0; line-height: inherit; }
+.sk-home :where(button,[type=button],[type=submit]):is(:hover,:focus) { background: none; color: inherit; border: 0; }
+.sk-home {--red: #c32030; --red-dark: #9a1825; --red-soft: rgba(195, 32, 48, 0.08); --grey-100: #ecedec; --grey-300: #cecbcc; --grey-500: #959897; --grey-700: #757575; --ink: #2a2a2a; --ink-soft: #555555; --white: #ffffff; --font-display: "Merriweather", Georgia, serif; --font-body: "Karla", Arial, sans-serif; --font-alt: Arial, Helvetica, sans-serif; --header-h: 76px; --radius: 10px; --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.08); --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.14); --shadow-lg: 0 28px 60px rgba(0, 0, 0, 0.22); --ease: cubic-bezier(0.22, 0.61, 0.36, 1); --container: 1200px; --page-max: 1400px; --sticky-top: var(--header-h);}
+.sk-home *, .sk-home *::before, .sk-home *::after {box-sizing: border-box;}
+.sk-home {scroll-behavior: smooth; scroll-padding-top: var(--header-h);}
+.sk-home {margin: 0; font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--ink); background: var(--white); overflow-x: hidden; -webkit-font-smoothing: antialiased;}
+.sk-home img {max-width: 100%; display: block;}
+.sk-home a {color: inherit; text-decoration: none;}
+.sk-home ul, .sk-home ol {margin: 0; padding: 0; list-style: none;}
+.sk-home h1, .sk-home h2, .sk-home h3 {margin: 0;}
+.sk-home p {margin: 0;}
+.sk-home button {font: inherit; color: inherit; background: none; border: 0; cursor: pointer;}
+.sk-home :focus-visible {outline: 2px solid var(--red); outline-offset: 3px;}
+.sk-home .header-inner {height: var(--header-h); max-width: 1440px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; gap: 28px;}
+.sk-home .icon-btn {width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; transition: background 0.25s; flex-shrink: 0;}
+.sk-home .icon-btn:hover {background: var(--red-soft);}
+.sk-home .main-nav {margin-left: auto;}
+.sk-home .hero {position: relative; height: 100vh; min-height: 620px; overflow: hidden; perspective: 1200px; background: transparent;}
+.sk-home .hero-bg {position: absolute; inset: -6%; background: url("https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/hero-palette.jpg") center / cover no-repeat; animation: sk-paintDrift 38s ease-in-out infinite alternate; will-change: transform; -webkit-mask-image: linear-gradient(180deg, #000 45%, rgba(0, 0, 0, 0.35) 68%, transparent 84%); mask-image: linear-gradient(180deg, #000 45%, rgba(0, 0, 0, 0.35) 68%, transparent 84%);}
+@keyframes sk-paintDrift {0% { transform: scale(1.02) translate3d(0, 0, 0) rotate(0deg); } 50% { transform: scale(1.07) translate3d(-1.5%, 1%, 0) rotate(0.6deg); } 100% { transform: scale(1.04) translate3d(1%, -1.2%, 0) rotate(-0.4deg); }}
+.sk-home .hero-shade {position: absolute; inset: 0; background: linear-gradient(180deg, rgba(251, 251, 251, 0.7) 0%, rgba(251, 251, 251, 0.15) 22%, rgba(251, 251, 251, 0) 40%);}
+.sk-home .hero-panel, .sk-home .scroll-cue {z-index: 3;}
+.sk-home .hero-diagonal {position: absolute; inset: auto -60px -60px -60px; height: 62%; background: linear-gradient(115deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.7) 55%, rgba(236, 237, 236, 0.85) 100%); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); clip-path: polygon(38% 100%, 100% 22%, 100% 100%); display: none;}
+.sk-home .hero-panel {position: absolute; right: clamp(16px, 5vw, 88px); bottom: clamp(56px, 10vh, 110px); width: min(680px, calc(100% - 32px)); padding: clamp(36px, 4vw, 56px) clamp(32px, 4vw, 60px) clamp(32px, 3.6vw, 48px); text-align: left; isolation: isolate;}
+.sk-home .hero-panel::before {content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(251, 251, 251, 0.62); backdrop-filter: blur(10px) saturate(1.1); -webkit-backdrop-filter: blur(10px) saturate(1.1); border-left: 4px solid var(--red); box-shadow: 0 18px 44px rgba(30, 30, 30, 0.12); animation: sk-geoRise 1.1s var(--ease) 0.05s both;}
+@keyframes sk-geoRise {from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: none; }}
+.sk-home .hero-eyebrow {display: flex; align-items: center; gap: 12px; margin-bottom: 18px; font: 700 12.5px var(--font-body); letter-spacing: 0.26em; text-transform: uppercase; color: var(--grey-700); opacity: 0; animation: sk-fadeUp 0.8s var(--ease) 0.3s forwards;}
+.sk-home .hero-eyebrow span {width: 34px; height: 2px; background: var(--red);}
+.sk-home .hero-tagline {display: flex; flex-direction: column; align-items: flex-start; font-family: var(--font-display); font-weight: 900; font-size: clamp(40px, 4.6vw, 76px); line-height: 1.04; letter-spacing: -0.015em; color: var(--ink); perspective: 800px;}
+.sk-home .ht-word {position: relative; display: inline-block; opacity: 0; transform: translateY(30px) rotateX(-70deg); transform-origin: bottom center; animation: sk-flipIn 0.9s var(--ease) forwards;}
+.sk-home .ht-word:nth-child(1) {animation-delay: 0.45s;}
+.sk-home .ht-word:nth-child(2) {animation-delay: 0.6s; color: var(--grey-700);}
+.sk-home .ht-word:nth-child(3) {animation-delay: 0.75s;}
+.sk-home .ht-word--swatch {margin-top: 0.08em; padding: 0.04em 0.28em 0.1em 0.2em; margin-left: -0.2em;}
+.sk-home .ht-swatch {position: absolute; inset: 0; z-index: -1; background: linear-gradient(175deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 40%), linear-gradient(90deg, #a5121f 0%, var(--red) 35%, #d0293a 70%, var(--red) 100%); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cfilter id='g' x='-5%25' y='-10%25' width='110%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.3' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='16'/%3E%3C/filter%3E%3Crect x='8' y='9' width='384' height='82' fill='black' filter='url(%23g)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cfilter id='g' x='-5%25' y='-10%25' width='110%25' height='120%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.008 0.3' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='16'/%3E%3C/filter%3E%3Crect x='8' y='9' width='384' height='82' fill='black' filter='url(%23g)'/%3E%3C/svg%3E") center / 100% 100% no-repeat; transform-origin: left center; transform: scaleX(0); animation: sk-swatchIn 0.75s cubic-bezier(0.7, 0, 0.2, 1) 1.15s forwards;}
+.sk-home .ht-text {color: var(--ink); animation: sk-swatchText 0.35s ease 1.45s forwards;}
+@keyframes sk-swatchIn {to { transform: scaleX(1); }}
+@keyframes sk-swatchText {to { color: var(--white); }}
+.sk-home .hero-sub {margin-top: 20px; font-family: var(--font-display); font-style: italic; font-size: clamp(16px, 1.35vw, 20px); color: var(--ink-soft); opacity: 0; animation: sk-fadeUp 0.9s var(--ease) 1.5s forwards;}
+.sk-home .hero-foot {display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 24px; margin-top: 26px; padding-top: 24px; border-top: 1px solid rgba(117, 117, 117, 0.25);}
+.sk-home .hero-actions {display: flex; flex-wrap: wrap; gap: 12px; opacity: 0; animation: sk-fadeUp 0.8s var(--ease) 1.65s forwards;}
+.sk-home .hero-actions .btn {padding: 12px 22px; font-size: 14.5px;}
+.sk-home .hero-actions .btn--outline {background: rgba(255, 255, 255, 0.55);}
+.sk-home .hero-rosettes {display: flex; align-items: center; gap: 16px; perspective: 600px;}
+.sk-home .hero-rosettes li {opacity: 0; animation: sk-fadeUp 0.8s var(--ease) forwards; transition: transform 0.6s var(--ease), filter 0.6s var(--ease);}
+.sk-home .hero-rosettes li:nth-child(1) {animation-delay: 1.8s;}
+.sk-home .hero-rosettes li:nth-child(2) {animation-delay: 1.95s;}
+.sk-home .hero-rosettes img {height: 58px; width: auto;}
+.sk-home .hero-rosettes li:nth-child(2) img {border-radius: 4px; box-shadow: var(--shadow-sm);}
+.sk-home .hero-rosettes li:hover {transform: rotateY(-14deg) translateY(-4px); filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.15));}
+.sk-home .scroll-cue {position: absolute; left: clamp(16px, 5vw, 88px); bottom: 28px; display: flex; flex-direction: row; align-items: center; gap: 14px; font: 700 10.5px var(--font-body); letter-spacing: 0.32em; text-transform: uppercase; writing-mode: vertical-rl; color: var(--grey-700); text-decoration: none; transition: color 0.25s;}
+.sk-home .scroll-cue:hover {color: var(--red);}
+.sk-home .scroll-cue span {position: relative; width: 1px; height: 56px; background: rgba(117, 117, 117, 0.35); overflow: hidden;}
+.sk-home .scroll-cue span::after {content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 40%; background: var(--red); animation: sk-scrollCue 2s var(--ease) infinite;}
+.sk-home {position: relative; background: radial-gradient(ellipse 55% 9% at 0% 14%,  rgba(195, 32, 48, 0.07), transparent 70%), radial-gradient(ellipse 50% 10% at 100% 30%, rgba(206, 203, 204, 0.55), transparent 70%), radial-gradient(ellipse 55% 9% at 0% 50%,  rgba(236, 237, 236, 0.95), transparent 70%), radial-gradient(ellipse 50% 9% at 100% 64%, rgba(195, 32, 48, 0.06), transparent 70%), radial-gradient(ellipse 55% 10% at 0% 82%, rgba(206, 203, 204, 0.5), transparent 70%), radial-gradient(ellipse 50% 8% at 100% 97%, rgba(149, 152, 151, 0.18), transparent 70%), #fbfbfb;}
+.sk-home .page-head {margin-bottom: clamp(32px, 4vw, 52px);}
+.sk-home .page-head .eyebrow {text-align: left;}
+.sk-home .page-title {font-family: var(--font-display); font-weight: 900; font-size: clamp(44px, 6vw, 84px); line-height: 1.05; color: var(--red);}
+.sk-home .page-intro {margin-top: 16px; max-width: 760px; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.7; color: var(--ink-soft);}
+.sk-home .section {position: relative; padding: clamp(36px, 4.5vw, 64px) 24px; overflow-x: clip;}
+.sk-home .section-head {text-align: center; margin-bottom: clamp(40px, 5vw, 64px); position: relative; z-index: 1; padding-top: 32px;}
+.sk-home .eyebrow {font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--grey-700); margin-bottom: 10px;}
+.sk-home .section-title {font-family: var(--font-display); font-weight: 900; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.15; color: var(--red);}
+.sk-home .section-title::after {content: ""; display: block; width: 64px; height: 3px; margin: 18px auto 0; background: var(--red); transform: scaleX(0); transition: transform 0.9s var(--ease) 0.35s;}
+.sk-home .is-visible .section-title::after {transform: scaleX(1);}
+.sk-home .section-cta {text-align: center; margin-top: 48px; position: relative; z-index: 1;}
+.sk-home .btn {display: inline-flex; align-items: center; gap: 10px; padding: 13px 30px; border-radius: 40px; font-family: var(--font-body); font-weight: 700; font-size: 15px; letter-spacing: 0.04em; transition: background 0.3s, color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s;}
+.sk-home .btn i {transition: transform 0.3s var(--ease);}
+.sk-home .btn:hover i {transform: translateX(4px);}
+.sk-home .btn:hover {transform: translateY(-2px); box-shadow: var(--shadow-md);}
+.sk-home .btn--solid {border: 2px solid var(--red); background: var(--red); color: var(--white);}
+.sk-home .btn--solid:hover {background: var(--red-dark); border-color: var(--red-dark);}
+.sk-home .btn--outline {border: 2px solid var(--red); color: var(--red);}
+.sk-home .btn--outline:hover {background: var(--red); color: var(--white);}
+.sk-home .reveal {opacity: 0; transform: perspective(1000px) translateY(48px) rotateX(10deg); transform-origin: center top; transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); transition-delay: var(--delay, 0s);}
+.sk-home .reveal.is-visible {opacity: 1; transform: none;}
+.sk-home [data-tilt] {transform-style: preserve-3d; will-change: transform;}
+.sk-home [data-tilt] .tilt-glare {position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, 0.35), transparent 55%); opacity: 0; transition: opacity 0.3s; z-index: 3;}
+.sk-home [data-tilt]:hover .tilt-glare {opacity: 1;}
+.sk-home .carousel {position: relative; z-index: 1; max-width: var(--container); margin: 0 auto;}
+.sk-home .carousel-stage {position: relative; height: 470px; perspective: 1400px; touch-action: pan-y; user-select: none;}
+.sk-home .carousel-track {position: absolute; inset: 0; transform-style: preserve-3d;}
+.sk-home .slide-card {position: absolute; top: 0; left: 50%; width: 340px; margin-left: -170px; height: 440px; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-md); overflow: hidden; transition: transform 0.7s var(--ease), opacity 0.7s var(--ease), box-shadow 0.7s, filter 0.7s; cursor: pointer;}
+.sk-home .slide-card.is-active {box-shadow: var(--shadow-lg); cursor: default;}
+.sk-home .slide-card.is-far {pointer-events: none;}
+.sk-home .slide-art {position: relative; height: 200px; display: flex; align-items: flex-end; padding: 18px; color: var(--white); overflow: hidden;}
+.sk-home .slide-art i {position: absolute; right: -10px; top: -6px; font-size: 150px; opacity: 0.16; transform: rotate(-12deg); transition: transform 0.8s var(--ease);}
+.sk-home .slide-card.is-active .slide-art i {transform: rotate(0deg) scale(1.05);}
+.sk-home .slide-art img {position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 1.2s var(--ease);}
+.sk-home .slide-card.is-active .slide-art img {transform: scale(1);}
+.sk-home .slide-art::after {content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(20, 6, 9, 0.55) 0%, rgba(20, 6, 9, 0) 55%), linear-gradient(135deg, transparent 55%, rgba(255, 255, 255, 0.12) 55.5%);}
+.sk-home .slide-tag {position: relative; z-index: 1; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 12px; border-radius: 20px; background: rgba(195, 32, 48, 0.88); backdrop-filter: blur(4px);}
+.sk-home .art-1 {background: linear-gradient(135deg, #c32030, #6e0f19);}
+.sk-home .art-2 {background: linear-gradient(135deg, #757575, #3c3c3c);}
+.sk-home .art-3 {background: linear-gradient(135deg, #9a1825, #c32030 60%, #e0525e);}
+.sk-home .art-4 {background: linear-gradient(135deg, #959897, #555);}
+.sk-home .art-5 {background: linear-gradient(135deg, #3d3d3d, #c32030);}
+.sk-home .art-6 {background: linear-gradient(135deg, #cecbcc, #757575);}
+.sk-home .slide-body {padding: 22px 24px 24px; display: flex; flex-direction: column; height: 240px;}
+.sk-home .slide-body h3 {font-family: var(--font-display); font-size: 17px; font-weight: 700; line-height: 1.4; color: var(--ink); margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;}
+.sk-home .slide-link {margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--grey-700); transition: color 0.3s, gap 0.3s;}
+.sk-home .slide-card.is-active:hover .slide-link {color: var(--red); gap: 12px;}
+.sk-home .slide-body time {margin-top: 8px; font-family: var(--font-alt); font-size: 13px; font-weight: 700; color: var(--red);}
+.sk-home .carousel-arrow {position: absolute; top: 210px; z-index: 20; width: 52px; height: 52px; border-radius: 50%; background: var(--white); color: var(--ink); box-shadow: var(--shadow-md); display: grid; place-items: center; transition: background 0.3s, color 0.3s, transform 0.3s var(--ease);}
+.sk-home .carousel-arrow:hover {background: var(--red); color: var(--white); transform: scale(1.08);}
+.sk-home .carousel-arrow.prev {left: 8px;}
+.sk-home .carousel-arrow.next {right: 8px;}
+.sk-home .carousel-dots {display: flex; justify-content: center; gap: 10px; margin-top: 18px;}
+.sk-home .carousel-dots button {width: 10px; height: 10px; border-radius: 10px; background: var(--grey-300); transition: width 0.4s var(--ease), background 0.4s;}
+.sk-home .carousel-dots button[aria-selected="true"] {width: 32px; background: var(--red);}
+.sk-home .spotlight-grid {max-width: var(--container); margin: 0 auto; display: grid; grid-template-columns: 1.35fr 1fr 1fr; grid-auto-rows: auto; gap: 28px;}
+.sk-home .spot-card {position: relative; display: flex; flex-direction: column; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--grey-100); overflow: hidden; transition: box-shadow 0.4s var(--ease);}
+.sk-home .spot-card:hover {box-shadow: var(--shadow-lg);}
+.sk-home .spot-card--feature {grid-row: span 2;}
+.sk-home .spot-tagline {display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px;}
+.sk-home .spot-pill {padding: 4px 11px; border-radius: 14px; font: 700 10.5px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--white);}
+.sk-home .spot-pill--alert {background: var(--red);}
+.sk-home .spot-pill--pub {background: var(--ink);}
+.sk-home .spot-cover--alert {padding: 0; background: #2a2a2a;}
+.sk-home .spot-cover--alert::before {display: none;}
+.sk-home .spot-cover > .spot-cover-photo {position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: none; transition: transform 0.8s var(--ease);}
+.sk-home .spot-card:hover .spot-cover-photo {transform: scale(1.05);}
+.sk-home .spot-card--alert {border-top: 3px solid var(--red);}
+.sk-home .spot-meta {font-size: 13px; color: var(--grey-500); line-height: 1.45;}
+.sk-home .spot-cover {position: relative; flex: 0 0 auto; height: 170px; padding: 20px 22px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; color: var(--white); overflow: hidden;}
+.sk-home .spot-card--feature .spot-cover {flex: 1 1 auto; min-height: 320px; padding: 32px;}
+.sk-home .spot-cover::before {content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 14px);}
+.sk-home .spot-cover > * {position: relative; transform: translateZ(30px);}
+.sk-home .cover-publisher {font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.85;}
+.sk-home .cover-publisher em {font-style: normal; opacity: 0.5; margin: 0 4px;}
+.sk-home .cover-title {font-family: var(--font-display); font-weight: 700; font-size: 20px; line-height: 1.25;}
+.sk-home .spot-card--feature .cover-title {font-size: clamp(28px, 3vw, 40px);}
+.sk-home .cover-edition {font-size: 13px; opacity: 0.8;}
+.sk-home .spot-cover--photo {padding: 0; background: #2a2a2a;}
+.sk-home .spot-card--feature .spot-cover--photo {padding: 0;}
+.sk-home .spot-cover--photo::before {display: none;}
+.sk-home .spot-cover--photo img {position: absolute; inset: 0; width: 100%; height: 100%;}
+.sk-home .spot-cover-blur {object-fit: cover; filter: blur(18px) brightness(0.85); transform: scale(1.2);}
+.sk-home .spot-cover-img {object-fit: contain; transition: transform 0.8s var(--ease);}
+.sk-home .spot-card:hover .spot-cover-img {transform: scale(1.03);}
+.sk-home .cover-navy {background: linear-gradient(140deg, #4a4a4a, #1f1f1f 70%);}
+.sk-home .cover-navy::after {content: ""; position: absolute; right: -60px; top: -60px; width: 260px; height: 260px; border-radius: 50%; border: 40px solid rgba(195, 32, 48, 0.55);}
+.sk-home .cover-red {background: linear-gradient(140deg, var(--red), var(--red-dark));}
+.sk-home .cover-grey {background: linear-gradient(140deg, var(--grey-500), var(--grey-700));}
+.sk-home .cover-charcoal {background: linear-gradient(140deg, #444, #222);}
+.sk-home .cover-light {background: linear-gradient(140deg, var(--grey-300), var(--grey-100)); color: var(--ink);}
+.sk-home .cover-light .cover-title {color: var(--red);}
+.sk-home .spot-body {padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1;}
+.sk-home .spot-card--feature .spot-body {flex: 0 0 auto; padding: 24px 32px 28px;}
+.sk-home .spot-body time {font-family: var(--font-alt); font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; color: var(--red);}
+.sk-home .spot-body h3 {font-family: var(--font-body); font-weight: 700; font-size: 17px; line-height: 1.4; color: var(--ink);}
+.sk-home .spot-card--feature .spot-body h3 {font-family: var(--font-display); font-size: 22px;}
+.sk-home .read-more {margin-top: auto; padding-top: 6px; font-size: 14px; font-weight: 700; color: var(--grey-700); display: inline-flex; align-items: center; gap: 8px; transition: color 0.3s, gap 0.3s;}
+.sk-home .spot-card:hover .read-more {color: var(--red); gap: 14px;}
+.sk-home .events-list {position: relative; z-index: 1; max-width: 980px; margin: 0 auto; display: grid; gap: 18px;}
+.sk-home .event {position: relative; display: grid; grid-template-columns: 110px 1fr 56px; align-items: center; gap: 28px; padding: 22px 26px 22px 22px; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-sm); border-left: 4px solid transparent; transition: box-shadow 0.4s var(--ease), border-color 0.4s;}
+.sk-home .event:hover {box-shadow: var(--shadow-md); border-left-color: var(--red);}
+.sk-home .event-date {display: flex; flex-direction: column; align-items: center; padding: 12px 0; border-radius: 8px; background: var(--grey-100); line-height: 1; transform: translateZ(30px); transition: background 0.4s, color 0.4s;}
+.sk-home .event:hover .event-date {background: var(--red); color: var(--white);}
+.sk-home .event-date .day {font-family: var(--font-display); font-weight: 900; font-size: 34px;}
+.sk-home .event-date .month {font-family: var(--font-body); font-weight: 700; text-transform: uppercase; letter-spacing: 0.16em; font-size: 13px; margin-top: 6px;}
+.sk-home .event-date .year {font-family: var(--font-alt); font-size: 12px; opacity: 0.7; margin-top: 4px;}
+.sk-home .event-type {font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-500); margin-bottom: 4px;}
+.sk-home .event-info h3 {font-family: var(--font-display); font-size: 18px; font-weight: 700; line-height: 1.4;}
+.sk-home .event-link {width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--grey-300); color: var(--grey-700); transition: all 0.35s var(--ease);}
+.sk-home .event:hover .event-link {border-color: var(--red); background: var(--red); color: var(--white); transform: translateX(4px);}
+.sk-home .ne-board {position: relative; z-index: 1; max-width: var(--container); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 36px); align-items: stretch;}
+.sk-home .ne-feature {position: relative; display: flex; align-items: flex-end; min-height: 520px; border-radius: 24px; overflow: hidden; isolation: isolate; color: var(--white); background: #2b0a10; box-shadow: var(--shadow-lg);}
+.sk-home .ne-feature-img {position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1.2s var(--ease);}
+.sk-home .ne-feature:hover .ne-feature-img {transform: scale(1.04);}
+.sk-home .ne-feature::after {content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(20, 6, 9, 0.94) 0%, rgba(20, 6, 9, 0.7) 40%, rgba(20, 6, 9, 0.05) 75%);}
+.sk-home .ne-feature-body {padding: clamp(26px, 3.4vw, 44px);}
+.sk-home .ne-kicker {display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; margin-bottom: 14px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.8);}
+.sk-home .ne-kicker span {padding: 4px 10px; border-radius: 12px; background: var(--red); color: var(--white);}
+.sk-home .ne-feature h3 {font-family: var(--font-display); font-weight: 900; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.2;}
+.sk-home .ne-feature-sum {margin-top: 14px; max-width: 60ch; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.82); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;}
+.sk-home .ne-more {display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; font-weight: 700; font-size: 15px; transition: gap 0.3s;}
+.sk-home .ne-feature:hover .ne-more {gap: 16px;}
+.sk-home .ne-side {display: flex; flex-direction: column; gap: 18px;}
+.sk-home .ne-side-head {display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey-700);}
+.sk-home .ne-side-head::before {content: ""; width: 26px; height: 2px; background: var(--red);}
+.sk-home .ne-up {padding: 20px 22px; border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow-sm); border-left: 4px solid var(--red);}
+.sk-home .ne-up-none {display: grid; grid-template-columns: 44px 1fr; gap: 4px 14px; align-items: start;}
+.sk-home .ne-up-icon {grid-row: span 2; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: rgba(195, 32, 48, 0.1); color: var(--red); font-size: 18px;}
+.sk-home .ne-up-none p {font-size: 14px; line-height: 1.55; color: var(--ink-soft);}
+.sk-home .ne-up-none strong {display: block; color: var(--ink); font-size: 15px;}
+.sk-home .ne-up-link {display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 14px; font-weight: 700; color: var(--red); transition: gap 0.3s;}
+.sk-home .ne-up-link:hover {gap: 12px;}
+.sk-home .ne-up-rows {display: grid; gap: 10px;}
+.sk-home .ne-up-row {display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: center; color: var(--ink);}
+.sk-home .ne-up-date {display: flex; flex-direction: column; align-items: center; padding: 7px 0; border-radius: 8px; background: var(--red); color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1;}
+.sk-home .ne-up-date b {font-family: var(--font-display); font-size: 22px; margin-bottom: 3px;}
+.sk-home .ne-up-text {font-family: var(--font-display); font-weight: 700; font-size: 15px; line-height: 1.35;}
+.sk-home .ne-up-text small, .sk-home .ne-row-text small {display: block; margin-bottom: 4px; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-500);}
+.sk-home .ne-up-row:hover .ne-up-text {color: var(--red);}
+.sk-home .ne-list ul {display: grid; gap: 10px;}
+.sk-home .ne-row {display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: center; padding: 10px; border-radius: 14px; background: var(--white); box-shadow: var(--shadow-sm); color: var(--ink); transition: box-shadow 0.35s var(--ease), transform 0.35s var(--ease);}
+.sk-home .ne-row:hover {box-shadow: var(--shadow-md); transform: translateX(4px);}
+.sk-home .ne-row img, .sk-home .ne-row-noimg {width: 96px; height: 72px; border-radius: 10px; object-fit: cover; background: var(--grey-100);}
+.sk-home .ne-row-text {font-family: var(--font-display); font-weight: 700; font-size: 15px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;}
+.sk-home .ne-row:hover .ne-row-text {color: var(--red);}
+@media (max-width: 960px) {
+.sk-home .ne-board {grid-template-columns: 1fr;}
+.sk-home .ne-feature {min-height: 420px;}
+}
+@media (max-width: 640px) {
+.sk-home .ne-row {grid-template-columns: 72px 1fr; gap: 12px;}
+.sk-home .ne-row img, .sk-home .ne-row-noimg {width: 72px; height: 60px;}
+}
+.sk-home .member-label {font-family: var(--font-alt); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.3; text-align: right;}
+.sk-home .member-logo {height: 42px; width: auto; filter: brightness(0) invert(1);}
+@keyframes sk-flipIn {to { opacity: 1; transform: none; }}
+@keyframes sk-fadeUp {from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; }}
+@keyframes sk-scrollCue {0% { transform: translateY(-100%); } 100% { transform: translateY(250%); }}
+@keyframes sk-spin {to { transform: rotate(360deg); }}
+@media (max-width: 1024px) {
+.sk-home .spotlight-grid {grid-template-columns: 1fr 1fr;}
+.sk-home .spot-card--feature {grid-column: span 2; grid-row: auto;}
+}
+@media (max-width: 860px) {
+.sk-home .header-inner {padding: 0 16px; gap: 8px;}
+.sk-home .main-nav {position: fixed; top: var(--header-h); left: 0; right: 0; max-height: calc(100vh - var(--header-h)); overflow-y: auto; margin: 0; padding: 8px 24px 28px; background: var(--white); box-shadow: 0 18px 30px rgba(0, 0, 0, 0.12); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s 0.3s;}
+}
+@media (max-width: 640px) {
+.sk-home {--header-h: 64px;}
+.sk-home .section {padding-left: 16px; padding-right: 16px;}
+.sk-home .hero {min-height: 560px;}
+.sk-home .hero-diagonal {height: 58%; background: rgba(255, 255, 255, 0.78); clip-path: polygon(0 18%, 100% 0, 100% 100%, 0 100%);}
+.sk-home .hero-panel {right: 12px; left: 12px; width: auto; bottom: 28px; padding: 34px 26px 28px;}
+.sk-home .hero-panel {bottom: 56px;}
+.sk-home .hero-panel::before {background: rgba(251, 251, 251, 0.72); box-shadow: 0 10px 24px rgba(30, 30, 30, 0.08);}
+.sk-home .hero-tagline {font-size: clamp(36px, 11vw, 46px);}
+.sk-home .hero-actions {gap: 10px;}
+.sk-home .hero-actions .btn {padding: 11px 18px; font-size: 14px;}
+.sk-home .hero-rosettes img {height: 56px;}
+.sk-home .scroll-cue {display: none;}
+.sk-home .carousel-stage {height: 450px;}
+.sk-home .slide-card {width: 280px; margin-left: -140px; height: 430px;}
+.sk-home .carousel-arrow {top: auto; bottom: -6px; width: 44px; height: 44px;}
+.sk-home .carousel-arrow.prev {left: 16px;}
+.sk-home .carousel-arrow.next {right: 16px;}
+.sk-home .carousel-dots {margin-top: 30px;}
+.sk-home .spotlight-grid {grid-template-columns: 1fr;}
+.sk-home .spot-card--feature {grid-column: auto;}
+.sk-home .spot-card--feature .spot-cover {min-height: 220px;}
+.sk-home .event {grid-template-columns: 76px 1fr; gap: 16px; padding: 16px;}
+.sk-home .event-link {display: none;}
+.sk-home .event-date .day {font-size: 26px;}
+.sk-home .event-info h3 {font-size: 16px;}
+}
+@media (prefers-reduced-motion: reduce) {
+.sk-home *, .sk-home *::before, .sk-home *::after {animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important;}
+.sk-home .reveal {opacity: 1; transform: none;}
+.sk-home {scroll-behavior: auto;}
+}
+.sk-home .design-switch {position: fixed; right: 16px; bottom: 16px; z-index: 60; display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(42, 42, 42, 0.92); box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);}
+.sk-home .design-switch a {padding: 8px 16px; border-radius: 999px; font: 700 13px var(--font-body); letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.8); transition: background 0.2s, color 0.2s;}
+.sk-home .design-switch a:hover {color: #fff;}
+.sk-home .design-switch a[aria-current="page"] {background: var(--red); color: #fff;}
+@media print {
+.sk-home .design-switch {display: none;}
+}
+.sk-home .person-link {color: inherit; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); transition: color 0.2s, text-decoration-color 0.2s;}
+.sk-home .person-link:hover, .sk-home .person-link:focus-visible {color: var(--red); text-decoration-color: var(--red);}
+.sk-home .latest-card--lead .person-link:hover, .sk-home .shot-feature .person-link:hover, .sk-home .shot-back .person-link:hover {color: #fff; text-decoration-color: #fff;}
+.sk-home .section-deck {margin-top: 14px; font-size: clamp(16px, 1.3vw, 19px); color: var(--ink-soft);}
+.sk-home .deals-board {position: relative; z-index: 1; max-width: var(--container); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: stretch;}
+.sk-home .deal-feature {position: relative; min-height: 520px; border-radius: 24px; overflow: hidden; color: var(--white); background: linear-gradient(150deg, #2b0a10 0%, #6e0f19 45%, var(--red) 100%); box-shadow: var(--shadow-lg); isolation: isolate;}
+.sk-home .deal-feature-art {position: absolute; inset: -6%; background: url("https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/hero-palette.jpg") center / cover no-repeat; opacity: 1; transition: opacity 0.26s var(--ease); animation: sk-paintDrift 40s ease-in-out infinite alternate; z-index: -1;}
+.sk-home .deal-feature-art.is-leaving {opacity: 0.25;}
+.sk-home .deal-feature::after {content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20, 6, 9, 0.92) 0%, rgba(20, 6, 9, 0.62) 50%, rgba(40, 8, 14, 0.3) 100%); z-index: -1;}
+.sk-home .deal-feature-content {position: relative; height: 100%; padding: clamp(28px, 4vw, 48px); display: flex; flex-direction: column; transform: translateZ(30px); transition: opacity 0.26s var(--ease), transform 0.26s var(--ease);}
+.sk-home .deal-feature-content.is-leaving {opacity: 0; transform: translateZ(30px) translateY(12px);}
+.sk-home .deal-sector {align-self: flex-start; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.35); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(4px);}
+.sk-home .deal-figure {margin-top: auto; padding-top: 40px; font-family: var(--font-display); font-weight: 900; line-height: 0.95; letter-spacing: -0.02em;}
+.sk-home .deal-figure-num {font-size: clamp(56px, 7.5vw, 112px);}
+.sk-home .deal-figure-unit {font-size: clamp(24px, 2.6vw, 38px); font-weight: 700; opacity: 0.85;}
+.sk-home .deal-figure-label {margin-top: 8px; font-size: 15px; letter-spacing: 0.02em; color: rgba(255, 255, 255, 0.78);}
+.sk-home .deal-headline {margin-top: 26px; max-width: 34ch; font-family: var(--font-display); font-weight: 700; font-size: clamp(20px, 1.9vw, 27px); line-height: 1.3;}
+.sk-home .deal-summary {margin-top: 12px; max-width: 60ch; font-size: 15.5px; line-height: 1.6; color: rgba(255, 255, 255, 0.82);}
+.sk-home .deal-meta {margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.2); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-family: var(--font-alt); font-size: 13px; color: rgba(255, 255, 255, 0.75);}
+.sk-home .deal-team::before {content: "Skrine team  "; font-weight: 700; color: var(--white); white-space: pre;}
+.sk-home .deal-list {display: flex; flex-direction: column; gap: 6px;}
+.sk-home .deal-list button {position: relative; width: 100%; display: grid; grid-template-columns: 1fr auto; grid-template-areas: "figure sector" "client client"; gap: 4px 12px; padding: 18px 22px 18px 26px; text-align: left; border-radius: 16px; background: rgba(255, 255, 255, 0.94); border: 1px solid rgba(206, 203, 204, 0.5); transition: background 0.35s, box-shadow 0.35s, transform 0.35s var(--ease);}
+.sk-home .deal-list button::before {content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 4px; border-radius: 0 4px 4px 0; background: var(--red); transform: scaleY(0); transition: transform 0.35s var(--ease);}
+.sk-home .deal-list button:hover {background: var(--white); transform: translateX(-4px);}
+.sk-home .deal-list button[aria-selected="true"] {background: var(--white); box-shadow: var(--shadow-md);}
+.sk-home .deal-list button[aria-selected="true"]::before {transform: scaleY(1);}
+.sk-home .dl-figure {grid-area: figure; font-family: var(--font-display); font-weight: 900; font-size: 22px; line-height: 1.1; color: var(--grey-500); transition: color 0.35s;}
+.sk-home .deal-list button[aria-selected="true"] .dl-figure, .sk-home .deal-list button:hover .dl-figure {color: var(--red);}
+.sk-home .dl-client {grid-area: client; font-weight: 700; font-size: 15.5px; color: var(--ink);}
+.sk-home .dl-sector {grid-area: sector; align-self: center; font-family: var(--font-alt); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-500);}
+.sk-home .network-wrap {position: relative; z-index: 1; max-width: var(--container); margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: center;}
+.sk-home .section-title--left {text-align: left;}
+.sk-home .section-title--left::after {margin-left: 0;}
+.sk-home .network-copy {position: relative; z-index: 1;}
+.sk-home .network-copy .eyebrow {text-align: left;}
+.sk-home .network-lead {margin-top: 24px; font-family: var(--font-display); font-size: clamp(18px, 1.6vw, 22px); line-height: 1.55; color: var(--ink);}
+.sk-home .network-lead strong {color: var(--red);}
+.sk-home .network-stats {margin: 30px 0; display: grid; grid-template-columns: 1.25fr 1fr 1fr; border-top: 1px solid var(--grey-300); border-bottom: 1px solid var(--grey-300);}
+.sk-home .network-stats li {padding: 20px 20px 18px 0;}
+.sk-home .network-stats li + li {padding-left: 24px; border-left: 1px solid var(--grey-300);}
+.sk-home .ns-num {display: block; font-family: var(--font-display); font-weight: 900; font-size: clamp(30px, 3.4vw, 46px); line-height: 1; color: var(--red);}
+.sk-home .ns-label {display: block; margin-top: 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-700);}
+.sk-home .network-body {font-size: 16px; line-height: 1.7; color: var(--ink-soft);}
+.sk-home .network-desks {margin-top: 30px;}
+.sk-home .nd-label {display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin-bottom: 14px; font-family: var(--font-alt); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);}
+.sk-home .nd-label span {font-family: var(--font-body); font-weight: 500; letter-spacing: 0; text-transform: none; font-size: 14px; color: var(--grey-700);}
+.sk-home .nd-cards {display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;}
+.sk-home .nd-card {position: relative; display: flex; flex-direction: column; gap: 4px; min-height: 150px; padding: 18px 18px 16px; border-radius: 14px; background: var(--white); box-shadow: var(--shadow-sm); color: var(--ink); overflow: hidden; isolation: isolate; transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), color 0.4s;}
+.sk-home .nd-card::before {content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(150deg, var(--red), var(--red-dark)); transform: translateY(101%); transition: transform 0.5s var(--ease);}
+.sk-home .nd-card::after {content: ""; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: rgba(255, 255, 255, 0.6); transform: scaleX(0); transform-origin: left;}
+.sk-home .nd-card.is-active {color: var(--white); box-shadow: var(--shadow-md); transform: translateY(-4px);}
+.sk-home .nd-card.is-active::before {transform: none;}
+.sk-home .nd-card.is-active::after {animation: sk-ndProgress 4.5s linear forwards;}
+.sk-home .nd-card:hover::after, .sk-home .nd-card:focus-visible::after {animation: none;}
+@keyframes sk-ndProgress {to { transform: scaleX(1); }}
+.sk-home .nd-region {font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-500); transition: color 0.4s;}
+.sk-home .nd-name {font-family: var(--font-display); font-weight: 900; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.15;}
+.sk-home .nd-local {font-size: 13px; line-height: 1.35; color: var(--grey-700); transition: color 0.4s;}
+.sk-home .nd-go {margin-top: auto; padding-top: 10px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--red); transition: color 0.4s, gap 0.3s;}
+.sk-home .nd-card.is-active .nd-region, .sk-home .nd-card.is-active .nd-local {color: rgba(255, 255, 255, 0.8);}
+.sk-home .nd-card.is-active .nd-go {color: var(--white); gap: 12px;}
+.sk-home .network-logo {margin-top: 34px; height: 68px; width: auto; opacity: 0.95;}
+.sk-home .network-globe {position: relative; width: 122%; max-width: 740px; margin-left: -16%; justify-self: center; aspect-ratio: 1; z-index: 0;}
+.sk-home .network-globe canvas {width: 100%; height: 100%; cursor: grab; touch-action: pan-y;}
+.sk-home .network-globe canvas:active {cursor: grabbing;}
+.sk-home .globe-pin {position: absolute; left: 0; top: 0; margin: -42px 0 0 14px; padding: 5px 12px; border-radius: 14px; background: var(--ink); color: var(--white); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; white-space: nowrap; pointer-events: none; transition: opacity 0.3s;}
+.sk-home .globe-pin--desk {margin: -40px 0 0 12px; background: var(--white); color: var(--red); border: 1.5px solid var(--red); box-shadow: var(--shadow-sm);}
+.sk-home .awards {--foil-1: #cecbcc; --foil-2: #ecedec; --foil-3: #ffffff; position: relative; overflow: hidden; padding: clamp(110px, 14vw, 180px) clamp(16px, 4vw, 64px) clamp(80px, 10vw, 140px); color: var(--grey-100); background: radial-gradient(1400px 900px at 50% -10%, #d23a48 0%, var(--red) 42%, var(--red-dark) 100%);}
+.sk-home .awards::before {content: ""; position: absolute; inset: 0 0 auto 0; height: 90px; background: linear-gradient(#fbfbfb 0%, rgba(251, 251, 251, 0.55) 30%, rgba(251, 251, 251, 0.12) 65%, rgba(251, 251, 251, 0) 100%); z-index: 1; pointer-events: none;}
+.sk-home .awards-guilloche {position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: radial-gradient(560px circle at var(--gx, 70%) var(--gy, 40%), #000 0%, rgba(0, 0, 0, 0.4) 45%, rgba(0, 0, 0, 0.14) 75%); mask-image: radial-gradient(560px circle at var(--gx, 70%) var(--gy, 40%), #000 0%, rgba(0, 0, 0, 0.4) 45%, rgba(0, 0, 0, 0.14) 75%);}
+.sk-home .awards-inner {position: relative; z-index: 2; max-width: var(--container); margin: 0 auto;}
+.sk-home .foil {--fx: 50%; background: linear-gradient(100deg, var(--foil-1) 0%, var(--foil-2) 22%, var(--foil-3) 38%, var(--foil-2) calc(var(--fx) - 5%), var(--foil-3) var(--fx), var(--foil-2) calc(var(--fx) + 5%), var(--foil-2) 72%, var(--foil-1) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;}
+.sk-home .awards-head {margin-bottom: clamp(40px, 5vw, 64px);}
+.sk-home .eyebrow--foil {color: rgba(255, 255, 255, 0.8);}
+.sk-home .awards-title {font-family: var(--font-display); font-weight: 900; font-size: clamp(48px, 7vw, 104px); line-height: 1; letter-spacing: -0.02em;}
+.sk-home .awards-deck {margin-top: 16px; max-width: 40ch; font-family: var(--font-body); font-weight: 500; font-size: clamp(17px, 1.5vw, 21px); color: rgba(255, 255, 255, 0.85);}
+.sk-home .award-src {display: block; font-family: var(--font-alt); font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.72);}
+.sk-home .awards-lead {display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(236, 237, 236, 0.35);}
+.sk-home .award-lead {padding: 40px 40px 44px 0; border-bottom: 1px solid rgba(236, 237, 236, 0.25);}
+.sk-home .award-lead + .award-lead {padding-left: 40px; border-left: 1px solid rgba(236, 237, 236, 0.25);}
+.sk-home .award-big {margin: 16px 0 22px; display: flex; align-items: baseline; gap: 22px;}
+.sk-home .award-big > .foil {font-family: var(--font-display); font-weight: 900; font-size: clamp(80px, 10vw, 150px); line-height: 0.85; letter-spacing: -0.03em;}
+.sk-home .award-big-label {max-width: 11em; font-family: var(--font-body); font-weight: 600; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.3; color: var(--grey-100);}
+.sk-home .award-list {font-family: var(--font-body); font-size: 15.5px; line-height: 1.75; color: rgba(255, 255, 255, 0.82);}
+.sk-home .award-note {margin-top: 18px; font-family: var(--font-body); font-weight: 600; font-size: 18px; color: var(--white);}
+.sk-home .award-note .foil {font-family: var(--font-display); font-weight: 900; font-size: 26px; margin-right: 4px;}
+.sk-home .award-banner {padding: 40px 0; display: flex; align-items: baseline; justify-content: space-between; gap: 30px; border-bottom: 1px solid rgba(236, 237, 236, 0.25);}
+.sk-home .award-banner .award-src {max-width: 20em; line-height: 1.5;}
+.sk-home .award-banner-title {font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.6vw, 54px); line-height: 1.05; letter-spacing: -0.02em; text-align: right;}
+.sk-home .award-rest {display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));}
+.sk-home .award-rest li {padding: 26px 20px 28px 0; font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 1.35; color: var(--white); border-bottom: 1px solid rgba(236, 237, 236, 0.25); transition: background 0.4s;}
+.sk-home .award-rest li + li {padding-left: 20px; border-left: 1px solid rgba(236, 237, 236, 0.18);}
+.sk-home .award-rest li:hover {background: rgba(255, 255, 255, 0.04);}
+.sk-home .award-rest .award-src {margin-bottom: 10px; font-size: 11.5px;}
+.sk-home .awards-cta {margin-top: 56px; text-align: center;}
+.sk-home .btn--foil {border: 1.5px solid rgba(236, 237, 236, 0.6); color: var(--white);}
+.sk-home .btn--foil:hover {background: var(--white); color: var(--red);}
+@media (max-width: 1024px) {
+.sk-home .deals-board {grid-template-columns: 1fr;}
+.sk-home .deal-feature {min-height: 460px;}
+.sk-home .deal-list {flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px;}
+.sk-home .deal-list li {flex: 0 0 240px; scroll-snap-align: start;}
+.sk-home .deal-list button:hover {transform: none;}
+.sk-home .network-wrap {grid-template-columns: 1fr;}
+.sk-home .network-globe {width: 100%; max-width: 520px; margin-left: 0; order: -1;}
+.sk-home .award-rest {grid-template-columns: repeat(3, minmax(0, 1fr));}
+.sk-home .award-rest li:nth-child(3n + 1) {padding-left: 0; border-left: 0;}
+}
+@media (max-width: 760px) {
+.sk-home .awards-lead {grid-template-columns: 1fr;}
+.sk-home .award-lead + .award-lead {padding-left: 0; border-left: 0;}
+.sk-home .award-banner {flex-direction: column;}
+.sk-home .award-banner-title {text-align: left;}
+.sk-home .award-rest {grid-template-columns: repeat(2, minmax(0, 1fr));}
+.sk-home .award-rest li:nth-child(3n + 1) {padding-left: 20px; border-left: 1px solid rgba(236, 237, 236, 0.18);}
+.sk-home .award-rest li:nth-child(odd) {padding-left: 0; border-left: 0;}
+}
+@media (max-width: 640px) {
+.sk-home .deal-feature {min-height: 0; border-radius: 18px;}
+.sk-home .deal-figure {padding-top: 28px;}
+.sk-home .network-stats li + li {padding-left: 12px;}
+.sk-home .nd-cards {grid-template-columns: 1fr;}
+.sk-home .nd-card {min-height: 0;}
+.sk-home .ns-label {font-size: 11px; letter-spacing: 0.06em;}
+}
+.sk-home .award-lead {position: relative;}
+.sk-home .award-rosette {position: absolute; top: 34px; right: 40px; display: grid; place-items: center; width: 96px; height: 96px; padding: 8px; border-radius: 16px; background: var(--white); box-shadow: 0 14px 30px rgba(60, 8, 16, 0.35); transform: perspective(600px) rotate(-4deg); transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);}
+.sk-home .award-lead:first-child .award-rosette {right: 40px;}
+.sk-home .award-lead + .award-lead .award-rosette {right: 0;}
+.sk-home .award-rosette img {max-width: 100%; max-height: 100%; object-fit: contain;}
+.sk-home .award-rosette--badge {padding: 0; overflow: hidden; background: #0d2340; transform: perspective(600px) rotate(4deg);}
+.sk-home .award-rosette--badge img {width: 100%; height: 100%; object-fit: cover;}
+.sk-home .award-lead:hover .award-rosette {transform: perspective(600px) rotateY(-14deg) translateY(-4px); box-shadow: 0 22px 40px rgba(60, 8, 16, 0.45);}
+.sk-home .award-mark {display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 14px; padding: 6px; border-radius: 12px; background: var(--white); box-shadow: 0 8px 18px rgba(60, 8, 16, 0.3); transition: transform 0.45s var(--ease);}
+.sk-home .award-mark img {max-width: 100%; max-height: 100%; object-fit: contain;}
+.sk-home .award-rest li:hover .award-mark {transform: perspective(500px) rotateY(-16deg) translateY(-3px);}
+@media (max-width: 760px) {
+.sk-home .award-rosette {width: 76px; height: 76px; top: 30px; right: 0;}
+.sk-home .award-lead:first-child .award-rosette {right: 0;}
+.sk-home .award-mark {width: 54px; height: 54px;}
+}
+.sk-home .section--art {isolation: isolate; overflow: clip;}
+.sk-home .section--art > * {position: relative; z-index: 1;}
+.sk-home .section--art::before, .sk-home .section--art::after {content: ""; position: absolute; pointer-events: none; z-index: 0; transform: translate3d(0, var(--drift, 0px), 0); will-change: transform;}
+.sk-home .section--art::before {transform: translate3d(0, calc(var(--drift, 0px) * 0.5), 0);}
+.sk-home .section--art::after {content: attr(data-watermark); top: 40px; font: 900 clamp(120px, 17vw, 260px)/0.9 var(--font-display); letter-spacing: -0.02em; color: transparent; -webkit-text-stroke: 1.5px rgba(195, 32, 48, 0.13); white-space: nowrap; user-select: none;}
+.sk-home .section--updates::before {inset: 8% -6% 0; background: url("https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/bg/paint-wash.jpg") 60% 50% / cover no-repeat; mix-blend-mode: multiply; opacity: 0.5; -webkit-mask-image: radial-gradient(60% 44% at 50% 55%, #000 20%, transparent 78%); mask-image: radial-gradient(60% 44% at 50% 55%, #000 20%, transparent 78%);}
+.sk-home .section--updates::after {left: -2vw; top: 90px; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 55%); mask-image: linear-gradient(180deg, transparent 0%, #000 55%);}
+.sk-home .section--deals::before {inset: -18% -5%; background: url("https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/bg/canvas-relief.jpg") 50% 40% / 170% auto no-repeat; mix-blend-mode: multiply; opacity: 0.22; -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, #000 36%, #000 64%, transparent 85%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, #000 36%, #000 64%, transparent 85%, transparent 100%);}
+.sk-home .section--deals::after {right: -3vw; top: 20px;}
+.sk-home .section--spotlight::before {inset: 0 -5%; background: url("https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/bg/paint-wash.jpg") 20% 60% / 140% auto no-repeat; mix-blend-mode: multiply; opacity: 0.48; -webkit-mask-image: radial-gradient(48% 52% at 26% 58%, #000 20%, transparent 72%), radial-gradient(28% 26% at 88% 36%, rgba(0, 0, 0, 0.6) 10%, transparent 70%); mask-image: radial-gradient(48% 52% at 26% 58%, #000 20%, transparent 72%), radial-gradient(28% 26% at 88% 36%, rgba(0, 0, 0, 0.6) 10%, transparent 70%);}
+.sk-home .section--spotlight::after {left: -2vw;}
+.sk-home .section--events::before {inset: -18% -5%; background: url("https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/bg/canvas-relief.jpg") 30% 70% / 170% auto no-repeat; mix-blend-mode: multiply; opacity: 0.2; -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, #000 36%, #000 64%, transparent 85%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0%, transparent 15%, #000 36%, #000 64%, transparent 85%, transparent 100%);}
+.sk-home .section--events::after {right: -3vw;}
+.sk-home .section--network::before {inset: -4% -5%; background: url("https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/bg/paint-wash.jpg") 70% 45% / cover no-repeat; mix-blend-mode: multiply; opacity: 0.5; -webkit-mask-image: radial-gradient(46% 56% at 70% 52%, #000 18%, transparent 76%); mask-image: radial-gradient(46% 56% at 70% 52%, #000 18%, transparent 76%);}
+.sk-home .section--network::after {left: -2vw; top: auto; bottom: 10px;}
+@media (max-width: 760px) {
+.sk-home .section--art::after {font-size: 34vw; -webkit-text-stroke-width: 1px;}
+}
+@media (prefers-reduced-motion: reduce) {
+.sk-home .section--art::before, .sk-home .section--art::after {transform: none;}
+}
+
+.sk-home { --header-h: 0px; overflow-x: clip; }
+</style>
+
+<div class="sk-home">
+<section class="hero" id="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-diagonal"></div>
+      <div class="hero-panel">
+        <p class="hero-eyebrow"><span></span>Skrine &#x00b7; Since 1963</p>
+        <h1 class="hero-tagline">
+          <span class="ht-word">Wisdom.</span>
+          <span class="ht-word">Fortitude.</span>
+          <span class="ht-word ht-word--swatch"><span class="ht-swatch" aria-hidden="true"></span><span class="ht-text">Ingenuity.</span></span>
+        </h1>
+        <p class="hero-sub">Our Heritage, Your Legacy</p>
+        <div class="hero-foot">
+          <div class="hero-actions">
+            <a href="/our-story/" class="btn btn--solid">Our Story <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="/practice-areas/" class="btn btn--outline">Explore Services <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <ul class="hero-rosettes" aria-label="Recognitions">
+            <li><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/chambers-2026.png" alt="Chambers Asia-Pacific 2026 &#x2014; Top Ranked" width="320" height="269"></li>
+            <li><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/legal500-2026.png" alt="Legal 500 Asia Pacific 2026 &#x2014; Top Tier Firm" width="290" height="320"></li>
+          </ul>
+        </div>
+      </div>
+      <a href="#updates" class="scroll-cue" aria-label="Scroll to content">
+        Scroll
+        <span aria-hidden="true"></span>
+      </a>
+    </section>
+    <section class="section section--updates section--art" id="updates" data-watermark="Updates">
+      <header class="section-head reveal">
+        <p class="eyebrow">Alerts &amp; Insights</p>
+        <h2 class="section-title">Legal Updates</h2>
+      </header>
+      <div class="carousel reveal" id="updatesCarousel" aria-roledescription="carousel" aria-label="Legal updates">
+        <button class="carousel-arrow prev" aria-label="Previous update"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="carousel-stage">
+          <ul class="carousel-track">
+            <li class="slide-card">
+              <div class="slide-art art-1">
+                <span class="slide-tag">Tax</span>
+                <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/tax-and-revenue.jpg" alt="" loading="lazy">
+              </div>
+              <div class="slide-body">
+                <h3>Principal Hub Tax Incentives Rules Amended to Remove Distinction between New Companies</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-11">11 Nov 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-2">
+                <span class="slide-tag">Employment</span>
+                <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/employment.jpg" alt="" loading="lazy">
+              </div>
+              <div class="slide-body">
+                <h3>Starting Basic Salary Guidelines to be Introduced from June 2027</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-06">06 Nov 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-3">
+                <span class="slide-tag">Regulatory Compliance</span>
+                <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/regulatory-compliance.jpg" alt="" loading="lazy">
+              </div>
+              <div class="slide-body">
+                <h3>2026 Updates to Malaysia's Food Laws and Regulations</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-05">05 Nov 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-4">
+                <span class="slide-tag">Maritime &amp; Shipping</span>
+                <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/maritime-and-shipping.jpg" alt="" loading="lazy">
+              </div>
+              <div class="slide-body">
+                <h3>Misdelivery of Cargo: When does a Release Instruction become Conversion?</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-04">04 Nov 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-5">
+                <span class="slide-tag">Corporate</span>
+                <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/corporate.jpg" alt="" loading="lazy">
+              </div>
+              <div class="slide-body">
+                <h3>New Directions and revised Guidelines on Company Names issued</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-11-03">03 Nov 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-6">
+                <span class="slide-tag">Banking &amp; Finance</span>
+                <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/banking-and-finance.jpg" alt="" loading="lazy">
+              </div>
+              <div class="slide-body">
+                <h3>Bank Negara Malaysia issues Revised Policy Document on Framework on Electronic Trading Platforms</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-10-30">30 Oct 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-1">
+                <span class="slide-tag">Real Estate</span>
+                <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/real-estate.jpg" alt="" loading="lazy">
+              </div>
+              <div class="slide-body">
+                <h3>Court of Appeal Clarifies Distinction Between Late Delivery and Defective Delivery of Vacant Possession</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-10-29">29 Oct 2026</time>
+              </div>
+            </li>
+            <li class="slide-card">
+              <div class="slide-art art-2">
+                <span class="slide-tag">Construction</span>
+                <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/construction-and-engineering.jpg" alt="" loading="lazy">
+              </div>
+              <div class="slide-body">
+                <h3>First Move or Final Outcome: Does a Winding-Up Order Preserve an Overturned Adjudication Decision?</h3>
+                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
+                <time datetime="2026-10-28">28 Oct 2026</time>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <button class="carousel-arrow next" aria-label="Next update"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="carousel-dots" role="tablist" aria-label="Choose update"></div>
+      </div>
+      <div class="section-cta reveal">
+        <a href="#" class="btn btn--outline">All Legal Updates <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </section>
+    <section class="section section--deals section--art" id="deals" data-watermark="Deals">
+      <header class="section-head reveal">
+        <p class="eyebrow">Transaction News</p>
+        <h2 class="section-title">Deals &amp; Transactions</h2>
+        <p class="section-deck">Landmark mandates shaping Malaysia's industries.</p>
+      </header>
+      <div class="deals-board reveal" id="dealsBoard">
+        <article class="deal-feature" id="dealFeature" data-tilt aria-live="polite">
+          <div class="deal-feature-art" aria-hidden="true" style="background-image: url(&quot;https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/fraud-and-asset-recovery.jpg&quot;)"></div>
+          <div class="deal-feature-content">
+            <p class="deal-sector">Tax &#x00b7; Dispute Resolution</p>
+            <p class="deal-figure"><span class="deal-figure-num">RM1</span> <span class="deal-figure-unit">bn</span></p>
+            <p class="deal-figure-label">sought in civil recovery suits in Malaysia</p>
+            <h3 class="deal-headline">Skrine leads Denmark's tax authority in civil suits to recover approximately RM1 billion</h3>
+            <p class="deal-summary">Skrine acted as lead counsel for the Customs and Tax Administration of the Kingdom of Denmark, plaintiff in civil suits against multiple Malaysian entities and related individuals, and successfully resisted an application to set aside service of the writ out of jurisdiction.</p>
+            <p class="deal-meta"><span class="deal-team">Preetha Pillai &#x00b7; Nimalan Devaraja</span><time>Cross-border recovery</time></p>
+          </div>
+        </article>
+        <ol class="deal-list" role="tablist" aria-label="Choose a transaction">
+          <li><button type="button" role="tab" aria-selected="true" data-deal="0"><span class="dl-figure">RM1bn</span><span class="dl-client">Kingdom of Denmark</span><span class="dl-sector">Tax &#x00b7; Disputes</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="1"><span class="dl-figure">6.5 tcf</span><span class="dl-client">TotalEnergies</span><span class="dl-sector">Oil &amp; Gas</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="2"><span class="dl-figure">RM4.0bn</span><span class="dl-client">AME Elite &#x00d7; UEM Sunrise</span><span class="dl-sector">Real Estate</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="3"><span class="dl-figure">US$2.325bn</span><span class="dl-client">AirTrunk</span><span class="dl-sector">Banking &amp; Finance</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="4"><span class="dl-figure">US$1.08bn</span><span class="dl-client">Thermo Fisher</span><span class="dl-sector">Corporate / M&amp;A</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="5"><span class="dl-figure">8 jurisdictions</span><span class="dl-client">Allianz Global Investors</span><span class="dl-sector">Corporate / M&amp;A</span></button></li>
+          <li><button type="button" role="tab" aria-selected="false" data-deal="6"><span class="dl-figure">US$643m</span><span class="dl-client">Carlsberg &#x00d7; Sapporo</span><span class="dl-sector">Corporate / M&amp;A</span></button></li>
+        </ol>
+      </div>
+      <div class="section-cta reveal">
+        <a href="#" class="btn btn--outline">All Transaction News <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </section>
+    <section class="section section--spotlight section--art" id="spotlight" data-watermark="Insights">
+      <header class="section-head reveal">
+        <p class="eyebrow">Alerts &amp; Publications</p>
+        <h2 class="section-title">In the Spotlight</h2>
+      </header>
+      <div class="spotlight-grid">
+        <a href="/publications/" class="spot-card spot-card--feature spot-card--pub reveal" data-tilt>
+          <div class="spot-cover spot-cover--photo">
+            <img class="spot-cover-blur" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/lexology-in-depth-intellectual-property-edition-15-0.png" alt="" aria-hidden="true" loading="lazy">
+            <img class="spot-cover-img" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/lexology-in-depth-intellectual-property-edition-15-0.png" alt="Lexology In-Depth: Intellectual Property, Edition 15" loading="lazy">
+          </div>
+          <div class="spot-body">
+            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2026-04-02">02 Apr 2026</time></p>
+            <h3>Lexology In-Depth: Intellectual Property &#x2013; Edition 15</h3>
+            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="/alert/?a=malaysias-cross-border-insolvency-act-2026-comes-into-operation" class="spot-card spot-card--alert reveal" data-tilt>
+          <div class="spot-cover spot-cover--alert">
+            <img class="spot-cover-photo" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/restructuring-and-insolvency.jpg" alt="" loading="lazy">
+          </div>
+          <div class="spot-body">
+            <p class="spot-tagline"><span class="spot-pill spot-pill--alert">Alert</span><time datetime="2026-09-21">21 Sep 2026</time></p>
+            <h3>Malaysia&#x2019;s Cross-Border Insolvency Act 2026 Comes into Operation</h3>
+            <p class="spot-meta">Restructuring &amp; Insolvency &#x00b7; Sharon Chong and Charmaine Lionel</p>
+            <span class="read-more">Read alert <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="/publications/" class="spot-card spot-card--pub reveal" data-tilt>
+          <div class="spot-cover spot-cover--photo">
+            <img class="spot-cover-blur" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/iels-guide-to-workplace-investigations-1.png" alt="" aria-hidden="true" loading="lazy">
+            <img class="spot-cover-img" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/iels-guide-to-workplace-investigations-1.png" alt="IEL's Guide to Workplace Investigations" loading="lazy">
+          </div>
+          <div class="spot-body">
+            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2025-11-27">27 Nov 2025</time></p>
+            <h3>IEL's Guide to Workplace Investigations</h3>
+            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="/alerts/" class="spot-card spot-card--alert reveal" data-tilt>
+          <div class="spot-cover spot-cover--alert">
+            <img class="spot-cover-photo" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/tax-and-revenue.jpg" alt="" loading="lazy">
+          </div>
+          <div class="spot-body">
+            <p class="spot-tagline"><span class="spot-pill spot-pill--alert">Alert</span><time datetime="2026-10-23">23 Oct 2026</time></p>
+            <h3>Snapshots of the 2027 Malaysian Budget</h3>
+            <p class="spot-meta">Corporate &#x00b7; Tan Wei Liang and Chong Cai Yi</p>
+            <span class="read-more">Read alert <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="/publications/" class="spot-card spot-card--pub reveal" data-tilt>
+          <div class="spot-cover spot-cover--photo">
+            <img class="spot-cover-blur" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/timor-leste-a-strategic-gateway-for-investment-2.jpg" alt="" aria-hidden="true" loading="lazy">
+            <img class="spot-cover-img" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/timor-leste-a-strategic-gateway-for-investment-2.jpg" alt="Map of Timor-Leste" loading="lazy">
+          </div>
+          <div class="spot-body">
+            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2025-10-30">30 Oct 2025</time></p>
+            <h3>Timor-Leste &#x2013; A Strategic Gateway for Investment</h3>
+            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="/alerts/" class="spot-card spot-card--alert reveal" data-tilt>
+          <div class="spot-cover spot-cover--alert">
+            <img class="spot-cover-photo" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/banking-and-finance.jpg" alt="" loading="lazy">
+          </div>
+          <div class="spot-body">
+            <p class="spot-tagline"><span class="spot-pill spot-pill--alert">Alert</span><time datetime="2026-10-22">22 Oct 2026</time></p>
+            <h3>Bank Negara Malaysia launches SSDS+ for the issue of tokenised bonds and sukuk</h3>
+            <p class="spot-meta">Fintech &#x00b7; Lee Ai Hsian</p>
+            <span class="read-more">Read alert <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="/publications/" class="spot-card spot-card--pub reveal" data-tilt>
+          <div class="spot-cover spot-cover--photo">
+            <img class="spot-cover-blur" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/updated-annotated-statue-of-malaysia-occupational-safety-and-health-ac-3.jpg" alt="" aria-hidden="true" loading="lazy">
+            <img class="spot-cover-img" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/updated-annotated-statue-of-malaysia-occupational-safety-and-health-ac-3.jpg" alt="Annotated Statutes of Malaysia: Occupational Safety and Health Act 1994" loading="lazy">
+          </div>
+          <div class="spot-body">
+            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2025-10-03">03 Oct 2025</time></p>
+            <h3>Updated Annotated Statute of Malaysia &#x2013; Occupational Safety and Health Act 1994</h3>
+            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="/publications/" class="spot-card spot-card--pub reveal" data-tilt>
+          <div class="spot-cover spot-cover--photo">
+            <img class="spot-cover-blur" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/data-protection-law-over-borders-data-protection-8.jpg" alt="" aria-hidden="true" loading="lazy">
+            <img class="spot-cover-img" src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/publications/data-protection-law-over-borders-data-protection-8.jpg" alt="Global Legal Post: Data Protection comparative guide" loading="lazy">
+          </div>
+          <div class="spot-body">
+            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2025-02-27">27 Feb 2025</time></p>
+            <h3>Data Protection Law Over Borders &#x2013; Comparative Guide</h3>
+            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+      </div>
+      <div class="section-cta reveal">
+        <a href="#" class="btn btn--outline">More Spotlights <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </section>
+    <section class="section section--events section--art" id="events" data-watermark="News">
+      <header class="section-head reveal">
+        <p class="eyebrow">What's Happening</p>
+        <h2 class="section-title">News &amp; Events</h2>
+      </header>
+      <div class="ne-board reveal" id="newsEvents">
+        <a href="/news-events/" class="ne-feature">
+          <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/news/2026-07-mybar-academy-x-working-committee-of-huangpu-lawyers-trainin.jpg" alt="" class="ne-feature-img">
+          <div class="ne-feature-body">
+            <p class="ne-kicker"><span>Latest News</span>Speaking &amp; Events &#x00b7; 07 Jul 2026</p>
+            <h3>MyBar Academy X Working Committee of Huangpu Lawyers Training Programme</h3>
+          </div>
+        </a>
+      </div>
+      <div class="section-cta reveal">
+        <a href="/news-events/" class="btn btn--outline">All News &amp; Events <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </section>
+    <section class="section section--network section--art" id="network" data-watermark="Global">
+      <div class="network-wrap">
+        <div class="network-copy reveal">
+          <p class="eyebrow">Global Network</p>
+          <h2 class="section-title section-title--left">Local expertise, global reach</h2>
+          <p class="network-lead">Skrine is the exclusive member firm in Malaysia for <strong>Lex Mundi</strong> &#x2014; the world's leading network of independent law firms.</p>
+          <ul class="network-stats">
+            <li><span class="ns-num"><span class="count-up" data-to="21000">21,000</span>+</span><span class="ns-label">lawyers</span></li>
+            <li><span class="ns-num"><span class="count-up" data-to="100">100</span>+</span><span class="ns-label">countries</span></li>
+            <li><span class="ns-num">1</span><span class="ns-label">point of contact</span></li>
+          </ul>
+          <p class="network-body">Our membership positions us to seamlessly handle cross-border transactions and disputes, giving clients preferred access to in-depth experience worldwide &#x2014; tapping into the best law practices and resources available internationally.</p>
+          <div class="network-desks">
+            <p class="nd-label">Regional Desks <span>Dedicated teams for inbound investment</span></p>
+            <div class="nd-cards" id="deskCards">
+              <a href="#" class="nd-card is-active" data-desk="china">
+                <span class="nd-region">East Asia</span>
+                <span class="nd-name">China Desk</span>
+                <span class="nd-local" lang="zh">&#x4e2d;&#x56fd;&#x670d;&#x52a1;&#x7ec4;</span>
+                <span class="nd-go">Explore <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+              </a>
+              <a href="#" class="nd-card" data-desk="india">
+                <span class="nd-region">South Asia</span>
+                <span class="nd-name">India Desk</span>
+                <span class="nd-local">Indian investors &amp; businesses</span>
+                <span class="nd-go">Explore <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+              </a>
+              <a href="#" class="nd-card" data-desk="mena">
+                <span class="nd-region">Middle East</span>
+                <span class="nd-name">MENA Desk</span>
+                <span class="nd-local">Gulf &amp; North African clients</span>
+                <span class="nd-go">Explore <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+              </a>
+            </div>
+          </div>
+          <img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/lexmundi.svg" alt="Lex Mundi &#x2014; Bringing the best together" class="network-logo">
+        </div>
+        <div class="network-globe reveal" aria-hidden="true">
+          <canvas id="globe"></canvas>
+          <span class="globe-pin">Kuala Lumpur</span>
+          <span class="globe-pin globe-pin--desk" data-desk="china">China Desk</span>
+          <span class="globe-pin globe-pin--desk" data-desk="india">India Desk</span>
+          <span class="globe-pin globe-pin--desk" data-desk="mena">MENA Desk</span>
+        </div>
+      </div>
+    </section>
+    <section class="awards" id="awards">
+      <canvas class="awards-guilloche" id="guilloche" aria-hidden="true"></canvas>
+      <div class="awards-inner">
+        <header class="awards-head reveal">
+          <p class="eyebrow eyebrow--foil">Recognition</p>
+          <h2 class="awards-title foil">Awards</h2>
+          <p class="awards-deck">Ranked by the directories our clients trust &#x2014; year after year.</p>
+        </header>
+        <div class="awards-lead">
+          <article class="award-lead reveal">
+            <span class="award-rosette"><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/chambers-2026.png" alt="Chambers Asia-Pacific 2026 &#x2014; Top Ranked" loading="lazy"></span>
+            <p class="award-src">Chambers Asia-Pacific &#x00b7; 2026 Guide</p>
+            <p class="award-big"><span class="foil count-up" data-to="11">11</span><span class="award-big-label">practice areas ranked</span></p>
+            <p class="award-list">Construction &#x00b7; Employment &amp; Industrial Relations &#x00b7; Intellectual Property &#x00b7; Projects, Infrastructure &amp; Energy &#x00b7; TMT &#x00b7; Competition &amp; Antitrust &#x00b7; Corporate/M&amp;A &#x00b7; Dispute Resolution &#x00b7; Shipping &#x00b7; Real Estate &#x00b7; Banking &amp; Finance</p>
+            <p class="award-note"><span class="foil">18</span> partners individually ranked</p>
+          </article>
+          <article class="award-lead reveal">
+            <span class="award-rosette award-rosette--badge"><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/legal500-2026.png" alt="Legal 500 Asia Pacific 2026 &#x2014; Top Tier Firm" loading="lazy"></span>
+            <p class="award-src">Legal 500 Asia-Pacific &#x00b7; 2026 Edition</p>
+            <p class="award-big"><span class="foil count-up" data-to="11">11</span><span class="award-big-label">practice areas in Tier&nbsp;1 &amp; Tier&nbsp;2</span></p>
+            <p class="award-list">Hall of Fame: To' Puan Janet Looi (Corporate and M&amp;A) &#x00b7; Charmayne Ong (Intellectual Property and TMT)</p>
+          </article>
+        </div>
+        <article class="award-banner reveal">
+          <p class="award-src">Chambers Asia-Pacific &amp; Greater China Region Awards 2024</p>
+          <p class="award-banner-title foil">&#x201c;Malaysia Law Firm of the Year&#x201d;</p>
+        </article>
+        <ul class="award-rest">
+          <li class="reveal"><span class="award-mark"><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/awards/iflr1000.png" alt="IFLR1000 logo" loading="lazy"></span><span class="award-src">IFLR1000 &#x00b7; 2023</span>Top-Tier Firm</li>
+          <li class="reveal"><span class="award-mark"><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/awards/asialaw.png" alt="asialaw Profiles logo" loading="lazy"></span><span class="award-src">asialaw Profiles &#x00b7; 2023</span>Outstanding Firm</li>
+          <li class="reveal"><span class="award-mark"><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/awards/benchmark.png" alt="Benchmark Litigation logo" loading="lazy"></span><span class="award-src">Benchmark Litigation Asia-Pacific &#x00b7; 2023</span>Top-Tier Firm</li>
+          <li class="reveal"><span class="award-mark"><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/awards/whoswholegal.png" alt="Who's Who Legal logo" loading="lazy"></span><span class="award-src">Who's Who Legal &#x00b7; 2019</span>Malaysia Law Firm of the Year</li>
+          <li class="reveal"><span class="award-mark"><img src="https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/awards/gar100.png" alt="GAR 100 logo" loading="lazy"></span><span class="award-src">Global Arbitration Review</span>GAR 100</li>
+        </ul>
+        <div class="awards-cta reveal">
+          <a href="#" class="btn btn--foil">All Recognitions <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var reveals = document.querySelectorAll(".sk-home .reveal");
+  reveals.forEach(function (el) {
+    var parent = el.parentElement;
+    if (!parent) return;
+    var siblings = Array.prototype.filter.call(parent.children, function (c) {
+      return c.classList.contains("reveal");
+    });
+    if (siblings.length > 1) {
+      el.style.setProperty("--delay", (siblings.indexOf(el) * 0.1) + "s");
+    }
+  });
+  var io = null;
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+  }
+  function observeReveal(el) {
+    if (io) io.observe(el);
+    else el.classList.add("is-visible");
+  }
+  reveals.forEach(observeReveal);
+  function attachTilt(card) {
+    if (!finePointer || reduceMotion || card.dataset.tiltReady) return;
+    card.dataset.tiltReady = "1";
+    (function () {
+      var max = card.classList.contains("event") ? 3 : 7;
+      var glare = document.createElement("span");
+      glare.className = "tilt-glare";
+      card.appendChild(glare);
+      card.addEventListener("mouseenter", function () {
+        card.style.transition = "transform 0.15s ease-out, box-shadow 0.4s, background 0.4s, border-color 0.4s";
+      });
+      card.addEventListener("mousemove", function (e) {
+        if (!card.classList.contains("is-visible") && card.classList.contains("reveal")) return;
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        var rx = (0.5 - py) * max * 2;
+        var ry = (px - 0.5) * max * 2;
+        card.style.transform =
+          "perspective(900px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) translateZ(6px)";
+        card.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
+        card.style.setProperty("--gy", (py * 100).toFixed(1) + "%");
+      });
+      card.addEventListener("mouseleave", function () {
+        card.style.transition = "transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.4s, background 0.4s, border-color 0.4s";
+        card.style.transform = "";
+      });
+    })();
+  }
+  document.querySelectorAll("[data-tilt]").forEach(attachTilt);
+  window.SkrineFX = { observeReveal: observeReveal, attachTilt: attachTilt };
+  document.querySelectorAll(".carousel").forEach(initCarousel);
+  function initCarousel(carousel) {
+    var cards = Array.prototype.slice.call(carousel.querySelectorAll(".slide-card"));
+    var dotsWrap = carousel.querySelector(".carousel-dots");
+    var stage = carousel.querySelector(".carousel-stage");
+    var index = 0;
+    var total = cards.length;
+    var timer = null;
+    var AUTOPLAY_MS = 5000;
+    var dots = cards.map(function (_, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-label", "Slide " + (i + 1));
+      b.addEventListener("click", function () { go(i); restart(); });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+    function spacing() {
+      var w = stage.clientWidth;
+      if (w < 520) return 150;
+      if (w < 900) return 230;
+      return 300;
+    }
+    function render() {
+      var gap = spacing();
+      cards.forEach(function (card, i) {
+        var off = i - index;
+        if (off > total / 2) off -= total;
+        if (off < -total / 2) off += total;
+        var abs = Math.abs(off);
+        var x = off * gap;
+        var z = -abs * 160;
+        var ry = reduceMotion ? 0 : -off * 28;
+        var scale = abs === 0 ? 1 : 0.88;
+        var opacity = abs > 2 ? 0 : abs === 2 ? 0.45 : 1;
+        card.style.transform =
+          "translateX(" + x + "px) translateZ(" + z + "px) rotateY(" + ry + "deg) scale(" + scale + ")";
+        card.style.opacity = opacity;
+        card.style.zIndex = String(10 - abs);
+        card.style.filter = abs === 0 ? "none" : "grayscale(" + Math.min(abs * 0.4, 0.8) + ")";
+        card.classList.toggle("is-active", abs === 0);
+        card.classList.toggle("is-far", abs > 2);
+        card.setAttribute("aria-hidden", abs === 0 ? "false" : "true");
+      });
+      dots.forEach(function (d, i) { d.setAttribute("aria-selected", String(i === index)); });
+    }
+    function go(i) {
+      index = (i + total) % total;
+      render();
+    }
+    function restart() {
+      if (reduceMotion) return;
+      clearInterval(timer);
+      timer = setInterval(function () { go(index + 1); }, AUTOPLAY_MS);
+    }
+    carousel.querySelector(".prev").addEventListener("click", function () { go(index - 1); restart(); });
+    carousel.querySelector(".next").addEventListener("click", function () { go(index + 1); restart(); });
+    cards.forEach(function (card, i) {
+      card.addEventListener("click", function () {
+        if (i !== index) { go(i); restart(); }
+      });
+    });
+    carousel.addEventListener("mouseenter", function () { clearInterval(timer); });
+    carousel.addEventListener("mouseleave", restart);
+    carousel.addEventListener("focusin", function () { clearInterval(timer); });
+    carousel.setAttribute("tabindex", "0");
+    carousel.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { go(index - 1); restart(); }
+      if (e.key === "ArrowRight") { go(index + 1); restart(); }
+    });
+    var startX = null;
+    stage.addEventListener("pointerdown", function (e) { startX = e.clientX; });
+    window.addEventListener("pointerup", function (e) {
+      if (startX === null) return;
+      var dx = e.clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 50) { go(index + (dx < 0 ? 1 : -1)); restart(); }
+    });
+    window.addEventListener("resize", render);
+    render();
+    restart();
+  }
+})();
+</script>
+<script>
+window.SKRINE_NEWS = [{"title":"MyBar Academy X Working Committee of Huangpu Lawyers Training Programme","date":"2026-07-07","category":"Speaking & Events","image":"2026-07-mybar-academy-x-working-committee-of-huangpu-lawyers-trainin.jpg","people":["To' Puan Janet Looi","Claudia Cheah Pek Yee","Kailash Kalaiarasu","Brenda Chan"],"summary":"Skrine was delighted to host a delegation of lawyers from Huangpu as part of the MyBar Academy X Working Committee of Huangpu Lawyers Training Programme on 7 July 2026. This event provided a wonderful opportunity for these visiting lawyers to engage in an afternoon of legal education, collaboration and international exchange. A warm welcome was extended at\u2026"},{"title":"FIRE International: Vilamoura","date":"2026-05-19","category":"Speaking & Events","image":"2026-05-fire-international-vilamoura.png","people":["Aufa Radzi"],"summary":"We are pleased to share that our partner, Aufa Radzi, will be speaking at FIRE International: Vilamoura, taking place from 19\u201321 May 2026 at EPIC Sana Algarve Hotel, Portugal. Now in its 5th year, FIRE International brings together leading practitioners in fraud litigation, contentious insolvency, and international enforcement for three days of expert-led\u2026"},{"title":"In-House Community Law Firms of the Year 2025","date":"2026-04-20","category":"Awards & Rankings","image":"2026-04-in-house-community-law-firms-of-the-year-2025.jpg","people":[],"summary":"We are pleased to share that Skrine has been recognised in the In-House Community Law Firms of the Year 2025 across six categories. This definitive list identifies Asia\u2010Pacific\u2019s leading law firms, determined by the first\u2010hand experiences of over 700 in\u2010house counsel."},{"title":"Commonwealth Legal Education Association (CLEA) Conference 2026","date":"2026-04-02","category":"Speaking & Events","image":"2026-04-commonwealth-legal-education-association-clea-conference-202.jpg","people":["To' Puan Janet Looi"],"summary":"Skrine was honoured to support the Commonwealth Legal Education Association (CLEA) Conference 2026 as a sponsor. The conference was held on 2\u20133 April 2026 at the Shangri-La, bringing together legal professionals from across the Commonwealth. The event opened with an address and keynote delivered by YAB Dato\u2019 Seri Anwar Ibrahim, setting the tone for two days\u2026"},{"title":"SkrineCast Episode 23: Motor Insurance in Malaysia - Passenger Cover","date":"2026-04-02","category":"SkrineCast","image":"2026-04-skrinecast-episode-23-motor-insurance-in-malaysia-passenger-.jpg","people":["Loo Peh Fern","Tan Yng Yiin"],"summary":"SkrineCast episode 23 is now available on Spotify! There is one important but often overlooked question in relation to the motor insurance in Malaysia: Are passengers actually covered in the event of an accident? In this episode, we explore how motor insurance policies work in Malaysia, the difference between a compulsory motor insurance and passenger cover,\u2026"}];
+window.SKRINE_UPCOMING = [];</script>
+<script>
+window.SKRINE_LAND = [[83,-24.8],[81.8,-89.7],[81.4,-37.2],[80.9,-69.7],[80.6,-17.1],[80.1,-49.6],[79.6,-82.1],[79.4,-29.5],[78.9,-62],[78.3,-41.9],[77.6,-21.9],[77.3,-54.3],[76.9,-86.8],[76.7,-34.3],[76.6,103.2],[76.5,-119.3],[76.3,-66.7],[76,-99.2],[75.8,-46.7],[75.5,143.4],[75.4,58.4],[75.3,-26.6],[75.2,110.9],[75.1,-111.6],[74.5,-39],[74.4,98.5],[74.3,-124],[73.7,-51.4],[73.6,86.1],[73.4,-83.9],[73.2,-31.3],[73.2,106.2],[72.7,126.2],[72.5,-43.7],[72.4,93.8],[72.3,146.3],[72.2,-76.2],[72.1,-23.7],[72,113.8],[72,-108.7],[71.8,81.4],[71.5,-88.6],[71.4,-36.1],[71.3,101.4],[71.3,-121.1],[71.2,16.4],[71.1,69],[70.9,121.5],[70.7,-48.5],[70.7,89],[70.5,141.6],[70.5,-80.9],[70.3,-28.4],[70.3,109.1],[70.2,24.1],[70.1,76.6],[70,-145.9],[69.9,129.2],[69.9,-93.3],[69.7,-40.8],[69.7,96.7],[69.5,149.2],[69.5,-73.3],[69.4,-158.3],[69.2,-105.7],[69.2,169.3],[69.1,-53.2],[69,-138.2],[69,-0.7],[68.9,-85.7],[68.8,51.8],[68.8,-170.7],[68.7,-33.2],[68.7,-118.1],[68.5,-65.6],[68.4,-150.6],[68.4,-13.1],[68.3,-98.1],[68.3,39.4],[68.2,-45.6],[68.1,-130.5],[68,7],[67.9,-78],[67.9,-163],[67.8,-25.5],[67.7,-110.5],[67.6,-58],[67.5,-142.9],[67.5,-5.4],[67.4,-90.4],[67.3,47.1],[67.3,-37.9],[67.2,-122.9],[67.1,-70.3],[67,-155.3],[66.9,-17.8],[66.8,-102.8],[66.7,-50.3],[66.6,-135.3],[66.6,2.2],[66.5,-82.7],[66.4,-167.7],[66.4,-30.2],[66.3,-115.2],[66.2,-62.7],[66.1,-147.7],[66.1,-10.2],[66,-95.1],[65.9,-42.6],[65.8,-127.6],[65.7,9.9],[65.7,-75.1],[65.6,-160.1],[65.5,-22.6],[65.5,-107.5],[65.3,-55],[65.3,-140],[65.2,-2.5],[65.2,-87.5],[65.1,-172.5],[65,-35],[65,-119.9],[64.9,17.6],[64.9,155.1],[64.8,-67.4],[64.8,70.1],[64.8,-152.4],[64.7,-14.9],[64.7,122.6],[64.6,-99.9],[64.6,37.6],[64.6,175.1],[64.5,-47.4],[64.5,90.1],[64.5,-132.3],[64.4,142.7],[64.3,57.7],[64.2,110.2],[64.2,-112.3],[64.1,25.2],[64.1,162.7],[64,77.7],[64,-144.7],[63.9,130.3],[63.9,-92.2],[63.8,45.3],[63.7,97.8],[63.7,-124.7],[63.6,12.8],[63.6,150.3],[63.5,65.3],[63.5,-157.1],[63.4,117.9],[63.4,-104.6],[63.3,32.9],[63.3,170.4],[63.2,85.4],[63.2,-137.1],[63.1,137.9],[63.1,53],[63,-169.5],[62.9,105.5],[62.9,-117],[62.8,158],[62.8,73],[62.7,-149.5],[62.7,125.5],[62.6,-97],[62.6,40.6],[62.5,178.1],[62.5,-44.4],[62.5,93.1],[62.4,-129.4],[62.4,8.1],[62.4,145.6],[62.3,-76.9],[62.3,60.6],[62.3,-161.9],[62.2,113.1],[62.2,-109.4],[62.1,28.2],[62.1,165.7],[62,80.7],[62,-141.8],[61.9,133.2],[61.8,48.2],[61.7,100.7],[61.7,-121.8],[61.7,15.8],[61.6,153.3],[61.6,68.3],[61.5,-154.2],[61.5,120.8],[61.4,-101.7],[61.4,35.8],[61.3,88.3],[61.3,-134.2],[61.2,140.9],[61.1,55.9],[61,108.4],[61,-114.1],[61,23.4],[60.9,160.9],[60.9,75.9],[60.8,-146.6],[60.8,128.5],[60.7,43.5],[60.6,96],[60.6,-126.5],[60.5,11],[60.5,148.5],[60.5,-74],[60.4,63.5],[60.4,-159],[60.3,116.1],[60.3,-106.4],[60.3,31.1],[60.2,83.6],[60.1,-138.9],[60.1,136.1],[60,51.1],[59.9,103.7],[59.9,-118.8],[59.7,71.2],[59.7,-151.3],[59.6,123.7],[59.6,-98.8],[59.6,38.7],[59.5,91.3],[59.4,-131.2],[59.4,6.3],[59.4,143.8],[59.3,58.8],[59.2,111.3],[59.2,-111.2],[59.2,26.3],[59.1,78.9],[59,131.4],[58.9,46.4],[58.8,98.9],[58.8,-123.6],[58.7,13.9],[58.7,-71],[58.6,66.5],[58.6,-156],[58.6,119],[58.5,-103.5],[58.5,34],[58.4,86.5],[58.4,-136],[58.3,139.1],[58.2,54.1],[58.1,106.6],[58.1,-115.9],[58.1,159.1],[58,-63.4],[58,74.1],[57.9,126.7],[57.9,-95.8],[57.8,41.7],[57.7,94.2],[57.7,-128.3],[57.6,-75.8],[57.6,61.7],[57.5,114.3],[57.5,-108.2],[57.4,29.3],[57.3,81.8],[57.3,-3.2],[57.3,134.3],[57.2,49.3],[57.1,101.9],[57.1,-120.6],[57,-68.1],[57,69.4],[56.9,121.9],[56.8,-100.6],[56.8,36.9],[56.7,89.5],[56.6,57],[56.5,109.5],[56.5,-113],[56.4,24.5],[56.4,162],[56.3,77.1],[56.2,129.6],[56.2,-92.9],[56.2,44.6],[56.1,97.1],[56.1,-125.4],[56,12.1],[56,-72.8],[55.9,64.7],[55.9,117.2],[55.8,-105.3],[55.8,32.2],[55.7,84.7],[55.6,52.3],[55.5,104.8],[55.5,-117.7],[55.4,157.3],[55.4,-65.2],[55.3,72.3],[55.3,124.8],[55.2,-97.6],[55.2,39.9],[55.1,92.4],[55.1,-130.1],[55,-77.6],[55,59.9],[54.9,-162.6],[54.9,112.4],[54.9,-110],[54.8,27.5],[54.7,80],[54.7,132.5],[54.6,-90],[54.6,47.5],[54.5,100],[54.5,-122.4],[54.4,-69.9],[54.4,67.6],[54.3,120.1],[54.3,-102.4],[54.2,35.1],[54.1,87.6],[54,55.2],[53.9,107.7],[53.9,-114.8],[53.9,22.7],[53.8,-62.3],[53.8,75.2],[53.7,127.8],[53.7,-94.7],[53.6,42.8],[53.6,95.3],[53.5,-127.2],[53.5,10.3],[53.5,-74.7],[53.4,62.8],[53.3,115.4],[53.3,-107.1],[53.3,30.4],[53.2,82.9],[53.2,-2.1],[53.1,135.4],[53.1,-87.1],[53.1,50.5],[53,103],[53,-119.5],[52.9,18],[52.9,-67],[52.9,70.5],[52.8,123],[52.7,-99.5],[52.7,38.1],[52.6,90.6],[52.6,-131.9],[52.6,5.6],[52.6,143.1],[52.5,58.1],[52.4,110.6],[52.4,-111.9],[52.4,25.7],[52.3,-59.3],[52.3,78.2],[52.2,130.7],[52.2,-91.8],[52.2,45.7],[52.1,98.2],[52,-124.3],[52,13.3],[52,-71.7],[51.9,65.8],[51.9,118.3],[51.8,-104.2],[51.8,33.3],[51.7,85.8],[51.7,0.9],[51.7,138.4],[51.6,-84.1],[51.6,53.4],[51.5,105.9],[51.5,-116.6],[51.5,20.9],[51.4,-64.1],[51.4,73.4],[51.3,126],[51.3,-96.5],[51.3,41],[51.2,93.5],[51.1,8.5],[51.1,-76.5],[51,61],[51,113.6],[50.9,-108.9],[50.9,28.6],[50.9,-56.4],[50.8,81.1],[50.8,-3.9],[50.8,133.6],[50.7,-88.9],[50.7,48.6],[50.6,101.2],[50.6,-121.3],[50.6,16.2],[50.5,-68.8],[50.5,68.7],[50.4,121.2],[50.4,-101.3],[50.4,36.2],[50.3,88.8],[50.2,3.8],[50.2,-81.2],[50.2,56.3],[50.1,108.8],[50.1,-113.7],[50,23.8],[50,76.4],[49.9,128.9],[49.9,-93.6],[49.8,43.9],[49.8,96.4],[49.7,-126.1],[49.7,11.4],[49.7,-73.5],[49.6,64],[49.6,116.5],[49.5,-106],[49.5,31.5],[49.4,84],[49.4,136.6],[49.3,-85.9],[49.3,51.6],[49.2,104.1],[49.2,-118.4],[49.2,19.1],[49.1,-65.9],[49.1,71.6],[49,124.2],[49,-98.3],[49,39.2],[48.9,91.7],[48.9,6.7],[48.8,-78.3],[48.8,59.2],[48.7,111.8],[48.7,-110.7],[48.7,26.8],[48.6,-58.2],[48.6,79.3],[48.5,131.8],[48.5,-90.7],[48.5,46.8],[48.4,99.4],[48.3,14.4],[48.3,-70.6],[48.3,66.9],[48.2,119.4],[48.2,-103.1],[48.1,34.4],[48.1,87],[48,2],[48,139.5],[48,-83],[47.9,54.5],[47.9,107],[47.9,-115.5],[47.8,22],[47.8,74.6],[47.7,127.1],[47.7,-95.4],[47.6,42.1],[47.6,94.6],[47.5,9.6],[47.5,-75.3],[47.4,62.2],[47.4,114.7],[47.3,-107.8],[47.3,29.7],[47.3,-55.3],[47.2,82.2],[47.2,134.7],[47.1,-87.7],[47.1,49.8],[47.1,102.3],[47,-120.2],[47,17.3],[47,-67.7],[46.9,69.8],[46.9,122.3],[46.8,-100.1],[46.7,89.9],[46.7,4.9],[46.7,142.4],[46.6,-80.1],[46.6,57.4],[46.5,109.9],[46.5,-112.5],[46.5,25],[46.4,77.5],[46.4,130],[46.3,-92.5],[46.3,45],[46.2,97.5],[46.2,12.6],[46.1,-72.4],[46.1,65.1],[46.1,117.6],[46,-104.9],[45.9,85.1],[45.9,0.2],[45.9,137.7],[45.8,-84.8],[45.7,105.2],[45.7,-117.3],[45.7,20.2],[45.7,-64.8],[45.6,72.7],[45.6,125.3],[45.5,-97.2],[45.5,40.3],[45.4,92.8],[45.4,7.8],[45.3,-77.2],[45.3,60.3],[45.3,112.9],[45.2,-109.6],[45.2,27.9],[45.1,80.4],[45.1,132.9],[45,-89.6],[45,100.5],[44.9,-122],[44.9,15.5],[44.9,-69.5],[44.8,68],[44.8,120.5],[44.7,-102],[44.7,88.1],[44.6,3.1],[44.6,-81.9],[44.5,55.6],[44.5,108.1],[44.4,-114.4],[44.4,23.2],[44.4,75.7],[44.3,128.2],[44.3,-94.3],[44.2,43.2],[44.2,95.7],[44.1,10.8],[44.1,-74.2],[44.1,63.3],[44,115.8],[44,-106.7],[43.9,83.3],[43.8,-86.6],[43.7,103.4],[43.7,-119.1],[43.6,18.4],[43.6,70.9],[43.5,123.5],[43.5,-99],[43.4,91],[43.4,6],[43.3,143.5],[43.3,-79],[43.3,58.5],[43.2,111.1],[43.2,-111.4],[43.2,26.1],[43.1,78.6],[43.1,-6.4],[43,131.1],[43,-91.4],[43,46.1],[42.9,98.7],[42.9,-123.8],[42.9,13.7],[42.8,-71.3],[42.8,66.2],[42.8,118.7],[42.7,-103.8],[42.6,86.3],[42.6,1.3],[42.6,-83.7],[42.5,53.8],[42.5,106.3],[42.4,-116.2],[42.4,21.3],[42.4,73.9],[42.3,126.4],[42.3,-96.1],[42.2,93.9],[42.1,8.9],[42.1,-76],[42.1,61.5],[42,114],[42,-108.5],[41.9,81.5],[41.8,-3.5],[41.8,-88.4],[41.7,101.6],[41.7,-120.9],[41.6,69.1],[41.5,121.7],[41.5,-100.8],[41.4,89.2],[41.3,-80.8],[41.3,56.7],[41.3,109.3],[41.2,-113.2],[41.2,24.3],[41.1,76.8],[41.1,-8.2],[41.1,129.3],[41.1,-93.2],[41,44.3],[41,96.9],[40.9,-73.1],[40.9,64.4],[40.8,116.9],[40.8,-105.6],[40.8,31.9],[40.7,84.5],[40.6,-0.5],[40.6,-85.5],[40.5,104.5],[40.5,-118],[40.5,19.5],[40.4,72.1],[40.3,124.6],[40.3,-97.9],[40.3,39.6],[40.2,92.1],[40.2,-77.8],[40.1,59.7],[40.1,112.2],[40,-110.3],[40,27.2],[40,79.7],[39.9,-5.3],[39.9,-90.2],[39.9,47.3],[39.8,99.8],[39.8,-122.7],[39.7,67.3],[39.6,-102.6],[39.6,34.9],[39.5,87.4],[39.4,-82.6],[39.4,54.9],[39.3,107.4],[39.3,-115],[39.3,22.5],[39.2,75],[39.2,-95],[39.1,42.5],[39.1,95],[39,62.6],[38.9,115.1],[38.9,-107.4],[38.9,30.1],[38.8,82.6],[38.8,-2.3],[38.7,-87.3],[38.6,102.7],[38.6,-119.8],[38.5,70.2],[38.4,-99.7],[38.4,37.8],[38.4,90.3],[38.3,-79.7],[38.2,57.8],[38.2,110.4],[38.2,-112.1],[38.1,77.9],[38,-7.1],[38,-92.1],[38,45.5],[37.9,98],[37.9,13],[37.8,65.5],[37.8,118],[37.7,-104.5],[37.7,33.1],[37.6,85.6],[37.6,-84.4],[37.5,105.6],[37.5,-116.9],[37.4,73.2],[37.3,-96.8],[37.3,40.7],[37.2,93.2],[37.1,-76.7],[37.1,60.8],[37.1,113.3],[37,-109.2],[37,28.3],[36.9,80.8],[36.9,-4.1],[36.9,-89.1],[36.8,48.4],[36.8,100.9],[36.8,-121.6],[36.7,68.4],[36.6,121],[36.6,-101.5],[36.5,88.5],[36.5,3.5],[36.4,-81.5],[36.4,56],[36.4,108.6],[36.3,-113.9],[36.3,76.1],[36.2,128.6],[36.2,-93.9],[36.2,43.6],[36.1,96.2],[36,63.7],[35.9,116.2],[35.9,-106.3],[35.8,83.8],[35.8,136.3],[35.7,-86.2],[35.7,51.3],[35.7,103.8],[35.6,-118.7],[35.6,71.4],[35.5,-98.6],[35.5,38.9],[35.4,91.4],[35.4,6.4],[35.3,-78.5],[35.3,59],[35.2,111.5],[35.2,-111],[35.1,79],[35.1,-6],[35.1,-90.9],[35,46.6],[35,99.1],[34.9,66.6],[34.8,119.2],[34.8,-103.3],[34.7,86.7],[34.7,1.7],[34.6,-83.3],[34.6,54.2],[34.6,106.8],[34.5,-115.7],[34.5,74.3],[34.4,-95.7],[34.4,41.8],[34.3,94.4],[34.3,9.4],[34.2,61.9],[34.2,114.4],[34.1,-108.1],[34.1,82],[34,-3],[34,134.5],[34,-88],[34,49.5],[33.9,102],[33.8,69.6],[33.7,-100.4],[33.7,37.1],[33.6,89.6],[33.6,4.6],[33.6,-80.3],[33.5,57.2],[33.5,109.7],[33.5,-112.8],[33.4,77.2],[33.3,-7.8],[33.3,129.7],[33.3,-92.7],[33.3,44.8],[33.2,97.3],[33.1,64.8],[33.1,117.3],[33,-105.1],[33,84.9],[32.9,-0.1],[32.9,-85.1],[32.9,52.4],[32.8,104.9],[32.7,72.5],[32.6,-97.5],[32.6,40],[32.6,92.5],[32.5,7.6],[32.5,60.1],[32.4,112.6],[32.4,-109.9],[32.3,80.1],[32.3,-4.8],[32.2,-89.8],[32.2,47.7],[32.2,100.2],[32.1,15.2],[32.1,67.7],[32,120.3],[32,-102.2],[32,35.3],[31.9,87.8],[31.9,2.8],[31.8,-82.2],[31.8,55.3],[31.8,107.9],[31.7,-114.6],[31.7,22.9],[31.7,75.4],[31.6,-9.6],[31.6,-94.6],[31.6,43],[31.5,95.5],[31.5,10.5],[31.4,63],[31.3,115.5],[31.3,-107],[31.3,30.6],[31.3,83.1],[31.2,-1.9],[31.2,-86.9],[31.2,50.6],[31.1,103.1],[31,70.7],[30.9,-99.3],[30.9,38.2],[30.8,90.7],[30.8,5.8],[30.8,58.3],[30.7,110.8],[30.7,-111.7],[30.7,25.8],[30.6,78.3],[30.6,-6.6],[30.5,-91.6],[30.5,45.9],[30.5,98.4],[30.4,13.4],[30.4,65.9],[30.3,118.5],[30.3,-104],[30.3,33.5],[30.2,86],[30.2,1],[30.1,-84],[30.1,53.5],[30.1,106.1],[30,21.1],[30,73.6],[29.9,-96.4],[29.9,41.1],[29.8,93.7],[29.8,8.7],[29.7,61.2],[29.7,113.7],[29.6,-108.8],[29.6,28.7],[29.6,81.3],[29.5,-3.7],[29.4,101.3],[29.4,16.3],[29.3,68.9],[29.3,121.4],[29.2,-101.1],[29.2,36.4],[29.2,88.9],[29.1,3.9],[29.1,-81],[29.1,56.5],[29,109],[29,24],[28.9,76.5],[28.9,-8.5],[28.8,44.1],[28.8,96.6],[28.7,11.6],[28.7,64.1],[28.6,116.7],[28.6,-105.8],[28.6,31.7],[28.5,84.2],[28.5,-0.8],[28.4,51.7],[28.4,104.3],[28.3,19.3],[28.3,71.8],[28.2,-98.2],[28.2,39.3],[28.1,91.9],[28.1,6.9],[28,59.4],[28,111.9],[28,-110.6],[28,26.9],[27.9,79.5],[27.9,-5.5],[27.8,47],[27.8,99.5],[27.7,14.5],[27.7,67.1],[27.6,119.6],[27.6,-102.9],[27.5,87.1],[27.5,2.1],[27.4,54.7],[27.4,107.2],[27.3,22.2],[27.3,74.7],[27.2,-10.3],[27.2,42.3],[27.1,94.8],[27.1,9.8],[27,62.3],[27,114.8],[27,-107.6],[26.9,29.9],[26.9,82.4],[26.8,-2.6],[26.8,49.9],[26.7,102.4],[26.7,17.5],[26.6,70],[26.6,-100],[26.6,37.5],[26.5,90],[26.5,5.1],[26.4,57.6],[26.4,110.1],[26.3,-112.4],[26.3,25.1],[26.3,77.6],[26.2,-7.3],[26.2,45.2],[26.1,97.7],[26.1,12.7],[26,65.2],[26,117.8],[26,-104.7],[25.9,32.8],[25.9,85.3],[25.8,0.3],[25.7,105.4],[25.7,20.4],[25.6,72.9],[25.6,-12.1],[25.6,40.5],[25.5,93],[25.5,8],[25.4,60.5],[25.4,113],[25.3,28.1],[25.3,80.6],[25.2,-4.4],[25.2,48.1],[25.1,100.6],[25.1,15.7],[25,68.2],[25,-101.8],[24.9,88.2],[24.8,3.3],[24.8,55.8],[24.7,108.3],[24.7,23.3],[24.6,75.8],[24.6,-9.1],[24.6,43.4],[24.5,95.9],[24.5,10.9],[24.4,116],[24.3,-106.5],[24.3,31],[24.3,83.5],[24.2,-1.5],[24.2,51],[24.1,103.6],[24.1,18.6],[24,71.1],[24,-13.9],[24,-98.9],[23.9,38.6],[23.9,91.2],[23.9,6.2],[23.8,111.2],[23.7,26.2],[23.7,78.8],[23.6,-6.2],[23.6,46.3],[23.5,98.8],[23.5,13.8],[23.4,-103.6],[23.3,33.9],[23.3,86.4],[23.3,1.4],[23.2,54],[23.1,106.5],[23.1,21.5],[23.1,74],[23,-11],[23,41.6],[22.9,94.1],[22.9,9.1],[22.8,114.2],[22.7,29.2],[22.7,81.7],[22.6,-3.3],[22.6,49.2],[22.5,101.8],[22.5,16.8],[22.4,-15.7],[22.4,-100.7],[22.3,89.4],[22.3,4.4],[22.2,-80.6],[22.2,56.9],[22.2,109.4],[22.1,24.4],[22.1,77],[22,-8],[22,44.5],[21.9,97],[21.9,12],[21.8,-105.4],[21.8,32.1],[21.7,84.6],[21.7,-0.4],[21.6,52.2],[21.6,104.7],[21.5,19.7],[21.5,72.2],[21.4,-12.8],[21.4,-97.7],[21.4,39.8],[21.3,92.3],[21.3,7.3],[21.3,-77.7],[21.2,27.4],[21.1,79.9],[21.1,-5.1],[21,-90.1],[21,47.4],[21,99.9],[20.9,15],[20.8,-102.5],[20.8,35],[20.7,2.6],[20.7,55.1],[20.6,22.6],[20.5,75.1],[20.5,-9.8],[20.4,42.7],[20.4,95.2],[20.3,10.2],[20.3,-74.8],[20.2,30.3],[20.1,82.8],[20.1,-2.2],[20.1,50.3],[20,102.9],[20,17.9],[19.9,-14.6],[19.9,-99.6],[19.7,5.5],[19.6,110.5],[19.6,25.6],[19.6,78.1],[19.5,-6.9],[19.5,45.6],[19.4,98.1],[19.4,13.2],[19.3,-71.8],[19.3,-104.3],[19.2,33.2],[19.2,0.8],[19.1,53.3],[19,20.8],[19,73.3],[18.9,-11.6],[18.9,-96.6],[18.8,8.4],[18.7,28.5],[18.6,81],[18.6,-4],[18.5,-89],[18.5,48.5],[18.5,101.1],[18.4,16.1],[18.4,-68.9],[18.3,121.1],[18.3,-101.4],[18.3,36.1],[18.2,3.7],[18.2,56.2],[18.1,23.7],[18,76.3],[18,-8.7],[17.9,-93.7],[17.9,43.8],[17.9,96.3],[17.8,11.3],[17.7,31.4],[17.6,-1.1],[17.6,51.5],[17.5,104],[17.5,19],[17.4,-13.5],[17.4,-98.4],[17.3,6.6],[17.1,26.7],[17.1,79.2],[17,-5.8],[17,-90.8],[17,46.7],[16.9,99.3],[16.9,14.3],[16.8,34.3],[16.7,1.9],[16.6,106.9],[16.5,21.9],[16.5,74.5],[16.5,-10.5],[16.4,-95.5],[16.4,94.5],[16.3,9.5],[16.2,29.6],[16.1,-2.9],[16,49.7],[16,102.2],[16,17.2],[15.9,-15.3],[15.8,37.3],[15.7,4.8],[15.6,24.9],[15.6,77.4],[15.5,-7.6],[15.5,-92.6],[15.5,44.9],[15.4,12.5],[15.3,32.5],[15.2,0.1],[15.1,-84.9],[15.1,105.1],[15,20.1],[14.9,-12.3],[14.9,40.2],[14.8,7.7],[14.7,27.8],[14.6,-4.7],[14.6,-89.7],[14.5,47.8],[14.5,100.4],[14.5,15.4],[14.4,-17.1],[14.3,35.5],[14.2,3],[14.1,108],[14.1,23.1],[14,75.6],[14,-9.4],[13.9,10.7],[13.7,30.7],[13.7,-1.7],[13.6,-86.7],[13.6,103.3],[13.5,18.3],[13.4,-14.1],[13.4,123.4],[13.4,38.4],[13.3,5.9],[13.2,26],[13.1,78.5],[13.1,-6.5],[13,98.6],[13,13.6],[12.8,33.6],[12.7,1.2],[12.7,-83.8],[12.6,106.2],[12.6,21.2],[12.5,-11.2],[12.5,41.3],[12.4,8.8],[12.2,28.9],[12.2,-3.6],[12,16.5],[11.9,-16],[11.9,36.6],[11.8,4.1],[11.7,109.2],[11.7,24.2],[11.6,76.7],[11.6,-8.3],[11.5,11.8],[11.3,31.8],[11.2,-0.6],[11.2,-85.6],[11.1,104.4],[11.1,19.4],[11,-13],[11,124.5],[11,39.5],[10.9,7],[10.8,27.1],[10.7,79.6],[10.7,-5.4],[10.6,47.2],[10.5,14.7],[10.5,-70.3],[10.4,34.8],[10.3,2.3],[10.2,22.4],[10.2,-62.6],[10.1,-10.1],[10.1,42.4],[10,10],[9.9,-75],[9.8,30],[9.8,-2.4],[9.7,50.1],[9.6,17.6],[9.6,-67.4],[9.5,122.7],[9.5,37.7],[9.4,5.2],[9.4,-79.8],[9.3,25.3],[9.2,77.8],[9.2,-7.2],[9.2,45.3],[9.1,12.9],[9,-72.1],[9,117.9],[8.9,33],[8.9,0.5],[8.7,20.6],[8.7,-64.4],[8.6,-11.9],[8.6,125.6],[8.6,40.6],[8.5,8.2],[8.5,-76.8],[8.4,28.2],[8.3,80.7],[8.3,-4.2],[8.2,48.3],[8.2,15.8],[8.1,-69.2],[8,35.9],[7.9,3.4],[7.9,-81.6],[7.8,23.5],[7.8,-61.5],[7.7,-9],[7.7,43.5],[7.6,11.1],[7.6,-73.9],[7.5,31.1],[7.4,-1.3],[7.2,18.7],[7.2,-66.2],[7.1,38.8],[7,6.3],[6.9,26.4],[6.9,-58.6],[6.8,-6.1],[6.8,46.5],[6.7,14],[6.7,-71],[6.6,34.1],[6.5,1.6],[6.3,21.7],[6.3,-63.3],[6.3,-10.8],[6.2,41.7],[6.1,9.3],[6.1,-75.7],[6,29.3],[6,-55.7],[5.9,-3.1],[5.8,101.9],[5.8,16.9],[5.7,-68.1],[5.6,37],[5.4,24.6],[5.4,-60.4],[5.4,-7.9],[5.3,44.7],[5.3,97.2],[5.2,12.2],[5.2,-72.8],[5.1,117.2],[5.1,32.3],[5.1,-52.7],[4.9,19.9],[4.8,-65.1],[4.7,39.9],[4.7,7.5],[4.5,27.5],[4.5,-57.5],[4.4,47.6],[4.3,15.1],[4.3,-69.9],[4.2,35.2],[4,22.8],[3.9,-62.2],[3.8,42.8],[3.8,10.4],[3.7,-74.6],[3.7,115.4],[3.6,30.5],[3.6,-54.5],[3.4,103],[3.4,18.1],[3.4,-66.9],[3.3,38.1],[3.1,25.7],[3,-59.3],[2.9,45.8],[2.9,98.3],[2.9,13.3],[2.8,-71.7],[2.7,33.4],[2.7,-51.6],[2.5,21],[2.5,-64],[2.4,41],[2.3,-76.4],[2.2,113.6],[2.2,28.6],[2.1,-56.3],[2,101.2],[2,16.2],[1.9,-68.7],[1.8,36.3],[1.6,23.9],[1.6,-61.1],[1.5,44],[1.4,11.5],[1.4,-73.5],[1.3,116.6],[1.3,31.6],[1.2,-53.4],[1.1,19.2],[1,-65.8],[1,124.2],[0.9,39.2],[0.8,-78.2],[0.7,111.8],[0.7,26.8],[0.7,-58.2],[0.5,99.4],[0.5,14.4],[0.5,-70.6],[0.4,34.5],[0.2,22.1],[0.1,-62.9],[0,42.2],[-0.1,9.7],[-0.1,-75.3],[-0.2,114.7],[-0.2,29.8],[-0.2,-55.2],[-0.4,102.3],[-0.4,17.4],[-0.4,-67.6],[-0.5,37.4],[-0.6,-80],[-0.7,110],[-0.7,25],[-0.8,-60],[-1,12.6],[-1,-72.4],[-1.1,32.7],[-1.1,-52.3],[-1.3,20.3],[-1.3,-64.7],[-1.4,40.3],[-1.5,-77.1],[-1.6,112.9],[-1.6,28],[-1.7,-57],[-1.7,133],[-1.9,15.6],[-1.9,-69.4],[-2,120.6],[-2,35.6],[-2,-49.4],[-2.2,23.2],[-2.2,-61.8],[-2.4,10.8],[-2.4,-74.2],[-2.5,115.9],[-2.5,30.9],[-2.6,-54.1],[-2.7,103.5],[-2.8,18.5],[-2.8,-66.5],[-2.9,38.5],[-2.9,-46.4],[-3,-78.9],[-3.1,26.1],[-3.1,-58.8],[-3.3,13.7],[-3.4,-71.2],[-3.4,33.8],[-3.5,-51.2],[-3.5,138.9],[-3.7,21.4],[-3.7,-63.6],[-3.8,-43.5],[-3.9,-76],[-4,29.1],[-4,-55.9],[-4.2,16.7],[-4.3,-68.3],[-4.3,121.7],[-4.4,36.7],[-4.4,-48.3],[-4.4,141.8],[-4.5,-80.7],[-4.6,24.3],[-4.6,-60.7],[-4.7,-40.6],[-4.8,11.9],[-4.8,-73.1],[-4.9,32],[-4.9,-53],[-5.1,104.6],[-5.1,19.6],[-5.2,-65.4],[-5.3,-45.3],[-5.4,144.7],[-5.4,-77.8],[-5.5,27.3],[-5.5,-57.7],[-5.6,-37.7],[-5.7,14.9],[-5.7,-70.1],[-5.8,34.9],[-5.8,-50.1],[-5.9,140],[-6,22.5],[-6.1,-62.5],[-6.2,-42.4],[-6.3,147.6],[-6.3,-74.9],[-6.4,30.2],[-6.4,-54.8],[-6.6,17.8],[-6.6,155.3],[-6.6,-67.2],[-6.7,37.8],[-6.8,-47.1],[-6.8,142.9],[-6.8,-79.6],[-6.9,110.4],[-6.9,25.5],[-7,-59.5],[-7.1,-39.5],[-7.1,13.1],[-7.2,-71.9],[-7.3,33.1],[-7.3,-51.9],[-7.5,20.7],[-7.5,-64.3],[-7.7,-44.2],[-7.7,145.8],[-7.7,-76.7],[-7.8,113.4],[-7.8,28.4],[-7.9,-56.6],[-8,-36.5],[-8.1,16],[-8.1,-69],[-8.2,36],[-8.2,-48.9],[-8.3,141.1],[-8.4,23.6],[-8.4,-61.3],[-8.6,-41.3],[-8.7,-73.7],[-8.8,31.3],[-8.8,-53.7],[-9,18.9],[-9,-66.1],[-9.1,39],[-9.1,-46],[-9.2,-78.5],[-9.3,26.6],[-9.3,-58.4],[-9.5,-38.4],[-9.5,14.2],[-9.6,-70.8],[-9.6,119.2],[-9.7,34.2],[-9.7,-50.8],[-9.9,21.8],[-9.9,-63.2],[-10,-43.1],[-10.1,-75.6],[-10.2,29.5],[-10.3,-55.5],[-10.4,17.1],[-10.5,-67.9],[-10.6,37.2],[-10.6,-47.8],[-10.8,24.8],[-10.8,162.3],[-10.8,-60.2],[-11,-40.2],[-11,-72.6],[-11.1,32.4],[-11.2,-52.6],[-11.4,20],[-11.4,-65],[-11.5,40.1],[-11.5,-44.9],[-11.6,-77.4],[-11.7,27.7],[-11.7,-57.3],[-11.8,132.7],[-11.9,15.3],[-12,-69.7],[-12.1,35.3],[-12.1,-49.6],[-12.3,23],[-12.3,-62],[-12.5,-42],[-12.5,-74.4],[-12.6,30.6],[-12.7,-54.4],[-12.7,135.7],[-12.9,18.2],[-12.9,-66.8],[-13,38.3],[-13,-46.7],[-13.1,143.3],[-13.2,25.9],[-13.2,-59.1],[-13.3,130.9],[-13.4,-39],[-13.4,13.5],[-13.5,-71.5],[-13.6,33.5],[-13.6,-51.4],[-13.8,21.1],[-13.8,-63.8],[-13.9,-43.8],[-14,-76.2],[-14.1,28.8],[-14.2,-56.2],[-14.2,133.9],[-14.3,48.9],[-14.4,16.4],[-14.4,-68.6],[-14.5,36.5],[-14.5,-48.5],[-14.7,24.1],[-14.7,-60.9],[-14.9,-40.9],[-15,-73.3],[-15.1,31.7],[-15.1,-53.3],[-15.3,19.3],[-15.3,-65.7],[-15.4,39.4],[-15.5,-45.6],[-15.5,144.4],[-15.6,27],[-15.7,-58],[-15.7,132],[-15.8,47.1],[-15.9,14.6],[-15.9,-70.4],[-16,34.7],[-16,-50.3],[-16.2,-167.8],[-16.2,-115.2],[-16.2,22.3],[-16.3,-62.7],[-16.3,-147.7],[-16.3,-10.2],[-16.3,127.3],[-16.3,-95.2],[-16.4,42.3],[-16.4,-42.7],[-16.4,94.8],[-16.4,-127.6],[-16.4,9.9],[-16.5,147.4],[-16.5,-75.1],[-16.5,62.4],[-16.5,-160.1],[-16.5,-22.6],[-16.5,114.9],[-16.6,-107.6],[-16.6,29.9],[-16.6,167.4],[-16.6,-55.1],[-16.6,82.4],[-16.7,-2.5],[-16.7,135],[-16.8,17.5],[-16.8,-67.5],[-16.9,37.6],[-17,-47.4],[-17,142.6],[-17.2,25.2],[-17.2,-59.8],[-17.3,130.2],[-17.3,45.2],[-17.3,-39.7],[-17.4,12.8],[-17.5,32.8],[-17.6,-52.1],[-17.6,137.9],[-17.7,20.5],[-17.8,-64.5],[-17.8,125.5],[-17.9,178],[-17.9,-44.5],[-18,145.6],[-18.1,28.1],[-18.1,-56.9],[-18.2,133.2],[-18.2,48.2],[-18.3,15.7],[-18.4,-69.3],[-18.5,35.8],[-18.5,-49.2],[-18.6,140.8],[-18.7,23.4],[-18.7,-61.6],[-18.8,128.4],[-18.9,-41.5],[-19.1,31],[-19.1,-53.9],[-19.2,136.1],[-19.3,18.6],[-19.3,-66.3],[-19.4,123.7],[-19.5,-46.3],[-19.5,143.8],[-19.6,26.3],[-19.7,-58.7],[-19.7,131.4],[-19.8,46.4],[-19.9,13.9],[-20,34],[-20,-51],[-20.1,139],[-20.2,21.6],[-20.3,-63.4],[-20.3,126.6],[-20.4,-43.4],[-20.5,146.7],[-20.6,29.2],[-20.6,-55.8],[-20.7,134.3],[-20.8,16.8],[-20.9,-68.2],[-20.9,121.9],[-21,-48.1],[-21.1,141.9],[-21.2,24.5],[-21.2,-60.5],[-21.3,129.5],[-21.3,44.6],[-21.5,117.1],[-21.6,32.2],[-21.6,-52.8],[-21.7,137.2],[-21.8,19.8],[-21.8,-65.2],[-21.9,124.8],[-22,-45.2],[-22,144.9],[-22.2,27.4],[-22.2,-57.6],[-22.3,132.5],[-22.3,47.5],[-22.4,15],[-22.4,-70],[-22.5,120.1],[-22.5,35.1],[-22.6,-49.9],[-22.6,140.1],[-22.8,22.7],[-22.8,-62.3],[-22.9,127.7],[-22.9,-42.2],[-23,147.8],[-23.1,115.3],[-23.1,30.3],[-23.2,-54.6],[-23.3,135.4],[-23.4,18],[-23.4,-67],[-23.5,123],[-23.6,-47],[-23.6,143.1],[-23.8,25.6],[-23.8,-59.4],[-23.9,130.7],[-23.9,45.7],[-24,150.7],[-24.1,118.3],[-24.1,33.3],[-24.2,-51.7],[-24.2,138.3],[-24.4,20.9],[-24.4,-64.1],[-24.5,125.9],[-24.6,146],[-24.7,28.5],[-24.8,-56.4],[-24.8,133.6],[-25,16.1],[-25,-68.8],[-25.1,121.2],[-25.2,-48.8],[-25.2,141.3],[-25.4,23.8],[-25.4,-61.2],[-25.5,128.9],[-25.6,148.9],[-25.7,116.5],[-25.7,31.5],[-25.8,-53.5],[-25.8,136.5],[-26,19.1],[-26,-65.9],[-26.1,124.1],[-26.2,144.2],[-26.4,26.7],[-26.4,-58.3],[-26.5,131.8],[-26.6,151.8],[-26.6,-70.7],[-26.7,119.4],[-26.8,-50.6],[-26.8,139.4],[-27,22],[-27,-63],[-27.1,127],[-27.2,147.1],[-27.3,114.6],[-27.4,29.7],[-27.4,-55.3],[-27.5,134.7],[-27.6,17.3],[-27.6,-67.7],[-27.7,122.3],[-27.9,142.4],[-28,24.9],[-28,-60.1],[-28.1,130],[-28.3,150],[-28.3,117.6],[-28.4,-52.4],[-28.5,137.6],[-28.6,20.2],[-28.7,-64.8],[-28.7,125.2],[-28.9,145.3],[-29,27.8],[-29.1,-57.1],[-29.1,132.9],[-29.3,153],[-29.3,-69.5],[-29.4,120.5],[-29.5,140.6],[-29.7,23.1],[-29.7,-61.9],[-29.8,128.2],[-29.9,148.2],[-30,115.8],[-30.1,30.8],[-30.1,-54.2],[-30.2,135.8],[-30.3,18.4],[-30.3,-66.6],[-30.4,123.4],[-30.6,143.5],[-30.7,26],[-30.7,-58.9],[-30.8,131.1],[-31,151.1],[-31,-71.3],[-31.1,118.7],[-31.1,-51.3],[-31.2,138.8],[-31.3,21.3],[-31.4,-63.7],[-31.5,126.4],[-31.6,146.4],[-31.8,29],[-31.8,-56],[-31.9,134],[-32,-68.4],[-32.1,121.6],[-32.3,141.7],[-32.4,24.2],[-32.4,-60.8],[-32.7,149.3],[-32.8,116.9],[-32.9,-53.1],[-32.9,136.9],[-33.1,19.5],[-33.1,-65.5],[-33.3,144.6],[-33.5,-57.8],[-33.8,-70.2],[-33.9,119.8],[-34,139.9],[-34.2,-62.6],[-34.4,147.5],[-34.6,-54.9],[-34.9,-67.3],[-35.1,142.8],[-35.3,-59.6],[-35.5,-72],[-36,-64.4],[-36.2,145.7],[-36.7,-69.1],[-36.9,141],[-37.1,-61.4],[-37.3,148.6],[-37.8,-66.2],[-37.9,176.4],[-38,143.9],[-38.2,-58.5],[-38.5,-70.9],[-38.9,-63.3],[-39.7,-68],[-40.4,-72.7],[-40.8,-65.1],[-41.1,145],[-41.6,-69.8],[-41.7,172.8],[-42.3,148],[-42.8,-66.9],[-43.6,-71.6],[-43.7,170.9],[-44.8,-68.7],[-45.6,-73.4],[-45.8,169.1],[-46.9,-70.5],[-48.2,-67.6],[-49.1,-72.3],[-50.5,-69.4],[-51.4,-74.1],[-52.8,-71.2],[-54.3,-68.3]];
+</script>
+<script>
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var DEALS = (window.SKRINE_DEALS && window.SKRINE_DEALS.length) ? window.SKRINE_DEALS : [
+    {
+      sector: "Tax \u00b7 Dispute Resolution",
+      num: "RM1", unit: "bn",
+      label: "sought in civil recovery suits in Malaysia",
+      headline: "Skrine leads Denmark's tax authority in civil suits to recover approximately RM1 billion",
+      summary: "Skrine acted as lead counsel for the Customs and Tax Administration of the Kingdom of Denmark, plaintiff in civil suits against multiple Malaysian entities and related individuals, and successfully resisted an application to set aside service of the writ out of jurisdiction.",
+      team: "Preetha Pillai \u00b7 Nimalan Devaraja",
+      date: "Cross-border recovery",
+      img: "https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/practice/fraud-and-asset-recovery.jpg"
+    },
+    {
+      sector: "Oil & Gas \u00b7 Energy",
+      num: "6.5", unit: "tcf",
+      label: "more than 6.5 trillion cubic feet of gas resources across the Lang Lebah and B14 fields",
+      headline: "TotalEnergies acquires a 30% operated interest in the Lang Lebah and B14 gas fields offshore Sarawak",
+      summary: "Skrine acted as Malaysian legal counsel to TotalEnergies on its arrangements with PETRONAS Carigali, PTTEP and KUFPEC. Lang Lebah is one of Malaysia's largest offshore gas discoveries.",
+      team: "Fariz Abdul Aziz \u00b7 Samson Kong",
+      date: "06 Nov 2026",
+      img: "https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/sectors/oil-and-gas-and-energy.jpg"
+    },
+    {
+      sector: "Real Estate \u00b7 Industrial",
+      num: "RM4.0", unit: "bn",
+      label: "estimated gross development value",
+      headline: "AME Elite and UEM Sunrise form a joint venture for an industrial development in the Johor-Singapore Special Economic Zone",
+      summary: "Skrine acted as legal counsel to AME Development on the 50:50 joint venture to develop 402.1 acres of freehold industrial land in Gerbang Nusajaya, Iskandar Puteri.",
+      team: "Sheba Gumis \u00b7 Jesy Ooi \u00b7 Engy Tan",
+      date: "03 Nov 2026",
+      img: "https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/sectors/real-estate.jpg"
+    },
+    {
+      sector: "Banking & Finance \u00b7 Data Centres",
+      num: "US$2.325", unit: "bn",
+      label: "green financing from 30 financial institutions",
+      headline: "AirTrunk secures the largest green project financing for a single data centre in Malaysia",
+      summary: "Skrine acted as Malaysian counsel for AirTrunk on the financing for its JHB2 hyperscale data centre campus in Johor Bahru \u2014 AirTrunk's largest single-asset financing to date.",
+      team: "Lee Ai Hsian \u00b7 Javene Fan \u00b7 Chong Zhi Shin",
+      date: "31 Jul 2026",
+      img: "https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/sectors/telecommunications-media-and-technology.jpg"
+    },
+    {
+      sector: "Corporate / M&A \u00b7 Healthcare",
+      num: "US$1.08", unit: "bn",
+      label: "sale of Thermo Fisher's microbiology business",
+      headline: "Thermo Fisher sells its microbiology business to private equity firm Astorg",
+      summary: "Skrine acted as Malaysian counsel for Thermo Fisher Scientific on the sale, which included its shareholding in its Malaysian subsidiary.",
+      team: "Sheba Gumis \u00b7 Joey Tiw \u00b7 Faith Chan",
+      date: "17 Aug 2026",
+      img: "https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/sectors/healthcare-biotechnology-and-pharmaceuticals.jpg"
+    },
+    {
+      sector: "Corporate / M&A \u00b7 Asset Management",
+      num: "8", unit: "jurisdictions",
+      label: "in one regional acquisition",
+      headline: "Allianz Global Investors to acquire UOB Asset Management's operations across Asia",
+      summary: "Skrine, as part of the global team led by Freshfields, advised AllianzGI on the Malaysian law and regulatory aspects, including due diligence and regulatory approvals.",
+      team: "To' Puan Janet Looi \u00b7 Tan Wei Xian",
+      date: "11 Aug 2026",
+      img: "https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/sectors/financial-institutions.jpg"
+    },
+    {
+      sector: "Corporate / M&A \u00b7 Consumer",
+      num: "US$643", unit: "m",
+      label: "for Sapporo's 25% stake in the regional joint venture",
+      headline: "Carlsberg and Sapporo form a strategic partnership across Southeast Asia and Hong Kong",
+      summary: "Skrine acted as Malaysian counsel for Carlsberg on the joint venture and the internal cross-border restructuring behind it.",
+      team: "To' Puan Janet Looi \u00b7 Tan Wei Xian \u00b7 Kyra Iman Yaacob",
+      date: "22 Jul 2026",
+      img: "https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/sectors/industrial-and-manufacturing.jpg"
+    }
+  ];
+  var board = document.getElementById("dealsBoard");
+  if (board) {
+    var feature = document.getElementById("dealFeature");
+    var content = feature.querySelector(".deal-feature-content");
+    var art = feature.querySelector(".deal-feature-art");
+    DEALS.forEach(function (d) { new Image().src = d.img; });
+    var tabs = Array.prototype.slice.call(board.querySelectorAll(".deal-list button"));
+    var current = 0;
+    var rotate = null;
+    var ROTATE_MS = 7000;
+    function q(sel) { return content.querySelector(sel); }
+    function show(i, fromUser) {
+      if (i === current && fromUser) return;
+      current = (i + DEALS.length) % DEALS.length;
+      var d = DEALS[current];
+      content.classList.add("is-leaving");
+      art.classList.add("is-leaving");
+      setTimeout(function () {
+        art.style.backgroundImage = "url(\"" + d.img + "\")";
+        art.classList.remove("is-leaving");
+        q(".deal-sector").textContent = d.sector;
+        q(".deal-figure-num").textContent = d.num;
+        q(".deal-figure-unit").textContent = d.unit;
+        q(".deal-figure-label").textContent = d.label;
+        q(".deal-headline").textContent = d.headline;
+        q(".deal-summary").textContent = d.summary;
+        q(".deal-team").textContent = d.team;
+        q("time").textContent = d.date;
+        content.classList.remove("is-leaving");
+      }, reduceMotion ? 0 : 260);
+      tabs.forEach(function (t, k) {
+        t.setAttribute("aria-selected", String(k === current));
+        t.tabIndex = k === current ? 0 : -1;
+      });
+    }
+    function restartRotate() {
+      if (reduceMotion) return;
+      clearInterval(rotate);
+      rotate = setInterval(function () { show(current + 1); }, ROTATE_MS);
+    }
+    tabs.forEach(function (t, k) {
+      t.tabIndex = k === 0 ? 0 : -1;
+      t.addEventListener("click", function () { show(k, true); restartRotate(); });
+      t.addEventListener("keydown", function (e) {
+        var dir = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
+        if (!dir) return;
+        e.preventDefault();
+        show(current + dir, true);
+        tabs[current].focus();
+        restartRotate();
+      });
+    });
+    board.addEventListener("mouseenter", function () { clearInterval(rotate); });
+    board.addEventListener("mouseleave", restartRotate);
+    board.addEventListener("focusin", function () { clearInterval(rotate); });
+    restartRotate();
+  }
+  var neBoard = document.getElementById("newsEvents");
+  if (neBoard && window.SKRINE_NEWS && window.SKRINE_NEWS.length) {
+    var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var IMG = "https://skrineapps.github.io/Website-Revamp-Testing/new%20design/images/news/";
+    var LIST_URL = "/news-events/";
+    var todayISO = new Date().toISOString().slice(0, 10);
+    var UP = (window.SKRINE_UPCOMING || [])
+      .filter(function (e) { return (e.endDate || e.date) >= todayISO; })
+      .sort(function (x, y) { return x.date < y.date ? -1 : 1; })
+      .slice(0, 3);
+    var NEWS5 = window.SKRINE_NEWS.slice(0, 5);
+    function esc(s) {
+      return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+    }
+    function fmt(iso) { var d = iso.split("-"); return d[2] + " " + MON[Number(d[1]) - 1] + " " + d[0]; }
+    function img(v) { return /^(https?:)?\/\//.test(v) ? esc(v) : IMG + esc(v); }
+    var f = NEWS5[0];
+    var html =
+      '<a href="' + LIST_URL + '#latest" class="ne-feature">' +
+        (f.image ? '<img src="' + img(f.image) + '" alt="" class="ne-feature-img">' : "") +
+        '<div class="ne-feature-body">' +
+          '<p class="ne-kicker"><span>Latest News</span>' + esc(f.category) + " \u00b7 " + fmt(f.date) + "</p>" +
+          "<h3>" + esc(f.title) + "</h3>" +
+          (f.summary ? '<p class="ne-feature-sum">' + esc(f.summary) + "</p>" : "") +
+          '<span class="ne-more">Read the story <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>' +
+        "</div>" +
+      "</a>";
+    html += '<div class="ne-side">';
+    html += '<section class="ne-up" aria-labelledby="neUpHead"><h3 class="ne-side-head" id="neUpHead">Upcoming Events</h3>';
+    if (UP.length) {
+      html += '<ul class="ne-up-rows">';
+      UP.forEach(function (e) {
+        var d = e.date.split("-");
+        html += '<li><a href="' + (e.register || LIST_URL + "#upcoming") + '" class="ne-up-row">' +
+          '<span class="ne-up-date"><b>' + d[2] + "</b>" + MON[Number(d[1]) - 1] + "</span>" +
+          '<span class="ne-up-text"><small>' + esc([e.type, e.location, e.time].filter(Boolean).join(" \u00b7 ")) + "</small>" + esc(e.title) + "</span>" +
+          "</a></li>";
+      });
+      html += "</ul>";
+    } else {
+      html += '<div class="ne-up-none">' +
+        '<span class="ne-up-icon"><i class="fa-regular fa-calendar" aria-hidden="true"></i></span>' +
+        "<p><strong>No upcoming events right now.</strong> Our lawyers speak regularly at conferences, seminars and webinars \u2014 new events will appear here.</p>" +
+        '<a href="' + LIST_URL + '#upcoming" class="ne-up-link">Get notified <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>' +
+      "</div>";
+    }
+    html += "</section>";
+    html += '<section class="ne-list" aria-labelledby="neListHead"><h3 class="ne-side-head" id="neListHead">More News</h3><ul>';
+    NEWS5.slice(1).forEach(function (n) {
+      html += '<li><a href="' + LIST_URL + '#latest" class="ne-row">' +
+        (n.image ? '<img src="' + img(n.image) + '" alt="" loading="lazy">' : '<span class="ne-row-noimg"></span>') +
+        '<span class="ne-row-text"><small>' + esc(n.category) + " \u00b7 " + fmt(n.date) + "</small>" + esc(n.title) + "</span>" +
+        "</a></li>";
+    });
+    html += "</ul></section></div>";
+    neBoard.innerHTML = html;
+  }
+  function countUp(el) {
+    var to = Number(el.dataset.to);
+    if (!to || reduceMotion) return;
+    var start = null;
+    var DUR = 1400;
+    function step(t) {
+      if (start === null) start = t;
+      var p = Math.min((t - start) / DUR, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(to * eased).toLocaleString("en-US");
+      if (p < 1) requestAnimationFrame(step);
+    }
+    el.textContent = "0";
+    requestAnimationFrame(step);
+  }
+  var counters = document.querySelectorAll(".count-up");
+  if ("IntersectionObserver" in window) {
+    var cio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { countUp(en.target); cio.unobserve(en.target); }
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function (c) { cio.observe(c); });
+  }
+  var globe = document.getElementById("globe");
+  if (globe && globe.getContext) {
+    var gctx = globe.getContext("2d");
+    var DOTS = [];
+    var N = 900;
+    for (var i = 0; i < N; i++) {
+      var y = 1 - (i / (N - 1)) * 2;
+      var r = Math.sqrt(1 - y * y);
+      var th = i * Math.PI * (3 - Math.sqrt(5));
+      DOTS.push([Math.cos(th) * r, y, Math.sin(th) * r]);
+    }
+    function fromLatLon(lat, lon) {
+      var la = lat * Math.PI / 180, lo = lon * Math.PI / 180;
+      return [Math.cos(la) * Math.cos(lo), Math.sin(la), -Math.cos(la) * Math.sin(lo)];
+    }
+    var HUB = fromLatLon(3.14, 101.69);
+    var LAND = (window.SKRINE_LAND || []).map(function (p) { return fromLatLon(p[0], p[1]); });
+    var NODES = [];
+    var nodeSource = LAND.length ? LAND : DOTS;
+    for (var n = 0; NODES.length < 20 && n < 400; n++) {
+      var cand = nodeSource[(n * 977 + 131) % nodeSource.length];
+      var cd = cand[0] * HUB[0] + cand[1] * HUB[1] + cand[2] * HUB[2];
+      if (cd > 0.05 && cd < 0.97) NODES.push(cand);
+    }
+    var DESKS = {
+      china: { pos: fromLatLon(31.23, 121.47) },
+      india: { pos: fromLatLon(19.08, 72.88) },
+      mena:  { pos: fromLatLon(25.2, 55.27) }
+    };
+    Object.keys(DESKS).forEach(function (k) {
+      var d = DESKS[k], p = d.pos;
+      var m = [p[0] + HUB[0], p[1] + HUB[1], p[2] + HUB[2]];
+      d.focusY = Math.atan2(m[0], m[2]);
+      d.focusX = Math.asin(m[1] / Math.hypot(m[0], m[1], m[2])) * 0.9 + 0.05;
+      d.pin = globe.parentElement.querySelector('.globe-pin--desk[data-desk="' + k + '"]');
+    });
+    var activeDesk = "china", lastUserSpin = -1e9;
+    var rotY = DESKS.china.focusY, rotX = DESKS.china.focusX, targetX = rotX, dragV = 0;
+    var size = 0, dpr = 1, pin = globe.parentElement.querySelector(".globe-pin:not(.globe-pin--desk)");
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      size = globe.clientWidth;
+      globe.width = size * dpr;
+      globe.height = size * dpr;
+    }
+    function project(p) {
+      var cy = Math.cos(rotY), sy = Math.sin(rotY), cx = Math.cos(rotX), sx = Math.sin(rotX);
+      var x = p[0] * cy - p[2] * sy;
+      var z = p[0] * sy + p[2] * cy;
+      var y2 = p[1] * cx - z * sx;
+      var z2 = p[1] * sx + z * cx;
+      var R = size * 0.44;
+      return { x: size / 2 + x * R, y: size / 2 - y2 * R, z: z2 };
+    }
+    var ARC_STEPS = 40;
+    function arcPoint(a, b, ang, u, h) {
+      var s = Math.sin(ang) || 1;
+      var wa = Math.sin((1 - u) * ang) / s, wb = Math.sin(u * ang) / s;
+      var lift = 1 + h * Math.sin(Math.PI * u);
+      return [(a[0] * wa + b[0] * wb) * lift, (a[1] * wa + b[1] * wb) * lift, (a[2] * wa + b[2] * wb) * lift];
+    }
+    function onShow(p) {
+      if (p.z >= 0) return true;
+      var dx = p.x - size / 2, dy = p.y - size / 2, R = size * 0.44;
+      return dx * dx + dy * dy > R * R;
+    }
+    function arc(a, b, t, strong) {
+      var dot = Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2]));
+      var ang = Math.acos(dot);
+      if (ang < 0.01) return;
+      var h = Math.min(0.16, 0.03 + ang * 0.09);
+      var pts = [];
+      for (var i = 0; i <= ARC_STEPS; i++) {
+        var pr = project(arcPoint(a, b, ang, i / ARC_STEPS, h));
+        pr.v = onShow(pr);
+        pts.push(pr);
+      }
+      gctx.lineWidth = strong ? 2.6 : 1.1;
+      gctx.lineCap = "round";
+      gctx.beginPath();
+      var drawing = false, depth = 0, n = 0;
+      for (var k = 0; k < pts.length; k++) {
+        var q = pts[k];
+        if (!q.v) { drawing = false; continue; }
+        if (drawing) gctx.lineTo(q.x, q.y); else { gctx.moveTo(q.x, q.y); drawing = true; }
+        depth += q.z; n++;
+      }
+      if (!n) return;
+      gctx.strokeStyle = strong
+        ? "rgba(195, 32, 48, 0.95)"
+        : "rgba(195, 32, 48, " + (0.12 + 0.18 * Math.max(0, depth / n)) + ")";
+      gctx.stroke();
+      var count = strong ? 3 : 1;
+      for (var c = 0; c < count; c++) {
+        var u = (t * (strong ? 1.6 : 1) + c / count) % 1;
+        var pp = project(arcPoint(a, b, ang, u, h));
+        if (!onShow(pp)) continue;
+        gctx.beginPath();
+        gctx.arc(pp.x, pp.y, strong ? 3.4 : 2.2, 0, Math.PI * 2);
+        gctx.fillStyle = strong ? "#c32030" : "rgba(195, 32, 48, 0.7)";
+        gctx.fill();
+      }
+    }
+    function deskMarker(d, isActive, time) {
+      var p = project(d.pos);
+      if (d.pin) {
+        d.pin.style.transform = "translate(" + p.x + "px," + p.y + "px)";
+        d.pin.style.opacity = p.z > 0.12 ? (isActive ? 1 : 0.75) : 0;
+      }
+      if (p.z < 0) return;
+      if (isActive) {
+        var pl = (time % 1500) / 1500;
+        gctx.beginPath();
+        gctx.arc(p.x, p.y, 6 + pl * 18, 0, Math.PI * 2);
+        gctx.strokeStyle = "rgba(195, 32, 48, " + (0.7 * (1 - pl)) + ")";
+        gctx.lineWidth = 2;
+        gctx.stroke();
+      }
+      gctx.beginPath();
+      gctx.arc(p.x, p.y, isActive ? 6 : 4.5, 0, Math.PI * 2);
+      gctx.fillStyle = "#fff";
+      gctx.fill();
+      gctx.lineWidth = isActive ? 3 : 2;
+      gctx.strokeStyle = isActive ? "#c32030" : "#757575";
+      gctx.stroke();
+    }
+    var visible = true;
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0 }).observe(globe);
+    }
+    function frame(time) {
+      requestAnimationFrame(frame);
+      if (!visible || !size) return;
+      if (activeDesk && time - lastUserSpin > 4000) {
+        var goal = DESKS[activeDesk].focusY;
+        var diff = Math.atan2(Math.sin(goal - rotY), Math.cos(goal - rotY));
+        rotY += reduceMotion ? diff : diff * 0.045;
+        targetX = DESKS[activeDesk].focusX;
+      } else {
+        rotY -= (reduceMotion ? 0 : 0.0016) + dragV;
+      }
+      dragV *= 0.94;
+      rotX += (targetX - rotX) * 0.05;
+      gctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      gctx.clearRect(0, 0, size, size);
+      var g = gctx.createRadialGradient(size * 0.4, size * 0.38, size * 0.05, size / 2, size / 2, size * 0.46);
+      g.addColorStop(0, "rgba(255,255,255,0.9)");
+      g.addColorStop(1, "rgba(206,203,204,0.25)");
+      gctx.beginPath();
+      gctx.arc(size / 2, size / 2, size * 0.44, 0, Math.PI * 2);
+      gctx.fillStyle = g;
+      gctx.fill();
+      for (var k = 0; k < DOTS.length; k++) {
+        var p = project(DOTS[k]);
+        if (p.z < 0) continue;
+        gctx.beginPath();
+        gctx.arc(p.x, p.y, 0.8 + p.z * 0.5, 0, Math.PI * 2);
+        gctx.fillStyle = "rgba(149,152,151," + (0.06 + p.z * 0.14) + ")";
+        gctx.fill();
+      }
+      gctx.fillStyle = "#757575";
+      for (var l = 0; l < LAND.length; l++) {
+        var q = project(LAND[l]);
+        if (q.z < 0.02) continue;
+        gctx.globalAlpha = 0.25 + q.z * 0.7;
+        gctx.beginPath();
+        gctx.arc(q.x, q.y, 1.1 + q.z * 1.1, 0, Math.PI * 2);
+        gctx.fill();
+      }
+      gctx.globalAlpha = 1;
+      var t = time / 2600;
+      for (var a = 0; a < NODES.length; a++) arc(HUB, NODES[a], t + a * 0.137);
+      Object.keys(DESKS).forEach(function (k) {
+        if (k === activeDesk) arc(HUB, DESKS[k].pos, t, true);
+      });
+      NODES.forEach(function (nd) {
+        var p = project(nd);
+        if (p.z < 0) return;
+        gctx.beginPath();
+        gctx.arc(p.x, p.y, 2.6, 0, Math.PI * 2);
+        gctx.fillStyle = "rgba(149,152,151,0.95)";
+        gctx.fill();
+      });
+      var h = project(HUB);
+      var pulse = (time % 1800) / 1800;
+      gctx.beginPath();
+      gctx.arc(h.x, h.y, 5 + pulse * 16, 0, Math.PI * 2);
+      gctx.strokeStyle = "rgba(195, 32, 48, " + (0.6 * (1 - pulse)) + ")";
+      gctx.lineWidth = 2;
+      gctx.stroke();
+      gctx.beginPath();
+      gctx.arc(h.x, h.y, 5, 0, Math.PI * 2);
+      gctx.fillStyle = "#c32030";
+      gctx.fill();
+      Object.keys(DESKS).forEach(function (k) { deskMarker(DESKS[k], k === activeDesk, time); });
+      if (pin) {
+        pin.style.transform = "translate(" + h.x + "px," + h.y + "px)";
+        pin.style.opacity = h.z > 0.1 ? 1 : 0;
+      }
+    }
+    var lastX = null;
+    globe.addEventListener("pointerdown", function (e) { lastX = e.clientX; lastUserSpin = performance.now(); globe.setPointerCapture(e.pointerId); });
+    globe.addEventListener("pointermove", function (e) {
+      if (lastX !== null) { dragV = (e.clientX - lastX) * 0.0012; lastX = e.clientX; lastUserSpin = performance.now(); }
+    });
+    globe.addEventListener("pointerup", function () { lastX = null; });
+    var deskCards = Array.prototype.slice.call(document.querySelectorAll(".nd-card"));
+    var deskOrder = deskCards.map(function (c) { return c.dataset.desk; });
+    var deskTimer = null, deskHold = false;
+    function setDesk(k) {
+      activeDesk = k;
+      lastUserSpin = -1e9;
+      deskCards.forEach(function (c) { c.classList.toggle("is-active", c.dataset.desk === k); });
+    }
+    function cycleDesks() {
+      clearInterval(deskTimer);
+      if (reduceMotion) return;
+      deskTimer = setInterval(function () {
+        if (deskHold || !visible) return;
+        setDesk(deskOrder[(deskOrder.indexOf(activeDesk) + 1) % deskOrder.length]);
+      }, 4500);
+    }
+    deskCards.forEach(function (c) {
+      c.addEventListener("pointerenter", function () { deskHold = true; setDesk(c.dataset.desk); });
+      c.addEventListener("pointerleave", function () { deskHold = false; cycleDesks(); });
+      c.addEventListener("focus", function () { deskHold = true; setDesk(c.dataset.desk); });
+      c.addEventListener("blur", function () { deskHold = false; cycleDesks(); });
+    });
+    cycleDesks();
+    resize();
+    window.addEventListener("resize", resize);
+    requestAnimationFrame(frame);
+  }
+  var gcan = document.getElementById("guilloche");
+  if (gcan && gcan.getContext) {
+    var section = gcan.closest(".awards");
+    function drawGuilloche() {
+      var dpr2 = Math.min(window.devicePixelRatio || 1, 2);
+      var w = gcan.clientWidth, h = gcan.clientHeight;
+      gcan.width = w * dpr2;
+      gcan.height = h * dpr2;
+      var c = gcan.getContext("2d");
+      c.setTransform(dpr2, 0, 0, dpr2, 0, 0);
+      c.lineWidth = 0.6;
+      function rosette(cx, cy, R, rings, alpha) {
+        c.strokeStyle = "rgba(236, 237, 236, " + alpha + ")";
+        rings.forEach(function (ring) {
+          var base = ring[0], amp = ring[1], lobes = ring[2], copies = ring[3];
+          for (var k = 0; k < copies; k++) {
+            var phase = (k / copies) * (Math.PI * 2 / lobes);
+            c.beginPath();
+            var steps = Math.max(720, lobes * 36);
+            for (var s = 0; s <= steps; s++) {
+              var a = (s / steps) * Math.PI * 2;
+              var rr = R * (base + amp * Math.sin(lobes * (a + phase)));
+              var x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr;
+              if (s) c.lineTo(x, y); else c.moveTo(x, y);
+            }
+            c.stroke();
+          }
+        });
+      }
+      var R = Math.min(w * 0.4, h * 0.45, 620);
+      rosette(w * 0.92, h * 0.38, R, [[0.96, 0.025, 54, 3], [0.8, 0.04, 40, 4], [0.64, 0.05, 30, 4], [0.48, 0.06, 22, 5], [0.32, 0.07, 14, 5]], 0.24);
+      rosette(w * 0.04, h * 0.96, R * 0.55, [[0.95, 0.03, 36, 3], [0.66, 0.06, 22, 4]], 0.17);
+      c.strokeStyle = "rgba(236, 237, 236, 0.14)";
+      for (var k = 0; k < 6; k++) {
+        c.beginPath();
+        for (var x = 0; x <= w; x += 3) {
+          var y = h - 50 + Math.sin(x * 0.028 + k * 0.7) * 12 + Math.sin(x * 0.01 + k) * 5;
+          if (x) c.lineTo(x, y); else c.moveTo(x, y);
+        }
+        c.stroke();
+      }
+    }
+    drawGuilloche();
+    var rt;
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(drawGuilloche, 200); });
+    var foils = section.querySelectorAll(".foil");
+    if (finePointer && !reduceMotion) {
+      section.addEventListener("pointermove", function (e) {
+        var r = section.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        section.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
+        section.style.setProperty("--gy", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%");
+        foils.forEach(function (f) { f.style.setProperty("--fx", (20 + px * 60).toFixed(1) + "%"); });
+      });
+    }
+  }
+})();
+(function () {
+  "use strict";
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var secs = Array.prototype.slice.call(document.querySelectorAll(".section--art"));
+  if (!secs.length) return;
+  var ticking = false;
+  function update() {
+    var vh = window.innerHeight;
+    secs.forEach(function (s) {
+      var r = s.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      var off = (r.top + r.height / 2 - vh / 2) * -0.08;
+      s.style.setProperty("--drift", off.toFixed(1) + "px");
+    });
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
+</script>

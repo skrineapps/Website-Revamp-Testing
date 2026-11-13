@@ -65,7 +65,7 @@
 
   /* ---------- body + side ---------- */
   var body = document.getElementById("nwBody");
-  body.innerHTML = D.body.join("");
+  A.fillBody(body, D.body);
   // Chinese sections: tag the language so the right font and line breaking apply
   body.querySelectorAll("p, h2").forEach(function (n) { if (/[一-鿿]{4,}/.test(n.textContent)) n.lang = "zh"; });
   // the story's video (YouTube), shown in our own frame

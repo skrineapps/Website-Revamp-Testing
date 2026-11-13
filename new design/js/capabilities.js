@@ -14,6 +14,8 @@
   var PEOPLE = window.SKRINE_PEOPLE || {};
   var FX = window.SkrineFX || { observeReveal: function (el) { el.classList.add("is-visible"); }, attachTilt: function () {} };
   var PHOTO_DIR = "../current design/images/people/";
+  // a file name in that folder, or a full URL (WordPress media library)
+  function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var PREVIEW_RELATED = 6; // related capabilities shown in the panel before "View all"
   var PREVIEW_TEAM = 9;
 
@@ -51,7 +53,7 @@
     var wrap = el("span", "pa-avatar" + (size ? " pa-avatar--" + size : ""));
     wrap.setAttribute("aria-hidden", "true");
     var img = el("img");
-    img.src = PHOTO_DIR + encodeURIComponent(photoFor(person.name));
+    img.src = photoUrl(photoFor(person.name));
     img.alt = "";
     img.loading = "lazy";
     img.addEventListener("error", function () { img.replaceWith(el("span", "pa-avatar-initials", initials(person.name))); });

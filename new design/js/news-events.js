@@ -16,6 +16,8 @@
   var FX = window.SkrineFX || { observeReveal: function (el) { el.classList.add("is-visible"); }, attachTilt: function () {} };
   var IMG_DIR = "images/news/";
   var PHOTO_DIR = "../current design/images/people/";
+  // a file name in that folder, or a full URL (WordPress media library)
+  function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var PAGE = 12;
   var HEADLINES = 4;
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -38,7 +40,7 @@
   function picture(item) {
     var frame = el("span", "pub-cover");
     if (!item.image) return frame;
-    var url = IMG_DIR + encodeURIComponent(item.image);
+    var url = /^(https?:)?\/\//.test(item.image) ? item.image : IMG_DIR + encodeURIComponent(item.image);
     frame.style.setProperty("--cover", 'url("' + new URL(url, document.baseURI).href + '")');
     var img = el("img");
     img.src = url;
@@ -63,7 +65,7 @@
     var file = photoByName[name];
     if (file) {
       var img = el("img");
-      img.src = PHOTO_DIR + encodeURIComponent(file);
+      img.src = photoUrl(file);
       img.alt = "";
       img.loading = "lazy";
       img.addEventListener("error", function () { img.replaceWith(el("span", null, initials(name))); });
@@ -315,7 +317,7 @@
       n.people.forEach(function (name) {
         var li = el("li");
         li.appendChild(avatar(name));
-        li.appendChild(el("span", null, name));
+        li.appendChild(window.SkrinePeople ? window.SkrinePeople.link(name) : el("span", null, name));
         ul.appendChild(li);
       });
       pe.appendChild(ul);
