@@ -1,0 +1,398 @@
+/* =========================================================
+   SKRINE — Our Story (our-story.html)
+   Heading · opening (year rewinds to 1963 + founding "deed") ·
+   scroll-driven chapters · founder seals · John Skrine's quote ·
+   values switcher · onward links
+   ========================================================= */
+
+/* the reveal animation tilts wide blocks in 3D; keep that from widening the page on phones
+   (clip, unlike hidden, leaves the sticky chapter panel working) */
+.story { overflow-x: clip; }
+.st-h2 { font: 900 clamp(28px, 3vw, 44px)/1.18 var(--font-display); color: var(--ink); max-width: 18ch; }
+.story .eyebrow { color: var(--red); }
+
+/* =========================================================
+   Opening
+   ========================================================= */
+.st-open {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 6vw, 100px);
+  align-items: center;
+  padding: clamp(8px, 2vw, 24px) 0 clamp(64px, 8vw, 120px);
+}
+.st-open-kicker { font: 700 13px var(--font-body); letter-spacing: 0.24em; text-transform: uppercase; color: var(--grey-700); }
+.st-open-year {
+  margin: 4px 0 14px;
+  font: 900 clamp(110px, 15vw, 230px)/0.9 var(--font-display);
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+/* grey-to-red gradient fill; a grey outline while the year rewinds */
+.st-open-year span {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(117, 117, 117, 0.6);
+  background-image: linear-gradient(135deg, #4a4c4b 0%, #959897 38%, var(--red) 72%, var(--red-dark) 100%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-size 1.1s var(--ease), -webkit-text-stroke-color 0.8s var(--ease) 0.4s;
+}
+/* once it lands on 1963, the gradient rises up through the numbers */
+.st-open-year.is-done span { background-size: 100% 100%; -webkit-text-stroke-color: transparent; }
+.st-open-line { max-width: 46ch; font: 400 clamp(18px, 1.5vw, 22px)/1.65 var(--font-display); color: var(--ink); }
+.st-open-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+  font: 700 14px var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--red);
+}
+.st-open-cue i { animation: stCue 1.8s ease-in-out infinite; }
+@keyframes stCue { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+/* the founding "deed": paper card, slightly turned, with a seal */
+.st-deed { margin: 0; justify-self: center; width: min(100%, 470px); }
+.st-deed-paper { transform: rotate(-2.2deg); }
+.st-deed-paper {
+  position: relative;
+  padding: 40px 40px 30px;
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(251, 249, 244, 0.94), rgba(246, 242, 234, 0.96)),
+    url("../images/bg/canvas-relief.jpg") 40% 40% / 260% auto;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04), 0 34px 60px -30px rgba(40, 30, 20, 0.45);
+  border: 1px solid rgba(206, 203, 204, 0.6);
+}
+/* inner ruled border, like an old certificate */
+.st-deed-paper::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(195, 32, 48, 0.35);
+  border-radius: 3px;
+  pointer-events: none;
+}
+.st-deed-firm { font: 900 30px/1.1 var(--font-display); color: var(--ink); letter-spacing: 0.01em; }
+.st-deed-est { margin-top: 8px; font: 700 12px var(--font-body); letter-spacing: 0.24em; text-transform: uppercase; color: var(--red); }
+.st-deed-creed { margin: 22px 0 24px; padding: 16px 0; border-top: 1px solid rgba(117, 117, 117, 0.25); border-bottom: 1px solid rgba(117, 117, 117, 0.25); font: italic 400 17px/1.6 var(--font-display); color: var(--ink-soft); }
+.st-deed-label { font: 700 11px var(--font-body); letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-700); margin-bottom: 8px; }
+.st-deed-names li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 0;
+  font: 700 16px var(--font-display);
+  color: var(--ink);
+}
+/* dotted signature line after each name */
+.st-deed-names li::after { content: ""; flex: 1; border-bottom: 1px dotted rgba(117, 117, 117, 0.6); transform: translateY(-4px); }
+.st-deed-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; }
+.st-deed-sig { display: block; width: 150px; height: 46px; overflow: hidden; position: relative; }
+.st-deed-sig img { position: absolute; left: -16px; top: 50%; width: 170px; transform: translateY(-50%); opacity: 0.85; }
+/* the wax seal, pressed onto the corner of the card */
+.st-deed-seal {
+  width: clamp(110px, 11vw, 150px);
+  height: auto;
+  margin: -56px -64px -64px 0;
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 8px 10px rgba(90, 15, 25, 0.35));
+  animation: stSealIn 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) 1.2s both;
+}
+@keyframes stSealIn { from { opacity: 0; transform: rotate(-30deg) scale(1.6); } to { opacity: 1; transform: rotate(-12deg) scale(1); } }
+
+/* =========================================================
+   Chapters: big year on the left changes as you scroll
+   ========================================================= */
+.st-chapters {
+  display: grid;
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  gap: clamp(28px, 6vw, 110px);
+  padding: clamp(32px, 4vw, 56px) 0 clamp(48px, 6vw, 96px);
+  scroll-margin-top: calc(var(--header-h) + 20px);
+}
+.st-chapters-sticky { position: sticky; top: calc(var(--sticky-top, var(--header-h)) + 40px); transition: top 0.4s var(--ease); }
+.st-bigyear {
+  height: clamp(110px, 11vw, 170px);
+  margin: 26px 0 8px;
+  overflow: hidden;
+  font: 900 clamp(96px, 10vw, 156px)/1.05 var(--font-display);
+  letter-spacing: -0.04em;
+  color: var(--red);
+}
+.st-bigyear.is-word { font-size: clamp(64px, 6.4vw, 104px); line-height: 1.6; }
+.st-bigyear span { display: inline-block; }
+.st-bigyear span.is-out { animation: stYearOut 0.18s ease-in forwards; }
+.st-bigyear span.is-in { animation: stYearIn 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+@keyframes stYearOut { to { opacity: 0; transform: translateY(-40%); filter: blur(4px); } }
+@keyframes stYearIn { from { opacity: 0; transform: translateY(45%); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+
+/* progress rail under the year */
+.st-rail { position: relative; display: flex; justify-content: space-between; max-width: 380px; padding-top: 14px; }
+.st-rail::before,
+.st-rail::after { content: ""; position: absolute; left: 8px; right: 8px; top: 21px; height: 2px; background: var(--grey-300); }
+.st-rail::after { background: var(--red); transform-origin: left; transform: scaleX(var(--progress, 0)); transition: transform 0.5s var(--ease); }
+.st-rail li { position: relative; z-index: 1; }
+.st-rail-btn { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0; border: 0; background: none; cursor: pointer; }
+.st-rail li:first-child .st-rail-btn { align-items: flex-start; }
+.st-rail li:last-child .st-rail-btn { align-items: flex-end; }
+.st-rail-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fbfbfb;
+  border: 2px solid var(--grey-500);
+  transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s;
+}
+.st-rail-btn.is-past .st-rail-dot { background: var(--red); border-color: var(--red); }
+.st-rail-btn.is-active .st-rail-dot { background: var(--red); border-color: var(--red); transform: scale(1.3); box-shadow: 0 0 0 6px rgba(195, 32, 48, 0.15); }
+.st-rail-label { font: 700 11px var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-700); white-space: nowrap; transition: color 0.3s; }
+.st-rail-btn.is-active .st-rail-label { color: var(--red); }
+.st-rail-btn:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; border-radius: 6px; }
+
+/* the chapters themselves */
+.st-steps { position: relative; padding-left: 40px; }
+.st-steps::before,
+.st-steps::after { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--grey-300); }
+.st-steps::after { background: var(--red); transform-origin: top; transform: scaleY(var(--progress, 0)); }
+.st-step {
+  position: relative;
+  min-height: 52vh;
+  padding: 8px 0 clamp(40px, 6vh, 80px);
+  opacity: 0.28;
+  transform: translateX(14px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.st-step:last-child { min-height: 0; padding-bottom: 0; }
+.st-step::before {
+  content: "";
+  position: absolute;
+  left: -40px;
+  top: 10px;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fbfbfb;
+  border: 2px solid var(--grey-500);
+  box-shadow: 0 0 0 6px #fbfbfb;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease);
+}
+.st-step.is-past, .st-step.is-active { opacity: 1; transform: none; }
+.st-step.is-past { opacity: 0.55; }
+.st-step.is-past::before, .st-step.is-active::before { background: var(--red); border-color: var(--red); }
+.st-step.is-active::before { transform: scale(1.25); }
+.st-when { display: block; font: 700 12.5px var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+.st-step h3 { font: 900 clamp(24px, 2.4vw, 34px)/1.2 var(--font-display); color: var(--ink); margin-bottom: 14px; }
+.st-step p { max-width: 62ch; font-size: 17px; line-height: 1.85; color: var(--ink-soft); }
+.st-step p + p { margin-top: 12px; }
+.st-step strong { color: var(--red); font-family: var(--font-display); }
+
+/* =========================================================
+   Founders: a typographic roll call of the five names.
+   Names alternate left and right and fill from outline to
+   solid, one after another, as the list scrolls into view.
+   ========================================================= */
+.st-founders { padding: clamp(40px, 5vw, 72px) 0; }
+.st-founders-head { margin-bottom: clamp(24px, 3vw, 40px); }
+.st-founders-line { margin-top: 12px; font: italic 400 clamp(17px, 1.4vw, 20px)/1.6 var(--font-display); color: var(--grey-700); }
+.st-roll { border-top: 1px solid var(--grey-300); }
+.st-roll-item {
+  display: flex;
+  align-items: baseline;
+  gap: 18px 28px;
+  padding: clamp(14px, 1.8vw, 24px) 0;
+  border-bottom: 1px solid var(--grey-300);
+}
+.st-roll-item:nth-child(even) { flex-direction: row-reverse; text-align: right; }
+.st-roll-name {
+  position: relative;
+  font: 900 clamp(40px, 6vw, 92px)/1.05 var(--font-display);
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(117, 117, 117, 0.55);
+  transition: color 0.9s var(--ease), -webkit-text-stroke-color 0.9s var(--ease);
+  transition-delay: calc(var(--i, 0) * 0.18s + 0.2s);
+}
+.st-roll-item.is-visible .st-roll-name { color: var(--ink); -webkit-text-stroke-color: transparent; }
+.st-roll-note {
+  flex: none;
+  font: 700 12px var(--font-body);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  transition-delay: calc(var(--i, 0) * 0.18s + 0.6s);
+}
+.st-roll-item.is-visible .st-roll-note { opacity: 1; transform: none; }
+/* hover: the name turns red and a short rule draws in before the label */
+.st-roll-note::before { content: ""; display: inline-block; width: 0; height: 2px; margin-right: 0; vertical-align: middle; background: var(--red); transition: width 0.4s var(--ease), margin 0.4s var(--ease); }
+.st-roll-item:hover .st-roll-name { color: var(--red); transition-delay: 0s; }
+.st-roll-item:hover .st-roll-note::before { width: 34px; margin-right: 10px; }
+/* keep the roll call steady: no tilt-in from the shared reveal */
+.st-roll-item.reveal { transform: none; opacity: 1; }
+
+/* =========================================================
+   Quote
+   ========================================================= */
+.st-quote {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(60px, 8vw, 120px) minmax(0, 1fr);
+  gap: clamp(8px, 2vw, 24px);
+  margin-top: clamp(40px, 5vw, 72px);
+  margin-bottom: clamp(40px, 5vw, 72px);
+  padding: clamp(40px, 5vw, 72px) clamp(28px, 6vw, 96px) clamp(40px, 5vw, 64px) clamp(20px, 4vw, 56px);
+  border-radius: 28px;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--white);
+  background: linear-gradient(140deg, #2a2a2a 0%, #1f1f1f 60%, #3a0d13 100%);
+}
+.st-quote::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("../images/bg/paint-wash.jpg") 70% 50% / cover no-repeat;
+  opacity: 0.28;
+  mix-blend-mode: screen;
+}
+.st-quote-mark { font: 900 clamp(110px, 12vw, 180px)/0.8 var(--font-display); color: var(--red); text-align: right; }
+.st-quote blockquote { margin: 0; max-width: 980px; }
+.st-quote blockquote p { font: 400 clamp(16px, 1.35vw, 19px)/1.8 var(--font-display); color: rgba(255, 255, 255, 0.78); }
+.st-quote blockquote p + p { margin-top: 18px; }
+.st-quote .st-quote-key { font-size: clamp(20px, 2vw, 28px); line-height: 1.55; color: var(--white); }
+.st-quote-by { display: flex; align-items: center; gap: 18px; margin-top: 30px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.18); }
+/* the signature image has a lot of empty space around it: show just the stroke */
+.st-quote-sig { position: relative; display: block; width: 140px; height: 44px; overflow: hidden; flex: none; }
+.st-quote-sig img { position: absolute; left: -14px; top: 50%; width: 160px; transform: translateY(-50%); filter: invert(1); opacity: 0.9; }
+.st-quote-meta { display: flex; flex-direction: column; gap: 2px; padding-left: 18px; border-left: 1px solid rgba(255, 255, 255, 0.25); }
+.st-quote-meta b { font: 700 16px var(--font-body); letter-spacing: 0.04em; }
+.st-quote-meta span { font: 700 11.5px var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); }
+
+/* =========================================================
+   Values: words on the left, meaning on the right
+   ========================================================= */
+.st-values { padding: clamp(40px, 5vw, 72px) 0; }
+.st-values-head { margin-bottom: 30px; }
+.st-vlist {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-rows: repeat(3, auto) 1fr;
+  column-gap: clamp(32px, 6vw, 100px);
+}
+.st-v { display: contents; }
+.st-v-word {
+  grid-column: 1;
+  position: relative;
+  justify-self: start;
+  padding: 6px 0 14px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font: 900 clamp(48px, 6vw, 92px)/1.05 var(--font-display);
+  letter-spacing: -0.02em;
+  color: rgba(117, 117, 117, 0.35);
+  transition: color 0.4s var(--ease);
+}
+.st-v-word::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  height: 4px;
+  width: 100%;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.st-v-word:hover { color: rgba(42, 42, 42, 0.6); }
+.st-v.is-active .st-v-word { color: var(--ink); }
+.st-v.is-active .st-v-word::after { transform: scaleX(1); }
+.st-v-word:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; border-radius: 6px; }
+.st-v-panel {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  align-self: center;
+  position: relative;
+  padding: clamp(28px, 3vw, 44px);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--grey-100);
+  border-left: 4px solid var(--red);
+  box-shadow: 0 24px 50px -34px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease), visibility 0s 0.45s;
+}
+.st-v.is-active .st-v-panel { opacity: 1; visibility: visible; transform: none; transition: opacity 0.45s var(--ease) 0.08s, transform 0.45s var(--ease) 0.08s, visibility 0s; }
+.st-v-lead { font: 700 clamp(21px, 1.8vw, 26px)/1.35 var(--font-display); color: var(--ink); margin-bottom: 14px; }
+.st-v-panel p:not(.st-v-lead) { font-size: 16.5px; line-height: 1.85; color: var(--ink-soft); }
+
+/* =========================================================
+   Onward
+   ========================================================= */
+.st-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: clamp(24px, 3vw, 40px);
+  padding-top: clamp(32px, 4vw, 48px);
+  border-top: 1px solid var(--grey-300);
+}
+.st-next h2 { font: 900 clamp(24px, 2.4vw, 34px)/1.25 var(--font-display); color: var(--ink); }
+.st-next-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 1100px) {
+}
+@media (max-width: 900px) {
+  .st-open { grid-template-columns: minmax(0, 1fr); }
+  .st-deed { justify-self: start; }
+  .st-chapters { grid-template-columns: minmax(0, 1fr); }
+  .st-chapters-sticky { position: static; }
+  .st-bigyear, .st-rail { display: none; }
+  .st-step { min-height: 0; padding-bottom: 40px; opacity: 1; transform: none; }
+  .st-step.is-past { opacity: 1; }
+  /* values become an accordion */
+  .st-vlist { display: block; }
+  .st-v { display: block; border-top: 1px solid var(--grey-300); }
+  .st-v:last-child { border-bottom: 1px solid var(--grey-300); }
+  .st-v-word { width: 100%; padding: 16px 0; font-size: clamp(36px, 10vw, 54px); color: var(--ink); }
+  .st-v-word::after { bottom: 10px; width: 56px; }
+  .st-v-panel { display: none; opacity: 1; visibility: visible; transform: none; margin-bottom: 20px; }
+  .st-v.is-active .st-v-panel { display: block; }
+}
+@media (max-width: 640px) {
+  .st-roll-item, .st-roll-item:nth-child(even) { flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; }
+  .st-open-year { -webkit-text-stroke-width: 1.5px; }
+  .st-deed-paper { transform: rotate(-1.2deg); }
+  .st-deed-paper { padding: 30px 24px 24px; }
+  .st-deed-firm { font-size: 26px; }
+  .st-steps { padding-left: 30px; }
+  .st-step::before { left: -30px; }
+  .st-quote { grid-template-columns: minmax(0, 1fr); padding: 30px 22px 34px; }
+  .st-quote-mark { text-align: left; font-size: 100px; height: 60px; }
+  .st-quote-by { flex-wrap: wrap; }
+  .st-next { flex-direction: column; align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .st-open-cue i, .st-deed-seal { animation: none; }
+  .st-step { transition: none; }
+  .st-roll-name, .st-roll-note { transition: none; }
+  .st-v-panel { transition: none; }
+}
