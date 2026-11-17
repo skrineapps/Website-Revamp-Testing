@@ -72,6 +72,16 @@ function skrine_content_types() {
 				'thumbnail' => 'Background photo.',
 			),
 		),
+		'skrine_job'         => array(
+			'plural'   => 'Jobs',
+			'singular' => 'Job Opening',
+			'icon'     => 'dashicons-id-alt',
+			'supports' => array( 'title', 'page-attributes', 'revisions' ),
+			'notes'    => array(
+				'title' => 'The role, as shown on its own page, e.g. "Associate – Tax Practice Group".',
+				'order' => 'Position in the Careers list (lower comes first).',
+			),
+		),
 	);
 }
 
@@ -137,6 +147,14 @@ function skrine_fields( $type ) {
 			'client'       => array( 'Client (list)', 'text', 'Short name in the list on the right, e.g. "TotalEnergies".' ),
 			'list_sector'  => array( 'Sector (list)', 'text', 'Short sector in the list, e.g. "Oil & Gas".' ),
 		),
+		'skrine_job'         => array(
+			'group'       => array( 'Listed under', 'select', '', array( 'Lawyer' => 'Lawyer', 'Office Support' => 'Office Support', 'Pupil' => 'Pupil' ) ),
+			'short_title' => array( 'Name in the Careers list', 'text', 'Optional shorter name for the "Open roles" list on the Careers page, e.g. "Paralegal (Dispute Resolution)". Leave empty to use the title.' ),
+			'intro'       => array( 'Introduction', 'lines', 'Optional. One paragraph per line, shown under the title.' ),
+			'sections'    => array( 'Role details', 'sections', 'Start each part with "## " (e.g. "## Requirements"), then one point per line. Start a line with "- " to make it a sub-point of the line above. Leave a blank line between parts.' ),
+			'location'    => array( 'Location', 'text', 'e.g. "Damansara Heights, Kuala Lumpur".' ),
+			'apply_to'    => array( 'Send applications for this role to', 'text', 'Optional. Email address(es), separated by commas. Leave empty to use the address in Skrine → Settings.' ),
+		),
 	);
 	return isset( $f[ $type ] ) ? $f[ $type ] : array();
 }
@@ -168,9 +186,12 @@ function skrine_register_content_types() {
 		) );
 	}
 
+	// topics have no pages of their own (they are filters on the listing pages), so they stay out of search and sitemaps
 	register_taxonomy( 'skrine_topic', array( 'skrine_alert', 'skrine_publication' ), array(
 		'labels'            => array( 'name' => 'Topics', 'singular_name' => 'Topic', 'add_new_item' => 'Add Topic' ),
 		'hierarchical'      => true,
+		'public'            => false,
+		'show_ui'           => true,
 		'show_in_rest'      => true,
 		'show_admin_column' => true,
 		'rewrite'           => false,
@@ -178,6 +199,8 @@ function skrine_register_content_types() {
 	register_taxonomy( 'skrine_news_cat', array( 'skrine_news' ), array(
 		'labels'            => array( 'name' => 'News Categories', 'singular_name' => 'News Category', 'add_new_item' => 'Add News Category' ),
 		'hierarchical'      => true,
+		'public'            => false,
+		'show_ui'           => true,
 		'show_in_rest'      => true,
 		'show_admin_column' => true,
 		'rewrite'           => false,
@@ -198,6 +221,8 @@ add_filter( 'post_type_link', function ( $link, $post ) {
 			return home_url( 'news-events.html#upcoming' );
 		case 'skrine_deal':
 			return home_url( '/#deals' );
+		case 'skrine_job':
+			return $post->post_name ? home_url( 'job.html?j=' . rawurlencode( $post->post_name ) ) : home_url( 'careers.html#join' );
 		case 'skrine_person':
 			$role = skrine_meta( $post->ID, 'group' );
 			return in_array( $role, array( 'partners', 'consultants' ), true )
@@ -207,11 +232,12 @@ add_filter( 'post_type_link', function ( $link, $post ) {
 	return $link;
 }, 10, 2 );
 
-/* ---------- People use the classic edit screen ----------
+/* ---------- People, Jobs and Alerts use the classic edit screen ----------
  * Everything about a person (overview, role, contact details, experience, quotes) sits on
- * one page; the block editor would tuck the fields away in a panel under the text. */
+ * one page; the block editor would tuck the fields away in a panel under the text.
+ * Alerts: Visual / HTML tabs, Import from Word and the live preview (inc/alert-tools.php). */
 add_filter( 'use_block_editor_for_post_type', function ( $use, $type ) {
-	return $type === 'skrine_person' ? false : $use;
+	return in_array( $type, array( 'skrine_person', 'skrine_job', 'skrine_alert' ), true ) ? false : $use;
 }, 10, 2 );
 
 /* ---------- People: list columns, role filter, title placeholder ---------- */
@@ -456,9 +482,9 @@ add_action( 'admin_enqueue_scripts', function ( $hook ) {
 	}
 } );
 
-/* ---------- order: newest first (Deals: by "Order", then newest) ---------- */
+/* ---------- order: newest first (Deals and Jobs: by "Order", then newest) ---------- */
 add_action( 'pre_get_posts', function ( $q ) {
-	if ( is_admin() && $q->is_main_query() && $q->get( 'post_type' ) === 'skrine_deal' && ! $q->get( 'orderby' ) ) {
+	if ( is_admin() && $q->is_main_query() && in_array( $q->get( 'post_type' ), array( 'skrine_deal', 'skrine_job' ), true ) && ! $q->get( 'orderby' ) ) {
 		$q->set( 'orderby', array( 'menu_order' => 'ASC', 'date' => 'DESC' ) );
 	}
 } );

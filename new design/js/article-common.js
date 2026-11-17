@@ -185,6 +185,11 @@
   // scrolling wrapper so they don't squash on phones; WordPress table blocks already have one
   function fillBody(target, parts) {
     target.innerHTML = parts.join("");
+    // numbered lists that carry on from an earlier list (<ol start="4">): the numbers are drawn by CSS counters
+    Array.prototype.forEach.call(target.querySelectorAll("ol[start]"), function (ol) {
+      var s = parseInt(ol.getAttribute("start"), 10);
+      if (s > 1) ol.style.counterReset = "ar " + (s - 1);
+    });
     Array.prototype.forEach.call(target.querySelectorAll("table"), function (t) {
       if (t.closest(".wp-block-table, .ar-table")) return;
       var wrap = document.createElement("div");

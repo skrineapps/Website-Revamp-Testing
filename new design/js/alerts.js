@@ -281,5 +281,9 @@
     render();
   });
 
+  // alerts.html?q=… (from the site search): start with that search and show the list
+  var startQ = new URLSearchParams(location.search).get("q");
+  if (startQ) { searchEl.value = startQ; state.q = startQ; }
   render();
+  if (startQ) setTimeout(function () { document.getElementById("archive").scrollIntoView({ behavior: "smooth" }); }, 300);
 })();

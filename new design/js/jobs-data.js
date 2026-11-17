@@ -196,18 +196,18 @@ window.SKRINE_JOBS = [
     "items": [
      "In recognition of the diverse needs of our clients and the emergence of legal professionals who are seeking a non-traditional practice, our paralegal team has become an important part of our firm. The firm intends to build our paralegal team even further and invites qualified candidates to explore opportunities with us.",
      "In this role you will have the opportunity to be involved in the following types of work:",
-     "&bull;Drafting legal notices;",
-     "&bull;Drafting cause papers from the commencement of civil action until the enforcement of judgment;",
-     "&bull;Monitoring progress of files, maintaining and updating status reports;",
-     "&bull;Maintaining and updating calendar entry for case managements, hearings, trial."
+     "Drafting legal notices;",
+     "Drafting cause papers from the commencement of civil action until the enforcement of judgment;",
+     "Monitoring progress of files, maintaining and updating status reports;",
+     "Maintaining and updating calendar entry for case managements, hearings, trial."
     ]
    },
    {
     "heading": "Job requirements",
     "items": [
-     "&bull;Candidates will ideally have a law degree but other suitably qualified candidates will also be considered.",
-     "&bull;Possess knowledge in legal proceedings in relation to hire-purchase is an added advantage.",
-     "&bull;Proficiency in English is required."
+     "Candidates will ideally have a law degree but other suitably qualified candidates will also be considered.",
+     "Possess knowledge in legal proceedings in relation to hire-purchase is an added advantage.",
+     "Proficiency in English is required."
     ]
    },
    {

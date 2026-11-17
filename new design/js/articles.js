@@ -170,6 +170,11 @@
     flip.appendChild(front);
 
     var back = el("span", "shot-face shot-back");
+    // a reminder of the question, so the back still says what the card is about
+    var recap = el("span", "shot-back-recap");
+    recap.appendChild(el("span", "shot-back-lead", q.lead));
+    recap.appendChild(el("span", "shot-back-q", q.text));
+    back.appendChild(recap);
     back.appendChild(el("span", "shot-back-title", s.contacts.length ? "Ask our experts" : "SkrineShot"));
     if (s.contacts.length) back.appendChild(contactList(s.contacts));
     else back.appendChild(el("span", "shot-back-note", "Contact us at skrine@skrine.com for more information."));
@@ -293,5 +298,8 @@
     render();
   });
 
+  // articles.html?q=… (from the site search): start with that search
+  var startQ = new URLSearchParams(location.search).get("q");
+  if (startQ) { document.getElementById("shotSearch").value = startQ; state.q = startQ; }
   render();
 })();

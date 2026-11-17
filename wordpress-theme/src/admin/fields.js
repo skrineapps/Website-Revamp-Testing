@@ -61,7 +61,7 @@
     var names = area.value.split(/\r?\n/).map(function (s) { return s.trim(); }).filter(Boolean);
     var dragFrom = null;
 
-    function save() { area.value = names.join("\n"); }
+    function save() { area.value = names.join("\n"); $(area).trigger("change"); }
     function render() {
       chips.empty();
       names.forEach(function (n, i) {
@@ -95,6 +95,12 @@
       render();
       search.trigger("focus");
     }
+    // the names were changed from outside (Import from Word): read them again
+    box.on("skrine:reload", function () {
+      names = area.value.split(/\r?\n/).map(function (s) { return s.trim(); }).filter(Boolean);
+      render();
+      $(area).trigger("change");
+    });
     box.on("click", ".skrine-people-add", add);
     search.on("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); add(); } });
     // picking from the list adds straight away

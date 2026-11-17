@@ -332,6 +332,9 @@
   modal.addEventListener("click", function (e) { if (e.target === modal || e.target.closest("[data-close]")) modal.close(); });
 
   /* ---------- start ---------- */
+  // news-events.html?q=… (from the site search): start with that search
+  var startQ = new URLSearchParams(location.search).get("q");
+  if (startQ) { document.getElementById("neSearch").value = startQ; state.q = startQ; }
   render();
   showTab(location.hash === "#upcoming" ? "upcoming" : "latest", false);
   // keep in step with links such as news-events.html#upcoming

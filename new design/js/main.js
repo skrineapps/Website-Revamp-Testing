@@ -99,17 +99,180 @@
       closeMenus();
       if (open) open.focus();
       if (header.classList.contains("nav-open")) { setNav(false); navToggle.focus(); }
-      searchBar.classList.remove("is-open");
+      if (searchBar.classList.contains("is-open")) {
+        if (searchBar.contains(document.activeElement)) searchToggle.focus();
+        searchBar.classList.remove("is-open");
+        hideSuggest();
+      }
     }
   });
 
-  /* ---------- Search ---------- */
+  /* ---------- Search ----------
+     Enter (or the arrow) opens search.html?q=…; while typing, the best few
+     matches appear under the bar. The search index and the data files it
+     reads (js/search-index.js) load the first time the bar is opened. */
   var searchToggle = document.getElementById("searchToggle");
   var searchBar = document.getElementById("searchBar");
+  var searchInput = searchBar.querySelector("input");
   searchToggle.addEventListener("click", function () {
     var open = searchBar.classList.toggle("is-open");
-    if (open) setTimeout(function () { searchBar.querySelector("input").focus(); }, 200);
+    if (open) { loadSearch(); setTimeout(function () { searchInput.focus(); }, 200); }
+    else hideSuggest();
   });
+
+  // the "new design" folder, worked out from this script's own address (the home page lives one level up)
+  var SEARCH_CFG = window.SKRINE_SEARCH || {};
+  var ME = document.currentScript && document.currentScript.src;
+  var SITE_ROOT = SEARCH_CFG.root || (ME ? new URL("../", ME).href : "");
+  var SEARCH_PAGE = SEARCH_CFG.page || SITE_ROOT + "search.html";
+  function siteUrl(href) { return SITE_ROOT ? new URL(href, SITE_ROOT).href : href; }
+
+  function searchUrl(q) { return SEARCH_PAGE + (q ? "?q=" + encodeURIComponent(q) : ""); }
+
+  searchBar.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var act = activeOption();
+    location.href = act ? act.querySelector("a").href : searchUrl(searchInput.value.trim());
+  });
+
+  // load the index and any data files this page doesn't already have
+  var SEARCH_FILES = [
+    ["SKRINE_PEOPLE", "people-data"], ["SKRINE_PRACTICES", "practice-data"], ["SKRINE_SECTORS", "sector-data"],
+    ["SKRINE_ALERTS", "alerts-data"], ["SKRINE_ALERTS_FULL", "alerts-full-data"], ["SKRINE_NEWS", "news-data"],
+    ["SKRINE_NEWS_FULL", "news-full-data"], ["SKRINE_PUBLICATIONS", "publications-data"], ["SKRINE_SHOTS", "articles-data"],
+    ["SKRINE_LIFE", "life-data"], ["SKRINE_JOBS", "jobs-data"], ["SkrineSearch", "search-index"],
+  ];
+  // on WordPress, SKRINE_SEARCH.files gives the latest content's addresses and .js the theme's js folder
+  var JS_DIR = SEARCH_CFG.js || SITE_ROOT + "js/";
+  var searchLoad = null;
+  function loadSearch() {
+    if (searchLoad) return searchLoad;
+    searchLoad = new Promise(function (resolve) {
+      var urls = [];
+      SEARCH_FILES.forEach(function (f) {
+        if (window[f[0]]) return;
+        var u = (SEARCH_CFG.files && SEARCH_CFG.files[f[0]]) || JS_DIR + f[1] + ".js";
+        if (urls.indexOf(u) === -1) urls.push(u); // one WordPress file can hold two of these
+      });
+      var left = urls.length;
+      if (!left) { resolve(); return; }
+      urls.forEach(function (u) {
+        var s = document.createElement("script");
+        s.src = u;
+        s.async = false; // run in this order: the index comes last
+        s.onload = s.onerror = function () { if (--left === 0) resolve(); };
+        document.body.appendChild(s);
+      });
+    });
+    return searchLoad;
+  }
+
+  /* suggestions: a list box under the bar, moved through with the arrow keys */
+  var suggest = document.createElement("div");
+  suggest.className = "search-suggest";
+  suggest.hidden = true;
+  var suggestList = document.createElement("ul");
+  suggestList.id = "searchSuggestList";
+  suggestList.setAttribute("role", "listbox");
+  suggestList.setAttribute("aria-label", "Suggestions");
+  suggest.appendChild(suggestList);
+  searchBar.appendChild(suggest);
+  searchInput.setAttribute("role", "combobox");
+  searchInput.setAttribute("aria-autocomplete", "list");
+  searchInput.setAttribute("aria-controls", "searchSuggestList");
+  searchInput.setAttribute("aria-expanded", "false");
+  searchInput.setAttribute("autocomplete", "off");
+
+  function hideSuggest() {
+    suggest.hidden = true;
+    searchBar.classList.remove("has-suggest");
+    searchInput.setAttribute("aria-expanded", "false");
+    searchInput.removeAttribute("aria-activedescendant");
+  }
+  function options() { return suggestList.querySelectorAll('[role="option"]'); }
+  function activeOption() { return suggest.hidden ? null : suggestList.querySelector(".is-active"); }
+  function setActive(i) {
+    var opts = options();
+    opts.forEach(function (o, k) { o.classList.toggle("is-active", k === i); o.setAttribute("aria-selected", String(k === i)); });
+    if (opts[i]) { searchInput.setAttribute("aria-activedescendant", opts[i].id); opts[i].scrollIntoView({ block: "nearest" }); }
+    else searchInput.removeAttribute("aria-activedescendant");
+  }
+
+  function option(id, href, cls) {
+    var li = document.createElement("li");
+    li.id = id;
+    li.setAttribute("role", "option");
+    li.setAttribute("aria-selected", "false");
+    if (cls) li.className = cls;
+    var a = document.createElement("a");
+    a.href = href;
+    a.tabIndex = -1;
+    li.appendChild(a);
+    return li;
+  }
+
+  function showSuggest() {
+    var q = searchInput.value.trim();
+    var S = window.SkrineSearch;
+    if (!q || !S) { hideSuggest(); return; }
+    var hits = S.search(q);
+    var re = S.marker(q);
+    suggestList.textContent = "";
+    hits.slice(0, 6).forEach(function (it, i) {
+      var li = option("sugg-" + i, siteUrl(it.href));
+      var a = li.firstChild;
+      var ic = document.createElement("span");
+      ic.className = "suggest-icon";
+      var fa = document.createElement("i");
+      fa.className = S.TYPES[it.type].icon;
+      fa.setAttribute("aria-hidden", "true");
+      ic.appendChild(fa);
+      a.appendChild(ic);
+      var txt = document.createElement("span");
+      txt.className = "suggest-text";
+      var title = document.createElement("span");
+      title.className = "suggest-title";
+      S.highlight(title, it.title, re);
+      var meta = document.createElement("span");
+      meta.className = "suggest-meta";
+      meta.textContent = [S.TYPES[it.type].one, it.meta, it.date ? S.shortDate(it.date) : ""].filter(Boolean).join(" · ");
+      txt.appendChild(title);
+      txt.appendChild(meta);
+      a.appendChild(txt);
+      suggestList.appendChild(li);
+    });
+    var all = option("sugg-all", searchUrl(q), "suggest-all");
+    all.firstChild.textContent = hits.length
+      ? "See all " + hits.length + (hits.length === 1 ? " result" : " results") + " for “" + q + "”"
+      : "No quick matches for “" + q + "”. Search the whole site";
+    var arrow = document.createElement("i");
+    arrow.className = "fa-solid fa-arrow-right";
+    arrow.setAttribute("aria-hidden", "true");
+    all.firstChild.appendChild(arrow);
+    suggestList.appendChild(all);
+    suggest.hidden = false;
+    searchBar.classList.add("has-suggest");
+    searchInput.setAttribute("aria-expanded", "true");
+    setActive(-1);
+  }
+
+  var suggestTimer;
+  searchInput.addEventListener("input", function () {
+    clearTimeout(suggestTimer);
+    suggestTimer = setTimeout(function () { loadSearch().then(showSuggest); }, 120);
+  });
+  searchInput.addEventListener("focus", function () { loadSearch().then(function () { if (searchInput.value.trim()) showSuggest(); }); });
+  searchInput.addEventListener("keydown", function (e) {
+    var opts = options();
+    if (suggest.hidden || !opts.length) return;
+    var cur = Array.prototype.indexOf.call(opts, activeOption());
+    if (e.key === "ArrowDown") { e.preventDefault(); setActive(cur + 1 >= opts.length ? 0 : cur + 1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActive(cur <= 0 ? opts.length - 1 : cur - 1); }
+    else if (e.key === "Escape") { e.stopPropagation(); hideSuggest(); }
+  });
+  // clicking or tabbing away closes the suggestions
+  document.addEventListener("click", function (e) { if (!searchBar.contains(e.target)) hideSuggest(); });
+  searchBar.addEventListener("focusout", function (e) { if (!searchBar.contains(e.relatedTarget)) hideSuggest(); });
 
   /* ---------- Scroll handler ---------- */
   var ticking = false;

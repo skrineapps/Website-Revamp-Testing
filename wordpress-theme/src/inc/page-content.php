@@ -63,6 +63,6 @@ add_action( 'admin_notices', function () {
 	if ( ! file_exists( get_template_directory() . '/content/' . $slug . '.html' ) ) {
 		return;
 	}
-	echo '<div class="notice notice-info"><p><strong>Skrine design page.</strong> Each block is one section of the page: edit the wording inside it (the menu and footer come from the theme). '
+	echo '<div class="notice notice-info"><p><strong>Skrine design page.</strong> Each block is one section of the page: edit the wording inside it (the menu is in Appearance → Menus, the footer in Appearance → Customize). '
 		. 'Lists such as alerts, news and people are filled in automatically from their own sections in the admin menu.</p></div>';
 } );

@@ -303,5 +303,8 @@
     if (e.target === modal || e.target.closest("[data-close]")) modal.close();
   });
 
+  // publications.html?q=… (from the site search): start with that search
+  var startQ = new URLSearchParams(location.search).get("q");
+  if (startQ) { document.getElementById("pubSearch").value = startQ; state.q = startQ; }
   render();
 })();

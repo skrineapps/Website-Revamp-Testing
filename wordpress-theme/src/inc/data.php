@@ -25,8 +25,9 @@ function skrine_person_slug( $name ) {
 	return trim( preg_replace( '/[^a-z0-9]+/', '-', $s ), '-' );
 }
 
-/* "## Heading" then one item per line → [ heading, items[] ]. A blank line starts a new group. */
-function skrine_sections( $v ) {
+/* "## Heading" then one item per line → [ heading, items[] ]. A blank line starts a new group.
+   $keep_dash: keep "- " at the start of a line (jobs use it for sub-points). */
+function skrine_sections( $v, $keep_dash = false ) {
 	$out   = array();
 	$cur   = null;
 	$blank = false;
@@ -51,7 +52,7 @@ function skrine_sections( $v ) {
 		if ( ! $cur ) {
 			$cur = array( 'heading' => '', 'items' => array() );
 		}
-		$cur['items'][] = preg_replace( '/^[-•*]\s+/u', '', $line );
+		$cur['items'][] = $keep_dash ? $line : preg_replace( '/^[-•*]\s+/u', '', $line );
 	}
 	if ( $cur ) {
 		$out[] = $cur;
@@ -132,7 +133,7 @@ function skrine_query( $type ) {
 		'numberposts'      => -1,
 		'suppress_filters' => true,
 	);
-	if ( $type === 'skrine_deal' ) {
+	if ( $type === 'skrine_deal' || $type === 'skrine_job' ) {
 		$args['orderby'] = array( 'menu_order' => 'ASC', 'date' => 'DESC' );
 	} elseif ( $type === 'skrine_person' ) {
 		$args['orderby'] = array( 'menu_order' => 'ASC', 'title' => 'ASC' );
@@ -269,6 +270,21 @@ function skrine_build_set( $set ) {
 			}
 			return array( 'SKRINE_DEALS' => $list );
 
+		case 'jobs':
+			// same shape as js/jobs-data.js
+			$list = array();
+			foreach ( skrine_query( 'skrine_job' ) as $p ) {
+				$list[] = array(
+					'slug'     => $p->post_name,
+					'group'    => skrine_meta( $p->ID, 'group' ) ?: 'Lawyer',
+					'title'    => $p->post_title,
+					'intro'    => skrine_lines( skrine_meta( $p->ID, 'intro' ) ),
+					'sections' => skrine_sections( skrine_meta( $p->ID, 'sections' ), true ),
+					'location' => skrine_meta( $p->ID, 'location' ),
+				);
+			}
+			return array( 'SKRINE_JOBS' => $list );
+
 		case 'people':
 			// same shape as js/people-data.js
 			$groups = array_fill_keys( array_keys( skrine_person_roles() ), array() );
@@ -380,6 +396,7 @@ function skrine_set_types() {
 		'deals'        => 'skrine_deal',
 		'people'       => 'skrine_person',
 		'profiles'     => 'skrine_person',
+		'jobs'         => 'skrine_job',
 	);
 }
 
@@ -402,9 +419,11 @@ function skrine_data( $set, $files = array() ) {
 		foreach ( (array) $files as $f ) {
 			echo '<script src="' . esc_url( get_template_directory_uri() . '/js/' . $f ) . '"></script>' . "\n";
 		}
-		return;
+	} else {
+		echo '<script src="' . esc_url( skrine_data_url( $set ) ) . '"></script>' . "\n";
 	}
-	echo '<script src="' . esc_url( skrine_data_url( $set ) ) . '"></script>' . "\n";
+	// e.g. the alert preview adds the unsaved alert here (inc/alert-tools.php)
+	do_action( 'skrine_data_printed', $set );
 }
 
 /* serve /skrine-data/<set>.js */

@@ -139,6 +139,34 @@ a.ar-person:hover .ar-person-name { color: var(--red); }
 .ar-body ol { counter-reset: ar; }
 .ar-body ol > li { counter-increment: ar; }
 .ar-body ol > li::before { content: counter(ar) "."; position: absolute; left: 0; font-weight: 700; color: var(--red); }
+/* Word's numbering kept by Import from Word: a. A. i. I. (classes sk-la/ua/lr/ur), "(a)" (sk-paren) and "a)" (sk-close);
+   lists that carry on use start="…" (js/article-common.js) */
+.ar-body ol.sk-la > li::before { content: counter(ar, lower-alpha) "."; }
+.ar-body ol.sk-ua > li::before { content: counter(ar, upper-alpha) "."; }
+.ar-body ol.sk-lr > li::before { content: counter(ar, lower-roman) "."; }
+.ar-body ol.sk-ur > li::before { content: counter(ar, upper-roman) "."; }
+.ar-body ol.sk-paren > li::before { content: "(" counter(ar) ")"; }
+.ar-body ol.sk-paren.sk-la > li::before { content: "(" counter(ar, lower-alpha) ")"; }
+.ar-body ol.sk-paren.sk-ua > li::before { content: "(" counter(ar, upper-alpha) ")"; }
+.ar-body ol.sk-paren.sk-lr > li::before { content: "(" counter(ar, lower-roman) ")"; }
+.ar-body ol.sk-paren.sk-ur > li::before { content: "(" counter(ar, upper-roman) ")"; }
+.ar-body ol.sk-close > li::before { content: counter(ar) ")"; }
+.ar-body ol.sk-close.sk-la > li::before { content: counter(ar, lower-alpha) ")"; }
+.ar-body ol.sk-close.sk-ua > li::before { content: counter(ar, upper-alpha) ")"; }
+.ar-body ol.sk-close.sk-lr > li::before { content: counter(ar, lower-roman) ")"; }
+.ar-body ol.sk-close.sk-ur > li::before { content: counter(ar, upper-roman) ")"; }
+.ar-body ol.sk-lr > li, .ar-body ol.sk-ur > li, .ar-body ol.sk-paren > li { padding-left: 44px; }
+/* colours from Word (Import from Word): filled table cells keep their colour; text inside follows the cell's */
+.ar-body td[style*="color"] strong, .ar-body th[style*="color"] strong,
+.ar-body td[style*="color"] a, .ar-body th[style*="color"] a { color: inherit; }
+/* a shaded paragraph (e.g. a "Key points" box) */
+.ar-body .sk-shaded { padding: 16px 20px; border-radius: 8px; }
+.ar-body .sk-shaded strong { color: inherit; }
+/* indented paragraphs (Word's left indent, in steps) */
+.ar-body .sk-indent-1 { padding-left: 2em; }
+.ar-body .sk-indent-2 { padding-left: 4em; }
+.ar-body .sk-indent-3 { padding-left: 6em; }
+@media (max-width: 640px) { .ar-body .sk-indent-2, .ar-body .sk-indent-3 { padding-left: 2em; } }
 .ar-body sup { line-height: 0; }
 .ar-body sup a { display: inline-block; min-width: 18px; padding: 0 4px; margin-left: 2px; border-radius: 4px; background: var(--red-soft); font: 700 11px/1.6 var(--font-alt); text-align: center; text-decoration: none; scroll-margin-top: calc(var(--header-h) + 80px); }
 .ar-body sup a:hover { background: var(--red); color: var(--white); }

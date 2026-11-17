@@ -23,6 +23,7 @@ function skrine_activate() {
 	}
 
 	skrine_register_content_types();
+	skrine_setup_menus();
 	skrine_rewrites();
 	flush_rewrite_rules();
 }
@@ -32,6 +33,12 @@ add_action( 'after_switch_theme', 'skrine_activate' );
 add_action( 'admin_init', function () {
 	if ( get_option( 'skrine_theme_version' ) !== SKRINE_VERSION ) {
 		skrine_activate();
+		// 2.2: the old site's /search now opens the search page (saved redirect lists still had "/search → /")
+		$rules = get_option( 'skrine_redirects' );
+		$old = '#^/search\s*(→|->|=>)\s*/\s*$#mu';
+		if ( is_string( $rules ) && preg_match( $old, $rules ) ) {
+			update_option( 'skrine_redirects', preg_replace( $old, '/search* → search.html', $rules ) );
+		}
 		update_option( 'skrine_theme_version', SKRINE_VERSION );
 	}
 } );
@@ -96,6 +103,13 @@ add_filter( 'template_include', function ( $template ) {
 	if ( is_front_page() ) {
 		return get_template_directory() . '/front-page.php';
 	}
+	// alert.html?a=…, job.html?j=… etc.: the item itself (inc/seo.php), drawn by its design page
+	if ( ! empty( $GLOBALS['skrine_item_page'] ) && is_singular() ) {
+		$file = get_template_directory() . '/page-' . $GLOBALS['skrine_item_page'] . '.php';
+		if ( file_exists( $file ) ) {
+			return $file;
+		}
+	}
 	if ( is_page() ) {
 		$slug = get_post_field( 'post_name', get_queried_object_id() );
 		$file = get_template_directory() . '/page-' . $slug . '.php';
@@ -110,5 +124,3 @@ add_filter( 'template_include', function ( $template ) {
 add_action( 'after_setup_theme', function () {
 	add_theme_support( 'post-thumbnails' );
 } );
-// the design pages carry their own <title>
-remove_action( 'wp_head', '_wp_render_title_tag', 1 );

@@ -3,8 +3,8 @@
    - Role header, sections, sticky "Apply" card
    - Three-step application form: data protection consent,
      your details + CV upload, review & submit.
-     FRONT END ONLY: submitting shows a confirmation; nothing is sent.
-     Connect the form to the firm's HR system / form handler later.
+     On WordPress (window.SKRINE_FORMS set by the theme) the application and CV are sent
+     to the site, saved and emailed; on the static site it only shows the confirmation.
    - Other open roles
    Data: js/jobs-data.js
    ========================================================= */
@@ -175,9 +175,7 @@
       });
   }
 
-  // Front end only: show the confirmation instead of sending anything
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+  function showDone() {
     document.getElementById("jbDoneName").textContent = form.elements.name.value.trim().split(/\s+/)[0];
     document.getElementById("jbDoneRole").textContent = J.title;
     form.hidden = true;
@@ -185,6 +183,52 @@
     var done = document.getElementById("jbDone");
     done.hidden = false;
     done.focus();
+  }
+
+  // sending (WordPress): a hidden field people never fill in, and how long the form was open, keep spam out
+  var CFG = window.SKRINE_FORMS;
+  var opened = Date.now();
+  var sendErr = null;
+  if (CFG && CFG.apply) {
+    var trap = el("input");
+    trap.type = "text"; trap.name = "website"; trap.tabIndex = -1; trap.autocomplete = "off";
+    trap.setAttribute("aria-hidden", "true");
+    trap.style.cssText = "position:absolute;left:-9999px;width:1px;height:1px;opacity:0";
+    form.appendChild(trap);
+    sendErr = el("p", "jb-error");
+    sendErr.hidden = true;
+    sendErr.setAttribute("role", "alert");
+    var lastActions = form.querySelector('.jb-pane[data-pane="3"] .jb-actions');
+    lastActions.parentNode.insertBefore(sendErr, lastActions);
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!CFG || !CFG.apply) { showDone(); return; }
+    var btn = form.querySelector('button[type="submit"]');
+    var label = btn.innerHTML;
+    var data = new FormData(form);
+    data.append("action", "skrine_apply");
+    data.append("job", J.slug);
+    data.append("role", J.title);
+    data.append("consent", document.getElementById("jbConsent").checked ? "1" : "");
+    data.append("elapsed", String(Date.now() - opened));
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    sendErr.hidden = true;
+    function fail(msg) {
+      btn.disabled = false;
+      btn.innerHTML = label;
+      sendErr.textContent = msg || "Sorry, your application could not be sent. Please check your connection and try again.";
+      sendErr.hidden = false;
+    }
+    fetch(CFG.apply, { method: "POST", body: data, credentials: "same-origin" })
+      .then(function (r) { return r.json().catch(function () { return null; }); })
+      .then(function (res) {
+        if (res && res.success) showDone();
+        else fail(res && res.data && res.data.message);
+      })
+      .catch(function () { fail(); });
   });
 
   /* ---------- other roles ---------- */

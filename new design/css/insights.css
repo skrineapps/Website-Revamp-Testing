@@ -564,7 +564,26 @@
   background: linear-gradient(150deg, var(--red), var(--red-dark));
   box-shadow: var(--shadow-md);
 }
-.shot-back-title { font-family: var(--font-display); font-weight: 900; font-size: 22px; margin-bottom: 18px; }
+.shot-back-recap {
+  display: block;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+}
+.shot-back-lead { display: block; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); }
+.shot-back-q {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--white);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.shot-back-title { font-family: var(--font-display); font-weight: 900; font-size: 18px; margin-bottom: 12px; }
 .shot-back .shot-contact-name { color: var(--white); }
 .shot-back .shot-avatar { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6); }
 .shot-back-note { font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.88); }

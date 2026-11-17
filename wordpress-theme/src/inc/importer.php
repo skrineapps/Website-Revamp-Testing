@@ -104,6 +104,7 @@ function skrine_import_item( $type, $r ) {
 		'post_excerpt' => isset( $r['excerpt'] ) ? $r['excerpt'] : '',
 		'post_date'    => isset( $r['date'] ) ? $r['date'] . ' 09:00:00' : current_time( 'mysql' ),
 		'menu_order'   => isset( $r['order'] ) ? (int) $r['order'] : 0,
+		'post_name'    => isset( $r['slug'] ) ? $r['slug'] : '',
 	), true );
 	if ( is_wp_error( $id ) ) {
 		return;
@@ -139,12 +140,13 @@ function skrine_import_steps() {
 		'publications' => array( 'Publications', 10 ),
 		'news'         => array( 'News', 10 ),
 		'deals'        => array( 'Deals', 10 ),
+		'jobs'         => array( 'Jobs', 20 ),
 		'pages'        => array( 'Page wording', 6 ),
 	);
 }
 
 function skrine_import_types() {
-	return array( 'people' => 'skrine_person', 'alerts' => 'skrine_alert', 'publications' => 'skrine_publication', 'news' => 'skrine_news', 'deals' => 'skrine_deal' );
+	return array( 'people' => 'skrine_person', 'alerts' => 'skrine_alert', 'publications' => 'skrine_publication', 'news' => 'skrine_news', 'deals' => 'skrine_deal', 'jobs' => 'skrine_job' );
 }
 
 function skrine_import_total( $step ) {
@@ -241,13 +243,13 @@ function skrine_import_page() {
 		<p>This copies the website's content into WordPress so it can be edited here:</p>
 		<ul class="ul-disc">
 			<li><strong>Images</strong> go into the <a href="<?php echo esc_url( admin_url( 'upload.php' ) ); ?>">Media Library</a>.</li>
-			<li><strong>People, Alerts, Publications, News and Deals</strong> become posts in their own menus on the left (Upcoming Events starts empty).</li>
+			<li><strong>People, Alerts, Publications, News, Deals and Jobs</strong> become posts in their own menus on the left (Upcoming Events starts empty).</li>
 			<li><strong>Page wording</strong> goes into each page under <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>">Pages</a>.</li>
 		</ul>
 		<p>It runs in small steps and takes a few minutes. Keep this tab open until it says it's finished. Running it again is safe: anything already imported is skipped.</p>
 
 		<?php if ( $done ) : ?>
-			<div class="notice notice-success inline"><p>The import has been run. People: <?php echo (int) $counts['people']; ?>, Alerts: <?php echo (int) $counts['alerts']; ?>, Publications: <?php echo (int) $counts['publications']; ?>, News: <?php echo (int) $counts['news']; ?>, Deals: <?php echo (int) $counts['deals']; ?>.</p></div>
+			<div class="notice notice-success inline"><p>The import has been run. People: <?php echo (int) $counts['people']; ?>, Alerts: <?php echo (int) $counts['alerts']; ?>, Publications: <?php echo (int) $counts['publications']; ?>, News: <?php echo (int) $counts['news']; ?>, Deals: <?php echo (int) $counts['deals']; ?>, Jobs: <?php echo (int) $counts['jobs']; ?>.</p></div>
 		<?php endif; ?>
 
 		<p><label><input type="checkbox" id="skrineOverwrite"> Also replace page wording that has already been edited, with the design's original wording</label></p>
