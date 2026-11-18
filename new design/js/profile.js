@@ -115,9 +115,10 @@
   var P = PROFILES[slug];
   var navItems = [];
 
-  function otherProfiles(exclude) {
+  // keys: which profiles to list (all but `exclude` when not given)
+  function otherProfiles(exclude, keys) {
     var grid = el("div", "pf-others-grid");
-    Object.keys(PROFILES).forEach(function (k) {
+    (keys || Object.keys(PROFILES)).forEach(function (k) {
       if (k === exclude) return;
       var o = PROFILES[k];
       var a = el("a", "pf-other");
@@ -132,6 +133,38 @@
       grid.appendChild(a);
     });
     return grid;
+  }
+
+  /* People closest to this profile: shared practice areas count most, then shared words in
+     area names (e.g. both do some kind of "Construction"), then the same division.
+     Ties are broken by a fixed per-profile order so each page shows a steady, varied set. */
+  var AREA_STOP = { and: 1, of: 1, the: 1, law: 1, "&": 1, services: 1, advisory: 1, disputes: 1, litigation: 1 };
+  function areasOf(k) {
+    var d = directory[k];
+    return ((PROFILES[k] && PROFILES[k].keyAreas) || []).concat(d && d.person.areas ? d.person.areas : []);
+  }
+  function areaKey(a) { return a.toLowerCase().replace(/\boil and gas\b/g, "oil & gas").replace(/[^a-z0-9&]+/g, " ").trim(); }
+  function areaWords(list) {
+    var w = {};
+    list.forEach(function (a) { areaKey(a).split(" ").forEach(function (x) { if (x.length > 2 && !AREA_STOP[x]) w[x] = 1; }); });
+    return w;
+  }
+  function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; }
+  function relatedProfiles(self, count) {
+    var mine = areasOf(self), mineKeys = {}, myWords = areaWords(mine);
+    mine.forEach(function (a) { mineKeys[areaKey(a)] = a; });
+    var myDiv = directory[self] ? directory[self].person.division : "";
+    var scored = Object.keys(PROFILES).filter(function (k) { return k !== self; }).map(function (k) {
+      var theirs = areasOf(k), shared = 0, seen = {};
+      theirs.forEach(function (a) { var key = areaKey(a); if (mineKeys[key] && !seen[key]) { seen[key] = 1; shared++; } });
+      var words = 0, tw = areaWords(theirs);
+      Object.keys(tw).forEach(function (x) { if (myWords[x]) words++; });
+      var div = directory[k] ? directory[k].person.division : "";
+      var sameDiv = myDiv && div === myDiv;
+      return { k: k, score: shared * 3 + Math.min(words, 4) + (sameDiv ? 2 : 0), tie: hash(self + "|" + k) };
+    });
+    scored.sort(function (a, b) { return b.score - a.score || a.tie - b.tie; });
+    return scored.slice(0, count).map(function (x) { return x.k; });
   }
 
   if (!P) {
@@ -411,10 +444,10 @@
     var more = el("section", "pf-section pf-more-people reveal");
     var mh = el("header", "pf-section-head");
     mh.appendChild(el("p", "eyebrow", "Our people"));
-    mh.appendChild(el("h2", "pf-section-title", "More profiles"));
+    mh.appendChild(el("h2", "pf-section-title", "Related profiles"));
     more.appendChild(mh);
     var mb = el("div", "pf-section-body");
-    mb.appendChild(otherProfiles(slug));
+    mb.appendChild(otherProfiles(slug, relatedProfiles(slug, 6)));
     var all = el("a", "pf-all-link");
     all.href = "people.html";
     all.appendChild(document.createTextNode("See everyone at Skrine "));

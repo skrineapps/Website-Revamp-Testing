@@ -374,8 +374,7 @@
 .pf-other-photo .pf-monogram { font-size: 22px; }
 .pf-other-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .pf-other-name { font: 700 15.5px/1.3 var(--font-display); color: var(--ink); }
-.pf-other-role { font-size: 13.5px; color: var(--grey-700); }
-.pf-other-arrow { color: var(--grey-500); transition: color 0.2s, transform 0.3s var(--ease); }
+.pf-other-role { font-size: 13.5px; color: var(--grey-700); }.pf-other-arrow { color: var(--grey-500); transition: color 0.2s, transform 0.3s var(--ease); }
 .pf-other:hover .pf-other-arrow { color: var(--red); transform: translateX(4px); }
 .pf-all-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; font-weight: 700; color: var(--red); }
 .pf-all-link:hover { text-decoration: underline; text-underline-offset: 4px; }

@@ -310,7 +310,9 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+      // reveal once the top edge is well on screen; a share-of-element threshold never fires for
+      // sections taller than the screen (e.g. a long grid on a small laptop), leaving them blank
+    }, { threshold: 0, rootMargin: "0px 0px -12% 0px" });
   }
 
   function observeReveal(el) {
