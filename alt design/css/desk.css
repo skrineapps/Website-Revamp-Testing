@@ -1,0 +1,181 @@
+/* =========================================================
+   SKRINE — Regional desk pages (china-desk.html, india-desk.html)
+   Built from the site's own pieces so the desks match the rest:
+   - page head + rounded banner   → practice area page (capabilities.css)
+   - section bar, sections, rows,
+     cards, contact band          → profile page (profile.css)
+   - expandable practice list,
+     other-desk chips             → practice area page (capabilities.css)
+   This file only adds what those don't cover.
+   ========================================================= */
+
+/* Chinese text: a CJK face that sits well next to Merriweather / Karla */
+:lang(zh) { font-family: "Karla", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; }
+.dk-cn,
+h1 :lang(zh), h2 :lang(zh), h3 :lang(zh), h3:lang(zh) { font-family: "Noto Serif SC", "Songti SC", "SimSun", serif; }
+
+/* ---------- page head ---------- */
+.dk-head .page-title .dk-cn {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.42em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--grey-700);
+}
+
+.dk-head .pa-hero-stats { white-space: pre-wrap; }
+
+/* Chinese words in section titles sit on their own line */
+.pf-section-title .dk-cn { display: block; margin-top: 6px; font-size: 0.62em; font-weight: 700; color: var(--grey-700); }
+
+/* ---------- banner: the desk's city, intro text over it ---------- */
+.dk-banner {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(340px, 34vw, 480px);
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: 24px;
+  overflow: hidden;
+  background: #2b2d30;
+  box-shadow: var(--shadow-lg);
+  color: var(--white);
+}
+.dk-banner-img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+.dk-banner:hover .dk-banner-img { transform: scale(1.03); }
+.dk-banner--china .dk-banner-img { object-position: 55% 50%; }
+.dk-banner--india .dk-banner-img { object-position: 60% 40%; }
+.dk-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(22, 23, 25, 0.84) 0%, rgba(22, 23, 25, 0.6) 40%, rgba(22, 23, 25, 0.1) 75%),
+    linear-gradient(to top, rgba(22, 23, 25, 0.5) 0%, rgba(22, 23, 25, 0) 45%);
+}
+.dk-banner-text { max-width: 620px; }
+.dk-lead { font: 400 clamp(17px, 1.5vw, 21px)/1.65 var(--font-display); color: var(--white); }
+.dk-lead-zh { margin-top: 10px; font-size: 15.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.85); }
+.dk-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.dk-banner .pf-contact-actions { margin-top: 26px; }
+
+/* ---------- section bar: room under the banner ---------- */
+.dk-page .pf-nav { margin-top: clamp(36px, 4.5vw, 56px); }
+
+/* overview text: small labels between paragraphs */
+.dk-overview .pf-sub { margin: 28px 0 10px; }
+.dk-overview .pf-sub:first-child { margin-top: 0; }
+
+/* EN / 中文 switch, styled like the Modern / Classic switch */
+.dk-lang {
+  display: inline-flex;
+  margin-bottom: 22px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--grey-100);
+}
+.dk-lang button {
+  min-width: 64px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font: 700 13.5px var(--font-body);
+  color: var(--ink-soft);
+  transition: background 0.25s, color 0.25s;
+}
+.dk-lang button[aria-pressed="true"] { background: var(--red); color: var(--white); }
+.dk-page[data-lang-mode="en"] [data-lang="zh"],
+.dk-page[data-lang-mode="zh"] [data-lang="en"] { display: none !important; }
+
+/* key facts under the overview */
+.dk-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--grey-100);
+}
+.dk-fact b { display: block; font: 900 clamp(28px, 2.8vw, 38px)/1.1 var(--font-display); color: var(--red); }
+.dk-fact b:lang(zh) { font-family: "Noto Serif SC", serif; }
+.dk-fact span { display: block; margin-top: 6px; font-size: 14px; line-height: 1.5; color: var(--grey-700); }
+
+/* numbered rows in two columns (one-stop service, strengths) */
+.dk-matters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.dk-matters .pf-matter p strong { display: block; font: 700 16.5px/1.4 var(--font-display); color: var(--ink); }
+.dk-matters .pf-matter p span { display: block; margin-top: 2px; font-size: 14.5px; color: var(--grey-700); }
+.dk-matters .pf-matter { align-items: center; }
+
+/* cards: a little room for the note under the list */
+.pf-cred .dk-note { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--grey-100); font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); }
+.pf-cred .dk-note strong { color: var(--ink); }
+.pf-cred li small { display: block; font-size: 13.5px; color: var(--grey-700); }
+.pf-cred > p { font-size: 15.5px; line-height: 1.7; color: var(--ink-soft); }
+.pf-cred-tag { display: block; margin-bottom: 6px; font: 700 12px var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); }
+
+.dk-statement { margin-top: 24px; font: 400 clamp(18px, 1.5vw, 21px)/1.65 var(--font-display); color: var(--ink); }
+
+/* practice areas: Related Capabilities cards, one column for the longer text */
+.dk-practice .pa-related-list { grid-template-columns: minmax(0, 1fr); }
+.dk-practice .pa-related-head { margin-bottom: 14px; justify-content: flex-end; }
+.dk-practice .pa-rel-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; }
+.dk-rel-en { font: 600 13.5px var(--font-body); color: var(--grey-700); }
+.pa-rel[open] .dk-rel-en { color: var(--grey-700); }
+.dk-practice .pa-rel-body p { line-height: 1.85; }
+.dk-rel-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--grey-100); }
+.dk-rel-foot-label { margin-right: 4px; font: 700 12px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-700); }
+.dk-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1.5px solid var(--red);
+  background: var(--grey-100);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: background 0.25s, color 0.25s;
+}
+a.dk-chip:hover { background: var(--red); color: var(--white); }
+.dk-rel-link { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--red); }
+.dk-rel-link i { font-size: 11px; transition: transform 0.25s var(--ease); }
+.dk-rel-link:hover i { transform: translateX(3px); }
+
+/* insights: filter pills (profile tabs) + rows (profile talks list) */
+.pf-tab[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: var(--white); }
+.dk-talks li { display: block; padding: 0; }
+.dk-talks li[hidden] { display: none; }
+.dk-talks a { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding: 14px 0; }
+.dk-talk-date { font: 700 13px var(--font-alt); letter-spacing: 0.04em; color: var(--red); }
+.dk-talk-title { font-size: 15.5px; line-height: 1.6; color: var(--ink); transition: color 0.2s; }
+.dk-talks a:hover .dk-talk-title { color: var(--red); }
+.dk-talks a i { font-size: 11px; color: var(--grey-500); }
+.dk-count { margin-left: 12px; font-size: 14px; color: var(--grey-700); }
+
+/* team rows: link straight to the profile */
+.dk-team .pf-other-role { line-height: 1.4; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+  .dk-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .dk-banner { min-height: 0; padding-top: 120px; }
+  .dk-banner::before { background: linear-gradient(to top, rgba(22, 23, 25, 0.9) 0%, rgba(22, 23, 25, 0.55) 60%, rgba(22, 23, 25, 0.25) 100%); }
+  .dk-matters { grid-template-columns: minmax(0, 1fr); }
+  .pf-tabs.dk-years { flex-wrap: wrap; overflow: visible; margin: 0 0 20px; padding: 0; }
+  .dk-talks a { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .dk-talks a i { display: none; }
+  .dk-rel-link { margin-left: 0; }
+}

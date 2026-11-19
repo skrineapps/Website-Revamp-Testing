@@ -428,14 +428,25 @@
       gctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       gctx.clearRect(0, 0, size, size);
 
-      // soft sphere shading
-      var g = gctx.createRadialGradient(size * 0.4, size * 0.38, size * 0.05, size / 2, size / 2, size * 0.46);
-      g.addColorStop(0, "rgba(255,255,255,0.9)");
-      g.addColorStop(1, "rgba(206,203,204,0.25)");
+      // solid, lit sphere with a soft drop shadow and a fine rim, so it stands off the pale background
+      var g = gctx.createRadialGradient(size * 0.4, size * 0.36, size * 0.04, size / 2, size / 2, size * 0.45);
+      g.addColorStop(0, "#ffffff");
+      g.addColorStop(0.55, "#f0f0f2");
+      g.addColorStop(1, "#cfd1d6");
+      gctx.save();
+      gctx.shadowColor = "rgba(29, 31, 35, 0.22)";
+      gctx.shadowBlur = size * 0.07;
+      gctx.shadowOffsetY = size * 0.03;
       gctx.beginPath();
       gctx.arc(size / 2, size / 2, size * 0.44, 0, Math.PI * 2);
       gctx.fillStyle = g;
       gctx.fill();
+      gctx.restore();
+      gctx.beginPath();
+      gctx.arc(size / 2, size / 2, size * 0.44, 0, Math.PI * 2);
+      gctx.strokeStyle = "rgba(117, 117, 117, 0.35)";
+      gctx.lineWidth = 1.2;
+      gctx.stroke();
 
       // faint lattice gives the sphere its shape
       for (var k = 0; k < DOTS.length; k++) {
@@ -443,16 +454,16 @@
         if (p.z < 0) continue;
         gctx.beginPath();
         gctx.arc(p.x, p.y, 0.8 + p.z * 0.5, 0, Math.PI * 2);
-        gctx.fillStyle = "rgba(149,152,151," + (0.06 + p.z * 0.14) + ")";
+        gctx.fillStyle = "rgba(117,120,126," + (0.1 + p.z * 0.2) + ")";
         gctx.fill();
       }
 
       // continents
-      gctx.fillStyle = "#757575";
+      gctx.fillStyle = "#55585e";
       for (var l = 0; l < LAND.length; l++) {
         var q = project(LAND[l]);
         if (q.z < 0.02) continue;
-        gctx.globalAlpha = 0.25 + q.z * 0.7;
+        gctx.globalAlpha = 0.35 + q.z * 0.65;
         gctx.beginPath();
         gctx.arc(q.x, q.y, 1.1 + q.z * 1.1, 0, Math.PI * 2);
         gctx.fill();

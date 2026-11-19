@@ -1,0 +1,156 @@
+/* =========================================================
+   SKRINE — Alternative design: "red as an accent"
+   Loaded last on every page in alt design/, so it overrides
+   the shared styles without touching them.
+
+   Skrine red stays the signature colour, kept for the logo,
+   main buttons, links, the line under headings and a few
+   deliberate moments (home hero, the Kuala Lumpur pulse).
+   Everything else that was red moves to Skrine's own secondary
+   palette (#ecedec · #cecbcc · #959897 · #757575):
+   - headings and big figures → ink
+   - large red panels → light silver with ink text and a red edge
+   - the Awards band → pewter grey
+   - selected filters and tabs → a pale red tint
+   ========================================================= */
+
+:root {
+  --silver: linear-gradient(150deg, #fbfbfb 0%, #f1f1f1 50%, #e4e3e4 100%);
+  --pewter: radial-gradient(1400px 900px at 50% -10%, #8a8d8c 0%, #6b6e6d 42%, #535655 100%);
+  --tint: #f9e8ea;          /* pale red, for selected states */
+  --tint-line: #ebc3c8;
+  --red-edge: inset 0 3px 0 var(--red);
+}
+
+/* ---------- headings and big figures: ink, not red ---------- */
+.page-title,
+.section-title,
+.pa-section-title,
+.group-title,
+.ar-related-head h2,
+.pc-heading,
+.contact .kit-title,
+.pub-year-title,
+.alert-month-name,
+.jb-more-group,
+.ns-num,
+.kit-stat-num,
+.life-count b,
+.deal-list button[aria-selected="true"] .dl-figure { color: var(--ink); }
+/* the short red rule under titles stays: it is the accent */
+
+/* eyebrows that were red go quiet grey, like the rest */
+.pf-hero .eyebrow,
+.pf-section-head .eyebrow,
+.story .eyebrow,
+.jb-apply-head .eyebrow,
+.jb-card-eyebrow { color: var(--grey-700); }
+
+/* ---------- Awards band: pewter instead of red ---------- */
+.awards { background: var(--pewter); }
+
+/* ---------- light silver panels (were solid red) ---------- */
+.alert-subscribe,
+.pf-quotes,
+.shot-back { background: var(--silver); color: var(--ink); box-shadow: var(--red-edge), var(--shadow-sm); border: 1px solid var(--grey-100); }
+
+/* alerts: sign-up panel */
+.alert-subscribe p { color: var(--ink-soft); }
+.alert-subscribe .btn--light-solid { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* profile: client quotes */
+.pf-quotes::after { background: radial-gradient(closest-side, rgba(195, 32, 48, 0.08), rgba(195, 32, 48, 0)); }
+.pf-quote-mark { color: var(--red); opacity: 0.35; }
+.pf-quote-btn { border-color: var(--grey-300); color: var(--ink); }
+.pf-quote-btn:hover { background: var(--red); border-color: var(--red); color: var(--white); }
+
+/* SkrineShot card backs */
+.shot-back-recap { border-bottom-color: var(--grey-300); }
+.shot-back-lead { color: var(--grey-700); }
+.shot-back-q { color: var(--ink); }
+.shot-back .shot-back-title { color: var(--red); }
+.shot-back .shot-contact-name { color: var(--ink); }
+.shot-back .shot-avatar { box-shadow: 0 0 0 2px var(--white); }
+.shot-back-note { color: var(--ink-soft); }
+.shot-back-topic { background: var(--grey-100); color: var(--ink); }
+.shot-back .person-link:hover { color: var(--red); text-decoration-color: var(--red); }
+
+/* home: the selected regional desk card */
+.nd-card::before { background: var(--silver); }
+.nd-card::after { background: var(--red); }
+.nd-card.is-active { color: var(--ink); box-shadow: var(--red-edge), var(--shadow-md); }
+.nd-card.is-active .nd-region,
+.nd-card.is-active .nd-local { color: var(--grey-700); }
+.nd-card.is-active .nd-go { color: var(--red); }
+
+/* classic profile header */
+.pc-top { background: var(--silver); color: var(--ink); box-shadow: var(--red-edge); }
+.pc-top::before { background: rgba(195, 32, 48, 0.08); }
+.pc-top::after { background: rgba(149, 152, 151, 0.25); }
+.pc-crumbs { color: var(--grey-700); }
+.pc-crumbs a:hover { color: var(--red); }
+.pc-title { color: var(--grey-700); }
+.pc-areas h2 { color: var(--grey-700); }
+.pc-tag { background: var(--white); border-color: var(--grey-300); color: var(--ink); }
+.pc-contacts { background: var(--white); border-color: var(--grey-100); box-shadow: var(--shadow-sm); }
+.pc-contact { color: var(--ink); }
+.pc-contact:hover { color: var(--red); }
+.pc-contact-icon { background: var(--tint); color: var(--red); }
+.pc-download { border-color: var(--red); color: var(--red); }
+.pc-download:hover { background: var(--red); color: var(--white); }
+
+/* regional desk pages: contact band in silver, labels in grey */
+.dk-contact { background: var(--silver); color: var(--ink); box-shadow: var(--red-edge), var(--shadow-sm); border: 1px solid var(--grey-100); }
+.dk-contact p { color: var(--ink-soft); opacity: 1; }
+.dk-contact-mail { color: var(--red); }
+.dk-contact .btn { background: var(--red); border-color: var(--red); color: var(--white); }
+.dk-contact .btn:hover { background: var(--red-dark); border-color: var(--red-dark); color: var(--white); }
+.dk-card-tag { color: var(--grey-700); }
+.dk-years .pf-tab[aria-pressed="true"] { background: var(--tint); border-color: var(--tint-line); color: var(--red-dark); }
+.dk-years .pf-tab[aria-pressed="true"] .pf-tab-count { background: var(--white); color: var(--red-dark); }
+.dk-lang button[aria-pressed="true"] { background: var(--white); color: var(--red-dark); box-shadow: var(--shadow-sm); }
+.pf-cred-tag { color: var(--grey-700); }
+
+/* ---------- photo cards: lighter, neutral wash (no maroon tint) ---------- */
+.deal-feature { background: #3a3c3f; }
+.deal-feature::after { background: linear-gradient(to top, rgba(28, 29, 31, 0.86) 0%, rgba(28, 29, 31, 0.5) 50%, rgba(28, 29, 31, 0.12) 100%); }
+.latest-card--lead { background: #3a3c3f; }
+.latest-card--lead .latest-photo::after { background: linear-gradient(to top, rgba(28, 29, 31, 0.88) 0%, rgba(28, 29, 31, 0.55) 45%, rgba(28, 29, 31, 0.15) 100%); }
+.shot-feature { background: #3a3c3f; }
+.shot-feature.has-photo { background: #3a3c3f; }
+.shot-feature.has-photo::before { background: linear-gradient(90deg, rgba(28, 29, 31, 0.88) 0%, rgba(28, 29, 31, 0.6) 50%, rgba(28, 29, 31, 0.15) 100%); }
+.ne-feature::after { background: linear-gradient(to top, rgba(28, 29, 31, 0.88) 0%, rgba(28, 29, 31, 0.55) 40%, rgba(28, 29, 31, 0.04) 75%); }
+
+/* legal-updates carousel art: one red slide in three, the others in brand greys */
+.art-1 { background: linear-gradient(135deg, #959897, #757575); }
+.art-5 { background: linear-gradient(135deg, #cecbcc, #959897); }
+.slide-tag { background: rgba(117, 117, 117, 0.88); }
+
+/* ---------- selected filters and tabs: pale red tint ---------- */
+.topic-chip[aria-pressed="true"],
+.sr-chip[aria-pressed="true"],
+.pf-tab[aria-selected="true"] { background: var(--tint); border-color: var(--tint-line); color: var(--red-dark); }
+.topic-toggle.has-value { background: var(--tint); border-color: var(--tint-line); color: var(--red-dark); }
+.topic-toggle.has-value strong { color: var(--red-dark); }
+.sr-chip[aria-pressed="true"] i { color: var(--red-dark); }
+.sr-chip[aria-pressed="true"] .sr-chip-n,
+.pf-tab[aria-selected="true"] .pf-tab-count { background: var(--white); color: var(--red-dark); }
+
+.seg button[aria-pressed="true"],
+.role-tabs button[aria-pressed="true"],
+.jb-step-pill.is-current { background: var(--tint); color: var(--red-dark); box-shadow: inset 0 0 0 1px var(--tint-line); }
+.ne-tab[aria-selected="true"] { background: var(--tint); color: var(--red-dark); box-shadow: inset 0 0 0 1px var(--tint-line); }
+.ne-tab[aria-selected="true"] .ne-tab-count { background: var(--white); color: var(--red-dark); }
+
+.pa-tile.is-active { background: var(--silver); color: var(--ink); box-shadow: var(--red-edge), var(--shadow-md); }
+.pa-tile.is-active .pa-tile-chev { color: var(--red); }
+
+.filter-option input:checked + .filter-box { background: var(--red-dark); border-color: var(--red-dark); }
+
+/* ---------- small badges and date blocks: brand greys ---------- */
+.filters-count,
+.ne-badge,
+.pub-spot-badge,
+.cr-num b { background: var(--grey-700); }
+.ne-up-date { background: var(--grey-100); color: var(--ink); }
+.alert-tag--label { background: var(--grey-100); color: var(--ink); }
