@@ -29,49 +29,58 @@ h1 :lang(zh), h2 :lang(zh), h3 :lang(zh), h3:lang(zh) { font-family: "Noto Serif
 /* Chinese words in section titles sit on their own line */
 .pf-section-title .dk-cn { display: block; margin-top: 6px; font-size: 0.62em; font-weight: 700; color: var(--grey-700); }
 
-/* ---------- banner: the desk's city, intro text over it ---------- */
-.dk-banner {
+/* ---------- hero: the desk's city behind the heading ----------
+   The photo runs edge to edge from the top of the page and fades into
+   the page canvas (#fbfbfb) on the left, where the text sits, and at
+   the bottom, so the heading flows straight into the content. */
+.dk-page::before, .dk-page::after { display: none; }   /* the usual texture is replaced by the city */
+.dk-page { overflow-x: clip; }                          /* the full-width photo never adds a sideways scroll */
+.dk-hero {
   position: relative;
   isolation: isolate;
-  display: flex;
-  align-items: flex-end;
-  min-height: clamp(340px, 34vw, 480px);
-  padding: clamp(28px, 4vw, 56px);
-  border-radius: 24px;
-  overflow: hidden;
-  background: #2b2d30;
-  box-shadow: var(--shadow-lg);
-  color: var(--white);
+  padding-bottom: clamp(40px, 6vw, 96px);
 }
-.dk-banner-img {
+.dk-hero-img {
   position: absolute;
-  inset: 0;
   z-index: -2;
-  width: 100%;
-  height: 100%;
+  top: calc(-1 * (var(--header-h) + clamp(40px, 5vw, 72px)));  /* up to the very top of the page */
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  max-width: none;
+  height: auto;
   object-fit: cover;
-  transition: transform 1.2s var(--ease);
+  transform: translateX(-50%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  animation: dkHeroIn 1.6s var(--ease) both;
 }
-.dk-banner:hover .dk-banner-img { transform: scale(1.03); }
-.dk-banner--china .dk-banner-img { object-position: 55% 50%; }
-.dk-banner--india .dk-banner-img { object-position: 60% 40%; }
-.dk-banner::before {
+.dk-hero--china .dk-hero-img { object-position: 60% 55%; }
+.dk-hero--india .dk-hero-img { object-position: 65% 45%; }
+/* soft wash on the left so the red title and text read clearly */
+.dk-hero::before {
   content: "";
   position: absolute;
-  inset: 0;
   z-index: -1;
+  top: calc(-1 * (var(--header-h) + clamp(40px, 5vw, 72px)));
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
   background:
-    linear-gradient(90deg, rgba(22, 23, 25, 0.84) 0%, rgba(22, 23, 25, 0.6) 40%, rgba(22, 23, 25, 0.1) 75%),
-    linear-gradient(to top, rgba(22, 23, 25, 0.5) 0%, rgba(22, 23, 25, 0) 45%);
+    linear-gradient(90deg, rgba(251, 251, 251, 0.97) 0%, rgba(251, 251, 251, 0.9) 28%, rgba(251, 251, 251, 0.45) 52%, rgba(251, 251, 251, 0) 72%),
+    linear-gradient(to bottom, rgba(251, 251, 251, 0) 60%, #fbfbfb 100%);
+  pointer-events: none;
 }
-.dk-banner-text { max-width: 620px; }
-.dk-lead { font: 400 clamp(17px, 1.5vw, 21px)/1.65 var(--font-display); color: var(--white); }
-.dk-lead-zh { margin-top: 10px; font-size: 15.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.85); }
-.dk-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-.dk-banner .pf-contact-actions { margin-top: 26px; }
+@keyframes dkHeroIn { from { opacity: 0; transform: translateX(-50%) scale(1.04); } to { opacity: 1; transform: translateX(-50%); } }
 
-/* ---------- section bar: room under the banner ---------- */
-.dk-page .pf-nav { margin-top: clamp(36px, 4.5vw, 56px); }
+.dk-head { max-width: 680px; margin-bottom: 0; padding-top: clamp(8px, 2vw, 32px); }
+.dk-lead { margin-top: 26px; font: 400 clamp(17px, 1.5vw, 21px)/1.65 var(--font-display); color: var(--ink); }
+.dk-lead-zh { margin-top: 10px; font-size: 15.5px; line-height: 1.7; color: var(--ink-soft); }
+.dk-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+/* ---------- section bar ---------- */
+.dk-page .pf-nav { margin-top: 0; }
 
 /* overview text: small labels between paragraphs */
 .dk-overview .pf-sub { margin: 28px 0 10px; }
@@ -166,13 +175,46 @@ a.dk-chip:hover { background: var(--red); color: var(--white); }
 /* team rows: link straight to the profile */
 .dk-team .pf-other-role { line-height: 1.4; }
 
+/* ---------- explore more: the other desk + all practice areas ---------- */
+.dk-others { margin-top: clamp(56px, 7vw, 96px); }
+.dk-others-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 18px; }
+.dk-other-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--white);
+  border: 1px solid var(--grey-100);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s, border-color 0.3s;
+}
+.dk-other-card:hover { transform: translateY(-4px); border-color: var(--grey-300); box-shadow: 0 20px 40px -26px rgba(0, 0, 0, 0.4); }
+.dk-other-card--plain { grid-template-columns: minmax(0, 1fr); }
+.dk-other-media { position: relative; min-height: 220px; overflow: hidden; background: var(--grey-100); }
+.dk-other-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+.dk-other-media--india img { object-position: 65% 50%; }
+.dk-other-media--china img { object-position: 58% 55%; }
+.dk-other-card:hover .dk-other-media img { transform: scale(1.05); }
+.dk-other-body { display: flex; flex-direction: column; align-items: flex-start; padding: clamp(22px, 2.6vw, 32px); }
+.dk-other-body .eyebrow { margin-bottom: 6px; color: var(--red); }
+.dk-other-icon { width: 44px; height: 44px; margin-bottom: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 17px; color: var(--red); background: var(--red-soft); }
+.dk-other-name { font: 900 clamp(20px, 1.8vw, 24px)/1.25 var(--font-display); color: var(--ink); transition: color 0.25s; }
+.dk-other-name [lang="zh"] { display: block; margin-top: 4px; font-size: 0.7em; color: var(--grey-700); }
+.dk-other-card:hover .dk-other-name { color: var(--red); }
+.dk-other-desc { margin-top: 10px; font-size: 15px; line-height: 1.65; color: var(--ink-soft); }
+.dk-other-go { margin-top: auto; padding-top: 18px; display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 700; color: var(--red); }
+.dk-other-go i { font-size: 12px; transition: transform 0.25s var(--ease); }
+.dk-other-card:hover .dk-other-go i { transform: translateX(4px); }
+
 /* ---------- responsive ---------- */
 @media (max-width: 1000px) {
   .dk-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) {
-  .dk-banner { min-height: 0; padding-top: 120px; }
-  .dk-banner::before { background: linear-gradient(to top, rgba(22, 23, 25, 0.9) 0%, rgba(22, 23, 25, 0.55) 60%, rgba(22, 23, 25, 0.25) 100%); }
+  .dk-hero::before {
+    background: linear-gradient(to bottom, rgba(251, 251, 251, 0.2) 0%, rgba(251, 251, 251, 0.72) 30%, rgba(251, 251, 251, 0.9) 60%, #fbfbfb 100%);
+  }
+  .dk-others-grid, .dk-other-card { grid-template-columns: minmax(0, 1fr); }
+  .dk-other-media { min-height: 170px; }
   .dk-matters { grid-template-columns: minmax(0, 1fr); }
   .pf-tabs.dk-years { flex-wrap: wrap; overflow: visible; margin: 0 0 20px; padding: 0; }
   .dk-talks a { grid-template-columns: minmax(0, 1fr); gap: 2px; }
