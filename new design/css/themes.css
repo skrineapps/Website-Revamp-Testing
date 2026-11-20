@@ -230,11 +230,19 @@
 /* ---------- Home ---------- */
 .themed .hero-bg {
   background: var(--t-art) var(--t-hero-pos) / cover no-repeat;
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.6) 86%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.6) 86%, transparent 100%);
+  /* the layer is 12% taller than the hero (it drifts), and the hero clips it at ~95%:
+     the fade has to finish before that, or the bottom shows as a hard edge.
+     Nothing is painted over the seam: the page canvas shows through, so the hero runs straight into Legal Updates */
+  -webkit-mask-image: linear-gradient(180deg, #000 48%, rgba(0, 0, 0, 0.6) 64%, rgba(0, 0, 0, 0.22) 76%, rgba(0, 0, 0, 0.06) 84%, transparent 88%);
+  mask-image: linear-gradient(180deg, #000 48%, rgba(0, 0, 0, 0.6) 64%, rgba(0, 0, 0, 0.22) 76%, rgba(0, 0, 0, 0.06) 84%, transparent 88%);
   animation-duration: 46s;
 }
 .themed .hero-shade { background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 22%); }
+/* the veils fade out with the artwork, so nothing stops at the hero's bottom edge */
+.themed .hero-shade {
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 88%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 88%);
+}
 /* frosted card in the artwork's colours, with a short brand-red edge */
 .themed .hero-panel::before {
   border-left: 0;
