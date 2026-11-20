@@ -1,0 +1,415 @@
+/* =========================================================
+   SKRINE — Design 2 ("Ribbons")
+   A site-wide look, switched on by js/design.js as html.skin-2.
+   Every rule is scoped to .skin-2, so Design 1 is untouched.
+
+   Built on the ribbons artwork (images/d2/):
+   - ribbons.jpg       warm taupe architecture, crimson ribbons
+   - ribbons-wash.jpg  the same, heavily blurred: soft warm light
+   Palette taken from it:
+     sand / ivory   #f6ede5  #efe2d7  #e3cfc0
+     taupe          #9c857a  #6e5850  #4a3a35
+     espresso       #2c1f1c
+     crimson        #c32030 (brand)  wine #8e1626  deep wine #5e0d18
+   ========================================================= */
+
+.skin-2 {
+  --red: #c32030;
+  --red-dark: #8e1626;
+  --red-soft: rgba(142, 22, 38, 0.08);
+  --wine: #8e1626;
+  --wine-deep: #5e0d18;
+
+  --grey-100: #f1e6dd;
+  --grey-300: #dfcab9;
+  --grey-500: #9c857a;
+  --grey-700: #6e5850;
+
+  --ink: #2f2220;
+  --ink-soft: #5b4741;
+  --white: #fffaf6;
+
+  --canvas: #f6ede5;
+  --sand: #efe2d7;
+  --sand-deep: #e3cfc0;
+  --espresso: #2c1f1c;
+
+  --shadow-sm: 0 4px 14px rgba(74, 40, 30, 0.09);
+  --shadow-md: 0 14px 34px rgba(74, 40, 30, 0.16);
+  --shadow-lg: 0 28px 60px rgba(74, 40, 30, 0.24);
+
+  --ribbon: linear-gradient(100deg, #5e0d18 0%, #8e1626 30%, #c32030 62%, #a3182a 100%);
+}
+
+/* ---------- Base canvas ---------- */
+.skin-2 body { background: var(--canvas); color: var(--ink); }
+.skin-2 ::selection { background: rgba(195, 32, 48, 0.85); color: #fff; }
+
+.skin-2 main {
+  background:
+    radial-gradient(ellipse 55% 9% at 0% 14%,  rgba(195, 32, 48, 0.06), transparent 70%),
+    radial-gradient(ellipse 50% 10% at 100% 30%, rgba(214, 184, 164, 0.55), transparent 70%),
+    radial-gradient(ellipse 55% 9% at 0% 50%,  rgba(239, 226, 215, 0.95), transparent 70%),
+    radial-gradient(ellipse 50% 9% at 100% 64%, rgba(142, 22, 38, 0.06), transparent 70%),
+    radial-gradient(ellipse 55% 10% at 0% 82%, rgba(214, 184, 164, 0.5), transparent 70%),
+    radial-gradient(ellipse 50% 8% at 100% 97%, rgba(156, 133, 122, 0.2), transparent 70%),
+    var(--canvas);
+}
+.skin-2 .careers,
+.skin-2 .contact,
+.skin-2 .life {
+  background:
+    radial-gradient(ellipse 55% 9% at 0% 8%, rgba(195, 32, 48, 0.06), transparent 70%),
+    radial-gradient(ellipse 50% 10% at 100% 34%, rgba(214, 184, 164, 0.55), transparent 70%),
+    radial-gradient(ellipse 55% 9% at 0% 62%, rgba(239, 226, 215, 0.95), transparent 70%),
+    var(--canvas);
+}
+
+/* ---------- Header ---------- */
+.skin-2 .site-header { background: rgba(246, 237, 229, 0.6); }
+.skin-2 .site-header.is-scrolled { background: rgba(250, 243, 237, 0.95); box-shadow: 0 6px 22px rgba(74, 40, 30, 0.1); }
+/* a thin ribbon along the bottom edge once the page scrolls */
+.skin-2 .site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--ribbon);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+}
+.skin-2 .site-header.is-scrolled::after { opacity: 0.85; }
+.skin-2 .nav-link::after { background: var(--ribbon); }
+.skin-2 .nav-menu { background: var(--white); border-color: var(--grey-300); }
+
+/* ---------- Headings ---------- */
+.skin-2 .eyebrow { color: var(--grey-700); }
+.skin-2 .page-title,
+.skin-2 .section-title {
+  background: var(--ribbon);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.06em; /* keeps descenders inside the clipped gradient */
+}
+/* a short crimson bar close under the heading, deep wine fading to brand red */
+.skin-2 .section-title::after {
+  width: 72px;
+  height: 3px;
+  margin-top: 12px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--wine-deep), var(--red) 70%, #e0606c);
+}
+.skin-2 .section--art::after { -webkit-text-stroke-color: rgba(142, 22, 38, 0.13); }
+
+/* ---------- Buttons ---------- */
+.skin-2 .btn--solid {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--wine) 0%, var(--red) 55%, #b01c2c 100%);
+  box-shadow: 0 10px 22px -12px rgba(94, 13, 24, 0.75);
+}
+.skin-2 .btn--solid:hover { background: linear-gradient(120deg, var(--wine-deep) 0%, var(--wine) 50%, var(--red) 100%); border-color: transparent; }
+.skin-2 .btn--outline { border-color: var(--wine); color: var(--wine); background: rgba(255, 250, 246, 0.45); }
+.skin-2 .btn--outline:hover { border-color: transparent; background: linear-gradient(120deg, var(--wine) 0%, var(--red) 100%); color: #fff; }
+
+/* =========================================================
+   Home
+   ========================================================= */
+.skin-2 .hero-bg {
+  background: url("../images/d2/ribbons.jpg") 68% 50% / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.6) 86%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.6) 86%, transparent 100%);
+  animation-duration: 46s;
+}
+/* warm veil: clear for the menu at the top, darker taupe on the left behind the text */
+.skin-2 .hero-shade {
+  background:
+    linear-gradient(180deg, rgba(246, 237, 229, 0.55) 0%, rgba(246, 237, 229, 0) 22%),
+    linear-gradient(90deg, rgba(44, 31, 28, 0.35) 0%, rgba(44, 31, 28, 0.12) 40%, rgba(44, 31, 28, 0) 60%);
+}
+/* the text sits in the open space on the left; the ribbons sweep through on the right */
+.skin-2 .hero-panel {
+  left: clamp(16px, 6vw, 104px);
+  right: auto;
+  width: min(620px, calc(100% - 32px));
+}
+.skin-2 .hero-panel::before {
+  border-left: 0;
+  border-radius: 28px;
+  background: linear-gradient(150deg, rgba(250, 243, 237, 0.74) 0%, rgba(239, 226, 215, 0.6) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 30px 60px -20px rgba(44, 31, 28, 0.45);
+}
+/* a short ribbon on the card's left edge, echoing the artwork */
+.skin-2 .hero-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 4px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, transparent, var(--red) 25%, var(--wine) 75%, transparent);
+  animation: geoRise 1.1s var(--ease) 0.05s both;
+}
+.skin-2 .hero-eyebrow { color: var(--grey-700); }
+.skin-2 .hero-eyebrow span { background: var(--ribbon); }
+.skin-2 .ht-word:nth-child(2) { color: #8a6f64; }
+.skin-2 .ht-swatch {
+  background:
+    linear-gradient(175deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(90deg, var(--wine-deep) 0%, var(--wine) 30%, var(--red) 70%, #a3182a 100%);
+}
+.skin-2 .hero-sub { color: var(--ink-soft); }
+.skin-2 .scroll-cue { color: rgba(255, 250, 246, 0.85); }
+.skin-2 .scroll-cue span { background: rgba(255, 250, 246, 0.6); }
+/* Recognitions: deep wine instead of bright red, with warm foil numbers */
+.skin-2 .awards {
+  --foil-1: #dfcab9;
+  --foil-2: #f1e6dd;
+  --foil-3: #fffaf6;
+  background:
+    radial-gradient(1400px 900px at 50% -10%, var(--red) 0%, var(--wine) 45%, #4a0b14 100%);
+}
+.skin-2 .awards::before { background: linear-gradient(var(--canvas) 0%, rgba(246, 237, 229, 0.55) 30%, rgba(246, 237, 229, 0.12) 65%, rgba(246, 237, 229, 0) 100%); }
+
+/* section materials: warm light from the blurred artwork, and the ribbons themselves faint in the "field" bands */
+.skin-2 .section--updates::before,
+.skin-2 .section--spotlight::before,
+.skin-2 .section--network::before { background-image: url("../images/d2/ribbons-wash.jpg"); opacity: 0.55; }
+.skin-2 .section--deals::before,
+.skin-2 .section--events::before {
+  background: url("../images/d2/ribbons.jpg") 80% 50% / cover no-repeat;
+  opacity: 0.16;
+}
+
+.skin-2 .deal-feature,
+.skin-2 .latest-card--lead { background: linear-gradient(150deg, var(--espresso) 0%, var(--wine-deep) 45%, var(--wine) 100%); }
+.skin-2 .deal-feature::after { background: linear-gradient(to top, rgba(44, 31, 28, 0.93) 0%, rgba(44, 31, 28, 0.62) 50%, rgba(94, 13, 24, 0.3) 100%); }
+.skin-2 .ne-feature { background: var(--espresso); }
+.skin-2 .art-1 { background: linear-gradient(135deg, var(--red), var(--wine-deep)); }
+.skin-2 .spot-cover--alert,
+.skin-2 .spot-cover--photo { background: var(--espresso); }
+.skin-2 .cover-navy { background: linear-gradient(140deg, #6e5850, var(--espresso) 70%); }
+
+/* =========================================================
+   Inner pages: the ribbons sweep in behind every page heading
+   ========================================================= */
+.skin-2 .page-main::before,
+.skin-2 main.contact::before,
+.skin-2 main.life::before {
+  height: clamp(440px, 54vw, 680px);
+  background: url("../images/d2/ribbons.jpg") 100% 45% / cover no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.62;
+  -webkit-mask-image: radial-gradient(75% 105% at 100% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
+  mask-image: radial-gradient(75% 105% at 100% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
+}
+.skin-2 .page-main::after,
+.skin-2 main.contact::after,
+.skin-2 main.life::after {
+  background-image: url("../images/d2/ribbons-wash.jpg");
+  opacity: 0.4;
+}
+@media (max-width: 760px) {
+  .skin-2 .page-main::before,
+  .skin-2 main.contact::before,
+  .skin-2 main.life::before { opacity: 0.4; background-size: auto 100%; }
+}
+
+/* glassy panels and toolbars pick up the warm canvas */
+.skin-2 .kit-panel::before {
+  background: linear-gradient(150deg, rgba(250, 243, 237, 0.8), rgba(239, 226, 215, 0.66));
+  border-left-color: var(--wine);
+  border-radius: 0 22px 22px 0;
+  box-shadow: 0 24px 50px -20px rgba(44, 31, 28, 0.35);
+}
+.skin-2 .kit-painted::before { background-image: url("../images/d2/ribbons.jpg"); }
+.skin-2 .kit-dots::before { background-image: url("../images/d2/ribbons-wash.jpg"); opacity: 0.4; }
+.skin-2 .brush--ink::before { background: linear-gradient(90deg, var(--espresso), #4a3a35 60%, var(--espresso)); }
+.skin-2 .cr-chapters,
+.skin-2 .life-lead::before,
+.skin-2 .cr-lead::before,
+.skin-2 .ct-address::before { background: rgba(250, 243, 237, 0.9); }
+.skin-2 .alerts-toolbar,
+.skin-2 .pf-nav { background: var(--canvas); box-shadow: 0 0 0 100vmax var(--canvas); }
+.skin-2 .jb-field textarea,
+.skin-2 .jb-drop { background: var(--canvas); }
+.skin-2 .life-banner::before { color: var(--canvas); }
+
+/* China / India desks: the photo fades into the warm canvas instead of grey */
+.skin-2 .dk-hero::before {
+  background:
+    linear-gradient(90deg, rgba(246, 237, 229, 0.97) 0%, rgba(246, 237, 229, 0.9) 28%, rgba(246, 237, 229, 0.45) 52%, rgba(246, 237, 229, 0) 72%),
+    linear-gradient(to bottom, rgba(246, 237, 229, 0) 60%, var(--canvas) 100%);
+}
+@media (max-width: 760px) {
+  .skin-2 .dk-hero::before { background: linear-gradient(to bottom, rgba(246, 237, 229, 0.2) 0%, rgba(246, 237, 229, 0.72) 30%, rgba(246, 237, 229, 0.9) 60%, var(--canvas) 100%); }
+}
+
+/* Our Story */
+.skin-2 .st-rail-dot,
+.skin-2 .st-step::before { background: var(--canvas); }
+.skin-2 .st-step::before { box-shadow: 0 0 0 6px var(--canvas); }
+.skin-2 .st-quote { background: linear-gradient(140deg, var(--espresso) 0%, #3a2824 55%, var(--wine-deep) 100%); }
+.skin-2 .st-quote::before { background-image: url("../images/d2/ribbons.jpg"); }
+.skin-2 .st-deed-paper { background-color: var(--white); }
+
+/* =========================================================
+   Footer: espresso, with the ribbons running through on the right
+   ========================================================= */
+.skin-2 .site-footer {
+  position: relative;
+  background:
+    linear-gradient(90deg, rgba(44, 31, 28, 0.97) 0%, rgba(44, 31, 28, 0.9) 45%, rgba(58, 30, 30, 0.55) 100%),
+    url("../images/d2/ribbons.jpg") 100% 55% / cover no-repeat,
+    var(--espresso);
+  color: #f6ede5;
+}
+.skin-2 .site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--ribbon);
+}
+.skin-2 .footer-connect a:hover { background: #f6ede5; color: var(--wine); }
+
+/* =========================================================
+   Review pill
+   ========================================================= */
+.skin-2 .design-switch { background: rgba(44, 31, 28, 0.92); box-shadow: 0 10px 30px -10px rgba(44, 31, 28, 0.6); }
+.skin-2 .design-switch a { color: rgba(246, 237, 229, 0.8); }
+.skin-2 .design-switch a[aria-current="page"] { background: linear-gradient(120deg, var(--wine), var(--red)); color: #fff; }
+
+/* the hero card sits on the left in Design 2, so the scroll cue moves to the right */
+.skin-2 .scroll-cue { left: auto; right: clamp(16px, 4vw, 64px); bottom: 96px; } /* clear of the review pill */
+
+/* =========================================================
+   Ribbon bands instead of paint strokes
+   The Design 1 brush strokes belong to its painting. Here the
+   same brand highlights (the red word in a heading, red labels,
+   tape, title rules) become satin crimson ribbons like the ones
+   in the artwork: smooth, slightly slanted, a sheen across the
+   middle and a bright edge along the top.
+   ========================================================= */
+html.skin-2 {
+  --brush-mask: none;
+  --ribbon-satin:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 22%, rgba(0, 0, 0, 0) 68%, rgba(40, 0, 6, 0.22) 100%),
+    linear-gradient(100deg, #5e0d18 0%, #8e1626 20%, #c32030 52%, #b01c2c 78%, #6d0f1c 100%);
+}
+
+@keyframes d2RibbonIn {
+  from { transform: skewX(-12deg) scaleX(0); }
+  to   { transform: skewX(-12deg) scaleX(1); }
+}
+
+/* "Ingenuity." on the home hero: the word sits on a ribbon that sweeps in */
+.skin-2 .ht-swatch {
+  -webkit-mask: none;
+  mask: none;
+  inset: 0.06em 0 0.02em;
+  border-radius: 0.14em 0.42em 0.14em 0.42em;
+  background: var(--ribbon-satin);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 140, 150, 0.55),
+    0 14px 26px -12px rgba(94, 13, 24, 0.7);
+  transform: skewX(-12deg) scaleX(0);
+  animation-name: d2RibbonIn;
+}
+
+/* brushed words in headings (e.g. "Life at Skrine") */
+.skin-2 .brush { padding: 0 0.26em 0.06em 0.22em; }
+.skin-2 .brush::before {
+  border-radius: 0.12em 0.38em 0.12em 0.38em;
+  background: var(--ribbon-satin);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 140, 150, 0.5),
+    0 14px 26px -12px rgba(94, 13, 24, 0.65);
+  animation-name: d2RibbonIn;
+}
+.skin-2 .brush--ink::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 24%, rgba(0, 0, 0, 0) 68%, rgba(0, 0, 0, 0.25) 100%),
+    linear-gradient(100deg, var(--espresso), #4a3a35 55%, var(--espresso));
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.18), 0 14px 26px -12px rgba(44, 31, 28, 0.6);
+}
+
+/* small labels: little slanted ribbons */
+.skin-2 .brush-tag::before,
+.skin-2 .life-route li.is-world span::before {
+  border-radius: 3px 10px 3px 10px;
+  background: var(--ribbon-satin);
+  box-shadow: inset 0 1px 0 rgba(255, 140, 150, 0.5);
+  transform: skewX(-12deg);
+}
+
+/* tape on the photos: a short satin ribbon */
+.skin-2 .kit-polaroid::after {
+  height: 14px;
+  border-radius: 2px 7px 2px 7px;
+  background: var(--ribbon-satin);
+  box-shadow: inset 0 1px 0 rgba(255, 140, 150, 0.5), 0 4px 8px -3px rgba(94, 13, 24, 0.5);
+  opacity: 0.92;
+}
+
+/* rule under Life page titles: the same bar as the section headings */
+.skin-2 .life-head .page-title::after {
+  width: 72px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--wine-deep), var(--red) 70%, #e0606c);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skin-2 .ht-swatch, .skin-2 .brush::before { animation: none; transform: skewX(-12deg); }
+}
+
+/* =========================================================
+   Components: softer, rounder, warmer
+   Design 1's square red outlines become warm hairlines; the
+   brand red is kept for the active state as a satin ribbon.
+   ========================================================= */
+/* practice area tiles */
+.skin-2 .pa-tile {
+  border: 1px solid var(--grey-300);
+  border-radius: 16px;
+  background: rgba(255, 250, 246, 0.72);
+}
+.skin-2 .pa-tile:hover { border-color: var(--wine); background: var(--white); }
+.skin-2 .pa-tile.is-active {
+  border-color: transparent;
+  background: var(--ribbon-satin);
+  box-shadow: inset 0 1.5px 0 rgba(255, 140, 150, 0.5), 0 14px 28px -14px rgba(94, 13, 24, 0.7);
+}
+.skin-2 .pa-panel-card { border-radius: 26px; }
+
+/* People: role buttons */
+.skin-2 .role-tabs button {
+  border: 1px solid var(--grey-300);
+  border-radius: 999px;
+  background: rgba(255, 250, 246, 0.8);
+}
+.skin-2 .role-tabs button:hover { border-color: var(--wine); color: var(--wine); }
+.skin-2 .role-tabs button[aria-pressed="true"] {
+  border-color: transparent;
+  background: var(--ribbon-satin);
+  color: #fff;
+  box-shadow: inset 0 1.5px 0 rgba(255, 140, 150, 0.5), 0 14px 28px -14px rgba(94, 13, 24, 0.7);
+}
+
+/* cards and quotes with a red edge: the edge stays (brand), the corners soften */
+.skin-2 .cr-quote,
+.skin-2 .cr-lead::before,
+.skin-2 .ct-form-wrap::before,
+.skin-2 .ct-address::before,
+.skin-2 .life-quote,
+.skin-2 .life-lead::before,
+.skin-2 .st-v-panel,
+.skin-2 .ne-up {
+  border-left-color: var(--wine);
+  border-radius: 4px 22px 22px 4px;
+}

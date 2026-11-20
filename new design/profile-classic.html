@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-variant>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,8 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/profile-classic.css">
+  <link rel="stylesheet" href="css/design2.css">
+  <script src="js/design.js"></script>
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -144,10 +146,11 @@
     </section>
   </main>
 
-  <!-- review aid: flip between the two profile designs -->
+  <!-- review aid: switch between designs (js/design.js) -->
   <nav class="design-switch" aria-label="Profile design">
-    <a href="profile.html" data-switch>Modern</a>
-    <a href="profile-classic.html" data-switch aria-current="page">Classic</a>
+    <a href="profile.html" data-skin="1">Design 1</a>
+    <a href="profile.html" data-skin="2">Design 2</a>
+    <a href="profile-classic.html">Design 3</a>
   </nav>
 
   <!-- ============ FOOTER ============ -->

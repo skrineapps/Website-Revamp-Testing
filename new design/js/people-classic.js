@@ -7,7 +7,6 @@
   "use strict";
 
   // review aid: keep ?q= etc. when switching designs
-  document.querySelectorAll("[data-switch]").forEach(function (a) { a.href = a.getAttribute("href") + location.search; });
 
   var DATA = window.SKRINE_PEOPLE;
   if (!DATA) return;

@@ -13,11 +13,6 @@
 (function () {
   "use strict";
 
-  // review aid: switching designs keeps the open practice area (#slug)
-  document.querySelectorAll("[data-switch]").forEach(function (a) {
-    a.addEventListener("click", function () { a.href = a.getAttribute("href").split("#")[0] + location.hash; });
-  });
-
   var AREAS = window.SKRINE_PRACTICES || [];
   var PEOPLE = window.SKRINE_PEOPLE || {};
   var FX = window.SkrineFX || { observeReveal: function (el) { el.classList.add("is-visible"); }, attachTilt: function () {} };

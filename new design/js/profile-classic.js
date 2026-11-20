@@ -20,7 +20,6 @@
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   // design switch keeps the same person
-  document.querySelectorAll("[data-switch]").forEach(function (a) { a.href = a.getAttribute("href") + location.search; });
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);

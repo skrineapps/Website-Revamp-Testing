@@ -27,7 +27,6 @@
   if (!sectionsEl) return;
 
   // design switch keeps the same person
-  document.querySelectorAll("[data-switch]").forEach(function (a) { a.href = a.getAttribute("href") + location.search; });
 
   /* ---------- helpers ---------- */
   function el(tag, cls, text) {
