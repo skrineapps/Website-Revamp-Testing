@@ -1,63 +1,19 @@
 /* =========================================================
    SKRINE — Practice areas, Design 1 (capabilities.html)
-   Loaded after css/capabilities.css. The preview panel is two
-   columns with the team running underneath, kept compact for
-   small laptop screens:
-   ┌ photo + title ─────────┬ largest deal (red feature) ┐
-   │ write-up · Explore     │ ledger of the other deals   │
-   │ related capabilities   │ (scrolls inside its box)    │
-   └ team carousel ─────────┴─────────────────────────────┘
+   Loaded after css/capabilities.css. The panel keeps the Design 2
+   layout (banner, related capabilities, team list); the write-up is
+   cut to three lines with "Show more", and under it a carousel of
+   the area's three largest deals, one at a time:  ‹ [ deal ] ›
    ========================================================= */
 
-.pv-card { padding: clamp(14px, 1.6vw, 20px); min-width: 0; }
-.pa-panel:has(.pv-card) { min-width: 0; }
-.pv-card .pa-panel-close { top: 26px; right: 26px; }
+[data-design="1"] .pa-panel-overview,
+[data-design="1"] .pa-panel-side { min-width: 0; }
 
-.pv-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: clamp(16px, 2vw, 28px);
-  align-items: stretch;
-}
-.pv-left { display: flex; flex-direction: column; min-width: 0; padding-bottom: 4px; }
-.pv-right { min-width: 0; display: flex; flex-direction: column; }
-
-/* ---------- left: photo, write-up, Explore, related ---------- */
-.pv-banner {
-  height: 150px;
-  border-radius: 16px;
-}
-.pv-banner::after { background: linear-gradient(to top, rgba(20, 6, 9, 0.82) 0%, rgba(20, 6, 9, 0.35) 55%, rgba(20, 6, 9, 0.05) 100%); }
-.pv-title {
-  position: absolute;
-  left: 20px;
-  right: 20px;
-  bottom: 34px;
-  z-index: 1;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(22px, 2vw, 30px);
-  line-height: 1.15;
-  color: var(--white);
-}
-.pv-banner-meta {
-  position: absolute;
-  left: 20px;
-  bottom: 14px;
-  z-index: 1;
-  font-family: var(--font-alt);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
-  white-space: pre;
-}
-
+/* ---------- write-up + Explore ---------- */
 .pv-text {
-  margin: 16px 4px 0;
-  font-size: 15px;
-  line-height: 1.7;
+  margin-top: 14px;
+  font-size: 15.5px;
+  line-height: 1.75;
   color: var(--ink-soft);
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -66,8 +22,8 @@
 }
 .pv-text p + p { margin-top: 12px; }
 .pv-text.is-open { display: block; -webkit-line-clamp: unset; }
-.pv-intro-actions { margin: 14px 4px 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
-.pv-explore { height: 44px; padding: 0 20px; font-size: 14px; }
+.pv-intro-actions { margin-top: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; }
+.pv-intro-actions .pa-panel-cta { margin-top: 0; }
 .pv-more {
   font-weight: 700;
   font-size: 14px;
@@ -77,268 +33,132 @@
 }
 .pv-more[hidden] { display: none; }
 
-.pv-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-alt);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--grey-700);
-}
-.pv-count {
-  min-width: 24px;
-  height: 22px;
-  padding: 0 7px;
-  border-radius: 11px;
-  background: var(--grey-100);
-  color: var(--ink);
-  font-size: 11.5px;
-  letter-spacing: 0;
-  display: inline-grid;
-  place-items: center;
-}
-
-.pv-left .pv-related { margin: auto 4px 0; padding-top: 18px; }
-.pv-related .pv-label { margin-bottom: 10px; }
-.pv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.pv-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 7px 14px;
-  border-radius: 20px;
-  border: 1.5px solid var(--grey-300);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  transition: border-color 0.25s, color 0.25s, background 0.25s;
-}
-.pv-chip:hover { border-color: var(--red); color: var(--red); background: var(--red-soft); }
-.pv-related .pa-view-all { margin-top: 10px; font-size: 13px; }
-/* no deals: the related capabilities get the whole right column */
-.pv-card--nodeals .pv-right .pv-related { padding: 8px 4px; }
-
-/* ---------- right: deals ---------- */
-.pv-deals { display: flex; flex-direction: column; min-height: 0; flex: 1; }
-.pv-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 10px; padding-right: 64px; }
-.pv-sub { margin-top: 3px; font-size: 13.5px; color: var(--ink-soft); }
+/* ---------- deals & transactions ---------- */
+.pv-deals { margin-top: 28px; min-width: 0; }
+.pv-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 12px; }
+.pv-head .pv-label { margin: 0; }
+.pv-sub { font-size: 13.5px; color: var(--ink-soft); }
 .pv-sub b { color: var(--red); font-weight: 700; }
 
-.pv-num { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-.pv-unit { margin-left: 2px; font-weight: 700; }
+.pv-stage { display: flex; align-items: center; gap: 10px; }
+.pv-view { flex: 1; min-width: 0; overflow: hidden; border-radius: 16px; }
+.pv-slides { display: flex; transition: transform 0.6s var(--ease); }
+.pv-slide { flex: 0 0 100%; min-width: 0; }
 
-/* the largest deal */
-.pv-feature {
-  position: relative;
+.pv-arrow {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--grey-300);
+  background: var(--white);
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  grid-template-areas: "tag tag" "fig title" "what title" "foot foot";
-  column-gap: 22px;
-  align-items: start;
-  padding: 16px 20px 14px;
+  place-items: center;
+  font-size: 12px;
+  color: var(--ink);
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
+}
+.pv-arrow:hover { background: var(--red); border-color: var(--red); color: var(--white); }
+.pv-arrow:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+.pv-arrow[hidden] { display: none; }
+
+/* one deal: red figure block on the left, headline on the right */
+.pv-deal {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.2fr);
+  min-height: 150px;
   border-radius: 16px;
+  border: 1px solid var(--grey-100);
+  background: var(--white);
+  color: var(--ink);
+  overflow: hidden;
+  transition: box-shadow 0.35s var(--ease);
+}
+.pv-deal:hover { box-shadow: 0 14px 28px rgba(195, 32, 48, 0.14); }
+.pv-deal:focus-visible { outline: 3px solid var(--red); outline-offset: -3px; }
+
+.pv-deal-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 20px;
   color: var(--white);
   background:
     radial-gradient(120% 140% at 100% 0%, rgba(255, 255, 255, 0.14), transparent 55%),
     linear-gradient(150deg, var(--red) 0%, var(--red-dark) 100%);
-  overflow: hidden;
-  isolation: isolate;
-  box-shadow: 0 12px 26px rgba(195, 32, 48, 0.28);
-  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
-  animation: pvIn 0.6s var(--ease) both;
 }
-/* engraved frame, like a deal tombstone */
-.pv-feature::before {
-  content: "";
+.pv-deal-rank {
   position: absolute;
-  inset: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 12px;
-  pointer-events: none;
-}
-.pv-feature:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(195, 32, 48, 0.36); }
-.pv-feature:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-.pv-feature-tag {
-  grid-area: tag;
-  margin-bottom: 6px;
+  top: 12px;
+  left: 20px;
   font-family: var(--font-alt);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.7);
 }
-.pv-feature-fig { grid-area: fig; font-family: var(--font-display); font-weight: 900; line-height: 1; white-space: nowrap; }
-.pv-feature-fig .pv-num { font-size: clamp(36px, 3.4vw, 48px); }
-.pv-feature-fig .pv-unit { font-size: 22px; color: rgba(255, 255, 255, 0.8); }
-.pv-feature-what { grid-area: what; margin-top: 6px; font-size: 12px; color: rgba(255, 255, 255, 0.8); max-width: 22ch; }
-.pv-feature-title {
-  grid-area: title;
-  align-self: center;
-  padding-left: 18px;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  font-size: 14px;
+.pv-deal-fig { margin-top: 8px; font-family: var(--font-display); font-weight: 900; line-height: 1; white-space: nowrap; }
+.pv-num { font-size: clamp(28px, 2.6vw, 38px); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.pv-unit { margin-left: 2px; font-size: 18px; color: rgba(255, 255, 255, 0.8); }
+.pv-deal-fig--none {
+  font-family: var(--font-alt);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.pv-deal-what {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.pv-deal-main { display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 18px 20px; min-width: 0; }
+.pv-deal-title {
+  font-size: 15px;
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  transition: color 0.25s;
 }
-.pv-feature-foot {
-  grid-area: foot;
-  margin-top: 12px;
+.pv-deal:hover .pv-deal-title { color: var(--red); }
+.pv-deal-foot {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 10px;
   font-family: var(--font-alt);
-  font-size: 11.5px;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  color: var(--grey-500);
+  white-space: pre;
 }
-.pv-feature-foot i { font-size: 11px; transition: transform 0.3s var(--ease); }
-.pv-feature:hover .pv-feature-foot i { transform: translate(2px, -2px); }
+.pv-deal-foot span { overflow: hidden; text-overflow: ellipsis; }
+.pv-deal-foot i { font-size: 10px; flex-shrink: 0; transition: transform 0.3s var(--ease), color 0.3s; }
+.pv-deal:hover .pv-deal-foot i { color: var(--red); transform: translate(2px, -2px); }
 
-/* the ledger of other deals */
-.pv-ledger-wrap { position: relative; margin-top: 10px; flex: 1; min-height: 0; }
-.pv-ledger-wrap::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 8px;
-  bottom: 0;
-  height: 36px;
-  background: linear-gradient(to top, var(--white), rgba(255, 255, 255, 0));
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
+.pv-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+.pv-dots[hidden] { display: none; }
+.pv-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--grey-300);
+  transition: width 0.35s var(--ease), background 0.35s;
 }
-.pv-ledger-wrap.has-more::after { opacity: 1; }
-.pv-ledger {
-  max-height: 232px;
-  overflow-y: auto;
-  padding-right: 6px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--grey-300) transparent;
-}
-.pv-ledger li { animation: pvIn 0.5s var(--ease) both; animation-delay: calc(0.15s + var(--i, 0) * 0.05s); }
-.pv-row {
-  display: grid;
-  grid-template-columns: 112px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 10px 10px 4px;
-  border-bottom: 1px solid var(--grey-100);
-  color: var(--ink);
-  transition: background 0.25s, padding 0.3s var(--ease);
-}
-.pv-row:hover { background: var(--grey-100); padding-left: 10px; }
-.pv-row:focus-visible { outline: 2px solid var(--red); outline-offset: -2px; }
-.pv-row-fig { font-family: var(--font-display); font-weight: 900; line-height: 1; white-space: nowrap; color: var(--red); }
-.pv-row-fig .pv-num { font-size: 21px; }
-.pv-row-fig .pv-unit { font-size: 13px; color: var(--red-dark); }
-.pv-row-fig--none { font-family: var(--font-alt); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-500); }
-.pv-row-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.pv-row-title { font-size: 13.5px; font-weight: 600; line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pv-row-meta { font-family: var(--font-alt); font-size: 11px; color: var(--grey-500); white-space: pre; overflow: hidden; text-overflow: ellipsis; }
-.pv-row-go { font-size: 10px; color: var(--grey-500); transition: transform 0.3s var(--ease), color 0.3s; }
-.pv-row:hover .pv-row-go { color: var(--red); transform: translate(2px, -2px); }
-.pv-row:hover .pv-row-title { color: var(--red); }
-
-@keyframes pvIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: none; }
-}
-
-/* ---------- team carousel (full width, under both columns) ---------- */
-.pv-team { margin-top: clamp(14px, 1.6vw, 20px); padding: 14px 4px 0; border-top: 1px solid var(--grey-100); min-width: 0; }
-.pv-team .pv-head { padding-right: 0; margin-bottom: 8px; align-items: center; }
-.pv-arrows { display: flex; gap: 8px; flex-shrink: 0; }
-.pv-arrow {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1.5px solid var(--grey-300);
-  display: grid;
-  place-items: center;
-  font-size: 11px;
-  color: var(--ink);
-  transition: background 0.25s, border-color 0.25s, color 0.25s, opacity 0.25s;
-}
-.pv-arrow:hover:not(:disabled) { background: var(--red); border-color: var(--red); color: var(--white); }
-.pv-arrow:disabled { opacity: 0.35; cursor: default; }
-
-.pv-track {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 4px 4px 10px;
-  margin: 0 -4px;
-  scrollbar-width: none;
-  cursor: grab;
-}
-.pv-track::-webkit-scrollbar { display: none; }
-.pv-track > li { flex: 0 0 auto; scroll-snap-align: start; }
-.pv-track.is-dragging { cursor: grabbing; scroll-snap-type: none; }
-.pv-track.is-dragging a { pointer-events: none; }
-
-.pv-team-track > li { width: 196px; }
-.pv-member {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 7px 14px 7px 7px;
-  border-radius: 40px;
-  background: var(--grey-100);
-  color: var(--ink);
-  transition: background 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
-}
-.pv-member:hover { background: var(--white); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
-.pv-member:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
-.pa-avatar--lg { width: 44px; height: 44px; }
-.pv-member-text { display: flex; flex-direction: column; min-width: 0; }
-.pv-member-name {
-  font-size: 13.5px;
-  font-weight: 700;
-  line-height: 1.25;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.pv-member:hover .pv-member-name { color: var(--red); }
-.pv-member-role { margin-top: 2px; font-family: var(--font-alt); font-size: 11px; color: var(--grey-500); }
+.pv-dot[aria-current="true"] { width: 24px; background: var(--red); }
+.pv-dot:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .pv-feature, .pv-ledger li { animation: none; }
-}
-
-/* ---------- smaller screens ---------- */
-@media (max-height: 820px) and (min-width: 861px) {
-  /* short laptop screens */
-  .pv-banner { height: 128px; }
-  .pv-ledger { max-height: 196px; }
-}
-@media (max-width: 1100px) {
-  .pv-feature { grid-template-columns: 1fr; grid-template-areas: "tag" "fig" "what" "title" "foot"; }
-  .pv-feature-title { margin-top: 10px; padding: 10px 0 0; border-left: 0; border-top: 1px solid rgba(255, 255, 255, 0.3); }
-}
-@media (max-width: 860px) {
-  .pv-grid { grid-template-columns: minmax(0, 1fr); }
-  .pv-head { padding-right: 0; }
-  .pv-left .pv-related { margin-top: 0; }
+  .pv-slides { transition: none; }
 }
 @media (max-width: 560px) {
-  .pv-card { padding: 10px; }
-  .pv-card .pa-panel-close { top: 18px; right: 18px; }
-  .pv-banner { height: 128px; }
-  .pv-title { font-size: 21px; }
-  .pv-row { grid-template-columns: 88px minmax(0, 1fr); }
-  .pv-row-go { display: none; }
-  .pv-row-fig .pv-num { font-size: 18px; }
-  .pv-team-track > li { width: 172px; }
-  .pv-arrows { display: none; }
+  .pv-deal { grid-template-columns: minmax(0, 1fr); }
+  .pv-deal-side { padding-top: 32px; }
+  .pv-arrow { width: 32px; height: 32px; }
+  .pv-stage { gap: 6px; }
 }
