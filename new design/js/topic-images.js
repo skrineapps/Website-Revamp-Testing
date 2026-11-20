@@ -31,7 +31,7 @@
     [/company|companies|director|shareholder|merger|acquisition|corporate|joint venture|竞业|公司|董事|股东/i, P + "corporate.jpg"]
   ];
 
-  // topic / practice names used by alerts-data.js and articles-data.js
+  // topic / practice names used by alerts-data.js
   var TOPICS = {
     "corporate & m&a": P + "corporate.jpg", "corporate": P + "corporate.jpg",
     "transaction news": P + "corporate-structures-and-secretarial-services.jpg",

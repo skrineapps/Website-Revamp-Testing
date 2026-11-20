@@ -47,7 +47,6 @@ $u = function ( $slug ) {
             </button>
             <ul class="nav-menu" id="menu-insights">
               <li><a href="<?php echo $u( 'alerts' ); ?>">Alerts</a></li>
-              <li><a href="<?php echo $u( 'articles' ); ?>">Articles</a></li>
               <li><a href="<?php echo $u( 'publications' ); ?>">Publications</a></li>
               <li><a href="<?php echo esc_url( get_post_type_archive_link( 'skrine_news' ) ); ?>">News &amp; Events</a></li>
             </ul>

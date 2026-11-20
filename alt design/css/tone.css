@@ -51,8 +51,7 @@
 
 /* ---------- light silver panels (were solid red) ---------- */
 .alert-subscribe,
-.pf-quotes,
-.shot-back { background: var(--silver); color: var(--ink); box-shadow: var(--red-edge), var(--shadow-sm); border: 1px solid var(--grey-100); }
+.pf-quotes { background: var(--silver); color: var(--ink); box-shadow: var(--red-edge), var(--shadow-sm); border: 1px solid var(--grey-100); }
 
 /* alerts: sign-up panel */
 .alert-subscribe p { color: var(--ink-soft); }
@@ -63,17 +62,6 @@
 .pf-quote-mark { color: var(--red); opacity: 0.35; }
 .pf-quote-btn { border-color: var(--grey-300); color: var(--ink); }
 .pf-quote-btn:hover { background: var(--red); border-color: var(--red); color: var(--white); }
-
-/* SkrineShot card backs */
-.shot-back-recap { border-bottom-color: var(--grey-300); }
-.shot-back-lead { color: var(--grey-700); }
-.shot-back-q { color: var(--ink); }
-.shot-back .shot-back-title { color: var(--red); }
-.shot-back .shot-contact-name { color: var(--ink); }
-.shot-back .shot-avatar { box-shadow: 0 0 0 2px var(--white); }
-.shot-back-note { color: var(--ink-soft); }
-.shot-back-topic { background: var(--grey-100); color: var(--ink); }
-.shot-back .person-link:hover { color: var(--red); text-decoration-color: var(--red); }
 
 /* home: the selected regional desk card */
 .nd-card::before { background: var(--silver); }
@@ -116,9 +104,6 @@
 .deal-feature::after { background: linear-gradient(to top, rgba(28, 29, 31, 0.86) 0%, rgba(28, 29, 31, 0.5) 50%, rgba(28, 29, 31, 0.12) 100%); }
 .latest-card--lead { background: #3a3c3f; }
 .latest-card--lead .latest-photo::after { background: linear-gradient(to top, rgba(28, 29, 31, 0.88) 0%, rgba(28, 29, 31, 0.55) 45%, rgba(28, 29, 31, 0.15) 100%); }
-.shot-feature { background: #3a3c3f; }
-.shot-feature.has-photo { background: #3a3c3f; }
-.shot-feature.has-photo::before { background: linear-gradient(90deg, rgba(28, 29, 31, 0.88) 0%, rgba(28, 29, 31, 0.6) 50%, rgba(28, 29, 31, 0.15) 100%); }
 .ne-feature::after { background: linear-gradient(to top, rgba(28, 29, 31, 0.88) 0%, rgba(28, 29, 31, 0.55) 40%, rgba(28, 29, 31, 0.04) 75%); }
 
 /* legal-updates carousel art: one red slide in three, the others in brand greys */
@@ -136,7 +121,6 @@
 .sr-chip[aria-pressed="true"] .sr-chip-n,
 .pf-tab[aria-selected="true"] .pf-tab-count { background: var(--white); color: var(--red-dark); }
 
-.seg button[aria-pressed="true"],
 .role-tabs button[aria-pressed="true"],
 .jb-step-pill.is-current { background: var(--tint); color: var(--red-dark); box-shadow: inset 0 0 0 1px var(--tint-line); }
 .ne-tab[aria-selected="true"] { background: var(--tint); color: var(--red-dark); box-shadow: inset 0 0 0 1px var(--tint-line); }

@@ -139,7 +139,7 @@
   var SEARCH_FILES = [
     ["SKRINE_PEOPLE", "people-data"], ["SKRINE_PRACTICES", "practice-data"], ["SKRINE_SECTORS", "sector-data"],
     ["SKRINE_ALERTS", "alerts-data"], ["SKRINE_ALERTS_FULL", "alerts-full-data"], ["SKRINE_NEWS", "news-data"],
-    ["SKRINE_NEWS_FULL", "news-full-data"], ["SKRINE_PUBLICATIONS", "publications-data"], ["SKRINE_SHOTS", "articles-data"],
+    ["SKRINE_NEWS_FULL", "news-full-data"], ["SKRINE_PUBLICATIONS", "publications-data"],
     ["SKRINE_LIFE", "life-data"], ["SKRINE_JOBS", "jobs-data"], ["SkrineSearch", "search-index"],
   ];
   // on WordPress, SKRINE_SEARCH.files gives the latest content's addresses and .js the theme's js folder

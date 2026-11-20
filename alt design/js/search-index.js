@@ -1,7 +1,7 @@
 /* =========================================================
    SKRINE — Site search: the index and the matching
    Builds one list from the site's own data files (people, practice areas,
-   sectors, alerts, news, publications, SkrineShots, Life at Skrine stories,
+   sectors, alerts, news, publications, Life at Skrine stories,
    open roles) plus the main pages, and ranks matches for a query.
    Used by the results page (search.html, js/search.js) and the suggestions
    under the header search bar (js/main.js loads this file when needed).
@@ -18,7 +18,6 @@
     sector:      { label: "Sectors",        one: "Sector",         icon: "fa-solid fa-industry" },
     page:        { label: "Pages",          one: "Page",           icon: "fa-regular fa-file-lines" },
     alert:       { label: "Alerts",         one: "Alert",          icon: "fa-regular fa-bell" },
-    article:     { label: "Articles",       one: "SkrineShot",     icon: "fa-regular fa-lightbulb" },
     publication: { label: "Publications",   one: "Publication",    icon: "fa-solid fa-book-open" },
     news:        { label: "News & events",  one: "News",           icon: "fa-regular fa-newspaper" },
     life:        { label: "Life at Skrine", one: "Life at Skrine", icon: "fa-solid fa-people-group" },
@@ -34,7 +33,6 @@
     ["Practice Areas", "capabilities.html", "Skrine's practice areas — litigation, corporate, intellectual property and more.", "capabilities services expertise"],
     ["Sectors", "sectors.html", "The sectors Skrine serves — aviation, financial institutions, energy and more.", "industries capabilities"],
     ["Alerts", "alerts.html", "Legal alerts from Skrine on developments in Malaysian law and regulation.", "insights legal updates newsletter subscribe"],
-    ["Articles (SkrineShots)", "articles.html", "SkrineShot — short, informative facts on Malaysian law from Skrine.", "insights skrineshot did you know"],
     ["Publications", "publications.html", "Chapters and guides by Skrine lawyers in leading international legal publications.", "insights books guides chapters"],
     ["News & Events", "news-events.html", "The latest news from Skrine, and upcoming events our lawyers are speaking at.", "insights news events press"],
     ["Upcoming events", "news-events.html#upcoming", "Events and talks Skrine lawyers are speaking at.", "seminar webinar talk conference"],
@@ -166,17 +164,6 @@
         image: p.cover ? (/^(https?:)?\/\//.test(p.cover) ? p.cover : "../new%20design/images/publications/" + p.cover) : null,
         keys: words([p.publisher, p.topic].concat(p.authors || [])),
         text: p.summary,
-      });
-    });
-
-    (W.SKRINE_SHOTS || []).forEach(function (s) {
-      add(out, "article", {
-        title: s.title,
-        date: s.date,
-        meta: s.topic || "",
-        href: "articles.html?q=" + encodeURIComponent(s.title),
-        keys: words([s.topic].concat(s.contacts || [])),
-        text: "",
       });
     });
 

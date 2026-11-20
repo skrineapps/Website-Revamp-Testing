@@ -31,7 +31,6 @@ function skrine_default_redirects() {
 		'/news-events/upcoming → news-events.html#upcoming',
 		'/news-events* → news-events.html',
 		'/insights/publications* → publications.html',
-		'/insights/skrineshot* → articles.html',
 		'/insights* → alerts.html',
 		'/legal-insights → alerts.html',
 		'/subscribe → alerts.html',

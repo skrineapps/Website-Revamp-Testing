@@ -63,6 +63,14 @@
 }
 .deal-feature-content.is-leaving { opacity: 0; transform: translateZ(30px) translateY(12px); }
 
+.deal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.deal-top time { font-family: var(--font-alt); font-size: 13px; color: rgba(255, 255, 255, 0.75); }
 .deal-sector {
   align-self: flex-start;
   padding: 6px 14px;
@@ -76,9 +84,18 @@
   backdrop-filter: blur(4px);
 }
 
-.deal-figure {
+.deal-value-label {
   margin-top: auto;
   padding-top: 40px;
+  margin-bottom: 8px;
+  font-family: var(--font-alt);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.deal-figure {
   font-family: var(--font-display);
   font-weight: 900;
   line-height: 0.95;
@@ -108,19 +125,24 @@
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.82);
 }
-.deal-meta {
+.deal-facts {
   margin-top: 22px;
   padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  font-family: var(--font-alt);
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.75);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: 14px 28px;
 }
-.deal-team::before { content: "Skrine team  "; font-weight: 700; color: var(--white); white-space: pre; }
+.deal-facts dt {
+  font-family: var(--font-alt);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+.deal-facts dd { margin: 4px 0 0; font-size: 14px; line-height: 1.45; color: var(--white); }
+@media (max-width: 640px) { .deal-facts { grid-template-columns: minmax(0, 1fr); } }
 
 /* list of deals */
 .deal-list {
@@ -318,7 +340,9 @@
 .nd-card.is-active .nd-local { color: rgba(255, 255, 255, 0.8); }
 .nd-card.is-active .nd-go { color: var(--white); gap: 12px; }
 
-.network-logo { margin-top: 34px; height: 68px; width: auto; opacity: 0.95; }
+/* Lex Mundi logo: sits in the third slot, beside the desks */
+.nd-logo { display: flex; align-items: center; justify-content: center; padding: 8px; }
+.network-logo { display: block; width: 100%; max-width: 172px; height: auto; opacity: 0.95; }
 
 .network-globe {
   position: relative;
@@ -355,6 +379,7 @@
   border: 1.5px solid var(--red);
   box-shadow: var(--shadow-sm);
 }
+
 
 /* ---------- Awards (dark, engraved, foil) ---------- */
 .awards {
@@ -538,6 +563,8 @@
   .network-stats li + li { padding-left: 12px; }
   .nd-cards { grid-template-columns: 1fr; }
   .nd-card { min-height: 0; }
+  .nd-logo { justify-content: flex-start; padding: 6px 0 0; }
+  .network-logo { max-width: 150px; }
   .ns-label { font-size: 11px; letter-spacing: 0.06em; }
 }
 

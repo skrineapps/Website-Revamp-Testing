@@ -1,7 +1,7 @@
 /* =========================================================
    SKRINE — link people's names to their page
-   Needs js/people-data.js. Used by alerts, publications, news & events,
-   SkrineShots and the full article pages.
+   Needs js/people-data.js. Used by alerts, publications, news & events
+   and the full article pages.
    - Partners and consultants → their profile (profile.html?p=<slug>)
    - Other Skrine lawyers     → the People page, filtered to them (people.html?q=<name>)
    - Anyone else (e.g. co-authors from other firms) stays plain text

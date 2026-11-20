@@ -20,30 +20,36 @@
       // sources: ITR World Tax, Skrine (Malaysia) firm review — https://www.internationaltaxreview.com/itrworldtax/firms/skrine-malaysia
       // and Nimalan Devaraja's skrine.com profile (reported case: The Customs and Tax Administration of The Kingdom of Denmark v Timothy Paul Murphy [2022] MLJU 2956)
       sector: "Tax · Dispute Resolution",
+      practice: "Tax and Revenue Disputes · Fraud and Asset Recovery",
+      valueLabel: "Claim value",
       num: "RM1", unit: "bn",
       label: "sought in civil recovery suits in Malaysia",
       headline: "Skrine leads Denmark's tax authority in civil suits to recover approximately RM1 billion",
       summary: "Skrine acted as lead counsel for the Customs and Tax Administration of the Kingdom of Denmark, plaintiff in civil suits against multiple Malaysian entities and related individuals, and successfully resisted an application to set aside service of the writ out of jurisdiction.",
       team: "Preetha Pillai · Nimalan Devaraja",
-      date: "Cross-border recovery",
+      date: "",
       img: "../new%20design/images/practice/fraud-and-asset-recovery.jpg"
     },
     {
-      // source: https://www.skrine.com/insights/alerts/november-2026/transaction-news-skrine-advises-totalenergies-on-i
+      // source: https://www.skrine.com/insights/alerts/june-2026/transaction-news-skrine-advises-enquest-plc-on-its
       sector: "Oil & Gas · Energy",
-      num: "6.5", unit: "tcf",
-      label: "more than 6.5 trillion cubic feet of gas resources across the Lang Lebah and B14 fields",
-      headline: "TotalEnergies acquires a 30% operated interest in the Lang Lebah and B14 gas fields offshore Sarawak",
-      summary: "Skrine acted as Malaysian legal counsel to TotalEnergies on its arrangements with PETRONAS Carigali, PTTEP and KUFPEC. Lang Lebah is one of Malaysia's largest offshore gas discoveries.",
-      team: "Fariz Abdul Aziz · Samson Kong",
-      date: "06 Nov 2026",
+      practice: "Oil & Gas, and Energy · Mergers & Acquisitions",
+      valueLabel: "Deal value",
+      num: "US$833", unit: "m",
+      label: "aggregate consideration (approximately RM3.38 billion)",
+      headline: "EnQuest acquires interests in four offshore production sharing contracts from PETRONAS",
+      summary: "Skrine acted as Malaysian legal counsel to London-listed EnQuest PLC on all Malaysian law aspects of the acquisition, including the upstream regulatory and PSC framework, operatorship and assignment arrangements, and completion mechanics.",
+      team: "Fariz Abdul Aziz · Tan Wei Xian · Samson Kong · Siti Sarah Iskandar",
+      date: "11 Jun 2026",
       img: "../new%20design/images/sectors/oil-and-gas-and-energy.jpg"
     },
     {
       // source: https://www.skrine.com/insights/alerts/november-2026/transaction-news-ame-elite-enters-into-joint-ventu
       sector: "Real Estate · Industrial",
+      practice: "Corporate Advisory and Transactions · Real Estate Transactions",
+      valueLabel: "Gross development value",
       num: "RM4.0", unit: "bn",
-      label: "estimated gross development value",
+      label: "estimated, across 402.1 acres of freehold industrial land",
       headline: "AME Elite and UEM Sunrise form a joint venture for an industrial development in the Johor-Singapore Special Economic Zone",
       summary: "Skrine acted as legal counsel to AME Development on the 50:50 joint venture to develop 402.1 acres of freehold industrial land in Gerbang Nusajaya, Iskandar Puteri.",
       team: "Sheba Gumis · Jesy Ooi · Engy Tan",
@@ -52,7 +58,9 @@
     },
     {
       // source: https://www.skrine.com/insights/alerts/july-2026/transaction-news-airtrunk-secures-us2-325-billion
-      sector: "Banking & Finance · Data Centres",
+      sector: "Data Centres · Infrastructure",
+      practice: "Loan Financing and Restructuring",
+      valueLabel: "Financing value",
       num: "US$2.325", unit: "bn",
       label: "green financing from 30 financial institutions",
       headline: "AirTrunk secures the largest green project financing for a single data centre in Malaysia",
@@ -63,7 +71,9 @@
     },
     {
       // source: https://www.skrine.com/insights/alerts/august-2026/transaction-news-thermo-fisher-sells-microbiology
-      sector: "Corporate / M&A · Healthcare",
+      sector: "Healthcare · Life Sciences",
+      practice: "Mergers & Acquisitions",
+      valueLabel: "Deal value",
       num: "US$1.08", unit: "bn",
       label: "sale of Thermo Fisher's microbiology business",
       headline: "Thermo Fisher sells its microbiology business to private equity firm Astorg",
@@ -73,19 +83,23 @@
       img: "../new%20design/images/sectors/healthcare-biotechnology-and-pharmaceuticals.jpg"
     },
     {
-      // source: https://www.skrine.com/insights/alerts/august-2026/transaction-news-allianz-to-acquire-uob-asset-mana
-      sector: "Corporate / M&A · Asset Management",
-      num: "8", unit: "jurisdictions",
-      label: "in one regional acquisition",
-      headline: "Allianz Global Investors to acquire UOB Asset Management's operations across Asia",
-      summary: "Skrine, as part of the global team led by Freshfields, advised AllianzGI on the Malaysian law and regulatory aspects, including due diligence and regulatory approvals.",
-      team: "To' Puan Janet Looi · Tan Wei Xian",
-      date: "11 Aug 2026",
-      img: "../new%20design/images/sectors/financial-institutions.jpg"
+      // source: https://www.skrine.com/insights/alerts/july-2026/transaction-news-sitime-corporation-acquires-timin
+      sector: "Technology · Semiconductors",
+      practice: "Mergers & Acquisitions · Intellectual Property",
+      valueLabel: "Deal value",
+      num: "US$3.0", unit: "bn",
+      label: "global acquisition of Renesas' timing business",
+      headline: "NASDAQ-listed SiTime acquires the timing business assets of Renesas",
+      summary: "Skrine acted as Malaysian local counsel, supporting Cooley LLP, for SiTime Corporation on its acquisition of certain assets of Renesas Electronics' timing business, with IP advice on the Malaysian assets.",
+      team: "Sheba Gumis · Francine Ariel Paul · Alyshea Low Khye Lyn",
+      date: "06 Jul 2026",
+      img: "../new%20design/images/practice/intellectual-property-and-tmt.jpg"
     },
     {
       // source: https://www.skrine.com/insights/alerts/july-2026/transaction-news-carlsberg-and-sapporo-to-form-str
-      sector: "Corporate / M&A · Consumer",
+      sector: "Consumer · Food & Beverage",
+      practice: "Mergers & Acquisitions · Corporate Advisory and Transactions",
+      valueLabel: "Deal value",
       num: "US$643", unit: "m",
       label: "for Sapporo's 25% stake in the regional joint venture",
       headline: "Carlsberg and Sapporo form a strategic partnership across Southeast Asia and Hong Kong",
@@ -125,8 +139,11 @@
         q(".deal-figure-label").textContent = d.label;
         q(".deal-headline").textContent = d.headline;
         q(".deal-summary").textContent = d.summary;
+        q(".deal-value-label").textContent = d.valueLabel || "Deal value";
+        q(".deal-practice").textContent = d.practice || d.sector;
         q(".deal-team").textContent = d.team;
-        q("time").textContent = d.date;
+        q("time").textContent = d.date || "";
+        q("time").hidden = !d.date;
         content.classList.remove("is-leaving");
       }, reduceMotion ? 0 : 260);
       tabs.forEach(function (t, k) {
@@ -293,8 +310,7 @@
     // The globe turns to show KL and the active desk together.
     var DESKS = {
       china: { pos: fromLatLon(31.23, 121.47) },  // Shanghai
-      india: { pos: fromLatLon(19.08, 72.88) },   // Mumbai
-      mena:  { pos: fromLatLon(25.2, 55.27) }     // Dubai
+      india: { pos: fromLatLon(19.08, 72.88) }    // Mumbai
     };
     Object.keys(DESKS).forEach(function (k) {
       var d = DESKS[k], p = d.pos;
