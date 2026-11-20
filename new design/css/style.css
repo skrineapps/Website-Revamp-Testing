@@ -1488,8 +1488,11 @@ main {
 .layout-switch a:hover { color: #fff; }
 .design-switch a[aria-current],
 .layout-switch a[aria-current] { background: var(--red); color: #fff; }
-@media (max-width: 480px) {
-  .design-switch a { padding: 8px 11px; font-size: 12px; }
+/* six designs: on narrower screens the pill shows just the numbers */
+@media (max-width: 1100px) {
+  .design-switch::before { content: "Design"; padding: 0 4px 0 12px; font: 700 11px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.55); }
+  .design-switch .ds-word { display: none; }
+  .design-switch a { min-width: 34px; padding: 6px 12px; text-align: center; }
 }
 @media print { .design-switch, .layout-switch { display: none; } }
 

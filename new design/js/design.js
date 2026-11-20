@@ -2,12 +2,14 @@
    SKRINE — Design switch (review aid)
    Loaded in <head> on every page, before anything is drawn.
 
-   The site has four looks. Pick one on any page (the "Design" pill,
+   The site has six looks. Pick one on any page (the "Design" pill,
    bottom right) and every page after that uses it:
      Design 1  the current painted look (no extra class)
      Design 2  ribbons        html.skin-2.themed
      Design 3  artistic       html.skin-3.themed
      Design 4  songket        html.skin-4.themed
+     Design 5  steps          html.skin-5.themed  (Batu Caves stairs)
+     Design 6  peaks          html.skin-6.themed  (misty karst mountains)
    The looks live in css/themes.css; every page keeps one copy of its markup.
 
    - ?design=N in the address picks a look; the choice is remembered for
@@ -19,7 +21,7 @@
    ========================================================= */
 (function () {
   var KEY = "skrine-design";
-  var SKINS = ["1", "2", "3", "4"];
+  var SKINS = ["1", "2", "3", "4", "5", "6"];
   var html = document.documentElement;
   var params = new URLSearchParams(location.search);
   var asked = params.get("design");
@@ -61,7 +63,8 @@
     nav.setAttribute("aria-label", "Site design");
     SKINS.forEach(function (s) {
       var a = document.createElement("a");
-      a.textContent = "Design " + s;
+      a.innerHTML = '<span class="ds-word">Design </span>' + s;
+      a.setAttribute("aria-label", "Design " + s);
       if (s === skin) a.setAttribute("aria-current", "true");
       live(a, here, s);
       nav.appendChild(a);
