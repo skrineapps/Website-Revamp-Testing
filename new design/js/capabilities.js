@@ -1,14 +1,22 @@
 /* =========================================================
    SKRINE — Capabilities: practice areas
-   - capabilities.html: grid of practice areas; clicking one opens a
-     preview panel in place (overview, related capabilities preview, team)
+   - capabilities.html (Design 1): grid of practice areas; clicking one opens a
+     two-column panel (write-up, related, deals & transactions, team carousel)
+   - capabilities-classic.html (Design 2): the original preview panel
+     (overview, related capabilities preview, team)
    - practice-area.html?area=<slug>: full practice area page with every
      related capability
    - sectors.html / sector.html?sector=<slug>: sectors grid and sector page
-   Data: js/practice-data.js (practice areas), js/people-data.js (photos)
+   Data: js/practice-data.js (practice areas), js/people-data.js (photos),
+         js/practice-deals.js (Design 1 deals, from skrine.com Transaction News)
    ========================================================= */
 (function () {
   "use strict";
+
+  // review aid: switching designs keeps the open practice area (#slug)
+  document.querySelectorAll("[data-switch]").forEach(function (a) {
+    a.addEventListener("click", function () { a.href = a.getAttribute("href").split("#")[0] + location.hash; });
+  });
 
   var AREAS = window.SKRINE_PRACTICES || [];
   var PEOPLE = window.SKRINE_PEOPLE || {};
@@ -94,6 +102,240 @@
   }
 
   /* =========================================================
+     Design 1 building blocks: deals strip + team carousel
+     ========================================================= */
+  var DESIGN = (document.querySelector("[data-design]") || { getAttribute: function () { return ""; } }).getAttribute("data-design");
+  var DEALS = window.SKRINE_PRACTICE_DEALS || [];
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function monthYear(iso) { var p = (iso || "").split("-"); return p.length > 1 ? MONTHS[+p[1] - 1] + " " + p[0] : ""; }
+
+  // rough US$ millions, only to pick the largest deal for the feature card
+  var FX_USD = { "US$": 1, "USD": 1, "RM": 0.22, "A$": 0.66, "S$": 0.74 };
+  function usdMillions(v) {
+    if (!v) return 0;
+    var m = String(v.num).match(/^([A-Z]*\$?)([\d.,]+)/);
+    if (!m) return 0;
+    var n = parseFloat(m[2].replace(/,/g, "")) * (v.unit === "bn" ? 1000 : 1);
+    return n * (FX_USD[m[1]] || 1);
+  }
+
+  // partners and consultants have a profile page; everyone else opens the People page filtered to them
+  var PROFILE_ROLES = {};
+  ["partners", "consultants"].forEach(function (r) { (PEOPLE[r] || []).forEach(function (p) { PROFILE_ROLES[norm(p.name)] = 1; }); });
+  function personHref(name) {
+    if (PROFILE_ROLES[norm(name)]) {
+      return "profile.html?p=" + name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+    return "people.html?q=" + encodeURIComponent(name);
+  }
+
+  // figures count up from zero when the panel opens
+  function countUp(node, target) {
+    var m = String(target).match(/^(\D*)([\d.,]+)$/);
+    if (!m || reduceMotion) { node.textContent = target; return; }
+    var prefix = m[1], num = parseFloat(m[2].replace(/,/g, "")), dec = (m[2].split(".")[1] || "").length;
+    var start = null, DUR = 1300;
+    function step(t) {
+      if (start === null) start = t;
+      var p = Math.min((t - start) / DUR, 1), e = 1 - Math.pow(1 - p, 3);
+      node.textContent = prefix + (num * e).toFixed(dec);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    node.textContent = prefix + (0).toFixed(dec);
+    requestAnimationFrame(step);
+  }
+
+  /* A horizontal rail: native scrolling (wheel, trackpad, touch), drag with the
+     mouse, arrow buttons, and optionally moving on its own until someone touches it. */
+  function makeRail(track, prev, next, auto) {
+    function step() { var item = track.firstElementChild; return item ? item.getBoundingClientRect().width + 14 : 240; }
+    function atEnd() { return track.scrollLeft + track.clientWidth >= track.scrollWidth - 4; }
+    function sync() {
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = atEnd();
+    }
+    prev.addEventListener("click", function () { hold(); track.scrollBy({ left: -step() * 2, behavior: "smooth" }); });
+    next.addEventListener("click", function () { hold(); track.scrollBy({ left: step() * 2, behavior: "smooth" }); });
+    track.addEventListener("scroll", sync, { passive: true });
+
+    // drag with a mouse (touch and trackpads scroll natively)
+    var down = null, moved = false;
+    track.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "mouse") return;
+      down = { x: e.clientX, left: track.scrollLeft };
+      moved = false;
+      hold();
+    });
+    function onMove(e) {
+      if (!down) return;
+      var dx = e.clientX - down.x;
+      if (Math.abs(dx) > 4) { moved = true; track.classList.add("is-dragging"); }
+      track.scrollLeft = down.left - dx;
+    }
+    function onUp() {
+      if (!down) return;
+      down = null;
+      track.classList.remove("is-dragging");
+    }
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    // a drag shouldn't also count as a click on a card
+    track.addEventListener("click", function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+    // moving on its own: pauses while hovered, focused or touched, resumes after a moment
+    var timer = null, paused = false, resumeAt = 0;
+    function hold() { resumeAt = Date.now() + 5000; }
+    ["pointerenter", "focusin", "touchstart", "wheel"].forEach(function (ev) {
+      track.addEventListener(ev, function () { paused = true; hold(); }, { passive: true });
+    });
+    ["pointerleave", "focusout"].forEach(function (ev) { track.addEventListener(ev, function () { paused = false; hold(); }); });
+    if (auto && !reduceMotion) {
+      timer = setInterval(function () {
+        if (paused || Date.now() < resumeAt || track.scrollWidth <= track.clientWidth) return;
+        if (atEnd()) track.scrollTo({ left: 0, behavior: "smooth" });
+        else track.scrollBy({ left: step(), behavior: "smooth" });
+      }, 2600);
+    }
+    requestAnimationFrame(sync);
+    return function stop() {
+      clearInterval(timer);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+  }
+
+  function railHead(label, count, sub) {
+    var head = el("div", "pv-head");
+    var t = el("div", "pv-head-text");
+    var h = el("h3", "pv-label", label);
+    if (count) h.appendChild(el("span", "pv-count", String(count)));
+    t.appendChild(h);
+    if (sub) { var s = el("p", "pv-sub"); s.innerHTML = sub; t.appendChild(s); }
+    head.appendChild(t);
+    var nav = el("div", "pv-arrows");
+    var prev = el("button", "pv-arrow");
+    prev.type = "button";
+    prev.setAttribute("aria-label", "Previous");
+    prev.innerHTML = '<i class="fa-solid fa-chevron-left" aria-hidden="true"></i>';
+    var next = el("button", "pv-arrow");
+    next.type = "button";
+    next.setAttribute("aria-label", "Next");
+    next.innerHTML = '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>';
+    nav.appendChild(prev);
+    nav.appendChild(next);
+    head.appendChild(nav);
+    return { el: head, prev: prev, next: next };
+  }
+
+  function dealFigure(v, cls) {
+    var fig = el("p", cls);
+    var num = el("span", "pv-num", v.num);
+    fig.appendChild(num);
+    fig.appendChild(el("span", "pv-unit", v.unit));
+    return { el: fig, num: num };
+  }
+
+  function dealsBlock(deals) {
+    var sec = el("section", "pv-deals");
+    var biggest = deals.reduce(function (b, d) { return usdMillions(d.value) > usdMillions(b && b.value) ? d : b; }, null);
+    var since = deals.reduce(function (y, d) { return Math.min(y, +d.date.slice(0, 4)); }, 9999);
+    var counters = [];
+
+    var head = el("div", "pv-head");
+    var ht = el("div", "pv-head-text");
+    ht.appendChild(el("h3", "pv-label", "Deals & Transactions"));
+    var sub = el("p", "pv-sub");
+    sub.innerHTML = "<b>" + deals.length + "</b> " + (deals.length === 1 ? "transaction" : "transactions") + " announced since " + since;
+    ht.appendChild(sub);
+    head.appendChild(ht);
+    sec.appendChild(head);
+
+    // feature: the largest deal this team has announced
+    var rest = deals.slice().sort(function (a, b) { return b.date.localeCompare(a.date); });
+    if (biggest && biggest.value) {
+      var ft = el("a", "pv-feature");
+      ft.href = biggest.url;
+      ft.target = "_blank";
+      ft.rel = "noopener";
+      ft.setAttribute("aria-label", "Largest mandate: " + biggest.title + ", " + biggest.value.num + biggest.value.unit + " (opens skrine.com)");
+      ft.appendChild(el("span", "pv-feature-tag", "Largest mandate · " + monthYear(biggest.date)));
+      var fig = dealFigure(biggest.value, "pv-feature-fig");
+      counters.push([fig.num, biggest.value.num]);
+      ft.appendChild(fig.el);
+      ft.appendChild(el("p", "pv-feature-what", biggest.value.label));
+      ft.appendChild(el("p", "pv-feature-title", biggest.title));
+      var ff = el("p", "pv-feature-foot");
+      ff.appendChild(el("span", null, biggest.team.slice(0, 3).join(" · ") + (biggest.team.length > 3 ? " +" + (biggest.team.length - 3) : "")));
+      ff.insertAdjacentHTML("beforeend", '<i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>');
+      ft.appendChild(ff);
+      sec.appendChild(ft);
+      rest = rest.filter(function (d) { return d !== biggest; });
+    }
+
+    // ledger: every other deal, newest first, scrolls inside its box
+    if (rest.length) {
+      var ledger = el("ol", "pv-ledger");
+      ledger.setAttribute("aria-label", "More deals and transactions");
+      rest.forEach(function (d, i) {
+        var li = el("li");
+        li.style.setProperty("--i", Math.min(i, 8));
+        var a = el("a", "pv-row");
+        a.href = d.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.setAttribute("aria-label", d.title + (d.value ? ", " + d.value.num + d.value.unit : "") + ", " + monthYear(d.date) + " (opens skrine.com)");
+        if (d.value) {
+          var rf = dealFigure(d.value, "pv-row-fig");
+          if (i < 6) counters.push([rf.num, d.value.num]);
+          a.appendChild(rf.el);
+        } else {
+          a.appendChild(el("p", "pv-row-fig pv-row-fig--none", "Undisclosed"));
+        }
+        var txt = el("span", "pv-row-text");
+        txt.appendChild(el("span", "pv-row-title", d.title));
+        txt.appendChild(el("span", "pv-row-meta", monthYear(d.date) + "  ·  " + d.team.slice(0, 2).join(", ") + (d.team.length > 2 ? " +" + (d.team.length - 2) : "")));
+        a.appendChild(txt);
+        a.insertAdjacentHTML("beforeend", '<i class="fa-solid fa-arrow-up-right-from-square pv-row-go" aria-hidden="true"></i>');
+        li.appendChild(a);
+        ledger.appendChild(li);
+      });
+      var wrap = el("div", "pv-ledger-wrap");
+      wrap.appendChild(ledger);
+      sec.appendChild(wrap);
+      // the fade shows only while there's more to scroll
+      var syncFade = function () { wrap.classList.toggle("has-more", ledger.scrollTop + ledger.clientHeight < ledger.scrollHeight - 4); };
+      ledger.addEventListener("scroll", syncFade, { passive: true });
+      requestAnimationFrame(syncFade);
+    }
+
+    requestAnimationFrame(function () { counters.forEach(function (c) { countUp(c[0], c[1]); }); });
+    return { el: sec, stop: function () {} };
+  }
+
+  function teamCarousel(team) {
+    var sec = el("section", "pv-team");
+    var head = railHead("Team Members", team.length);
+    sec.appendChild(head.el);
+    var track = el("ul", "pv-track pv-team-track");
+    track.setAttribute("aria-label", "Team members");
+    team.forEach(function (m) {
+      var li = el("li");
+      var a = el("a", "pv-member");
+      a.href = personHref(m.name);
+      a.appendChild(avatar(m, "lg"));
+      var txt = el("span", "pv-member-text");
+      txt.appendChild(el("span", "pv-member-name", m.name));
+      txt.appendChild(el("span", "pv-member-role", m.role));
+      a.appendChild(txt);
+      li.appendChild(a);
+      track.appendChild(li);
+    });
+    sec.appendChild(track);
+    return { el: sec, stop: makeRail(track, head.prev, head.next, true) };
+  }
+
+  /* =========================================================
      Practice areas grid + in-place preview panel
      ========================================================= */
   var grid = document.getElementById("paGrid");
@@ -139,6 +381,7 @@
     }
 
     function fillPanel(area) {
+      if (DESIGN === "1") { fillPanelV1(area); return; }
       panel.textContent = "";
       panel.setAttribute("aria-labelledby", "panelTitle");
 
@@ -197,8 +440,113 @@
       panel.appendChild(card);
     }
 
+    /* ---------- Design 1 panel (capabilities.html) ----------
+       banner with the title · write-up cut to three lines with "Show more" ·
+       related capabilities · deals & transactions (js/practice-deals.js) ·
+       team carousel that moves on its own and can be dragged or scrolled */
+    var stopPanel = function () {};
+    var V1_RELATED = 4;   // related capabilities in the Design 1 panel before "View all"
+
+    function fillPanelV1(area) {
+      stopPanel();
+      panel.textContent = "";
+      panel.setAttribute("aria-labelledby", "panelTitle");
+      var deals = DEALS.filter(function (d) { return d.areas.indexOf(area.slug) > -1; });
+      var card = el("div", "pa-panel-card pv-card" + (deals.length ? "" : " pv-card--nodeals"));
+
+      var close = el("button", "pa-panel-close");
+      close.type = "button";
+      close.setAttribute("aria-label", "Close " + area.title);
+      close.innerHTML = '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+      close.addEventListener("click", function () { toggle(openIndex, true); });
+      card.appendChild(close);
+
+      var grid = el("div", "pv-grid");
+
+      // left: photo + title, write-up, Explore, related capabilities
+      var left = el("div", "pv-left");
+      var top = banner(area);
+      top.classList.add("pv-banner");
+      var h = el("h2", "pv-title", area.title);
+      h.id = "panelTitle";
+      top.appendChild(h);
+      if (area.team.length) top.appendChild(el("span", "pv-banner-meta", area.team.length + " lawyers" + (deals.length ? "  ·  " + deals.length + " deals" : "")));
+      left.appendChild(top);
+
+      var text = el("div", "pv-text");
+      text.id = "pvText";
+      area.desc.forEach(function (p) { text.appendChild(el("p", null, p)); });
+      left.appendChild(text);
+      var actions = el("div", "pv-intro-actions");
+      var go = el("a", "btn btn--solid pv-explore");
+      go.href = areaUrl(area.slug);
+      go.innerHTML = "Explore " + area.title + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+      actions.appendChild(go);
+      var more = el("button", "pv-more", "Show more");
+      more.type = "button";
+      more.setAttribute("aria-expanded", "false");
+      more.setAttribute("aria-controls", "pvText");
+      more.addEventListener("click", function () {
+        var open = text.classList.toggle("is-open");
+        more.textContent = open ? "Show less" : "Show more";
+        more.setAttribute("aria-expanded", String(open));
+      });
+      actions.appendChild(more);
+      left.appendChild(actions);
+
+      var related = null;
+      var lim = deals.length ? V1_RELATED : 12;
+      if (area.related.length) {
+        related = el("div", "pv-related");
+        related.appendChild(el("h3", "pv-label", "Related Capabilities"));
+        var ul = el("ul", "pv-chips");
+        area.related.slice(0, lim).forEach(function (r) {
+          var li = el("li");
+          var a = el("a", "pv-chip", r.name);
+          a.href = areaUrl(area.slug, "rel-" + r.slug);
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        related.appendChild(ul);
+        if (area.related.length > lim) {
+          var all = el("a", "pa-view-all");
+          all.href = areaUrl(area.slug, "related");
+          all.innerHTML = "View all " + area.related.length + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+          related.appendChild(all);
+        }
+      }
+
+      var stops = [];
+      grid.appendChild(left);
+      // right: deals (or, with no deals, the related capabilities)
+      var right = el("div", "pv-right");
+      if (deals.length) {
+        var dl = dealsBlock(deals);
+        right.appendChild(dl.el);
+        stops.push(dl.stop);
+        if (related) left.appendChild(related);
+      } else if (related) {
+        right.appendChild(related);
+      }
+      grid.appendChild(right);
+      card.appendChild(grid);
+
+      if (area.team.length) {
+        var tc = teamCarousel(area.team);
+        card.appendChild(tc.el);
+        stops.push(tc.stop);
+      }
+      panel.appendChild(card);
+
+      requestAnimationFrame(function () {
+        if (text.scrollHeight <= text.clientHeight + 2) more.hidden = true;
+      });
+      stopPanel = function () { stops.forEach(function (fn) { fn(); }); stopPanel = function () {}; };
+    }
+
     function toggle(i, fromUser) {
       var closing = i === openIndex;
+      if (DESIGN === "1") stopPanel();
       if (openIndex > -1) {
         tiles[openIndex].btn.setAttribute("aria-expanded", "false");
         tiles[openIndex].btn.classList.remove("is-active");

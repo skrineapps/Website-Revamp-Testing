@@ -12,6 +12,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/capabilities.css">
+  <link rel="stylesheet" href="css/capabilities-d1.css">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -85,7 +86,7 @@
     </form>
   </header>
 
-  <main class="cap-page page-main">
+  <main class="cap-page page-main" data-design="1">
     <header class="page-head reveal">
       <p class="eyebrow">Capabilities</p>
       <h1 class="page-title">Practice Areas</h1>
@@ -96,6 +97,12 @@
     <div class="pa-grid" id="paGrid" role="list"></div>
     <noscript><p class="page-intro">Please enable JavaScript to view the practice areas.</p></noscript>
   </main>
+
+  <!-- review aid: flip between the two practice area designs -->
+  <nav class="design-switch" aria-label="Practice areas design">
+    <a href="capabilities.html" data-switch aria-current="page">Design 1</a>
+    <a href="capabilities-classic.html" data-switch>Design 2</a>
+  </nav>
 
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
@@ -122,6 +129,7 @@
   <script src="js/main.js"></script>
   <script src="js/people-data.js"></script>
   <script src="js/practice-data.js"></script>
+  <script src="js/practice-deals.js"></script>
   <script src="js/capabilities.js"></script>
 </body>
 </html>
