@@ -12,6 +12,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/people.css">
+  <link rel="stylesheet" href="css/people-d1.css">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -86,7 +87,7 @@
     </form>
   </header>
 
-  <main class="people-page page-main">
+  <main class="people-page people-page--d1 page-main">
 
     <header class="page-head reveal">
       <p class="eyebrow">Our People</p>
@@ -94,75 +95,76 @@
       <p class="page-intro">Gain access to decades of legal experience and a team dedicated to achieving the best outcomes for your business.</p>
     </header>
 
-    <div class="people-layout">
+    <!-- ===== Search + filters: one bar across the top ===== -->
+    <div class="pd-toolbar reveal" id="filtersPanel" role="search" aria-label="Search and filter people">
+      <label class="people-search pd-search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input type="search" id="peopleSearch" placeholder="Search by name, practice area, sector, qualification…" aria-label="Search people by name, practice area, sector, qualification or affiliation" autocomplete="off">
+      </label>
 
-      <!-- ===== Sidebar: search + filters ===== -->
-      <aside class="people-sidebar" id="peopleSidebar" aria-label="Search and filter people">
-        <label class="people-search">
-          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-          <input type="search" id="peopleSearch" placeholder="Search" aria-label="Search people by name or practice area" autocomplete="off">
-        </label>
-
-        <button class="filters-toggle" id="filtersToggle" aria-expanded="false" aria-controls="filtersPanel">
-          <i class="fa-solid fa-sliders"></i> Filters <span class="filters-count" id="filtersCount" hidden></span>
+      <div class="pd-drop" data-drop>
+        <button type="button" class="pd-drop-btn" aria-expanded="false" aria-controls="practiceMenu">
+          <span>Practice Area</span> <span class="pd-drop-count" hidden></span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
         </button>
-
-        <div class="filters-panel" id="filtersPanel">
-          <fieldset class="filter-group">
-            <legend>Practice Areas</legend>
-            <div class="filter-options" id="practiceFilters"></div>
-          </fieldset>
-
-          <fieldset class="filter-group">
-            <legend>Sector</legend>
-            <div class="filter-options" id="industryFilters"></div>
-          </fieldset>
-
-          <button class="filters-clear" id="filtersClear" type="button" hidden>
-            <i class="fa-solid fa-xmark"></i> Clear filters
-          </button>
+        <div class="pd-drop-menu" id="practiceMenu" hidden>
+          <div class="filter-options" id="practiceFilters"></div>
         </div>
-      </aside>
-
-      <!-- ===== Directory ===== -->
-      <div class="people-main">
-        <nav class="role-tabs" aria-label="Filter by role" id="roleTabs">
-          <button type="button" data-role="partners" aria-pressed="false">Partners</button>
-          <button type="button" data-role="consultants" aria-pressed="false">Consultants</button>
-          <button type="button" data-role="seniorAssociates" aria-pressed="false">Senior Associates</button>
-          <button type="button" data-role="associates" aria-pressed="false">Associates</button>
-        </nav>
-
-        <p class="results-line" id="resultsLine" aria-live="polite"></p>
-
-        <section class="people-group" id="group-partners" data-role="partners">
-          <h2 class="group-title">Partners</h2>
-          <div class="photo-grid" id="grid-partners"></div>
-        </section>
-
-        <section class="people-group" id="group-consultants" data-role="consultants">
-          <h2 class="group-title">Consultants</h2>
-          <div class="photo-grid photo-grid--consultants" id="grid-consultants"></div>
-        </section>
-
-        <section class="people-group" id="group-seniorAssociates" data-role="seniorAssociates">
-          <h2 class="group-title">Senior Associates</h2>
-          <div class="mini-grid" id="grid-seniorAssociates"></div>
-        </section>
-
-        <section class="people-group" id="group-associates" data-role="associates">
-          <h2 class="group-title">Associates</h2>
-          <div class="mini-grid" id="grid-associates"></div>
-        </section>
-
-        <div class="people-empty" id="peopleEmpty" hidden>
-          <i class="fa-regular fa-face-meh"></i>
-          <p>No one matches your search.</p>
-          <button type="button" class="btn btn--outline" id="emptyReset">Reset search &amp; filters</button>
-        </div>
-
-        <noscript><p class="people-empty">Please enable JavaScript to view the people directory.</p></noscript>
       </div>
+
+      <div class="pd-drop" data-drop>
+        <button type="button" class="pd-drop-btn" aria-expanded="false" aria-controls="sectorMenu">
+          <span>Sector</span> <span class="pd-drop-count" hidden></span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="pd-drop-menu" id="sectorMenu" hidden>
+          <div class="filter-options" id="industryFilters"></div>
+        </div>
+      </div>
+
+      <button class="filters-clear pd-clear" id="filtersClear" type="button" hidden>
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i> Clear
+      </button>
+    </div>
+
+    <!-- ===== Directory ===== -->
+    <div class="people-main">
+      <nav class="role-tabs" aria-label="Choose a group" id="roleTabs">
+        <button type="button" data-role="partners" aria-pressed="true">Partners</button>
+        <button type="button" data-role="consultants" aria-pressed="false">Consultants</button>
+        <button type="button" data-role="seniorAssociates" aria-pressed="false">Senior Associates</button>
+        <button type="button" data-role="associates" aria-pressed="false">Associates</button>
+      </nav>
+
+      <p class="results-line" id="resultsLine" aria-live="polite"></p>
+
+      <section class="people-group" id="group-partners" data-role="partners">
+        <h2 class="group-title">Partners</h2>
+        <div class="photo-grid" id="grid-partners"></div>
+      </section>
+
+      <section class="people-group" id="group-consultants" data-role="consultants">
+        <h2 class="group-title">Consultants</h2>
+        <div class="photo-grid photo-grid--consultants" id="grid-consultants"></div>
+      </section>
+
+      <section class="people-group" id="group-seniorAssociates" data-role="seniorAssociates">
+        <h2 class="group-title">Senior Associates</h2>
+        <div class="mini-grid" id="grid-seniorAssociates"></div>
+      </section>
+
+      <section class="people-group" id="group-associates" data-role="associates">
+        <h2 class="group-title">Associates</h2>
+        <div class="mini-grid" id="grid-associates"></div>
+      </section>
+
+      <div class="people-empty" id="peopleEmpty" hidden>
+        <i class="fa-regular fa-face-meh"></i>
+        <p>No one matches your search.</p>
+        <button type="button" class="btn btn--outline" id="emptyReset">Reset search &amp; filters</button>
+      </div>
+
+      <noscript><p class="people-empty">Please enable JavaScript to view the people directory.</p></noscript>
     </div>
   </main>
 
@@ -182,6 +184,12 @@
       </footer>
     </div>
   </dialog>
+
+  <!-- review aid: flip between the two People designs -->
+  <nav class="design-switch" aria-label="People page design">
+    <a href="people.html" data-switch aria-current="page">Design 1</a>
+    <a href="people-classic.html" data-switch>Design 2</a>
+  </nav>
 
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">

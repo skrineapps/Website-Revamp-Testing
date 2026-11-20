@@ -346,10 +346,10 @@
 
 .network-globe {
   position: relative;
-  /* larger than its column: it may sit slightly behind the text */
-  width: 122%;
-  max-width: 740px;
-  margin-left: -16%;
+  /* a little larger than its column, with a small gap after the text */
+  width: 116%;
+  max-width: 720px;
+  margin-left: 0;
   justify-self: center;
   aspect-ratio: 1;
   z-index: 0;

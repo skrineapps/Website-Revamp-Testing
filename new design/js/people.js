@@ -1,13 +1,23 @@
 /* =========================================================
-   SKRINE — People directory
-   Renders the people in people-data.js and handles
-   search, role buttons and practice/industry filters.
+   SKRINE — People directory (Design 1: filter bar on top)
+   Renders the people in people-data.js, with practice areas
+   from profiles-data.js (taken from each skrine.com profile).
+   - opens on Partners; the role buttons switch group
+   - one search box covers names, practice areas, sectors,
+     qualifications, affiliations and profile text, across everyone
+   - Practice Area and Sector dropdowns narrow the list
+   - partner cards turn over slowly on hover to show practice areas
+   Design 2 (sidebar filters) is people-classic.html + js/people-classic.js.
    ========================================================= */
 (function () {
   "use strict";
 
+  // review aid: keep ?q= etc. when switching designs
+  document.querySelectorAll("[data-switch]").forEach(function (a) { a.href = a.getAttribute("href") + location.search; });
+
   var DATA = window.SKRINE_PEOPLE;
   if (!DATA) return;
+  var PROFILES = window.SKRINE_PROFILES || {};
 
   var FX = window.SkrineFX || { observeReveal: function (el) { el.classList.add("is-visible"); }, attachTilt: function () {} };
   var ROLES = ["partners", "consultants", "seniorAssociates", "associates"];
@@ -16,8 +26,10 @@
   // a file name in that folder, or a full URL (WordPress media library)
   function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
   var ROLE_LABEL = { partners: "Partner", consultants: "Consultant", seniorAssociates: "Senior Associate", associates: "Associate" };
+  var ROLE_PLURAL = { partners: "partners", consultants: "consultants", seniorAssociates: "senior associates", associates: "associates" };
+  var DEFAULT_ROLE = "partners";
 
-  /* Each filter matches a person when any of their listed practice areas
+  /* Each filter matches a person when any of their practice areas
      contains one of its keywords. Adjust the keywords to tune the matching. */
   var PRACTICE_FILTERS = [
     { label: "Litigation and Arbitration", keys: ["dispute resolution", "litigation", "arbitrat", "disputes"] },
@@ -42,7 +54,7 @@
     { label: "Healthcare, Biotechnology and Pharmaceuticals", keys: ["healthcare", "biotechnology", "pharmaceutical", "medical"] },
     { label: "Industrial and Manufacturing", keys: ["manufacturing", "industrial", "occupational safety"] },
     { label: "Insurance and Reinsurance", keys: ["insurance"] },
-    { label: "Oil & Gas, and Energy", keys: ["oil & gas", "energy"] },
+    { label: "Oil & Gas, and Energy", keys: ["oil & gas", "oil and gas", "energy"] },
     { label: "Real Estate", keys: ["real estate", "land acquisition"] },
     { label: "Maritime and Shipping", keys: ["maritime", "shipping"] },
     { label: "Technology, Media and Telecommunications", keys: ["technology", "media", "telecommunications", "fintech", "data protection"] }
@@ -57,130 +69,162 @@
       .replace(/\s+/g, " ")
       .trim();
   }
-
   function el(tag, cls, text) {
     var n = document.createElement(tag);
     if (cls) n.className = cls;
     if (text != null) n.textContent = text;
     return n;
   }
-
   function list(items, cls) {
     var ul = el("ul", cls);
     items.forEach(function (t) { ul.appendChild(el("li", null, t)); });
     return ul;
   }
-
   function initials(name) {
-    var skip = { "to": 1, "puan": 1, "tan": 0, "sri": 1, "dato": 1, "bin": 1, "binti": 1 };
+    var skip = { "to": 1, "puan": 1, "sri": 1, "dato": 1, "bin": 1, "binti": 1 };
     var parts = name.replace(/[’'.]/g, "").split(/\s+/).filter(function (p) { return !skip[p.toLowerCase()]; });
     return ((parts[0] || "")[0] || "") + ((parts[1] || "")[0] || "");
   }
-
-  function matches(person, filter) {
-    return filter.keys.some(function (k) { return person._hay.indexOf(k) !== -1; });
-  }
-
-  /* ---------- card builders ---------- */
-  // profile page slug (same rule as js/profile.js); only people in profiles-data.js get a link
+  // profile page slug (same rule as js/profile.js)
   function profileSlug(name) {
     return name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   }
+  // practice area names as published: drop hidden characters and the Chinese translations some profiles add
+  function cleanArea(s) {
+    return String(s || "")
+      .replace(/[​-‍﻿]/g, "")
+      .replace(/[　-〿㐀-鿿＀-￯][\s\S]*$/, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+  function matches(person, filter) {
+    return filter.keys.some(function (k) { return person._areasHay.indexOf(k) !== -1; });
+  }
 
-  function photoCard(p, role) {
-    var slug = profileSlug(p.name);
-    var linked = !!(window.SKRINE_PROFILES && window.SKRINE_PROFILES[slug]);
-    var card = el(linked ? "a" : "article", "photo-card reveal" + (role === "consultants" ? " photo-card--consultant" : "") + (linked ? " photo-card--link" : ""));
-    if (linked) {
-      card.href = "profile.html?p=" + encodeURIComponent(slug);
-      card.setAttribute("aria-label", p.name + (p.division ? ", " + p.division : "") + " — view profile");
-    }
-    card.setAttribute("data-tilt", "");
+  /* ---------- people: practice areas + everything search looks at ---------- */
+  var everyone = [];
+  ROLES.forEach(function (role) {
+    (DATA[role] || []).forEach(function (p) {
+      var prof = PROFILES[profileSlug(p.name)] || null;
+      var fromProfile = prof ? (prof.keyAreas || []).map(cleanArea).filter(Boolean) : [];
+      p._role = role;
+      p._profile = prof;
+      // skrine.com profile first; the directory's own list when the profile has none
+      p._areas = fromProfile.length ? fromProfile : (p.areas || p.keyAreas || []).map(cleanArea).filter(Boolean);
+      p._areasHay = " " + norm([].concat(p._areas, p.areas || [], p.keyAreas || []).join(" | ")) + " ";
+      everyone.push(p);
+    });
+  });
+
+  // search text: name, role, practice areas, sectors, qualifications, affiliations, rankings, profile text
+  everyone.forEach(function (p) {
+    var prof = p._profile || {};
+    var bits = [p.name, ROLE_LABEL[p._role], p._areas, p.areas, p.keyAreas, p.quals, p.affiliations, prof.overview, prof.rankings];
+    (prof.credentials || []).forEach(function (c) { bits.push(c.heading, c.items); });
+    (prof.experience || []).forEach(function (x) { bits.push(x.area); });
+    (prof.talks || []).forEach(function (t) { bits.push(t.items); });
+    PRACTICE_FILTERS.forEach(function (f) { if (matches(p, f)) bits.push(f.label); });
+    INDUSTRY_FILTERS.forEach(function (f) { if (matches(p, f)) bits.push(f.label); });
+    p._name = norm(p.name);
+    p._hay = norm([].concat.apply([], bits.map(function (b) { return b || []; })).join(" | "));
+  });
+
+  /* ---------- cards ---------- */
+  function photoFront(p) {
     var inner = el("div", "photo-card-inner");
-
     var img = el("img", "photo-card-img");
     img.src = photoUrl(p.photo || p.name + ".png");
     img.alt = "Portrait of " + p.name;
     img.loading = "lazy";
     img.decoding = "async";
-    // no photo in the folder yet: show initials instead
-    img.addEventListener("error", function () {
+    img.addEventListener("error", function () {   // no photo yet: initials
       var mono = el("div", "photo-card-monogram", initials(p.name).toUpperCase());
       mono.setAttribute("aria-hidden", "true");
       img.replaceWith(mono);
     });
     inner.appendChild(img);
-
     var info = el("div", "photo-card-info");
     info.appendChild(el("h3", "photo-card-name", p.name));
-    // name + division; no division means name only
-    if (p.division) info.appendChild(el("p", "photo-card-area", p.division));
-    if (linked) {
-      var cta = el("span", "photo-card-cta");
-      cta.innerHTML = 'View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
-      info.appendChild(cta);
-    }
     inner.appendChild(info);
+    return inner;
+  }
 
-    card.appendChild(inner);
+  function photoCard(p, role) {
+    var slug = profileSlug(p.name);
+    var linked = !!PROFILES[slug];
+    var flips = role === "partners";
+    var card = el(linked ? "a" : "article", "photo-card reveal" +
+      (role === "consultants" ? " photo-card--consultant" : "") +
+      (linked ? " photo-card--link" : "") +
+      (flips ? " photo-card--flip" : ""));
+    if (linked) {
+      card.href = "profile.html?p=" + encodeURIComponent(slug);
+      card.setAttribute("aria-label", p.name + ", " + ROLE_LABEL[role] +
+        (flips && p._areas.length ? ". Practice areas: " + p._areas.join(", ") : ""));
+    }
+    if (!flips) {
+      card.setAttribute("data-tilt", "");
+      card.appendChild(photoFront(p));
+      return card;
+    }
+
+    // partners: photo on the front, name + practice areas on the back
+    var flip = el("div", "pd-flip");
+    var front = photoFront(p);
+    front.classList.add("pd-face", "pd-front");
+    var back = el("div", "pd-face pd-back");
+    back.setAttribute("aria-hidden", "true");
+    back.appendChild(el("p", "pd-back-role", ROLE_LABEL[role]));
+    back.appendChild(el("h3", "pd-back-name", p.name));
+    if (p._areas.length) {
+      back.appendChild(el("p", "pd-back-label", "Practice areas"));
+      back.appendChild(list(p._areas, "pd-back-areas"));   // fitBacks() keeps as many as the card holds
+    }
+    flip.appendChild(front);
+    flip.appendChild(back);
+    card.appendChild(flip);
     return card;
   }
 
-
-  /* Uniform preview card; the full details open in the person modal. */
+  // senior associates: preview card that opens the details pop-up; associates: name only
   function miniCard(p, role) {
-    // associates: name only, no "View details" and no pop-up
     if (role === "associates") {
       var plain = el("article", "mini-card mini-card--static reveal");
       plain.appendChild(el("span", "mini-card-role", ROLE_LABEL[role]));
       plain.appendChild(el("span", "mini-card-name", p.name));
       return plain;
     }
-
     var card = el("button", "mini-card reveal");
     card.type = "button";
     card.setAttribute("data-tilt", "");
     card.setAttribute("aria-haspopup", "dialog");
-    card.setAttribute("aria-label", p.name + ", " + ROLE_LABEL[role] + " — view details");
-
+    card.setAttribute("aria-label", p.name + ", " + ROLE_LABEL[role]);
     card.appendChild(el("span", "mini-card-role", ROLE_LABEL[role]));
     card.appendChild(el("span", "mini-card-name", p.name));
-
-    var areas = p.keyAreas || [];
+    var areas = p._areas;
     var preview = el("span", "mini-card-preview");
     if (areas.length) {
       preview.appendChild(el("span", "mini-card-area", areas[0]));
       if (areas.length > 1) preview.appendChild(el("span", "mini-card-more", "+" + (areas.length - 1)));
     }
     card.appendChild(preview);
-
-    var cta = el("span", "mini-card-cta");
-    cta.innerHTML = 'View details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
-    card.appendChild(cta);
-
     card.addEventListener("click", function () { openModal(p); });
     return card;
   }
 
   /* ---------- render ---------- */
-  var everyone = [];
-
-  ROLES.forEach(function (role) {
-    var grid = document.getElementById("grid-" + role);
-    (DATA[role] || []).forEach(function (p, i) {
-      p._role = role;
-      p._name = norm(p.name);
-      p._hay = norm([].concat(p.areas || [], p.keyAreas || []).join(" | ")) + " ";
-      p._el = PHOTO_ROLES[role] ? photoCard(p, role) : miniCard(p, role);
-      p._el.style.setProperty("--delay", ((i % 4) * 0.08) + "s");
-      grid.appendChild(p._el);
-      FX.observeReveal(p._el);
-      if (role !== "associates") FX.attachTilt(p._el); // associate cards don't open anything
-      everyone.push(p);
-    });
+  var perRoleIndex = {};
+  everyone.forEach(function (p) {
+    var role = p._role;
+    var i = perRoleIndex[role] = (perRoleIndex[role] || 0) + 1;
+    p._el = PHOTO_ROLES[role] ? photoCard(p, role) : miniCard(p, role);
+    p._el.style.setProperty("--delay", (((i - 1) % 4) * 0.08) + "s");
+    document.getElementById("grid-" + role).appendChild(p._el);
+    FX.observeReveal(p._el);
+    if (p._el.hasAttribute("data-tilt")) FX.attachTilt(p._el);
   });
 
-  /* ---------- filter checkboxes ---------- */
+  /* ---------- dropdown filters ---------- */
   function buildFilters(containerId, filters, groupName) {
     var box = document.getElementById(containerId);
     filters.forEach(function (f, i) {
@@ -205,64 +249,98 @@
   buildFilters("practiceFilters", PRACTICE_FILTERS, "practice");
   buildFilters("industryFilters", INDUSTRY_FILTERS, "industry");
 
+  var drops = Array.prototype.slice.call(document.querySelectorAll("[data-drop]"));
+  function closeDrops(except) {
+    drops.forEach(function (d) {
+      if (d === except) return;
+      d.querySelector(".pd-drop-btn").setAttribute("aria-expanded", "false");
+      d.querySelector(".pd-drop-menu").hidden = true;
+      d.classList.remove("is-open");
+    });
+  }
+  drops.forEach(function (d) {
+    var btn = d.querySelector(".pd-drop-btn"), menu = d.querySelector(".pd-drop-menu");
+    btn.addEventListener("click", function () {
+      var open = menu.hidden;
+      closeDrops(d);
+      menu.hidden = !open;
+      btn.setAttribute("aria-expanded", String(open));
+      d.classList.toggle("is-open", open);
+      if (open) { var first = menu.querySelector("input"); if (first) first.focus({ preventScroll: true }); }
+    });
+    d.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !menu.hidden) { closeDrops(); btn.focus(); }
+    });
+  });
+  document.addEventListener("click", function (e) { if (!e.target.closest("[data-drop]")) closeDrops(); });
+
   /* ---------- state + apply ---------- */
-  var state = { q: "", role: null, practice: [], industry: [] };
+  var state = { q: "", role: DEFAULT_ROLE, practice: [], industry: [] };
 
   var searchInput = document.getElementById("peopleSearch");
   var resultsLine = document.getElementById("resultsLine");
   var emptyBox = document.getElementById("peopleEmpty");
   var clearBtn = document.getElementById("filtersClear");
-  var countBadge = document.getElementById("filtersCount");
   var roleButtons = document.querySelectorAll("#roleTabs button");
+  var dropCounts = { practice: drops[0].querySelector(".pd-drop-count"), industry: drops[1].querySelector(".pd-drop-count") };
 
   function apply() {
-    var q = norm(state.q);
-    var shown = 0;
-    var perRole = {};
+    var words = norm(state.q).split(" ").filter(Boolean);
+    // a search looks across everyone; otherwise show the chosen group
+    var role = words.length ? null : state.role;
+    var shown = 0, perRole = {};
 
     everyone.forEach(function (p) {
-      var ok = true;
-      if (state.role && p._role !== state.role) ok = false;
-      if (ok && q) ok = p._name.indexOf(q) !== -1 || p._hay.indexOf(q) !== -1;
+      var ok = !role || p._role === role;
+      if (ok && words.length) ok = words.every(function (w) { return p._hay.indexOf(w) !== -1; });
       if (ok && state.practice.length) ok = state.practice.some(function (i) { return matches(p, PRACTICE_FILTERS[i]); });
       if (ok && state.industry.length) ok = state.industry.some(function (i) { return matches(p, INDUSTRY_FILTERS[i]); });
-
       p._el.hidden = !ok;
       if (ok) {
         shown++;
         perRole[p._role] = (perRole[p._role] || 0) + 1;
-        // cards revealed while hidden would skip their animation; show them straight away
-        p._el.classList.add("is-visible");
+        p._el.classList.add("is-visible");   // revealed while hidden would skip the animation
       }
     });
 
-    ROLES.forEach(function (role) {
-      document.getElementById("group-" + role).hidden = !perRole[role];
-    });
+    ROLES.forEach(function (r) { document.getElementById("group-" + r).hidden = !perRole[r]; });
 
-    var activeFilters = state.practice.length + state.industry.length;
-    var narrowed = q || state.role || activeFilters;
-    resultsLine.textContent = narrowed
-      ? "Showing " + shown + " of " + everyone.length + " people"
-      : everyone.length + " people";
+    var filters = state.practice.length + state.industry.length;
+    if (words.length) {
+      resultsLine.textContent = shown + (shown === 1 ? " result" : " results") + " for “" + state.q.trim() + "” across everyone";
+    } else {
+      var total = (DATA[role] || []).length;
+      resultsLine.textContent = filters ? "Showing " + shown + " of " + total + " " + ROLE_PLURAL[role] : total + " " + ROLE_PLURAL[role];
+    }
     emptyBox.hidden = shown !== 0;
 
-    clearBtn.hidden = !activeFilters;
-    countBadge.hidden = !activeFilters;
-    countBadge.textContent = activeFilters;
+    clearBtn.hidden = !(filters || words.length);
+    ["practice", "industry"].forEach(function (g) {
+      dropCounts[g].hidden = !state[g].length;
+      dropCounts[g].textContent = state[g].length;
+      dropCounts[g].closest(".pd-drop").classList.toggle("has-value", !!state[g].length);
+    });
+    roleButtons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.role === role)); });
+    fitBacks();
+  }
 
-    roleButtons.forEach(function (b) {
-      b.setAttribute("aria-pressed", String(b.dataset.role === state.role));
+  /* ---------- card backs: list as many practice areas as fit, leaving room at the bottom ---------- */
+  function fitBacks() {
+    document.querySelectorAll(".pd-back").forEach(function (b) {
+      if (!b.clientHeight) return;                       // in a hidden group: fitted when it is shown
+      var items = Array.prototype.slice.call(b.querySelectorAll(".pd-back-areas li"));
+      items.forEach(function (li) { li.hidden = false; });
+      for (var i = items.length - 1; i > 0 && b.scrollHeight > b.clientHeight; i--) items[i].hidden = true;
     });
   }
+  var fitTimer;
+  window.addEventListener("resize", function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitBacks, 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitBacks);
 
   var searchTimer;
   searchInput.addEventListener("input", function () {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(function () {
-      state.q = searchInput.value;
-      apply();
-    }, 120);
+    searchTimer = setTimeout(function () { state.q = searchInput.value; apply(); }, 120);
   });
 
   document.getElementById("filtersPanel").addEventListener("change", function (e) {
@@ -278,27 +356,34 @@
 
   roleButtons.forEach(function (b) {
     b.addEventListener("click", function () {
-      state.role = state.role === b.dataset.role ? null : b.dataset.role;
+      // picking a group leaves any search
+      state.role = b.dataset.role;
+      state.q = "";
+      searchInput.value = "";
       apply();
-      var target = document.getElementById(state.role ? "group-" + state.role : "roleTabs");
-      var top = target.getBoundingClientRect().top + window.scrollY - 110;
+      var tabs = document.getElementById("roleTabs");
+      var top = tabs.getBoundingClientRect().top + window.scrollY - 110;
       if (window.scrollY > top) window.scrollTo({ top: top, behavior: "smooth" });
     });
   });
 
-  function resetAll() {
-    state = { q: "", role: null, practice: [], industry: [] };
-    searchInput.value = "";
-    document.querySelectorAll("#filtersPanel input[type=checkbox]").forEach(function (c) { c.checked = false; });
-    apply();
-  }
-  clearBtn.addEventListener("click", function () {
+  function clearFilters() {
     state.practice = [];
     state.industry = [];
     document.querySelectorAll("#filtersPanel input[type=checkbox]").forEach(function (c) { c.checked = false; });
+  }
+  clearBtn.addEventListener("click", function () {
+    clearFilters();
+    state.q = "";
+    searchInput.value = "";
     apply();
   });
-  document.getElementById("emptyReset").addEventListener("click", resetAll);
+  document.getElementById("emptyReset").addEventListener("click", function () {
+    clearFilters();
+    state = { q: "", role: DEFAULT_ROLE, practice: [], industry: [] };
+    searchInput.value = "";
+    apply();
+  });
 
   /* ---------- people.html?q=Name ----------
      Name links from alerts, news and publications (js/people-links.js) arrive here
@@ -312,34 +397,22 @@
     if (hit) setTimeout(function () { hit._el.scrollIntoView({ behavior: "smooth", block: "center" }); }, 350);
   }
 
-  /* mobile: collapsible filters */
-  var filtersToggle = document.getElementById("filtersToggle");
-  var sidebar = document.getElementById("peopleSidebar");
-  filtersToggle.addEventListener("click", function () {
-    var open = sidebar.classList.toggle("filters-open");
-    filtersToggle.setAttribute("aria-expanded", String(open));
-  });
-
-  /* ---------- person modal ---------- */
+  /* ---------- person pop-up (senior associates) ---------- */
   var modal = document.getElementById("personModal");
   var pmRole = document.getElementById("pmRole");
   var pmName = document.getElementById("pmName");
   var pmBody = document.getElementById("pmBody");
   var pmCount = document.getElementById("pmCount");
-  var current = null;
-  var lastFocus = null;
+  var current = null, lastFocus = null;
 
-  // people the modal can step through: same group, currently visible
   function siblingsOf(p) {
     return everyone.filter(function (o) { return o._role === p._role && !o._el.hidden; });
   }
-
   function fillModal(p) {
     current = p;
     pmRole.textContent = ROLE_LABEL[p._role] || "";
     pmName.textContent = p.name;
     pmBody.textContent = "";
-
     function section(title, items, chips) {
       if (!items || !items.length) return;
       var wrap = el("section", "pm-section");
@@ -353,25 +426,17 @@
       }
       pmBody.appendChild(wrap);
     }
-    section("Key Practice Areas", p.keyAreas, true);
+    section("Key Practice Areas", p._areas, true);
     section("Qualifications", p.quals);
     section("Professional Affiliations", p.affiliations);
-    if (!pmBody.children.length) {
-      pmBody.appendChild(el("p", "pm-empty", "Further details for " + p.name + " have not been published yet."));
-    }
-
-
-    var sibs = siblingsOf(p);
-    var at = sibs.indexOf(p);
+    if (!pmBody.children.length) pmBody.appendChild(el("p", "pm-empty", "Further details for " + p.name + " have not been published yet."));
+    var sibs = siblingsOf(p), at = sibs.indexOf(p);
     pmCount.textContent = (at + 1) + " / " + sibs.length;
-
-    // replay the entrance animation on each change
     var card = modal.querySelector(".pm-card");
     card.classList.remove("is-swapping");
     void card.offsetWidth;
     card.classList.add("is-swapping");
   }
-
   function openModal(p) {
     lastFocus = document.activeElement;
     fillModal(p);
@@ -379,24 +444,19 @@
     else modal.setAttribute("open", "");
     document.body.classList.add("modal-open");
   }
-
   function closeModal() {
     if (modal.open && typeof modal.close === "function") modal.close();
     else modal.removeAttribute("open");
   }
-
   function step(dir) {
     if (!current) return;
-    var sibs = siblingsOf(current);
-    var at = sibs.indexOf(current);
+    var sibs = siblingsOf(current), at = sibs.indexOf(current);
     fillModal(sibs[(at + dir + sibs.length) % sibs.length]);
   }
-
   modal.addEventListener("close", function () {
     document.body.classList.remove("modal-open");
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   });
-  // click on the dimmed backdrop closes
   modal.addEventListener("click", function (e) {
     if (e.target === modal || e.target.closest("[data-close]")) closeModal();
   });

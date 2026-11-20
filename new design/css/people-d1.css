@@ -1,0 +1,190 @@
+/* =========================================================
+   SKRINE — People page, Design 1
+   Loaded after css/people.css on people.html only.
+   - search + Practice Area + Sector dropdowns in one bar on top
+   - partner cards turn over slowly on hover to show practice areas
+   ========================================================= */
+
+/* ---------- filter bar ---------- */
+.pd-toolbar {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(206, 203, 204, 0.6);
+}
+.pd-search { height: 52px; border-color: var(--grey-300); }
+.pd-search:focus-within { border-color: var(--red); }
+
+.pd-drop { position: relative; }
+.pd-drop-btn {
+  height: 52px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid var(--grey-300);
+  border-radius: 8px;
+  background: var(--white);
+  font: 600 15px var(--font-body);
+  color: var(--ink);
+  white-space: nowrap;
+  transition: border-color 0.25s, color 0.25s, box-shadow 0.25s;
+}
+.pd-drop-btn:hover { border-color: var(--red); color: var(--red); }
+.pd-drop-btn i { font-size: 12px; transition: transform 0.3s var(--ease); }
+.pd-drop.is-open .pd-drop-btn { border-color: var(--red); box-shadow: 0 0 0 4px var(--red-soft); }
+.pd-drop.is-open .pd-drop-btn i { transform: rotate(180deg); }
+.pd-drop.has-value .pd-drop-btn { border-color: var(--red); color: var(--red); }
+.pd-drop-count {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 11px;
+  background: var(--red);
+  color: var(--white);
+  font: 700 12px var(--font-alt);
+  display: inline-grid;
+  place-items: center;
+}
+.pd-drop-count[hidden] { display: none; }
+
+.pd-drop-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(380px, calc(100vw - 32px));
+  max-height: min(420px, 60vh);
+  overflow-y: auto;
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--grey-100);
+  animation: pdDrop 0.25s var(--ease);
+}
+.pd-drop-menu[hidden] { display: none; }
+.pd-drop-menu .filter-label { font-size: 15px; white-space: normal; }
+@keyframes pdDrop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+.pd-clear { margin: 0 6px; }
+
+.people-page--d1 .people-main { margin-top: clamp(28px, 3vw, 40px); }
+
+/* partners and consultants: five to a row */
+.people-page--d1 .photo-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 24px); }
+.people-page--d1 .photo-card-name { font-size: clamp(16px, 1.3vw, 20px); }
+/* five across makes each card narrower; trim the height so they keep the old, less elongated look */
+.people-page--d1 .photo-card-inner { aspect-ratio: 263 / 380; }
+
+/* ---------- partner cards: slow flip ---------- */
+.photo-card--flip { perspective: 1400px; }
+.pd-flip {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.1s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+.photo-card--flip:hover .pd-flip,
+.photo-card--flip:focus-visible .pd-flip { transform: rotateY(180deg); }
+.pd-face {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+/* the photo zoom fights the flip; keep the photo still */
+.photo-card--flip:hover .photo-card-img { transform: scale(1.02); }
+.photo-card--flip .photo-card-name::after { display: none; }
+
+.pd-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: clamp(16px, 1.4vw, 22px) clamp(16px, 1.4vw, 22px) clamp(26px, 2.4vw, 36px);
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+  background:
+    radial-gradient(120% 70% at 100% 0%, rgba(255, 255, 255, 0.12), transparent 60%),
+    linear-gradient(160deg, var(--red) 0%, var(--red-dark) 100%);
+}
+.pd-back-role {
+  font: 700 11px var(--font-alt);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+.pd-back-name {
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(17px, 1.4vw, 22px);
+  line-height: 1.25;
+}
+.pd-back-name::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.7);
+}
+.pd-back-label {
+  margin-top: 18px;
+  font: 700 11px var(--font-alt);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+.pd-back-areas { margin-top: 8px; display: grid; gap: 7px; }
+.pd-back-areas li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 13px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pd-back-areas li[hidden] { display: none; }
+.pd-back-areas li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-flip { transition: none; }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1200px) {
+  .people-page--d1 .photo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .people-page--d1 .photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pd-toolbar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .pd-search { grid-column: 1 / -1; }
+  .pd-drop-btn { width: 100%; justify-content: space-between; }
+  .pd-clear { grid-column: 1 / -1; justify-self: start; }
+  .pd-drop:first-of-type .pd-drop-menu { right: auto; left: 0; }
+}
+@media (max-width: 640px) {
+  .people-page--d1 .photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pd-back { padding: 14px; border-radius: 14px; }
+  .pd-back-name { font-size: 15px; }
+  .pd-back-areas { gap: 4px; }
+  .pd-back-areas li { font-size: 12px; }
+}
