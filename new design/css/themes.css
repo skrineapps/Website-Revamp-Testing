@@ -1,0 +1,571 @@
+/* =========================================================
+   SKRINE — Site designs 2, 3 and 4
+   Switched on by js/design.js: html gets "themed" plus one of
+     .skin-2  Ribbons   images/d2/ribbons.jpg   warm taupe, crimson ribbons
+     .skin-3  Artistic  images/d3/artistic.jpg  palette-knife KL skyline, cream, gold
+     .skin-4  Songket   images/d4/songket.jpg   woven songket, linen, gold thread
+   Design 1 (no class) is the original look and is untouched.
+
+   How this file is laid out
+   1. Each design sets its own palette and artwork as variables.
+   2. Shared rules (.themed) use only those variables, so every page
+      picks up whichever design is chosen without per-page work.
+   3. A few rules belong to one design only: where the home hero text
+      sits, and what replaces Design 1's paint strokes.
+
+   Branding stays in every design: the brand red #c32030 is the main
+   accent (buttons, headings, active states, the logo), Merriweather and
+   Karla stay, and each artwork only adds its own neutrals and accents.
+   ========================================================= */
+
+/* =========================================================
+   1. Palettes and artwork
+   ========================================================= */
+.skin-2 {
+  /* Ribbons: warm sand and taupe, crimson ribbons */
+  --red: #c32030;
+  --red-dark: #8e1626;
+  --red-soft: rgba(142, 22, 38, 0.08);
+  --wine: #8e1626;
+  --wine-deep: #5e0d18;
+  --accent: #e0606c;
+
+  --grey-100: #f1e6dd;
+  --grey-300: #dfcab9;
+  --grey-500: #9c857a;
+  --grey-700: #6e5850;
+  --ink: #2f2220;
+  --ink-soft: #5b4741;
+  --white: #fffaf6;
+  --muted-word: #8a6f64;
+
+  --canvas: #f6ede5;
+  --canvas-rgb: 246, 237, 229;
+  --pale-rgb: 239, 226, 215;
+  --tint-rgb: 214, 184, 164;
+  --dark: #2c1f1c;
+  --dark-rgb: 44, 31, 28;
+  --shade-rgb: 74, 40, 30;
+
+  --ribbon: linear-gradient(100deg, #5e0d18 0%, #8e1626 30%, #c32030 62%, #a3182a 100%);
+  --rule: linear-gradient(90deg, #5e0d18, #c32030 70%, #e0606c);
+
+  --t-art: url("../images/d2/ribbons.jpg");
+  --t-wash: url("../images/d2/ribbons-wash.jpg");
+  --t-hero-pos: 68% 50%;
+  --t-field-pos: 80% 50%;
+  --t-head-pos: 100% 45%;   /* the ribbons are on the right of the artwork */
+  --t-head-flip: none;
+  --t-head-mask: radial-gradient(75% 105% at 100% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
+  --t-head-opacity: 0.62;
+  --t-foot-dir: 90deg;      /* dark on the left, the art shows on the right */
+  --t-foot-pos: 100% 55%;
+}
+
+.skin-3 {
+  /* Artistic: cream canvas, charcoal, burgundy strokes, gold leaf */
+  --red: #c32030;
+  --red-dark: #8a1a2a;
+  --red-soft: rgba(138, 26, 42, 0.08);
+  --wine: #8a1a2a;
+  --wine-deep: #5a0f1a;
+  --accent: #b08d57;        /* gold, from the scales and the gold lines */
+
+  --grey-100: #efe8dc;
+  --grey-300: #d9cdbb;
+  --grey-500: #988c7e;
+  --grey-700: #6b6157;
+  --ink: #2a2522;
+  --ink-soft: #574e47;
+  --white: #fffcf6;
+  --muted-word: #8b8073;
+
+  --canvas: #f6f0e6;
+  --canvas-rgb: 246, 240, 230;
+  --pale-rgb: 237, 228, 212;
+  --tint-rgb: 216, 202, 180;
+  --dark: #2b2522;
+  --dark-rgb: 43, 37, 34;
+  --shade-rgb: 60, 45, 30;
+
+  --ribbon: linear-gradient(100deg, #6a1220 0%, #a01c2c 35%, #c32030 70%, #a8202e 100%);
+  --rule: linear-gradient(90deg, #8a1a2a, #c32030 65%, #b08d57);
+
+  --t-art: url("../images/d3/artistic.jpg");
+  --t-wash: url("../images/d3/artistic-wash.jpg");
+  --t-hero-pos: 0% 50%;
+  --t-field-pos: 0% 60%;
+  --t-head-pos: 0% 40%;     /* the art is on the left of the painting: mirror it to sit behind the right of the heading */
+  --t-head-flip: scaleX(-1);
+  --t-head-mask: radial-gradient(75% 105% at 0% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
+  --t-head-opacity: 0.7;
+  --t-foot-dir: 270deg;     /* dark on the right, the art shows on the left */
+  --t-foot-pos: 0% 60%;
+}
+
+.skin-4 {
+  /* Songket: linen, charcoal cloth, burgundy flowers, gold thread */
+  --red: #c32030;
+  --red-dark: #7e1a26;
+  --red-soft: rgba(126, 26, 38, 0.08);
+  --wine: #7e1a26;
+  --wine-deep: #521019;
+  --accent: #a8895a;        /* gold thread */
+
+  --grey-100: #ece4da;
+  --grey-300: #d6cabc;
+  --grey-500: #968a7f;
+  --grey-700: #685e57;
+  --ink: #29231f;
+  --ink-soft: #564c46;
+  --white: #fdfaf6;
+  --muted-word: #857a71;
+
+  --canvas: #f2ece4;
+  --canvas-rgb: 242, 236, 228;
+  --pale-rgb: 232, 223, 211;
+  --tint-rgb: 210, 196, 180;
+  --dark: #2a2421;
+  --dark-rgb: 42, 36, 33;
+  --shade-rgb: 55, 42, 34;
+
+  --ribbon: linear-gradient(100deg, #521019 0%, #7e1a26 30%, #c32030 65%, #9a1e2c 100%);
+  --rule: linear-gradient(90deg, #7e1a26, #c32030 60%, #a8895a);
+
+  --t-art: url("../images/d4/songket.jpg");
+  --t-wash: url("../images/d4/songket-wash.jpg");
+  --t-hero-pos: 0% 50%;
+  --t-field-pos: 0% 50%;
+  --t-head-pos: 0% 40%;
+  --t-head-flip: scaleX(-1);
+  --t-head-mask: radial-gradient(75% 105% at 0% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
+  --t-head-opacity: 0.75;
+  --t-foot-dir: 270deg;
+  --t-foot-pos: 0% 50%;
+}
+
+.themed {
+  --shadow-sm: 0 4px 14px rgba(var(--shade-rgb), 0.09);
+  --shadow-md: 0 14px 34px rgba(var(--shade-rgb), 0.16);
+  --shadow-lg: 0 28px 60px rgba(var(--shade-rgb), 0.24);
+  --espresso: var(--dark);
+}
+
+/* =========================================================
+   2. Shared rules
+   ========================================================= */
+
+/* ---------- Base canvas ---------- */
+.themed body { background: var(--canvas); color: var(--ink); }
+.themed ::selection { background: rgba(195, 32, 48, 0.85); color: #fff; }
+
+.themed main {
+  background:
+    radial-gradient(ellipse 55% 9% at 0% 14%,  rgba(195, 32, 48, 0.06), transparent 70%),
+    radial-gradient(ellipse 50% 10% at 100% 30%, rgba(var(--tint-rgb), 0.55), transparent 70%),
+    radial-gradient(ellipse 55% 9% at 0% 50%,  rgba(var(--pale-rgb), 0.95), transparent 70%),
+    radial-gradient(ellipse 50% 9% at 100% 64%, rgba(195, 32, 48, 0.05), transparent 70%),
+    radial-gradient(ellipse 55% 10% at 0% 82%, rgba(var(--tint-rgb), 0.5), transparent 70%),
+    var(--canvas);
+}
+.themed .careers,
+.themed .contact,
+.themed .life {
+  background:
+    radial-gradient(ellipse 55% 9% at 0% 8%, rgba(195, 32, 48, 0.06), transparent 70%),
+    radial-gradient(ellipse 50% 10% at 100% 34%, rgba(var(--tint-rgb), 0.55), transparent 70%),
+    radial-gradient(ellipse 55% 9% at 0% 62%, rgba(var(--pale-rgb), 0.95), transparent 70%),
+    var(--canvas);
+}
+
+/* ---------- Header ---------- */
+.themed .site-header { background: rgba(var(--canvas-rgb), 0.6); }
+.themed .site-header.is-scrolled { background: rgba(var(--canvas-rgb), 0.95); box-shadow: 0 6px 22px rgba(var(--shade-rgb), 0.1); }
+/* a thin brand line along the bottom edge once the page scrolls */
+.themed .site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--rule);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+}
+.themed .site-header.is-scrolled::after { opacity: 0.85; }
+.themed .nav-link::after { background: var(--ribbon); }
+.themed .nav-menu { background: var(--white); border-color: var(--grey-300); }
+
+/* ---------- Headings ---------- */
+.themed .eyebrow { color: var(--grey-700); }
+.themed .page-title,
+.themed .section-title {
+  background: var(--ribbon);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.06em; /* keeps descenders inside the clipped gradient */
+}
+/* a short brand bar close under the heading */
+.themed .section-title::after {
+  width: 72px;
+  height: 3px;
+  margin-top: 12px;
+  border-radius: 3px;
+  background: var(--rule);
+}
+.themed .section--art::after { -webkit-text-stroke-color: rgba(var(--shade-rgb), 0.12); }
+
+/* ---------- Buttons ---------- */
+.themed .btn--solid {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--wine) 0%, var(--red) 55%, #b01c2c 100%);
+  box-shadow: 0 10px 22px -12px rgba(94, 13, 24, 0.75);
+}
+.themed .btn--solid:hover { background: linear-gradient(120deg, var(--wine-deep) 0%, var(--wine) 50%, var(--red) 100%); border-color: transparent; }
+.themed .btn--outline { border-color: var(--wine); color: var(--wine); background: rgba(var(--canvas-rgb), 0.45); }
+.themed .btn--outline:hover { border-color: transparent; background: linear-gradient(120deg, var(--wine) 0%, var(--red) 100%); color: #fff; }
+
+/* ---------- Home ---------- */
+.themed .hero-bg {
+  background: var(--t-art) var(--t-hero-pos) / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.6) 86%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.6) 86%, transparent 100%);
+  animation-duration: 46s;
+}
+.themed .hero-shade { background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 22%); }
+/* frosted card in the artwork's colours, with a short brand-red edge */
+.themed .hero-panel::before {
+  border-left: 0;
+  border-radius: 28px;
+  background: linear-gradient(150deg, rgba(var(--canvas-rgb), 0.76) 0%, rgba(var(--pale-rgb), 0.62) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 30px 60px -20px rgba(var(--dark-rgb), 0.4);
+}
+.themed .hero-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 4px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, transparent, var(--red) 25%, var(--wine) 75%, transparent);
+  animation: geoRise 1.1s var(--ease) 0.05s both;
+}
+.themed .hero-eyebrow { color: var(--grey-700); }
+.themed .hero-eyebrow span { background: var(--rule); }
+.themed .ht-word:nth-child(2) { color: var(--muted-word); }
+.themed .hero-sub { color: var(--ink-soft); }
+.themed .awards {
+  --foil-1: var(--grey-300);
+  --foil-2: var(--grey-100);
+  --foil-3: var(--white);
+  background: radial-gradient(1400px 900px at 50% -10%, var(--red) 0%, var(--wine) 45%, var(--wine-deep) 100%);
+}
+.themed .awards::before { background: linear-gradient(var(--canvas) 0%, rgba(var(--canvas-rgb), 0.55) 30%, rgba(var(--canvas-rgb), 0.12) 65%, rgba(var(--canvas-rgb), 0) 100%); }
+
+/* section materials: soft light from the blurred artwork, and the artwork itself faint in the "field" bands */
+.themed .section--updates::before,
+.themed .section--spotlight::before,
+.themed .section--network::before { background-image: var(--t-wash); opacity: 0.55; }
+.themed .section--deals::before,
+.themed .section--events::before {
+  background: var(--t-art) var(--t-field-pos) / cover no-repeat;
+  opacity: 0.16;
+}
+
+.themed .deal-feature,
+.themed .latest-card--lead { background: linear-gradient(150deg, var(--dark) 0%, var(--wine-deep) 45%, var(--wine) 100%); }
+.themed .deal-feature::after { background: linear-gradient(to top, rgba(var(--dark-rgb), 0.93) 0%, rgba(var(--dark-rgb), 0.62) 50%, rgba(94, 13, 24, 0.3) 100%); }
+.themed .ne-feature { background: var(--dark); }
+.themed .art-1 { background: linear-gradient(135deg, var(--red), var(--wine-deep)); }
+.themed .spot-cover--alert,
+.themed .spot-cover--photo { background: var(--dark); }
+.themed .cover-navy { background: linear-gradient(140deg, var(--grey-700), var(--dark) 70%); }
+
+/* ---------- Inner pages: the artwork behind every page heading ---------- */
+.themed .page-main::before,
+.themed main.contact::before,
+.themed main.life::before {
+  height: clamp(440px, 54vw, 680px);
+  background: var(--t-art) var(--t-head-pos) / cover no-repeat;
+  mix-blend-mode: multiply;
+  opacity: var(--t-head-opacity);
+  transform: var(--t-head-flip);
+  -webkit-mask-image: var(--t-head-mask);
+  mask-image: var(--t-head-mask);
+}
+.themed .page-main::after,
+.themed main.contact::after,
+.themed main.life::after {
+  background-image: var(--t-wash);
+  opacity: 0.4;
+}
+@media (max-width: 760px) {
+  .themed .page-main::before,
+  .themed main.contact::before,
+  .themed main.life::before { opacity: 0.4; background-size: auto 100%; }
+}
+
+/* glassy panels and toolbars pick up the canvas */
+.themed .kit-panel::before {
+  background: linear-gradient(150deg, rgba(var(--canvas-rgb), 0.82), rgba(var(--pale-rgb), 0.68));
+  border-left-color: var(--wine);
+  border-radius: 0 22px 22px 0;
+  box-shadow: 0 24px 50px -20px rgba(var(--dark-rgb), 0.35);
+}
+.themed .kit-painted::before { background-image: var(--t-art); }
+.themed .kit-dots::before { background-image: var(--t-wash); opacity: 0.4; }
+.themed .cr-chapters,
+.themed .life-lead::before,
+.themed .cr-lead::before,
+.themed .ct-address::before { background: rgba(var(--canvas-rgb), 0.9); }
+.themed .alerts-toolbar,
+.themed .pf-nav { background: var(--canvas); box-shadow: 0 0 0 100vmax var(--canvas); }
+.themed .jb-field textarea,
+.themed .jb-drop,
+.themed .pc-main { background: var(--canvas); }
+.themed .life-banner::before { color: var(--canvas); }
+
+/* China / India desks: the photo fades into the canvas */
+.themed .dk-hero::before {
+  background:
+    linear-gradient(90deg, rgba(var(--canvas-rgb), 0.97) 0%, rgba(var(--canvas-rgb), 0.9) 28%, rgba(var(--canvas-rgb), 0.45) 52%, rgba(var(--canvas-rgb), 0) 72%),
+    linear-gradient(to bottom, rgba(var(--canvas-rgb), 0) 60%, var(--canvas) 100%);
+}
+@media (max-width: 760px) {
+  .themed .dk-hero::before { background: linear-gradient(to bottom, rgba(var(--canvas-rgb), 0.2) 0%, rgba(var(--canvas-rgb), 0.72) 30%, rgba(var(--canvas-rgb), 0.9) 60%, var(--canvas) 100%); }
+}
+
+/* Our Story */
+.themed .st-rail-dot,
+.themed .st-step::before { background: var(--canvas); }
+.themed .st-step::before { box-shadow: 0 0 0 6px var(--canvas); }
+.themed .st-quote { background: linear-gradient(140deg, var(--dark) 0%, var(--dark) 55%, var(--wine-deep) 100%); }
+.themed .st-quote::before { background-image: var(--t-art); }
+.themed .st-deed-paper { background-color: var(--white); }
+
+/* ---------- Components: softer and warmer; brand red stays for the active state ---------- */
+.themed .pa-tile {
+  border: 1px solid var(--grey-300);
+  border-radius: 16px;
+  background: rgba(var(--canvas-rgb), 0.72);
+}
+.themed .pa-tile:hover { border-color: var(--wine); background: var(--white); }
+.themed .pa-tile.is-active {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--wine) 0%, var(--red) 60%, #b01c2c 100%);
+  box-shadow: 0 14px 28px -14px rgba(94, 13, 24, 0.7);
+}
+.themed .pa-panel-card { border-radius: 26px; }
+
+.themed .role-tabs button {
+  border: 1px solid var(--grey-300);
+  border-radius: 999px;
+  background: rgba(var(--canvas-rgb), 0.8);
+}
+.themed .role-tabs button:hover { border-color: var(--wine); color: var(--wine); }
+.themed .role-tabs button[aria-pressed="true"] {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--wine) 0%, var(--red) 60%, #b01c2c 100%);
+  color: #fff;
+  box-shadow: 0 14px 28px -14px rgba(94, 13, 24, 0.7);
+}
+
+/* cards and quotes with a red edge: the edge stays (brand), the corners soften */
+.themed .cr-quote,
+.themed .cr-lead::before,
+.themed .ct-form-wrap::before,
+.themed .ct-address::before,
+.themed .life-quote,
+.themed .life-lead::before,
+.themed .st-v-panel,
+.themed .ne-up {
+  border-left-color: var(--wine);
+  border-radius: 4px 22px 22px 4px;
+}
+
+/* rule under Life page titles: the same bar as the section headings */
+.themed .life-head .page-title::after {
+  width: 72px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--rule);
+  -webkit-mask: none;
+  mask: none;
+}
+
+/* ---------- Footer: dark, with the artwork running through ---------- */
+.themed .site-footer {
+  position: relative;
+  background:
+    linear-gradient(var(--t-foot-dir), rgba(var(--dark-rgb), 0.97) 0%, rgba(var(--dark-rgb), 0.9) 45%, rgba(var(--dark-rgb), 0.55) 100%),
+    var(--t-art) var(--t-foot-pos) / cover no-repeat,
+    var(--dark);
+  color: #f6f0e8;
+}
+.themed .site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--rule);
+}
+.themed .footer-connect a:hover { background: #f6f0e8; color: var(--wine); }
+
+/* ---------- Review pills ---------- */
+.themed .design-switch,
+.themed .layout-switch { background: rgba(var(--dark-rgb), 0.92); box-shadow: 0 10px 30px -10px rgba(var(--dark-rgb), 0.6); }
+.themed .design-switch a,
+.themed .layout-switch a { color: rgba(var(--canvas-rgb), 0.8); }
+.themed .design-switch a[aria-current],
+.themed .layout-switch a[aria-current] { background: linear-gradient(120deg, var(--wine), var(--red)); color: #fff; }
+
+/* =========================================================
+   3. Per design
+   ========================================================= */
+
+/* ---------- Design 2 (Ribbons) ----------
+   The ribbons sweep through the right of the artwork, so the hero text
+   moves into the open space on the left. Paint strokes become satin
+   crimson ribbons: smooth, slightly slanted, with a sheen and a bright edge. */
+.skin-2 .hero-shade {
+  background:
+    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 22%),
+    linear-gradient(90deg, rgba(var(--dark-rgb), 0.35) 0%, rgba(var(--dark-rgb), 0.12) 40%, rgba(var(--dark-rgb), 0) 60%);
+}
+.skin-2 .hero-panel {
+  left: clamp(16px, 6vw, 104px);
+  right: auto;
+  width: min(620px, calc(100% - 32px));
+}
+.skin-2 .scroll-cue { left: auto; right: clamp(16px, 4vw, 64px); bottom: 150px; color: rgba(255, 250, 246, 0.85); }
+.skin-2 .scroll-cue span { background: rgba(255, 250, 246, 0.6); }
+
+html.skin-2 {
+  --brush-mask: none;
+  --ribbon-satin:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 22%, rgba(0, 0, 0, 0) 68%, rgba(40, 0, 6, 0.22) 100%),
+    linear-gradient(100deg, #5e0d18 0%, #8e1626 20%, #c32030 52%, #b01c2c 78%, #6d0f1c 100%);
+}
+@keyframes d2RibbonIn {
+  from { transform: skewX(-12deg) scaleX(0); }
+  to   { transform: skewX(-12deg) scaleX(1); }
+}
+.skin-2 .ht-swatch {
+  -webkit-mask: none;
+  mask: none;
+  inset: 0.06em 0 0.02em;
+  border-radius: 0.14em 0.42em 0.14em 0.42em;
+  background: var(--ribbon-satin);
+  box-shadow: inset 0 2px 0 rgba(255, 140, 150, 0.55), 0 14px 26px -12px rgba(94, 13, 24, 0.7);
+  transform: skewX(-12deg) scaleX(0);
+  animation-name: d2RibbonIn;
+}
+.skin-2 .brush { padding: 0 0.26em 0.06em 0.22em; }
+.skin-2 .brush::before {
+  border-radius: 0.12em 0.38em 0.12em 0.38em;
+  background: var(--ribbon-satin);
+  box-shadow: inset 0 2px 0 rgba(255, 140, 150, 0.5), 0 14px 26px -12px rgba(94, 13, 24, 0.65);
+  animation-name: d2RibbonIn;
+}
+.skin-2 .brush--ink::before {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 24%, rgba(0, 0, 0, 0) 68%, rgba(0, 0, 0, 0.25) 100%),
+    linear-gradient(100deg, var(--dark), #4a3a35 55%, var(--dark));
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.18), 0 14px 26px -12px rgba(var(--dark-rgb), 0.6);
+}
+.skin-2 .brush-tag::before,
+.skin-2 .life-route li.is-world span::before {
+  border-radius: 3px 10px 3px 10px;
+  background: var(--ribbon-satin);
+  box-shadow: inset 0 1px 0 rgba(255, 140, 150, 0.5);
+  transform: skewX(-12deg);
+}
+.skin-2 .kit-polaroid::after {
+  height: 14px;
+  border-radius: 2px 7px 2px 7px;
+  background: var(--ribbon-satin);
+  box-shadow: inset 0 1px 0 rgba(255, 140, 150, 0.5), 0 4px 8px -3px rgba(94, 13, 24, 0.5);
+  opacity: 0.92;
+}
+.skin-2 .pa-tile.is-active,
+.skin-2 .role-tabs button[aria-pressed="true"] {
+  background: var(--ribbon-satin);
+  box-shadow: inset 0 1.5px 0 rgba(255, 140, 150, 0.5), 0 14px 28px -14px rgba(94, 13, 24, 0.7);
+}
+@media (prefers-reduced-motion: reduce) {
+  .skin-2 .ht-swatch, .skin-2 .brush::before { animation: none; transform: skewX(-12deg); }
+}
+
+/* ---------- Design 3 (Artistic) ----------
+   The artwork is a palette-knife painting, so Design 1's brush strokes
+   belong here and stay (in brand red). The art fills the left of the
+   painting, so the hero text keeps its place on the right, over the
+   open cream canvas. Gold from the scales and gold lines is the accent. */
+.skin-3 .hero-shade {
+  background:
+    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 22%),
+    linear-gradient(270deg, rgba(var(--canvas-rgb), 0.35) 0%, rgba(var(--canvas-rgb), 0) 45%);
+}
+.skin-3 .hero-panel::after { background: linear-gradient(180deg, transparent, var(--red) 25%, var(--accent) 80%, transparent); }
+.skin-3 .section-title::after { height: 4px; }
+.skin-3 .kit-polaroid::after { background: rgba(195, 32, 48, 0.82); }
+
+/* ---------- Design 4 (Songket) ----------
+   Paint strokes become a songket band: brand crimson edged with
+   gold thread top and bottom and a faint woven diamond pattern,
+   like the border of a kain songket. Square-cut, not slanted. */
+html.skin-4 {
+  --brush-mask: none;
+  --songket-weave:
+    repeating-linear-gradient(45deg, rgba(232, 200, 140, 0.14) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(-45deg, rgba(232, 200, 140, 0.14) 0 1px, transparent 1px 7px);
+  --songket-band: var(--songket-weave), linear-gradient(100deg, #6a1420 0%, #a01c2c 35%, #c32030 65%, #8e1a26 100%);
+  --songket-edge: inset 0 2px 0 #c9a66b, inset 0 -2px 0 #c9a66b, inset 0 4px 0 rgba(0, 0, 0, 0.18), inset 0 -4px 0 rgba(0, 0, 0, 0.18);
+}
+.skin-4 .hero-shade {
+  background:
+    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 22%),
+    linear-gradient(270deg, rgba(var(--canvas-rgb), 0.4) 0%, rgba(var(--canvas-rgb), 0) 45%);
+}
+.skin-4 .hero-panel::after { background: linear-gradient(180deg, transparent, var(--red) 25%, var(--accent) 80%, transparent); }
+.skin-4 .ht-swatch,
+.skin-4 .brush::before {
+  -webkit-mask: none;
+  mask: none;
+  border-radius: 2px;
+  background: var(--songket-band);
+  box-shadow: var(--songket-edge), 0 12px 24px -12px rgba(82, 16, 25, 0.6);
+}
+.skin-4 .ht-swatch { inset: 0.08em 0 0.04em; }
+.skin-4 .brush--ink::before { background: var(--songket-weave), linear-gradient(100deg, var(--dark), #4a403a 55%, var(--dark)); }
+.skin-4 .brush-tag::before,
+.skin-4 .life-route li.is-world span::before {
+  border-radius: 2px;
+  background: var(--songket-band);
+  box-shadow: inset 0 1.5px 0 #c9a66b, inset 0 -1.5px 0 #c9a66b;
+}
+.skin-4 .kit-polaroid::after {
+  height: 14px;
+  border-radius: 1px;
+  background: var(--songket-band);
+  box-shadow: inset 0 1.5px 0 #c9a66b, inset 0 -1.5px 0 #c9a66b;
+}
+/* heading rule: crimson between two gold threads */
+.skin-4 .section-title::after,
+.skin-4 .life-head .page-title::after {
+  width: 84px;
+  height: 7px;
+  border-radius: 0;
+  background:
+    linear-gradient(var(--accent), var(--accent)) top / 100% 1px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) bottom / 100% 1px no-repeat,
+    linear-gradient(90deg, var(--wine), var(--red)) center / 100% 3px no-repeat;
+}
+.skin-4 .site-header::after,
+.skin-4 .site-footer::before { background: linear-gradient(90deg, var(--accent), var(--red) 30%, var(--wine) 70%, var(--accent)); }
+.skin-4 .pa-tile.is-active,
+.skin-4 .role-tabs button[aria-pressed="true"] { background: var(--songket-band); box-shadow: var(--songket-edge), 0 14px 28px -14px rgba(82, 16, 25, 0.7); }

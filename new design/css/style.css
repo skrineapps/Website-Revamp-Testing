@@ -1449,20 +1449,26 @@ main {
   html { scroll-behavior: auto; }
 }
 
-/* ---------- Review aid: switch between the two profile designs ---------- */
-.design-switch {
+/* ---------- Review aid: design + layout pills (js/design.js) ----------
+   Design pill (bottom right): the site-wide look, Design 1–4.
+   Layout pill (above it): only on pages with more than one layout. */
+.design-switch,
+.layout-switch {
   position: fixed;
   right: 16px;
   bottom: 16px;
   z-index: 60;
   display: flex;
+  align-items: center;
   gap: 4px;
   padding: 4px;
   border-radius: 999px;
   background: rgba(42, 42, 42, 0.92);
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
-.design-switch a {
+.layout-switch { bottom: 66px; }
+.design-switch a,
+.layout-switch a {
   padding: 8px 16px;
   border-radius: 999px;
   font: 700 13px var(--font-body);
@@ -1470,9 +1476,22 @@ main {
   color: rgba(255, 255, 255, 0.8);
   transition: background 0.2s, color 0.2s;
 }
-.design-switch a:hover { color: #fff; }
-.design-switch a[aria-current="page"] { background: var(--red); color: #fff; }
-@media print { .design-switch { display: none; } }
+.layout-switch a { min-width: 34px; padding: 6px 12px; text-align: center; }
+.layout-switch-label {
+  padding: 0 6px 0 12px;
+  font: 700 11px var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+.design-switch a:hover,
+.layout-switch a:hover { color: #fff; }
+.design-switch a[aria-current],
+.layout-switch a[aria-current] { background: var(--red); color: #fff; }
+@media (max-width: 480px) {
+  .design-switch a { padding: 8px 11px; font-size: 12px; }
+}
+@media print { .design-switch, .layout-switch { display: none; } }
 
 
 /* ---------- Names linked to people (js/people-links.js) ---------- */
