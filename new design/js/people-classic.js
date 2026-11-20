@@ -1,5 +1,5 @@
 /* =========================================================
-   SKRINE — People directory (Design 2: sidebar filters)
+   SKRINE — People directory (Design 3: sidebar filters)
    Renders the people in people-data.js and handles
    search, role buttons and practice/industry filters.
    ========================================================= */

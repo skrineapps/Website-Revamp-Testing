@@ -1,13 +1,14 @@
 /* =========================================================
-   SKRINE — People directory (Design 1: filter bar on top)
+   SKRINE — People directory (Designs 1 and 2: filter bar on top)
    Renders the people in people-data.js, with practice areas
    from profiles-data.js (taken from each skrine.com profile).
    - opens on Partners; the role buttons switch group
    - one search box covers names, practice areas, sectors,
      qualifications, affiliations and profile text, across everyone
    - Practice Area and Sector dropdowns narrow the list
-   - partner cards turn over slowly on hover to show practice areas
-   Design 2 (sidebar filters) is people-classic.html + js/people-classic.js.
+   - partner cards on hover: Design 1 (people.html) turns them over slowly;
+     Design 2 (people-fade.html) darkens the photo and fades the practice areas in
+   Design 3 (sidebar filters) is people-classic.html + js/people-classic.js.
    ========================================================= */
 (function () {
   "use strict";
@@ -28,6 +29,9 @@
   var ROLE_LABEL = { partners: "Partner", consultants: "Consultant", seniorAssociates: "Senior Associate", associates: "Associate" };
   var ROLE_PLURAL = { partners: "partners", consultants: "consultants", seniorAssociates: "senior associates", associates: "associates" };
   var DEFAULT_ROLE = "partners";
+  // partner cards: "flip" (Design 1, people.html) or "fade" (Design 2, people-fade.html)
+  var pageEl = document.querySelector(".people-page");
+  var CARD_MODE = (pageEl && pageEl.getAttribute("data-cards")) || "flip";
 
   /* Each filter matches a person when any of their practice areas
      contains one of its keywords. Adjust the keywords to tune the matching. */
@@ -149,6 +153,13 @@
     return inner;
   }
 
+  // corner chevron on a partner card: it opens their profile
+  function goChevron() {
+    var go = el("span", "pd-go");
+    go.innerHTML = '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>';
+    return go;
+  }
+
   function photoCard(p, role) {
     var slug = profileSlug(p.name);
     var linked = !!PROFILES[slug];
@@ -156,7 +167,7 @@
     var card = el(linked ? "a" : "article", "photo-card reveal" +
       (role === "consultants" ? " photo-card--consultant" : "") +
       (linked ? " photo-card--link" : "") +
-      (flips ? " photo-card--flip" : ""));
+      (flips ? (CARD_MODE === "fade" ? " photo-card--fade" : " photo-card--flip") : ""));
     if (linked) {
       card.href = "profile.html?p=" + encodeURIComponent(slug);
       card.setAttribute("aria-label", p.name + ", " + ROLE_LABEL[role] +
@@ -168,7 +179,26 @@
       return card;
     }
 
-    // partners: photo on the front, name + practice areas on the back
+    // Design 2: the photo slowly darkens and the practice areas rise in one after another
+    if (CARD_MODE === "fade") {
+      var face = photoFront(p);
+      var panel = el("div", "pd-panel");
+      panel.setAttribute("aria-hidden", "true");
+      panel.appendChild(el("p", "pd-back-role", ROLE_LABEL[role]));
+      panel.appendChild(el("h3", "pd-back-name", p.name));
+      if (p._areas.length) {
+        panel.appendChild(el("p", "pd-back-label", "Practice areas"));
+        var ul = list(p._areas, "pd-back-areas");
+        Array.prototype.forEach.call(ul.children, function (li, k) { li.style.setProperty("--i", k); });
+        panel.appendChild(ul);
+      }
+      if (linked) panel.appendChild(goChevron());
+      face.appendChild(panel);
+      card.appendChild(face);
+      return card;
+    }
+
+    // Design 1: photo on the front, name + practice areas on the back
     var flip = el("div", "pd-flip");
     var front = photoFront(p);
     front.classList.add("pd-face", "pd-front");
@@ -180,6 +210,7 @@
       back.appendChild(el("p", "pd-back-label", "Practice areas"));
       back.appendChild(list(p._areas, "pd-back-areas"));   // fitBacks() keeps as many as the card holds
     }
+    if (linked) back.appendChild(goChevron());
     flip.appendChild(front);
     flip.appendChild(back);
     card.appendChild(flip);
@@ -326,7 +357,7 @@
 
   /* ---------- card backs: list as many practice areas as fit, leaving room at the bottom ---------- */
   function fitBacks() {
-    document.querySelectorAll(".pd-back").forEach(function (b) {
+    document.querySelectorAll(".pd-back, .pd-panel").forEach(function (b) {
       if (!b.clientHeight) return;                       // in a hidden group: fitted when it is shown
       var items = Array.prototype.slice.call(b.querySelectorAll(".pd-back-areas li"));
       items.forEach(function (li) { li.hidden = false; });

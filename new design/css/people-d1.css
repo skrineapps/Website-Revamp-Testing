@@ -1,8 +1,8 @@
 /* =========================================================
    SKRINE — People page, Design 1
-   Loaded after css/people.css on people.html only.
+   Loaded after css/people.css on people.html and people-fade.html.
    - search + Practice Area + Sector dropdowns in one bar on top
-   - partner cards turn over slowly on hover to show practice areas
+   - partner cards: turn over slowly (Design 1) or darken and fade the practice areas in (Design 2)
    ========================================================= */
 
 /* ---------- filter bar ---------- */
@@ -106,7 +106,7 @@
   transform: rotateY(180deg);
   border-radius: 20px;
   overflow: hidden;
-  padding: clamp(16px, 1.4vw, 22px) clamp(16px, 1.4vw, 22px) clamp(26px, 2.4vw, 36px);
+  padding: clamp(16px, 1.4vw, 22px) clamp(16px, 1.4vw, 22px) 56px;
   display: flex;
   flex-direction: column;
   color: var(--white);
@@ -167,6 +167,89 @@
 
 @media (prefers-reduced-motion: reduce) {
   .pd-flip { transition: none; }
+}
+
+
+/* ---------- "open profile" chevron, bottom right of a partner card ---------- */
+.pd-go {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  color: var(--red);
+  font-size: 13px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transition: transform 0.35s var(--ease), background 0.3s, color 0.3s;
+}
+.photo-card--flip:hover .pd-go { transform: translateX(2px); }
+.pd-go:hover { background: var(--ink); color: var(--white); }
+/* Design 2: it arrives last, after the practice areas */
+.pd-panel .pd-go { opacity: 0; transform: translateY(12px); transition: opacity 0.35s ease, transform 0.35s ease; }
+.photo-card--fade:hover .pd-panel .pd-go,
+.photo-card--fade:focus-visible .pd-panel .pd-go { opacity: 1; transform: none; transition: opacity 0.9s ease 2.2s, transform 0.9s cubic-bezier(0.22, 0.7, 0.2, 1) 2.2s; }
+
+/* ---------- Design 2 (people-fade.html): slow darken + practice areas in sequence ---------- */
+.pd-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  padding: clamp(16px, 1.4vw, 22px) clamp(16px, 1.4vw, 22px) 56px;
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+  pointer-events: none;
+}
+/* the wash: deep red into near-black, never fully opaque */
+.pd-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(122, 28, 38, 0.85) 0%, rgba(178, 30, 46, 0.85) 40%, rgba(195, 32, 48, 0.85) 100%);   /* about 15% see-through */
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.pd-panel > *,
+.pd-panel .pd-back-areas li {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.pd-panel .pd-back-areas { opacity: 1; transform: none; }
+
+.photo-card--fade:hover .pd-panel::before,
+.photo-card--fade:focus-visible .pd-panel::before { opacity: 1; transition: opacity 1.8s ease; }
+.photo-card--fade:hover .pd-panel > *,
+.photo-card--fade:focus-visible .pd-panel > *,
+.photo-card--fade:hover .pd-panel .pd-back-areas li,
+.photo-card--fade:focus-visible .pd-panel .pd-back-areas li {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+/* one after another: role, name, label, then each practice area */
+.photo-card--fade:hover .pd-panel .pd-back-role  { transition-delay: 0.5s; }
+.photo-card--fade:hover .pd-panel .pd-back-name  { transition-delay: 0.7s; }
+.photo-card--fade:hover .pd-panel .pd-back-label { transition-delay: 1s; }
+.photo-card--fade:hover .pd-panel .pd-back-areas li { transition-delay: calc(1.2s + var(--i, 0) * 0.28s); }
+
+/* the name on the photo gives way to the one in the panel; keep the photo still */
+.photo-card--fade .photo-card-info { transition: opacity 0.6s ease; }
+.photo-card--fade:hover .photo-card-info,
+.photo-card--fade:focus-visible .photo-card-info { opacity: 0; }
+.photo-card--fade:hover .photo-card-img { transform: scale(1.02); }
+.photo-card--fade .photo-card-name::after { display: none; }
+.pd-panel .pd-back-name { text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
+.pd-panel .pd-back-areas li { text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-panel::before, .pd-panel > *, .pd-panel .pd-back-areas li { transition: none !important; }
 }
 
 /* ---------- responsive ---------- */
