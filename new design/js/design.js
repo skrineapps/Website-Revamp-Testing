@@ -2,7 +2,7 @@
    SKRINE — Design switch (review aid)
    Loaded in <head> on every page, before anything is drawn.
 
-   The site has six looks. Pick one on any page (the "Design" pill,
+   The site has eight looks. Pick one on any page (the "Design" pill,
    bottom right) and every page after that uses it:
      Design 1  the current painted look (no extra class)
      Design 2  ribbons        html.skin-2.themed
@@ -10,6 +10,8 @@
      Design 4  songket        html.skin-4.themed
      Design 5  steps          html.skin-5.themed  (Batu Caves stairs)
      Design 6  peaks          html.skin-6.themed  (misty karst mountains)
+     Design 7  steel          html.skin-7.themed  (brushed corrugated steel)
+     Design 8  bridge         html.skin-8.themed  (cable-stayed bridge at sunrise)
    The looks live in css/themes.css; every page keeps one copy of its markup.
 
    - ?design=N in the address picks a look; the choice is remembered for
@@ -21,7 +23,7 @@
    ========================================================= */
 (function () {
   var KEY = "skrine-design";
-  var SKINS = ["1", "2", "3", "4", "5", "6"];
+  var SKINS = ["1", "2", "3", "4", "5", "6", "7", "8"];
   var html = document.documentElement;
   var params = new URLSearchParams(location.search);
   var asked = params.get("design");

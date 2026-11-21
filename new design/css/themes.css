@@ -6,6 +6,8 @@
      .skin-4  Songket   images/d4/songket.jpg   woven songket, linen, gold thread
      .skin-5  Steps     images/d5/steps.jpg     Batu Caves stairs (Getty comp: needs a licence)
      .skin-6  Peaks     images/d6/peaks.jpg     misty karst mountains
+     .skin-7  Steel     images/d7/metal.jpg     brushed corrugated steel (Getty comp: needs a licence)
+     .skin-8  Bridge    images/d8/bridge.jpg    cable-stayed bridge at sunrise (Getty comp: needs a licence)
    Design 1 (no class) is the original look and is untouched.
 
    How this file is laid out
@@ -802,4 +804,225 @@ html.skin-6 { --brush-mask: none; }
 .skin-6 .section-title::after { width: 110px; }
 @media (max-width: 760px) {
   .skin-6 .hero-panel { left: 20px; right: 20px; width: auto; }
+}
+
+/* =========================================================
+   Design 7 (Steel): brushed, corrugated steel
+   Cool silver greys from the photograph, a calm near-white
+   canvas, brand red as the one accent. The picture has no
+   empty space, so the words sit on the left under a soft veil
+   of canvas. The highlight is a red band ribbed like the metal.
+   NOTE: images/d7/metal.jpg is a Getty Images comp (watermarked,
+   small). It needs a licence, or a replacement photo, before
+   going live. The watermark sits in the part of the artwork the
+   page fades out.
+   ========================================================= */
+.skin-7 {
+  --red: #c32030;
+  --red-dark: #8e1626;
+  --red-soft: rgba(142, 22, 38, 0.07);
+  --wine: #8e1626;
+  --wine-deep: #5a0f18;
+  --accent: #6b7b88;        /* steel blue-grey */
+
+  --grey-100: #ecedee;
+  --grey-300: #d0d3d6;
+  --grey-500: #8d9297;
+  --grey-700: #5d6368;
+  --ink: #1e2124;
+  --ink-soft: #4c5257;
+  --white: #fcfcfd;
+  --muted-word: #757b80;
+
+  --canvas: #f1f2f3;
+  --canvas-rgb: 241, 242, 243;
+  --pale-rgb: 229, 231, 233;
+  --tint-rgb: 206, 210, 213;
+  --dark: #1d2023;
+  --dark-rgb: 29, 32, 35;
+  --shade-rgb: 28, 32, 36;
+
+  --ribbon: linear-gradient(100deg, #5a0f18 0%, #8e1626 30%, #c32030 70%, #a81b2a 100%);
+  --rule: linear-gradient(90deg, #c32030 0 70%, #8d9297 70% 100%);
+
+  --t-art: url("../images/d7/metal.jpg");
+  --t-wash: url("../images/d7/metal-wash.jpg");
+  --t-hero-pos: 50% 40%;
+  --t-field-pos: 50% 50%;
+  --t-head-pos: 50% 40%;
+  --t-head-flip: none;
+  --t-head-mask: radial-gradient(75% 105% at 100% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
+  --t-head-opacity: 0.5;
+  --t-foot-dir: 90deg;
+  --t-foot-pos: 50% 12%;   /* high in the picture, clear of the watermark */
+}
+
+/* hero artwork: shown larger and pinned to the top, so the watermark (low in the picture)
+   lands in the part of the hero that fades out. Very wide screens fall back to "cover". */
+.skin-7 .hero-bg,
+.skin-8 .hero-bg { background-size: auto 142%; background-position: 50% 0; }
+@media (min-aspect-ratio: 21/10) {
+  .skin-7 .hero-bg,
+  .skin-8 .hero-bg { background-size: cover; }
+}
+
+/* hero: a veil of canvas on the left behind the words, the steel showing on the right */
+.skin-7 .hero-shade {
+  background:
+    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.5) 0%, rgba(var(--canvas-rgb), 0) 22%),
+    radial-gradient(60% 85% at 24% 58%, rgba(var(--canvas-rgb), 0.92) 0%, rgba(var(--canvas-rgb), 0.66) 46%, rgba(var(--canvas-rgb), 0) 100%);
+}
+.skin-7 .hero-panel {
+  left: clamp(20px, 6vw, 104px);
+  right: auto;
+  width: min(600px, calc(100% - 40px));
+}
+.skin-7 .scroll-cue { left: auto; right: clamp(16px, 4vw, 64px); bottom: 150px; color: rgba(255, 255, 255, 0.9); }
+.skin-7 .scroll-cue span { background: rgba(255, 255, 255, 0.65); }
+
+/* highlight: a brand-red band ribbed like corrugated steel, with a bright top edge */
+html.skin-7 {
+  --brush-mask: none;
+  --steel-ribs: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.13) 0 2px, rgba(0, 0, 0, 0.1) 2px 4px);
+}
+.skin-7 .ht-swatch,
+.skin-7 .brush::before {
+  -webkit-mask: none;
+  mask: none;
+  border-radius: 2px;
+  background: var(--steel-ribs), linear-gradient(180deg, #d0283a 0%, #c32030 50%, #a81b2a 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4), 0 12px 24px -12px rgba(95, 14, 22, 0.6);
+}
+.skin-7 .brush--ink::before { background: var(--steel-ribs), linear-gradient(180deg, #3a3f44, var(--dark)); }
+.skin-7 .brush-tag::before,
+.skin-7 .life-route li.is-world span::before { border-radius: 2px; background: var(--red); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35); }
+.skin-7 .kit-polaroid::after { height: 12px; border-radius: 2px; background: var(--steel-ribs), var(--red); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35); }
+.skin-7 .section-title::after,
+.skin-7 .life-head .page-title::after { border-radius: 0; }
+.skin-7 .pa-tile.is-active,
+.skin-7 .role-tabs button[aria-pressed="true"] { background: var(--steel-ribs), var(--red); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.35), 0 14px 28px -14px rgba(95, 14, 22, 0.6); }
+@media (max-width: 760px) {
+  .skin-7 .hero-panel { left: 20px; right: 20px; width: auto; }
+}
+
+/* =========================================================
+   Design 8 (Bridge): a cable-stayed bridge at sunrise
+   Warm cream canvas, with the sky's peach as the second
+   colour and the deep teal of the water for the dark areas;
+   brand red stays the accent. A full, colourful photograph
+   with no empty canvas, so the hero darkens the left and the
+   words sit on it in white. The highlight is a red band that
+   warms to sunset orange, with a peach line like the horizon.
+   NOTE: images/d8/bridge.jpg is a Getty Images comp (watermarked,
+   small). It needs a licence, or a replacement photo, before
+   going live. The watermark sits in the part of the artwork the
+   page fades out.
+   ========================================================= */
+.skin-8 {
+  --red: #c32030;
+  --red-dark: #9a1824;
+  --red-soft: rgba(154, 24, 36, 0.08);
+  --wine: #9a1824;
+  --wine-deep: #5f0e16;
+  --accent: #e0955a;        /* sunrise peach */
+
+  --grey-100: #efeae5;
+  --grey-300: #dbd3cc;
+  --grey-500: #948c86;
+  --grey-700: #675f59;
+  --ink: #1d2224;
+  --ink-soft: #4b5457;
+  --white: #fffdfb;
+  --muted-word: rgba(255, 255, 255, 0.72);
+
+  --canvas: #f8f4ef;
+  --canvas-rgb: 248, 244, 239;
+  --pale-rgb: 236, 230, 223;
+  --tint-rgb: 222, 212, 200;
+  --dark: #14202a;
+  --dark-rgb: 20, 32, 42;
+  --shade-rgb: 24, 34, 40;
+
+  --ribbon: linear-gradient(100deg, #7a1420 0%, #c32030 60%, #cf4a2e 100%);
+  --rule: linear-gradient(90deg, #c32030 0 70%, #e0955a 70% 100%);
+
+  --t-art: url("../images/d8/bridge.jpg");
+  --t-wash: url("../images/d8/bridge-wash.jpg");
+  --t-hero-pos: 50% 35%;
+  --t-field-pos: 50% 50%;
+  --t-head-pos: 60% 30%;
+  --t-head-flip: none;
+  --t-head-mask: radial-gradient(70% 100% at 100% 0%, #000 25%, rgba(0, 0, 0, 0.45) 55%, transparent 80%);
+  --t-head-opacity: 0.42;
+  --t-foot-dir: 90deg;
+  --t-foot-pos: 50% 12%;   /* high in the picture, clear of the watermark */
+}
+
+/* hero: dark teal on the left, white words */
+.skin-8 .hero-shade {
+  background:
+    linear-gradient(180deg, rgba(var(--dark-rgb), 0.35) 0%, rgba(var(--dark-rgb), 0) 24%),
+    linear-gradient(90deg, rgba(var(--dark-rgb), 0.86) 0%, rgba(var(--dark-rgb), 0.66) 34%, rgba(var(--dark-rgb), 0.18) 58%, rgba(var(--dark-rgb), 0) 72%);
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 91%);
+  mask-image: linear-gradient(180deg, #000 70%, transparent 91%);
+}
+.skin-8 .hero-bg {
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.12) 87%, transparent 91%);
+  mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.12) 87%, transparent 91%);
+}
+.skin-8 .hero-panel {
+  left: clamp(20px, 6vw, 104px);
+  right: auto;
+  bottom: clamp(120px, 21vh, 200px);
+  width: min(600px, calc(100% - 40px));
+}
+.skin-8 .hero-eyebrow { color: rgba(255, 255, 255, 0.82); }
+.skin-8 .ht-word { color: #fff; }
+.skin-8 .ht-word:nth-child(2) { color: var(--muted-word); }
+.skin-8 .ht-word,
+.skin-8 .hero-sub { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45); }
+.skin-8 .ht-word--swatch { text-shadow: none; }
+.skin-8 .ht-text { color: #fff; }
+.skin-8 .hero-sub { color: rgba(255, 255, 255, 0.88); }
+.skin-8 .hero-foot { border-top-color: rgba(255, 255, 255, 0.28); }
+.skin-8 .hero .btn--outline { border-color: rgba(255, 255, 255, 0.85); color: #fff; background: rgba(255, 255, 255, 0.06); }
+.skin-8 .hero .btn--outline:hover { border-color: transparent; background: var(--red); }
+.skin-8 .scroll-cue { left: auto; right: clamp(16px, 4vw, 64px); bottom: 150px; color: rgba(255, 255, 255, 0.85); }
+.skin-8 .scroll-cue span { background: rgba(255, 255, 255, 0.6); }
+.skin-8 .site-header:not(.is-scrolled) { background: rgba(var(--canvas-rgb), 0.82); }
+/* the award badges are dark ink: give them a small white backing on the dark photo */
+.skin-8 .hero-rosettes li { padding: 5px; border-radius: 10px; background: rgba(255, 255, 255, 0.92); box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5); }
+
+/* highlight: a red band warming to sunset orange, with a peach line along its foot like the horizon */
+html.skin-8 { --brush-mask: none; }
+.skin-8 .ht-swatch,
+.skin-8 .brush::before {
+  -webkit-mask: none;
+  mask: none;
+  border-radius: 3px;
+  background: linear-gradient(100deg, #a81b2a 0%, #c32030 45%, #d4572f 100%);
+  box-shadow: inset 0 -3px 0 var(--accent), 0 12px 24px -12px rgba(95, 14, 22, 0.6);
+}
+.skin-8 .brush--ink::before { background: linear-gradient(180deg, #24343f, var(--dark)); }
+.skin-8 .brush-tag::before,
+.skin-8 .life-route li.is-world span::before { border-radius: 3px; background: var(--red); box-shadow: inset 0 -2px 0 var(--accent); }
+.skin-8 .kit-polaroid::after { height: 12px; border-radius: 2px; background: var(--red); box-shadow: inset 0 -2px 0 var(--accent); }
+.skin-8 .section-title::after,
+.skin-8 .life-head .page-title::after { border-radius: 0; }
+.skin-8 .pa-tile.is-active,
+.skin-8 .role-tabs button[aria-pressed="true"] { background: var(--red); box-shadow: inset 0 -3px 0 var(--accent), 0 14px 28px -14px rgba(95, 14, 22, 0.6); }
+@media (max-width: 760px) {
+  .skin-8 .hero-panel { left: 20px; right: 20px; width: auto; bottom: 64px; }
+  .skin-8 .hero-shade { background: linear-gradient(180deg, rgba(var(--dark-rgb), 0.35) 0%, rgba(var(--dark-rgb), 0.55) 40%, rgba(var(--dark-rgb), 0.82) 75%); }
+  .skin-8 .hero-shade::after { display: none; }
+}
+
+/* =========================================================
+   Design pill: eight designs. On phones the pill would run off
+   the screen, so it drops its "Design" label and tightens up.
+   ========================================================= */
+@media (max-width: 520px) {
+  .design-switch { right: 8px; bottom: 8px; gap: 2px; }
+  .design-switch::before { display: none; }
+  .design-switch a { min-width: 30px; padding: 6px 8px; }
 }
