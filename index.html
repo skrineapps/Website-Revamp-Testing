@@ -126,12 +126,16 @@
     </section>
 
     <!-- ============ GLOBAL NETWORK ============ -->
-    <section class="section section--network section--art" id="network" data-watermark="Global">
+    <section class="section section--network section--art" id="network" data-watermark="Lex Mundi">
       <div class="network-wrap">
         <div class="network-copy reveal">
           <p class="eyebrow">Global Network</p>
           <h2 class="section-title section-title--left">Local expertise, global reach</h2>
-          <p class="network-lead">Skrine is the exclusive member firm in Malaysia for <strong>Lex Mundi</strong> — the world's leading network of independent law firms.</p>
+          <!-- Lex Mundi membership leads the section: logo + sentence as one lockup -->
+          <div class="nw-member">
+            <img src="new%20design/images/lexmundi.svg" alt="Lex Mundi — Bringing the best together" class="nw-member-logo">
+            <p class="network-lead">Skrine is the exclusive member firm in Malaysia for <strong>Lex Mundi</strong> — the world's leading network of independent law firms.</p>
+          </div>
 
           <ul class="network-stats">
             <li><span class="ns-num"><span class="count-up" data-to="21000">21,000</span>+</span><span class="ns-label">lawyers</span></li>
@@ -156,9 +160,6 @@
                 <span class="nd-local">Indian investors &amp; businesses</span>
                 <span class="nd-go">Explore <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
               </a>
-              <div class="nd-logo">
-                <img src="new%20design/images/lexmundi.svg" alt="Lex Mundi — Bringing the best together" class="network-logo">
-              </div>
             </div>
           </div>
         </div>
@@ -487,22 +488,138 @@
           </article>
         </div>
 
-        <article class="award-banner reveal">
-          <p class="award-src">Chambers Asia-Pacific &amp; Greater China Region Awards 2024</p>
-          <p class="award-banner-title foil">“Malaysia Law Firm of the Year”</p>
-        </article>
-
-        <ul class="award-rest">
-          <li class="reveal"><span class="award-mark"><img src="new%20design/images/awards/iflr1000.png" alt="IFLR1000 logo" loading="lazy"></span><span class="award-src">IFLR1000 · 2023</span>Top-Tier Firm</li>
-          <li class="reveal"><span class="award-mark"><img src="new%20design/images/awards/asialaw.png" alt="asialaw Profiles logo" loading="lazy"></span><span class="award-src">asialaw Profiles · 2023</span>Outstanding Firm</li>
-          <li class="reveal"><span class="award-mark"><img src="new%20design/images/awards/benchmark.png" alt="Benchmark Litigation logo" loading="lazy"></span><span class="award-src">Benchmark Litigation Asia-Pacific · 2023</span>Top-Tier Firm</li>
-          <li class="reveal"><span class="award-mark"><img src="new%20design/images/awards/whoswholegal.png" alt="Who's Who Legal logo" loading="lazy"></span><span class="award-src">Who's Who Legal · 2019</span>Malaysia Law Firm of the Year</li>
-          <li class="reveal"><span class="award-mark"><img src="new%20design/images/awards/gar100.png" alt="GAR 100 logo" loading="lazy"></span><span class="award-src">Global Arbitration Review</span>GAR 100</li>
-        </ul>
-
-        <div class="awards-cta reveal">
-          <a href="#" class="btn btn--foil">All Recognitions <i class="fa-solid fa-arrow-right"></i></a>
+        <!-- firm accolades, set as quotes (most recent first; sources: Skrine's own Awards & Rankings news) -->
+        <div class="accolades" aria-label="Firm accolades">
+          <figure class="accolade accolade--lead reveal">
+            <blockquote>Malaysia Law Firm of the Year</blockquote>
+            <figcaption>Chambers Asia-Pacific &amp; Greater China Region Awards 2024</figcaption>
+          </figure>
+          <figure class="accolade reveal">
+            <blockquote>Labour and Employment Firm of the Year</blockquote>
+            <figcaption>Benchmark Litigation Asia-Pacific Awards 2025</figcaption>
+          </figure>
+          <figure class="accolade reveal">
+            <blockquote>One of the Best Overall Law Firms</blockquote>
+            <figcaption>Asia Business Law Journal · Malaysia Law Firm Awards 2025</figcaption>
+          </figure>
+          <figure class="accolade reveal">
+            <blockquote>Outstanding International IP Service Team</blockquote>
+            <figcaption>International Intellectual Property Service Teams Award 2024</figcaption>
+          </figure>
         </div>
+
+        <!-- individual lawyers, latest edition only (2026), by practice area -->
+        <section class="ranked reveal" aria-labelledby="rankedHead">
+          <header class="ranked-head">
+            <p class="eyebrow eyebrow--foil">Our lawyers</p>
+            <h3 class="ranked-title" id="rankedHead">Individually ranked, 2026</h3>
+          </header>
+          <!-- carousel: one lawyer per slide, no boxes; moves on its own (js/ranked-carousel.js) -->
+          <div class="rk" id="rankedCarousel" aria-roledescription="carousel" aria-label="Individually ranked lawyers, 2026">
+            <div class="rk-viewport">
+              <ul class="rk-track">
+                <li class="rk-slide" data-name="To' Puan Janet Looi">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Legal 500 Asia Pacific · 2026</p>
+                    <p class="rk-tier">Hall of Fame</p>
+                    <p class="rk-area">Corporate and M&amp;A</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=to-puan-janet-looi">To' Puan Janet Looi</a><span>Partner</span></h4>
+                    <ul class="rk-more"><li><span>Chambers</span>Corporate / M&amp;A · <b>Band 2</b></li></ul>
+                    <a class="rk-link" href="new%20design/profile.html?p=to-puan-janet-looi">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=to-puan-janet-looi" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/To%20Puan%20Janet%20Looi.png" alt="" loading="lazy"></a>
+                </li>
+                <li class="rk-slide" data-name="Fariz Abdul Aziz">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Chambers Asia-Pacific · 2026</p>
+                    <p class="rk-tier">Band 2</p>
+                    <p class="rk-area">Projects, Infrastructure &amp; Energy</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=fariz-abdul-aziz">Fariz Abdul Aziz</a><span>Partner</span></h4>
+                    <ul class="rk-more"><li><span>Chambers</span>Corporate / M&amp;A · <b>Band 3</b></li><li><span>Legal 500</span>Corporate and M&amp;A · Projects and Energy · <b>Leading Individual</b></li></ul>
+                    <a class="rk-link" href="new%20design/profile.html?p=fariz-abdul-aziz">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=fariz-abdul-aziz" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/Fariz.png" alt="" loading="lazy"></a>
+                </li>
+                <li class="rk-slide" data-name="Charmayne Ong">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Legal 500 Asia Pacific · 2026</p>
+                    <p class="rk-tier">Hall of Fame</p>
+                    <p class="rk-area">Intellectual Property &amp; TMT</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=charmayne-ong-poh-yin">Charmayne Ong</a><span>Partner</span></h4>
+                    <ul class="rk-more"><li><span>Chambers</span>Intellectual Property · TMT · <b>Ranked</b></li></ul>
+                    <a class="rk-link" href="new%20design/profile.html?p=charmayne-ong-poh-yin">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=charmayne-ong-poh-yin" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/Charmayne%20Ong.png" alt="" loading="lazy"></a>
+                </li>
+                <li class="rk-slide" data-name="Sharon Chong">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Chambers Asia-Pacific · 2026</p>
+                    <p class="rk-tier">Band 5</p>
+                    <p class="rk-area">Dispute Resolution</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=sharon-chong-tze-ying">Sharon Chong</a><span>Partner</span></h4>
+                    <a class="rk-link" href="new%20design/profile.html?p=sharon-chong-tze-ying">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=sharon-chong-tze-ying" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/Sharon%20Chong.png" alt="" loading="lazy"></a>
+                </li>
+                <li class="rk-slide" data-name="Jesy Ooi">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Chambers Asia-Pacific · 2026</p>
+                    <p class="rk-tier">Ranked</p>
+                    <p class="rk-area">Real Estate</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=jesy-ooi">Jesy Ooi</a><span>Partner</span></h4>
+                    <a class="rk-link" href="new%20design/profile.html?p=jesy-ooi">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=jesy-ooi" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/Jesy.png" alt="" loading="lazy"></a>
+                </li>
+                <li class="rk-slide" data-name="Tan Wei Xian">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Legal 500 Asia Pacific · 2026</p>
+                    <p class="rk-tier rk-tier--long">Next Generation Partner</p>
+                    <p class="rk-area">Corporate and M&amp;A</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=tan-wei-xian">Tan Wei Xian</a><span>Partner</span></h4>
+                    <a class="rk-link" href="new%20design/profile.html?p=tan-wei-xian">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=tan-wei-xian" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/Wei%20Xian.png" alt="" loading="lazy"></a>
+                </li>
+                <li class="rk-slide" data-name="Rachel Chiah">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Legal 500 Asia Pacific · 2026</p>
+                    <p class="rk-tier rk-tier--long">Next Generation Partner</p>
+                    <p class="rk-area">Projects and Energy</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=rachel-chiah">Rachel Chiah</a><span>Partner</span></h4>
+                    <a class="rk-link" href="new%20design/profile.html?p=rachel-chiah">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=rachel-chiah" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/Rachel.png" alt="" loading="lazy"></a>
+                </li>
+                <li class="rk-slide" data-name="Nimalan Devaraja">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Legal 500 Asia Pacific · 2026</p>
+                    <p class="rk-tier rk-tier--long">Next Generation Partner</p>
+                    <p class="rk-area">Dispute Resolution</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=nimalan-devaraja">Nimalan Devaraja</a><span>Partner</span></h4>
+                    <a class="rk-link" href="new%20design/profile.html?p=nimalan-devaraja">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=nimalan-devaraja" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/Nimalan.png" alt="" loading="lazy"></a>
+                </li>
+                <li class="rk-slide" data-name="Tatvaruban Subramaniam">
+                  <div class="rk-copy">
+                    <p class="rk-dir">Legal 500 Asia Pacific · 2026</p>
+                    <p class="rk-tier rk-tier--long">Next Generation Partner</p>
+                    <p class="rk-area">Real Estate and Construction</p>
+                    <h4 class="rk-name"><a href="new%20design/profile.html?p=tatvaruban-subramaniam">Tatvaruban Subramaniam</a><span>Partner</span></h4>
+                    <a class="rk-link" href="new%20design/profile.html?p=tatvaruban-subramaniam">View profile <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                  </div>
+                  <a class="rk-photo" href="new%20design/profile.html?p=tatvaruban-subramaniam" tabindex="-1" aria-hidden="true"><img src="current%20design/images/people/Tatvaruban.png" alt="" loading="lazy"></a>
+                </li>
+              </ul>
+            </div>
+            <div class="rk-controls">
+              <button type="button" class="rk-btn rk-prev" aria-label="Previous lawyer"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
+              <ol class="rk-roster" aria-label="Choose a lawyer"></ol>
+              <button type="button" class="rk-btn rk-next" aria-label="Next lawyer"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
 
@@ -527,6 +644,7 @@
       © 1963 – <span id="year">2026</span> Skrine. All rights reserved
       <span class="sep">|</span> <a href="#">Disclaimer</a>
       <span class="sep">|</span> <a href="#">PDPA Notice</a>
+      <span class="sep">|</span> <a href="new%20design/archive.html">Archive</a>
     </p>
   </footer>
 
@@ -534,5 +652,7 @@
   <script src="new%20design/js/news-data.js"></script>
   <script src="new%20design/js/globe-land.js"></script>
   <script src="new%20design/js/home.js"></script>
+  <script src="new%20design/js/ranked-carousel.js"></script>
+  <script src="new%20design/js/hero-immersive.js"></script>
 </body>
 </html>

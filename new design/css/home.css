@@ -276,7 +276,7 @@
 .nd-label span { font-family: var(--font-body); font-weight: 500; letter-spacing: 0; text-transform: none; font-size: 14px; color: var(--grey-700); }
 .nd-cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 .nd-card {
@@ -340,9 +340,35 @@
 .nd-card.is-active .nd-local { color: rgba(255, 255, 255, 0.8); }
 .nd-card.is-active .nd-go { color: var(--white); gap: 12px; }
 
-/* Lex Mundi logo: sits in the third slot, beside the desks */
-.nd-logo { display: flex; align-items: center; justify-content: center; padding: 8px; }
-.network-logo { display: block; width: 100%; max-width: 172px; height: auto; opacity: 0.95; }
+/* ---------- Lex Mundi membership: the section's lead ----------
+   An editorial lockup, no box: the logo recoloured in the site's ink
+   (it turns red on hover), a red rule that draws down, then the sentence. */
+.nw-member {
+  display: grid;
+  grid-template-columns: auto 2px minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 2.4vw, 32px);
+  margin-top: 30px;
+}
+.nw-member::before {
+  content: "";
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  background: var(--red);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.9s var(--ease) 0.3s;
+}
+.is-visible .nw-member::before { transform: scaleY(1); }
+.nw-member-logo {
+  grid-column: 1;
+  grid-row: 1;
+  display: block;
+  width: clamp(150px, 15vw, 200px);
+  height: auto;
+}
+.nw-member .network-lead { grid-column: 3; grid-row: 1; margin-top: 0; }
 
 .network-globe {
   position: relative;
@@ -563,8 +589,10 @@
   .network-stats li + li { padding-left: 12px; }
   .nd-cards { grid-template-columns: 1fr; }
   .nd-card { min-height: 0; }
-  .nd-logo { justify-content: flex-start; padding: 6px 0 0; }
-  .network-logo { max-width: 150px; }
+  .nw-member { grid-template-columns: 1fr; gap: 16px; }
+  .nw-member::before { display: none; }
+  .nw-member-logo { width: 170px; }
+  .nw-member .network-lead { grid-column: 1; grid-row: 2; padding-top: 16px; border-top: 2px solid var(--red); }
   .ns-label { font-size: 11px; letter-spacing: 0.06em; }
 }
 
@@ -720,3 +748,225 @@
 @media (prefers-reduced-motion: reduce) {
   .section--art::before, .section--art::after { transform: none; }
 }
+
+/* ---------- Awards: firm accolades as quotes ----------
+   Big serif quotes in the foil gradient, each with a hairline rule
+   and its source. The first one leads across the full width. */
+.accolades {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 clamp(24px, 3.5vw, 48px);
+  padding: clamp(40px, 5vw, 64px) 0 clamp(32px, 4vw, 48px);
+  border-bottom: 1px solid rgba(236, 237, 236, 0.25);
+}
+.accolade { position: relative; margin: 0; padding: 26px 0 22px; }
+.accolade::before {
+  content: "\201C";
+  position: absolute;
+  top: -10px;
+  left: -4px;
+  font: 900 64px/1 var(--font-display);
+  color: rgba(236, 237, 236, 0.22);
+}
+.accolade blockquote {
+  margin: 0;
+  font: 700 clamp(20px, 1.9vw, 26px)/1.3 var(--font-display);
+  color: var(--white);
+}
+.accolade figcaption {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(236, 237, 236, 0.22);
+  font: 400 12.5px/1.5 var(--font-alt);
+  letter-spacing: 0.04em;
+  color: rgba(236, 237, 236, 0.7);
+}
+.accolade--lead { grid-column: 1 / -1; padding: 6px 0 34px 0; margin-bottom: 10px; border-bottom: 1px solid rgba(236, 237, 236, 0.18); display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 40px; }
+.accolade--lead::before { top: -30px; font-size: 120px; }
+.accolade--lead blockquote {
+  font-size: clamp(32px, 4.2vw, 60px);
+  font-weight: 900;
+  background: linear-gradient(100deg, var(--foil-1) 0%, var(--foil-2) 30%, var(--foil-3) 50%, var(--foil-2) 70%, var(--foil-1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.accolade--lead blockquote::before { content: "\201C"; }
+.accolade--lead blockquote::after { content: "\201D"; }
+.accolade--lead::before { display: none; }
+.accolade--lead figcaption { margin: 0; padding: 0; border: 0; max-width: 22em; }
+
+/* ---------- Awards: individually ranked lawyers ---------- */
+.ranked { padding-top: clamp(40px, 5vw, 64px); }
+.ranked-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-bottom: 26px; }
+.ranked-head .eyebrow { margin: 0; }
+.ranked-title { font: 900 clamp(26px, 2.6vw, 36px)/1.15 var(--font-display); color: var(--white); }
+.ranked-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(28px, 4vw, 64px); }
+.ranked-col > .award-src { padding-bottom: 12px; border-bottom: 1px solid rgba(236, 237, 236, 0.45); }
+.ranked-list > div { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: 4px 18px; padding: 14px 0; border-bottom: 1px solid rgba(236, 237, 236, 0.16); }
+.ranked-list dt { grid-row: span 3; font: 700 11.5px/1.5 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(236, 237, 236, 0.65); padding-top: 3px; }
+.ranked-list dd { grid-column: 2; margin: 0; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.ranked-list dd a { font: 700 16px/1.35 var(--font-display); color: var(--white); border-bottom: 1px solid transparent; transition: border-color 0.25s; }
+.ranked-list dd a:hover { border-color: rgba(255, 255, 255, 0.7); }
+.tier { flex: 0 0 auto; font: 700 11px var(--font-body); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(236, 237, 236, 0.75); white-space: nowrap; }
+.tier--top {
+  padding: 3px 9px;
+  border-radius: 12px;
+  background: linear-gradient(100deg, var(--foil-1), var(--foil-3) 50%, var(--foil-2));
+  color: var(--red-dark, #8a1a2a);
+}
+
+@media (max-width: 900px) {
+  .accolades { grid-template-columns: 1fr; }
+  .ranked-cols { grid-template-columns: 1fr; }
+  .ranked-col + .ranked-col { margin-top: 32px; }
+}
+@media (max-width: 520px) {
+  .ranked-list > div { grid-template-columns: minmax(0, 1fr); }
+  .ranked-list dt { grid-row: auto; }
+  .ranked-list dd { grid-column: 1; flex-wrap: wrap; justify-content: flex-start; gap: 2px 10px; }
+}
+
+/* ---------- Awards: "Individually ranked" honour roll ----------
+   One lawyer at a time, no boxes. The top ranking is the headline,
+   set large in the foil serif; the portrait stands on the red beside it;
+   a roster of every ranked name runs underneath. */
+.rk { position: relative; }
+.rk-viewport { overflow: hidden; }
+.rk-track { display: flex; transition: transform 1s var(--ease); }
+.rk-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: end;
+  column-gap: clamp(24px, 4vw, 64px);
+  min-height: clamp(380px, 34vw, 460px);
+}
+.rk-copy { align-self: center; padding: 20px 0 30px; }
+.rk-copy > * { opacity: 0; transform: translateY(14px); transition: opacity 0.7s, transform 0.7s var(--ease); }
+.rk-slide.is-shown .rk-copy > * { opacity: 1; transform: none; }
+.rk-slide.is-shown .rk-copy > :nth-child(2) { transition-delay: 0.08s; }
+.rk-slide.is-shown .rk-copy > :nth-child(3) { transition-delay: 0.16s; }
+.rk-slide.is-shown .rk-copy > :nth-child(n+4) { transition-delay: 0.24s; }
+
+.rk-dir { display: flex; align-items: center; gap: 12px; font: 700 12px var(--font-body); letter-spacing: 0.24em; text-transform: uppercase; color: rgba(236, 237, 236, 0.78); }
+.rk-dir::before { content: ""; width: 34px; height: 2px; background: linear-gradient(90deg, var(--foil-1), var(--foil-3)); }
+.rk-tier {
+  margin-top: 10px;
+  font: 900 clamp(56px, 7.4vw, 112px)/0.98 var(--font-display);
+  letter-spacing: -0.015em;
+  background: linear-gradient(100deg, var(--foil-1) 0%, var(--foil-2) 25%, var(--foil-3) 48%, var(--foil-2) 70%, var(--foil-1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.rk-tier--long { font-size: clamp(40px, 4.8vw, 72px); line-height: 1.02; }
+.rk-area { margin-top: 12px; font: italic 400 clamp(18px, 1.6vw, 23px)/1.35 var(--font-display); color: rgba(255, 255, 255, 0.92); }
+.rk-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(236, 237, 236, 0.35);
+  font: 900 clamp(22px, 2vw, 28px)/1.2 var(--font-display);
+}
+.rk-name a { color: var(--white); }
+.rk-name span { font: 700 11.5px var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(236, 237, 236, 0.65); }
+.rk-more { margin-top: 12px; display: grid; gap: 6px; }
+.rk-more li { font-size: 14.5px; line-height: 1.45; color: rgba(255, 255, 255, 0.82); }
+.rk-more span { margin-right: 10px; font: 700 10.5px var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(236, 237, 236, 0.6); }
+.rk-more b { font-weight: 700; color: var(--white); }
+.rk-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; font-weight: 700; font-size: 14.5px; color: var(--white); border-bottom: 1px solid rgba(255, 255, 255, 0.4); padding-bottom: 3px; transition: gap 0.3s, border-color 0.3s; }
+.rk-link:hover { gap: 16px; border-color: #fff; }
+
+/* portrait: large cut-out standing on the bottom edge */
+.rk-photo { position: relative; display: block; align-self: end; height: clamp(360px, 32vw, 450px); isolation: isolate; }
+.rk-photo::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 90%;
+  height: 80%;
+  transform: translateX(-50%);
+  z-index: -1;
+  background: radial-gradient(50% 55% at 50% 60%, rgba(255, 255, 255, 0.14), transparent 70%);
+}
+.rk-photo img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.9s, transform 1s var(--ease);
+  /* a tight dark edge sits under the cut-out's light fringe, plus a soft cast shadow */
+  filter: drop-shadow(0 0 1.5px rgba(40, 4, 10, 0.85)) drop-shadow(0 0 6px rgba(40, 4, 10, 0.45)) drop-shadow(-14px 18px 28px rgba(20, 2, 6, 0.45));
+}
+.rk-slide.is-shown .rk-photo img { opacity: 1; transform: none; }
+
+/* controls: arrows + roster of all ranked names */
+.rk-controls { display: flex; align-items: flex-start; gap: 18px; padding-top: 18px; border-top: 1px solid rgba(236, 237, 236, 0.35); }
+.rk-btn { flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(236, 237, 236, 0.55); background: transparent; color: var(--white); font-size: 13px; cursor: pointer; transition: background 0.25s, color 0.25s; }
+.rk-btn:hover { background: var(--white); color: var(--red); }
+.rk-roster { flex: 1; min-width: 0; display: flex; gap: clamp(14px, 2vw, 26px); overflow-x: auto; scrollbar-width: none; padding: 6px 0 4px; }
+.rk-roster::-webkit-scrollbar { display: none; }
+.rk-roster button { display: flex; flex-direction: column; gap: 6px; padding: 0; background: none; border: 0; cursor: pointer; font: 700 13px var(--font-body); color: rgba(236, 237, 236, 0.55); white-space: nowrap; transition: color 0.3s; }
+.rk-roster button:hover, .rk-roster button[aria-current="true"] { color: var(--white); }
+.rk-roster-bar { display: block; height: 2px; background: rgba(236, 237, 236, 0.18); overflow: hidden; }
+.rk-roster-bar span { display: block; height: 100%; background: var(--white); transform: scaleX(0); transform-origin: left; }
+
+@media (max-width: 760px) {
+  .rk-slide { grid-template-columns: minmax(0, 1fr) 42%; min-height: 0; column-gap: 12px; }
+  .rk-photo { height: 260px; }
+  .rk-tier { font-size: clamp(40px, 11vw, 56px); }
+  .rk-tier--long { font-size: clamp(28px, 7.4vw, 36px); }
+  .rk-copy { padding-bottom: 20px; }
+}
+@media (max-width: 480px) {
+  .rk-slide { grid-template-columns: 1fr; }
+  .rk-photo { grid-row: 1; height: 220px; }
+  .rk-copy { padding-top: 6px; }
+}
+
+/* ---------- Honour roll: colour layering ----------
+   gold for the award, rose for the practice, white for the person,
+   muted tones for the details */
+.rk {
+  --rk-gold-1: #b8935a;
+  --rk-gold-2: #e9cf98;
+  --rk-gold-3: #fff3d6;
+  --rk-gold: #d9b878;
+  --rk-rose: #f4b9c0;
+  --rk-mute: rgba(244, 214, 218, 0.62);
+}
+.rk-dir { color: var(--rk-gold); }
+.rk-dir::before { background: linear-gradient(90deg, var(--rk-gold-1), var(--rk-gold-2)); }
+.rk-tier {
+  background: linear-gradient(100deg, var(--rk-gold-1) 0%, var(--rk-gold-2) 28%, var(--rk-gold-3) 46%, var(--rk-gold-2) 64%, var(--rk-gold-1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 6px 18px rgba(20, 2, 6, 0.35));
+}
+.rk-area { color: var(--rk-rose); }
+.rk-name { border-top-color: rgba(217, 184, 120, 0.35); }
+.rk-name a { color: #fff; }
+.rk-name span { color: var(--rk-gold); opacity: 0.85; }
+.rk-more li { color: var(--rk-mute); }
+.rk-more span { color: var(--rk-gold); opacity: 0.8; }
+.rk-more b { color: var(--rk-rose); }
+.rk-link { color: var(--rk-gold-2); border-bottom-color: rgba(217, 184, 120, 0.45); }
+.rk-link:hover { color: var(--rk-gold-3); border-color: var(--rk-gold-2); }
+.rk-roster button { color: var(--rk-mute); }
+.rk-roster button:hover, .rk-roster button[aria-current="true"] { color: #fff; }
+.rk-roster-bar span { background: linear-gradient(90deg, var(--rk-gold-1), var(--rk-gold-2)); }
+.rk-controls { border-top-color: rgba(217, 184, 120, 0.3); }
+.rk-btn { border-color: rgba(217, 184, 120, 0.55); color: var(--rk-gold-2); }
+.rk-btn:hover { background: var(--rk-gold-2); color: #5a0f1a; }

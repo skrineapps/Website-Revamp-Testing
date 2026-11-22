@@ -8,6 +8,7 @@
      .skin-6  Peaks     images/d6/peaks.jpg     misty karst mountains
      .skin-7  Steel     images/d7/metal.jpg     brushed corrugated steel (Getty comp: needs a licence)
      .skin-8  Bridge    images/d8/bridge.jpg    cable-stayed bridge at sunrise (Getty comp: needs a licence)
+     .skin-9  Heritage  images/d3/artistic.jpg  Design 3's painting as an immersive, zooming hero
    Design 1 (no class) is the original look and is untouched.
 
    How this file is laid out
@@ -1018,7 +1019,185 @@ html.skin-8 { --brush-mask: none; }
 }
 
 /* =========================================================
-   Design pill: eight designs. On phones the pill would run off
+   Design 9 (Heritage): an immersive hero on Design 3's painting
+   The palette-knife painting from Design 3 (scales of justice, the
+   KL skyline, a domed heritage building). Moving through the values
+   zooms slowly into the scales and skyline on the left, while the
+   words sit on the open cream canvas on the right.
+   The active word gets the red brush underline and its line from
+   skrine.com/profile/our-values. Behaviour: js/hero-immersive.js.
+   Palette follows Design 3: cream canvas, charcoal ink, gold accent;
+   brand red stays the main accent.
+   ========================================================= */
+.skin-9 {
+  --red: #c32030;
+  --red-dark: #8a1a2a;
+  --red-soft: rgba(138, 26, 42, 0.08);
+  --wine: #8a1a2a;
+  --wine-deep: #5a0f1a;
+  --accent: #b08d57;        /* gold, from the scales */
+
+  --grey-100: #efe8dc;
+  --grey-300: #d9cdbb;
+  --grey-500: #988c7e;
+  --grey-700: #6b6157;
+  --ink: #2a2522;
+  --ink-soft: #574e47;
+  --white: #fffcf6;
+  --muted-word: #8b8073;
+
+  --canvas: #f6f0e6;
+  --canvas-rgb: 246, 240, 230;
+  --pale-rgb: 237, 228, 212;
+  --tint-rgb: 216, 202, 180;
+  --dark: #2b2522;
+  --dark-rgb: 43, 37, 34;
+  --shade-rgb: 60, 45, 30;
+
+  --ribbon: linear-gradient(100deg, #6a1220 0%, #a01c2c 35%, #c32030 70%, #a8202e 100%);
+  --rule: linear-gradient(90deg, #8a1a2a, #c32030 65%, #b08d57);
+
+  --t-art: url("../images/d3/artistic.jpg");
+  --t-wash: url("../images/d3/artistic-wash.jpg");
+  --t-hero-pos: 0% 50%;
+  --t-field-pos: 0% 60%;
+  --t-head-pos: 0% 40%;
+  --t-head-flip: scaleX(-1);
+  --t-head-mask: radial-gradient(75% 105% at 0% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
+  --t-head-opacity: 0.7;
+  --t-foot-dir: 270deg;
+  --t-foot-pos: 0% 60%;
+}
+
+/* ---- hero: the painting as one zooming layer, a soft light following the cursor ---- */
+.skin-9 .hero { background: var(--canvas); }
+.skin-9 .hero-bg { background: none; animation: none; }
+.skin-9 .v9-layer {
+  position: absolute;
+  inset: 0;
+  background: var(--img) var(--pos, 0% 50%) / cover no-repeat;
+  will-change: transform;
+}
+.skin-9 .v9-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx, 30%) var(--my, 50%), rgba(255, 250, 238, 0.35), transparent 60%);
+  mix-blend-mode: soft-light;
+}
+/* a pool of the canvas colour behind the words keeps them readable */
+.skin-9 .hero-shade {
+  background:
+    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 22%),
+    radial-gradient(40% 52% at 72% 52%, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 100%);
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.skin-9 .hero-shade::after { display: none; }
+.skin-9 .hero-panel {
+  left: auto;
+  right: clamp(24px, 6vw, 112px);
+  width: min(600px, 46vw);
+}
+.skin-9 .hero-eyebrow { color: var(--grey-700); }
+.skin-9 .hero-eyebrow span { background: var(--rule); }
+
+/* the three words: the active one is full ink and underlined in red brush */
+.skin-9 .ht-word { color: rgba(var(--dark-rgb), 0.28); cursor: pointer; text-shadow: none; transition: color 0.5s; }
+.skin-9 .ht-word:nth-child(2) { color: rgba(var(--dark-rgb), 0.28); }
+.skin-9 .ht-word.is-on { color: var(--ink); }
+.skin-9 .ht-word:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+.skin-9 .ht-swatch { display: none; }
+.skin-9 .ht-text { color: inherit; animation: none; }
+.skin-9 .ht-word--swatch { padding: 0; margin: 0; }
+.skin-9 .ht-word::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.02em;
+  height: 0.16em;
+  background: var(--red);
+  -webkit-mask: var(--brush-mask) center / 100% 100% no-repeat;
+  mask: var(--brush-mask) center / 100% 100% no-repeat;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.skin-9 .ht-word.is-on::after { transform: scaleX(1); }
+
+/* the value line under the words */
+.skin-9 .hero-sub {
+  min-height: 3.4em;
+  color: var(--ink-soft);
+  text-shadow: 0 1px 10px rgba(var(--canvas-rgb), 0.6);
+  transition: opacity 0.4s;
+}
+.skin-9 .hero-sub.is-swapping { opacity: 0; }
+.skin-9 .v9-from { display: block; margin-top: 6px; font: 700 11px var(--font-body); font-style: normal; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); text-shadow: none; }
+
+.skin-9 .hero .btn--outline { border-color: var(--red); color: var(--red); background: rgba(var(--canvas-rgb), 0.6); }
+.skin-9 .hero .btn--outline:hover { background: var(--red); color: #fff; }
+/* after all three values, "Our Story" invites the click */
+.skin-9 .hero .btn--solid.v9-ready { animation: v9Pulse 2.4s ease-out 2; }
+@keyframes v9Pulse { 0% { box-shadow: 0 0 0 0 rgba(195, 32, 48, 0.55); } 100% { box-shadow: 0 0 0 18px rgba(195, 32, 48, 0); } }
+@media (max-width: 900px) {
+  .skin-9 .hero-panel { right: clamp(16px, 4vw, 40px); width: min(560px, 62vw); }
+}
+@media (max-width: 760px) {
+  .skin-9 .hero-panel { left: 24px; right: 24px; width: auto; bottom: 56px; }
+  .skin-9 .hero-shade { background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0.4) 0%, rgba(var(--canvas-rgb), 0.15) 30%, rgba(var(--canvas-rgb), 0.82) 55%, rgba(var(--canvas-rgb), 0.95) 100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skin-9 .v9-layer { transform: none !important; }
+  .skin-9 .v9-light { display: none; }
+}
+
+/* ---- Design 9: scroll-through (laptop) and swipe (phone) ---- */
+.skin-9 .hero.v9-hero { height: auto; min-height: 0; overflow: visible; perspective: none; }
+.skin-9 .v9-stage { position: relative; height: 100vh; min-height: 620px; overflow: hidden; perspective: 1200px; }
+.skin-9 .hero.v9-scroll { height: 300vh; }                         /* one screen of scroll per value */
+.skin-9 .hero.v9-scroll .v9-stage { position: sticky; top: 0; }
+.skin-9 .v9-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0), var(--canvas)); }
+/* one photo; the zoom follows the scroll (laptop) or steps per value (phone) */
+.skin-9 .v9-layer,
+.skin-9 .v9-layer.is-on {
+  opacity: 1;
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(var(--zoom, 1.04));
+  transform-origin: var(--origin, 50% 40%);
+}
+.skin-9 .v9-scroll .v9-layer { transition: transform 0.35s ease-out; }
+.skin-9 .v9-swipe .v9-layer { transition: transform 1.3s var(--ease); }
+
+/* progress: three short bars above the words */
+.skin-9 .v9-steps { display: flex; gap: 6px; margin: -4px 0 18px; }
+.skin-9 .v9-steps span { width: 34px; height: 3px; background: rgba(var(--dark-rgb), 0.16); transition: background 0.4s, width 0.4s var(--ease); }
+.skin-9 .v9-steps span.is-done { background: var(--accent); }
+.skin-9 .v9-steps span.is-on { width: 56px; background: var(--red); }
+
+/* hint: "Scroll / Swipe to explore our values" */
+.skin-9 .v9-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 18px;
+  font: 700 11px var(--font-body);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--grey-700);
+  transition: opacity 0.4s;
+}
+.skin-9 .v9-hint::before { content: ""; width: 1px; height: 22px; background: linear-gradient(var(--accent), transparent); animation: v9Hint 1.8s ease-in-out infinite; }
+.skin-9 .v9-swipe .v9-hint::before { width: 22px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); animation-name: v9HintX; }
+.skin-9 .v9-hint.is-gone { opacity: 0; }
+@keyframes v9Hint { 0%, 100% { transform: translateY(-4px); opacity: 0.4; } 50% { transform: translateY(4px); opacity: 1; } }
+@keyframes v9HintX { 0%, 100% { transform: translateX(4px); opacity: 0.4; } 50% { transform: translateX(-4px); opacity: 1; } }
+/* on the laptop the scroll cue is replaced by the hint */
+.skin-9 .v9-scroll .scroll-cue { display: none; }
+.skin-9 .v9-swipe .v9-stage { touch-action: pan-y; }
+
+/* =========================================================
+   Design pill: nine designs. On phones the pill would run off
    the screen, so it drops its "Design" label and tightens up.
    ========================================================= */
 @media (max-width: 520px) {

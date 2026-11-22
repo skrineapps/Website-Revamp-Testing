@@ -1,0 +1,108 @@
+/* =========================================================
+   SKRINE — Archive page and the small archive links/notices
+   Uses only the site's variables, so every design (1–9) restyles it.
+   ========================================================= */
+
+/* retired collections from skrine.com */
+.arc-collections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(24px, 4vw, 56px); margin-bottom: clamp(36px, 5vw, 56px); border-top: 2px solid var(--ink); }
+.arc-collection { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--grey-300); color: var(--ink); }
+.arc-collection strong { font: 900 clamp(19px, 1.7vw, 23px)/1.25 var(--font-display); transition: color 0.3s; }
+.arc-collection span { grid-column: 1; font-size: 14px; color: var(--grey-700); }
+.arc-collection i { grid-column: 2; grid-row: 1 / span 2; color: var(--red); font-size: 13px; transition: transform 0.3s; }
+.arc-collection:hover strong { color: var(--red); }
+.arc-collection:hover i { transform: translate(3px, -3px); }
+
+/* toolbar */
+.arc-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-bottom: 18px; border-bottom: 1px solid var(--grey-300); }
+.arc-search { position: relative; flex: 1 1 280px; max-width: 440px; }
+.arc-search i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--grey-500); }
+.arc-search input { width: 100%; padding: 12px 16px 12px 44px; border: 1.5px solid var(--grey-300); border-radius: 30px; background: var(--white); font: 15px var(--font-body); color: var(--ink); outline: none; transition: border-color 0.25s; }
+.arc-search input:focus { border-color: var(--red); }
+.arc-types { display: flex; flex-wrap: wrap; gap: 6px; }
+.arc-types button { padding: 8px 16px; border-radius: 22px; border: 1.5px solid var(--grey-300); background: transparent; font: 700 13.5px var(--font-body); color: var(--grey-700); cursor: pointer; transition: all 0.25s; }
+.arc-types button:hover { border-color: var(--red); color: var(--red); }
+.arc-types button[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: #fff; }
+.arc-count { margin-left: auto; font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-700); }
+
+/* layout: year rail + list */
+.arc-layout { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); margin-top: clamp(24px, 3vw, 36px); }
+.arc-rail { position: sticky; top: calc(var(--sticky-top) + 24px); align-self: start; border-left: 2px solid var(--grey-300); }
+.arc-rail p { padding: 0 0 10px 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey-700); }
+.arc-rail a { display: flex; justify-content: space-between; margin-left: -2px; padding: 7px 0 7px 16px; border-left: 2px solid transparent; font: 700 18px var(--font-display); color: var(--ink); transition: color 0.25s, border-color 0.25s; }
+.arc-rail a span { font: 700 12px var(--font-body); color: var(--grey-500); }
+.arc-rail a:hover { color: var(--red); border-left-color: var(--red); }
+
+.arc-year + .arc-year { margin-top: clamp(32px, 4vw, 48px); }
+.arc-year { scroll-margin-top: calc(var(--sticky-top) + 24px); }
+.arc-year-head { display: flex; align-items: baseline; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); font: 900 clamp(28px, 3vw, 40px)/1 var(--font-display); color: var(--red); }
+.arc-year-head span { font: 700 12px var(--font-body); letter-spacing: 0.14em; color: var(--grey-500); }
+.arc-row {
+  display: grid;
+  grid-template-columns: 110px 130px minmax(0, 1fr) 20px;
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--grey-300);
+  color: var(--ink);
+  transition: background 0.25s, padding 0.25s;
+}
+.arc-row:hover { background: rgba(var(--canvas-rgb, 251, 251, 251), 0.9); padding-left: 10px; }
+.arc-row time { font-size: 13px; font-weight: 700; color: var(--grey-700); }
+.arc-type { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-500); }
+.arc-type--pub { color: var(--accent, var(--red)); }
+.arc-title { font: 700 16.5px/1.4 var(--font-display); }
+.arc-title small { display: block; margin-top: 2px; font: 400 13px var(--font-body); color: var(--grey-700); }
+.arc-row i { font-size: 12px; color: var(--grey-500); transition: color 0.25s, transform 0.25s; }
+.arc-row:hover .arc-title, .arc-row:hover i { color: var(--red); }
+.arc-row:hover i { transform: translateX(3px); }
+.arc-empty { padding: 28px 0; color: var(--grey-700); }
+
+/* "Looking for something older?" at the end of the live listings */
+.archive-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 14px;
+  margin-top: clamp(40px, 5vw, 64px);
+  padding-top: 24px;
+  border-top: 1px solid var(--grey-300);
+  font-size: 15px;
+  color: var(--grey-700);
+}
+.archive-cta a { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--red); transition: gap 0.3s; }
+.archive-cta a:hover { gap: 14px; }
+
+/* notice on an archived story */
+.archive-note {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 0 0 24px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent, var(--red));
+  background: rgba(var(--pale-rgb, 236, 237, 236), 0.6);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.archive-note i { margin-top: 3px; color: var(--accent, var(--red)); }
+.archive-note strong { color: var(--ink); }
+.archive-note a { color: var(--red); font-weight: 700; }
+
+@media (max-width: 900px) {
+  .arc-layout { grid-template-columns: 1fr; }
+  .arc-rail { position: static; border-left: 0; }
+  .arc-rail ul { display: flex; flex-wrap: wrap; gap: 6px; }
+  .arc-rail p { padding-left: 0; }
+  .arc-rail a { margin: 0; padding: 6px 12px; border: 1.5px solid var(--grey-300); border-radius: 18px; font-size: 15px; gap: 8px; }
+}
+@media (max-width: 640px) {
+  .arc-collections { grid-template-columns: 1fr; }
+  .arc-row { grid-template-columns: minmax(0, 1fr) 16px; gap: 4px 12px; }
+  .arc-row time, .arc-type { grid-column: 1; }
+  .arc-row time { order: -2; }
+  .arc-type { order: -1; }
+  .arc-row i { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+  .arc-count { margin-left: 0; }
+}

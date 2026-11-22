@@ -47,6 +47,15 @@
   tags.appendChild(t);
   document.getElementById("nwTitle").textContent = D.title;
 
+  // older stories live in the Archive (same cut-off as js/archive.js)
+  if (D.date < "2025-01-01") {
+    var note = el("p", "archive-note");
+    note.innerHTML = '<i class="fa-solid fa-box-archive" aria-hidden="true"></i><span><strong>Archived</strong> · published ' +
+      A.longDate(D.date) + '. This story is kept for reference. <a href="archive.html?type=news">Browse the archive</a></span>';
+    var titleEl = document.getElementById("nwTitle");
+    titleEl.parentNode.insertBefore(note, titleEl);
+  }
+
   var peopleEl = document.getElementById("nwPeople");
   if (D.people.length) {
     peopleEl.appendChild(el("p", "ar-rail-label", "Featuring"));
