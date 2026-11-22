@@ -12,6 +12,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="new%20design/css/style.css">
   <link rel="stylesheet" href="new%20design/css/home.css">
+  <link rel="stylesheet" href="new%20design/css/spotlight-options.css">
   <link rel="stylesheet" href="new%20design/css/themes.css">
   <script src="new%20design/js/design.js"></script>
   <link rel="icon" type="image/png" sizes="32x32" href="new%20design/images/favicon-32.png">
@@ -215,226 +216,26 @@
       </div>
     </section>
 
-    <!-- ============ IN THE SPOTLIGHT ============ -->
+    <!-- ============ IN THE SPOTLIGHT: Legal Updates + Publications ============ -->
+    <!-- Three layouts to compare, built by js/spotlight-options.js from the alerts and
+         publications data. The A / B / C pill is a review aid, not part of the final site. -->
     <section class="section section--spotlight section--art" id="spotlight" data-watermark="Insights">
       <header class="section-head reveal">
         <p class="eyebrow">Alerts &amp; Publications</p>
         <h2 class="section-title">In the Spotlight</h2>
       </header>
 
-      <div class="spotlight-grid">
-        <a href="new%20design/publications.html" class="spot-card spot-card--feature spot-card--pub reveal" data-tilt>
-          <div class="spot-cover spot-cover--photo">
-            <img class="spot-cover-blur" src="new%20design/images/publications/lexology-in-depth-intellectual-property-edition-15-0.png" alt="" aria-hidden="true" loading="lazy">
-            <img class="spot-cover-img" src="new%20design/images/publications/lexology-in-depth-intellectual-property-edition-15-0.png" alt="Lexology In-Depth: Intellectual Property, Edition 15" loading="lazy">
-          </div>
-          <div class="spot-body">
-            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2026-04-02">02 Apr 2026</time></p>
-            <h3>Lexology In-Depth: Intellectual Property – Edition 15</h3>
-            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
-          </div>
-        </a>
-
-        <a href="new%20design/alert.html?a=malaysias-cross-border-insolvency-act-2026-comes-into-operation" class="spot-card spot-card--alert reveal" data-tilt>
-          <div class="spot-cover spot-cover--alert">
-            <img class="spot-cover-photo" src="new%20design/images/practice/restructuring-and-insolvency.jpg" alt="" loading="lazy">
-          </div>
-          <div class="spot-body">
-            <p class="spot-tagline"><span class="spot-pill spot-pill--alert">Alert</span><time datetime="2026-09-21">21 Sep 2026</time></p>
-            <h3>Malaysia’s Cross-Border Insolvency Act 2026 Comes into Operation</h3>
-            <p class="spot-meta">Restructuring &amp; Insolvency · Sharon Chong and Charmaine Lionel</p>
-            <span class="read-more">Read alert <i class="fa-solid fa-arrow-right"></i></span>
-          </div>
-        </a>
-
-        <a href="new%20design/publications.html" class="spot-card spot-card--pub reveal" data-tilt>
-          <div class="spot-cover spot-cover--photo">
-            <img class="spot-cover-blur" src="new%20design/images/publications/iels-guide-to-workplace-investigations-1.png" alt="" aria-hidden="true" loading="lazy">
-            <img class="spot-cover-img" src="new%20design/images/publications/iels-guide-to-workplace-investigations-1.png" alt="IEL's Guide to Workplace Investigations" loading="lazy">
-          </div>
-          <div class="spot-body">
-            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2025-11-27">27 Nov 2025</time></p>
-            <h3>IEL's Guide to Workplace Investigations</h3>
-            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
-          </div>
-        </a>
-
-        <a href="new%20design/alerts.html" class="spot-card spot-card--alert reveal" data-tilt>
-          <div class="spot-cover spot-cover--alert">
-            <img class="spot-cover-photo" src="new%20design/images/practice/tax-and-revenue.jpg" alt="" loading="lazy">
-          </div>
-          <div class="spot-body">
-            <p class="spot-tagline"><span class="spot-pill spot-pill--alert">Alert</span><time datetime="2026-10-23">23 Oct 2026</time></p>
-            <h3>Snapshots of the 2027 Malaysian Budget</h3>
-            <p class="spot-meta">Corporate · Tan Wei Liang and Chong Cai Yi</p>
-            <span class="read-more">Read alert <i class="fa-solid fa-arrow-right"></i></span>
-          </div>
-        </a>
-
-        <a href="new%20design/publications.html" class="spot-card spot-card--pub reveal" data-tilt>
-          <div class="spot-cover spot-cover--photo">
-            <img class="spot-cover-blur" src="new%20design/images/publications/timor-leste-a-strategic-gateway-for-investment-2.jpg" alt="" aria-hidden="true" loading="lazy">
-            <img class="spot-cover-img" src="new%20design/images/publications/timor-leste-a-strategic-gateway-for-investment-2.jpg" alt="Map of Timor-Leste" loading="lazy">
-          </div>
-          <div class="spot-body">
-            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2025-10-30">30 Oct 2025</time></p>
-            <h3>Timor-Leste – A Strategic Gateway for Investment</h3>
-            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
-          </div>
-        </a>
-
-        <a href="new%20design/alerts.html" class="spot-card spot-card--alert reveal" data-tilt>
-          <div class="spot-cover spot-cover--alert">
-            <img class="spot-cover-photo" src="new%20design/images/practice/banking-and-finance.jpg" alt="" loading="lazy">
-          </div>
-          <div class="spot-body">
-            <p class="spot-tagline"><span class="spot-pill spot-pill--alert">Alert</span><time datetime="2026-10-22">22 Oct 2026</time></p>
-            <h3>Bank Negara Malaysia launches SSDS+ for the issue of tokenised bonds and sukuk</h3>
-            <p class="spot-meta">Fintech · Lee Ai Hsian</p>
-            <span class="read-more">Read alert <i class="fa-solid fa-arrow-right"></i></span>
-          </div>
-        </a>
-
-        <a href="new%20design/publications.html" class="spot-card spot-card--pub reveal" data-tilt>
-          <div class="spot-cover spot-cover--photo">
-            <img class="spot-cover-blur" src="new%20design/images/publications/updated-annotated-statue-of-malaysia-occupational-safety-and-health-ac-3.jpg" alt="" aria-hidden="true" loading="lazy">
-            <img class="spot-cover-img" src="new%20design/images/publications/updated-annotated-statue-of-malaysia-occupational-safety-and-health-ac-3.jpg" alt="Annotated Statutes of Malaysia: Occupational Safety and Health Act 1994" loading="lazy">
-          </div>
-          <div class="spot-body">
-            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2025-10-03">03 Oct 2025</time></p>
-            <h3>Updated Annotated Statute of Malaysia – Occupational Safety and Health Act 1994</h3>
-            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
-          </div>
-        </a>
-
-        <a href="new%20design/publications.html" class="spot-card spot-card--pub reveal" data-tilt>
-          <div class="spot-cover spot-cover--photo">
-            <img class="spot-cover-blur" src="new%20design/images/publications/data-protection-law-over-borders-data-protection-8.jpg" alt="" aria-hidden="true" loading="lazy">
-            <img class="spot-cover-img" src="new%20design/images/publications/data-protection-law-over-borders-data-protection-8.jpg" alt="Global Legal Post: Data Protection comparative guide" loading="lazy">
-          </div>
-          <div class="spot-body">
-            <p class="spot-tagline"><span class="spot-pill spot-pill--pub">Publication</span><time datetime="2025-02-27">27 Feb 2025</time></p>
-            <h3>Data Protection Law Over Borders – Comparative Guide</h3>
-            <span class="read-more">Read more <i class="fa-solid fa-arrow-right"></i></span>
-          </div>
-        </a>
+      <div class="sp-switch" role="group" aria-label="Spotlight layout (review)">
+        <span class="sp-switch-label">Layout</span>
+        <button type="button" data-sp="a" aria-pressed="true">A · Two columns</button>
+        <button type="button" data-sp="b" aria-pressed="false">B · Tabs</button>
+        <button type="button" data-sp="c" aria-pressed="false">C · Featured + carousel</button>
       </div>
 
-      <div class="section-cta reveal">
-        <a href="#" class="btn btn--outline">More Spotlights <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </section>
-
-    <!-- ============ LEGAL UPDATES ============ -->
-    <section class="section section--updates section--art" id="updates" data-watermark="Updates">
-      <header class="section-head reveal">
-        <p class="eyebrow">Alerts &amp; Insights</p>
-        <h2 class="section-title">Legal Updates</h2>
-      </header>
-
-      <div class="carousel reveal" id="updatesCarousel" aria-roledescription="carousel" aria-label="Legal updates">
-        <button class="carousel-arrow prev" aria-label="Previous update"><i class="fa-solid fa-chevron-left"></i></button>
-
-        <div class="carousel-stage">
-          <ul class="carousel-track">
-            <li class="slide-card">
-              <div class="slide-art art-1">
-                <span class="slide-tag">Tax</span>
-                <img src="new%20design/images/practice/tax-and-revenue.jpg" alt="" loading="lazy">
-              </div>
-              <div class="slide-body">
-                <h3>Principal Hub Tax Incentives Rules Amended to Remove Distinction between New Companies</h3>
-                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
-                <time datetime="2026-11-11">11 Nov 2026</time>
-              </div>
-            </li>
-            <li class="slide-card">
-              <div class="slide-art art-2">
-                <span class="slide-tag">Employment</span>
-                <img src="new%20design/images/practice/employment.jpg" alt="" loading="lazy">
-              </div>
-              <div class="slide-body">
-                <h3>Starting Basic Salary Guidelines to be Introduced from June 2027</h3>
-                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
-                <time datetime="2026-11-06">06 Nov 2026</time>
-              </div>
-            </li>
-            <li class="slide-card">
-              <div class="slide-art art-3">
-                <span class="slide-tag">Regulatory Compliance</span>
-                <img src="new%20design/images/practice/regulatory-compliance.jpg" alt="" loading="lazy">
-              </div>
-              <div class="slide-body">
-                <h3>2026 Updates to Malaysia's Food Laws and Regulations</h3>
-                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
-                <time datetime="2026-11-05">05 Nov 2026</time>
-              </div>
-            </li>
-            <li class="slide-card">
-              <div class="slide-art art-4">
-                <span class="slide-tag">Maritime &amp; Shipping</span>
-                <img src="new%20design/images/practice/maritime-and-shipping.jpg" alt="" loading="lazy">
-              </div>
-              <div class="slide-body">
-                <h3>Misdelivery of Cargo: When does a Release Instruction become Conversion?</h3>
-                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
-                <time datetime="2026-11-04">04 Nov 2026</time>
-              </div>
-            </li>
-            <li class="slide-card">
-              <div class="slide-art art-5">
-                <span class="slide-tag">Corporate</span>
-                <img src="new%20design/images/practice/corporate.jpg" alt="" loading="lazy">
-              </div>
-              <div class="slide-body">
-                <h3>New Directions and revised Guidelines on Company Names issued</h3>
-                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
-                <time datetime="2026-11-03">03 Nov 2026</time>
-              </div>
-            </li>
-            <li class="slide-card">
-              <div class="slide-art art-6">
-                <span class="slide-tag">Banking &amp; Finance</span>
-                <img src="new%20design/images/practice/banking-and-finance.jpg" alt="" loading="lazy">
-              </div>
-              <div class="slide-body">
-                <h3>Bank Negara Malaysia issues Revised Policy Document on Framework on Electronic Trading Platforms</h3>
-                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
-                <time datetime="2026-10-30">30 Oct 2026</time>
-              </div>
-            </li>
-            <li class="slide-card">
-              <div class="slide-art art-1">
-                <span class="slide-tag">Real Estate</span>
-                <img src="new%20design/images/practice/real-estate.jpg" alt="" loading="lazy">
-              </div>
-              <div class="slide-body">
-                <h3>Court of Appeal Clarifies Distinction Between Late Delivery and Defective Delivery of Vacant Possession</h3>
-                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
-                <time datetime="2026-10-29">29 Oct 2026</time>
-              </div>
-            </li>
-            <li class="slide-card">
-              <div class="slide-art art-2">
-                <span class="slide-tag">Construction</span>
-                <img src="new%20design/images/practice/construction-and-engineering.jpg" alt="" loading="lazy">
-              </div>
-              <div class="slide-body">
-                <h3>First Move or Final Outcome: Does a Winding-Up Order Preserve an Overturned Adjudication Decision?</h3>
-                <a href="#" class="slide-link">Read update <i class="fa-solid fa-arrow-right"></i></a>
-                <time datetime="2026-10-28">28 Oct 2026</time>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <button class="carousel-arrow next" aria-label="Next update"><i class="fa-solid fa-chevron-right"></i></button>
-        <div class="carousel-dots" role="tablist" aria-label="Choose update"></div>
-      </div>
-
-      <div class="section-cta reveal">
-        <a href="#" class="btn btn--outline">All Legal Updates <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
+      <div class="sp-option" data-sp-option="a"></div>
+      <div class="sp-option" data-sp-option="b" hidden></div>
+      <div class="sp-option" data-sp-option="c" hidden></div>
+      <noscript><p class="section-deck">Please enable JavaScript to see the latest legal updates and publications.</p></noscript>
     </section>
 
     <!-- ============ NEWS & EVENTS ============ -->
@@ -648,6 +449,12 @@
     </p>
   </footer>
 
+  <!-- In the Spotlight: data + builder, loaded before main.js so its reveal / tilt / carousel set-up includes them -->
+  <script src="new%20design/js/alerts-data.js"></script>
+  <script src="new%20design/js/alerts-full-data.js"></script>
+  <script src="new%20design/js/publications-data.js"></script>
+  <script src="new%20design/js/topic-images.js"></script>
+  <script src="new%20design/js/spotlight-options.js"></script>
   <script src="new%20design/js/main.js"></script>
   <script src="new%20design/js/news-data.js"></script>
   <script src="new%20design/js/globe-land.js"></script>
