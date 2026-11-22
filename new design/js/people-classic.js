@@ -357,7 +357,7 @@
     }
     section("Key Practice Areas", p.keyAreas, true);
     section("Qualifications", p.quals);
-    section("Professional Affiliations", p.affiliations);
+    section("Memberships", p.affiliations);
     if (!pmBody.children.length) {
       pmBody.appendChild(el("p", "pm-empty", "Further details for " + p.name + " have not been published yet."));
     }

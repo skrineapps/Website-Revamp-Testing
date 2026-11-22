@@ -179,7 +179,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Chartered Institute of Arbitrators (UK)",
           "Society of Construction Law",
@@ -483,7 +483,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Member, Malaysian Intellectual Property Association",
           "​Member, Licensing Executives Society Malaysia",
@@ -610,7 +610,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Member, Advocates and Solicitors Disciplinary Board (2010-2017)",
           "Legal Profession Committee, Malaysian Bar Council",
@@ -658,7 +658,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Chairman (Director), Maybank Trustees Berhad (1985)",
           "Former Director, Malayan Banking Berhad (1984)",
@@ -866,7 +866,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Founding member and Past Co-Chair, International Women’s Insolvency & Restructuring Confederation (IWIRC) Malaysia Network.",
           "Asia Regional Membership Vice Director, IWIRC International"
@@ -1097,7 +1097,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Member, Honourable Society of Lincolns Inn",
           "Member, Association of International Petroleum Negotiators (AIPN)"
@@ -1301,7 +1301,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Treasurer, Malaysian Society for Labour and Social Security Laws, (local chapter of International Society for Labour and Social Security Laws)",
           "​Member of Bar Council’s Industrial Law Committee",
@@ -1567,7 +1567,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Fellow of the Chartered Institute of Arbitrators",
           "Fellow of the Malaysian Society of Adjudicators",
@@ -1818,7 +1818,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Committee Member, Malaysian Bar Council's AI, Cyberlaw and Data Protection Committee 2026/2027"
         ]
@@ -1952,7 +1952,12 @@ window.SKRINE_PROFILES = {
         "items": [
           "Patent Agent",
           "Advocate and Solicitor, High Court of Malaya (2012)",
-          "LL.B (Hons), University of Malaya (2011)",
+          "LL.B (Hons), University of Malaya (2011)"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "President, Licensing Executives Society (LES), Malaysia Chapter, 2024-2025",
           "Treasurer, Licensing Executives Society (LES), Malaysia Chapter, 2022-2023",
           "Treasurer, International Association for the Protection of Intellectual Property (AIPPI), Malaysia Chapter, 2025-2026",
@@ -2048,7 +2053,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Qualifications",
+        "heading": "Memberships",
         "items": [
           "Member, Bar Council Environment and Climate Change Committee (2022 – 2024).",
           "Volunteer, Refugee and Asylum Seekers Legal Aid Scheme organised by the Bar Council in collaboration with the UNHCR (2023 - 2024)."
@@ -2194,7 +2199,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Committee member, Malaysian Bar Intellectual Property Committee",
           "Committee member, ICC Intellectual Property Committee, Malaysian Chapter",
@@ -2317,7 +2322,6 @@ window.SKRINE_PROFILES = {
       {
         "heading": "Qualifications",
         "items": [
-          "Qualifications",
           "Notary Public",
           "Patent Agent",
           "Design Agent",
@@ -2325,8 +2329,12 @@ window.SKRINE_PROFILES = {
           "Advocate and Solicitor of the High Court of Brunei (1996) (Non-Practising)",
           "Advocate and Solicitor of the High Court of Singapore (1991) (Non-Practising)",
           "Advocate and Solicitor of the High Court of Malaya (1973).",
-          "Barrister-at-Law (Gray’s Inn) (1972)",
-          "Professional Affiliations",
+          "Barrister-at-Law (Gray’s Inn) (1972)"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "Chairman, ICC Malaysia (the Malaysian Chapter of the International Chamber of Commerce), December 2012 (Vice Chairman, since February 2004)",
           "Member, Executive Board of ICC Malaysia",
           "Member, Federation of Malaysian Manufacturers (FRIM) Ethical Business Practice Committee",
@@ -2441,7 +2449,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Former President, Licensing Executives Society of Malaysia",
           "Member, Malaysian Intellectual Property Association",
@@ -2537,7 +2545,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Co-Chair, Anti-Corruption and Rule of Law Committee, Inter-Pacific Bar Association (IPBA)",
           "Committee Member, ICC Malaysia Corporate Responsibility & Anti-Corruption Committee",
@@ -2839,7 +2847,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "President, Society of Construction Law Malaysia",
           "Committee Member, Bar Council Arbitration and Construction Law Committee",
@@ -2972,7 +2980,12 @@ window.SKRINE_PROFILES = {
           "Barrister at Law Lincoln’s Inn - 2004",
           "Bar Vocational Course – Inns of Court School of Law, London",
           "CPE Law – City University, London",
-          "BA Hons English and Related Literature – University of York",
+          "BA Hons English and Related Literature – University of York"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "Member of Lincoln’s Inn",
           "Committee Member Lincoln’s Inn Malaysia",
           "Fellow CIArb",
@@ -3298,7 +3311,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Fellow - The Chartered Institute of Arbitrators (CIArb)",
           "Fellow - Malaysian Institute of Arbitrators (MIArb)",
@@ -3426,7 +3439,12 @@ window.SKRINE_PROFILES = {
           "Advocate and Solicitor, High Court of Malaya (2016)",
           "LL.M, (Corporate and Commercial Law), Cornell Law School (2015)",
           "Barrister-at-Law (Lincoln’s Inn) (2015)",
-          "LL. B (Hons), University of Manchester (2013)",
+          "LL. B (Hons), University of Manchester (2013)"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "President, The Malaysian Institute of Arbitrators 2025/2027",
           "Honorary Treasurer, The Malaysian Institute of Arbitrators 2023/2025",
           "Council Member, The Malaysian Institute of Arbitrators 2019/2022",
@@ -3676,7 +3694,12 @@ window.SKRINE_PROFILES = {
           "Advocate and Solicitor, High Court of Malaya (2012)",
           "Barrister-at-Law (Inner Temple) (2011)",
           "LL.B (Hons), King’s College London (2010)",
-          "Fellow, Chartered Institute of Arbitrators (FCIArb)",
+          "Fellow, Chartered Institute of Arbitrators (FCIArb)"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "Chairman, Kuala Lumpur Bar Committee 2025/2026",
           "Honorary Secretary, Kuala Lumpur Bar Committee 2023/2024 & 2024/2025",
           "Co-Chairperson, Kuala Lumpur Bar Civil Practice and Court Liaison Committee 2021/2022 to 2024/2025",
@@ -3789,7 +3812,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Committee member, Committee on Commercial Law & Practice, ICC Malaysia",
           "Former committee member, Bar Council Law Reform and Special Areas Committee"
@@ -3895,7 +3918,12 @@ window.SKRINE_PROFILES = {
           "Advocate and Solicitor, High Court of Malaya (1998)",
           "LL.M, King’s College University of London (1997), Chevening Scholar",
           "Certificate of Legal Practice (1996)",
-          "LL.B (Hons), University of London (1994)",
+          "LL.B (Hons), University of London (1994)"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "Fellow of the Chartered Institute of Arbitrators (since 2018)",
           "Advisory Board of the Asia Pacific Regional Forum, International Bar Association (IBA)"
         ]
@@ -4012,7 +4040,12 @@ window.SKRINE_PROFILES = {
           "Advocate and Solicitor, High Court of Malaya (2016)",
           "Barrister-at-Law, Lincoln’s Inn (2015)",
           "Bar Professional Training Course, City Law School (2014)",
-          "LL.B (Hons), University of Nottingham (2013)",
+          "LL.B (Hons), University of Nottingham (2013)"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "Member, CIDB Technical Committee for Revision of CIDB Standard Form of Contracts."
         ]
       }
@@ -4568,7 +4601,12 @@ window.SKRINE_PROFILES = {
         "items": [
           "Advocate and Solicitor, High Court of Malaya (1994)",
           "Certificate of Legal Practice (1993)",
-          "LL.B (Hons), University of London (1992)",
+          "LL.B (Hons), University of London (1992)"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "Member, Anti-Sexual Harassment Tribunal",
           "Governor of Malaysian Institute of Corporate Governance (MICG)",
           "Past Chair, International Bar Association’s Employment & Industrial Relations Law Committee",
@@ -4793,7 +4831,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Vice-Chair, IBA Asia Pacific Forum Working Group.",
           "Member, International Insolvency Institute.",
@@ -5103,7 +5141,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Vice Chairman, ICCM Competition Committee",
           "IBA Committee (Anti-trust section)"
@@ -5194,7 +5232,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Member, Panel of Conciliators and of Arbitrators, International Centre for Settlement of Investment Disputes (ICSID) (1990-1996)",
           "President, Royal Selangor Club (1994-1995)",
@@ -5484,7 +5522,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "Deputy President, Society of Construction Law, Malaysia",
           "Member, Malaysian Bar Council Arbitration and Construction Law Committee"
@@ -5608,7 +5646,7 @@ window.SKRINE_PROFILES = {
         ]
       },
       {
-        "heading": "Professional Affiliations",
+        "heading": "Memberships",
         "items": [
           "National Reporter, Malaysian Chapter of the International Association for the Protection of Industrial Property (AIPPI)",
           "Member, HuanYu China- ASEAN Legal Cooperation Center",
@@ -5778,7 +5816,12 @@ window.SKRINE_PROFILES = {
       {
         "heading": "Mediation",
         "items": [
-          "Accredited Mediator of the Malaysian Mediation Centre (from May 2019)",
+          "Accredited Mediator of the Malaysian Mediation Centre (from May 2019)"
+        ]
+      },
+      {
+        "heading": "Memberships",
+        "items": [
           "Regional Vice Chair (Asia Pacific), Lex Mundi Managing Partners Committee",
           "Board Member, Lex Mundi (2007 to 2011)",
           "Chair Emeritus of the Environmental Law Committee of Lex Mundi",

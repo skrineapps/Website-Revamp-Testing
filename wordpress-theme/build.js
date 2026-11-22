@@ -49,7 +49,7 @@ const slugify = (s) => String(s).toLowerCase().normalize("NFD").replace(/[\u0300
   .replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80).replace(/-$/, "");
 
 /* ---------- pages ---------- */
-const NAMES = { alert: "Alert", news: "News Story", job: "Job Opening", profile: "Profile", "profile-classic": "Profile (Classic)",
+const NAMES = { alert: "Alert", news: "News Story", job: "Job Opening", profile: "Profile",
   "life-story": "Life at Skrine Story", capabilities: "Practice Areas", "practice-area": "Practice Area", sector: "Sector" };
 const T = "<?php echo esc_url( get_template_directory_uri() ); ?>";
 const HOME = "<?php echo esc_url( home_url( '/' ) ); ?>";

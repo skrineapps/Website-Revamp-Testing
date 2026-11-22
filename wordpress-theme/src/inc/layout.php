@@ -123,7 +123,7 @@ function skrine_template_slug() {
 function skrine_menu_slug() {
 	$parent = array(
 		'alert' => 'alerts', 'news' => 'news-events', 'job' => 'careers', 'life-story' => 'careers', 'profile' => 'people',
-		'profile-classic' => 'people', 'practice-area' => 'capabilities', 'sector' => 'sectors',
+		'practice-area' => 'capabilities', 'sector' => 'sectors',
 	);
 	$s = skrine_template_slug();
 	return isset( $parent[ $s ] ) ? $parent[ $s ] : $s;

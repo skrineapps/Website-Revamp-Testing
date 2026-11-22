@@ -19,7 +19,7 @@
   var PHOTO_DIR = "../current design/images/people/";
   // a file name in that folder, or a full URL (WordPress media library)
   function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
-  var MATTERS_SHOWN = 6;
+
   var LIST_SHOWN = 6;
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -96,7 +96,7 @@
     var b = el("button", "pf-more");
     b.type = "button";
     b.setAttribute("aria-expanded", "false");
-    var label = "Show all " + items.length + " " + noun;
+    var label = noun === "matters" ? "Show more" : "Show all " + items.length + " " + noun;
     b.appendChild(el("span", null, label));
     b.appendChild(icon("fa-solid fa-chevron-down"));
     b.addEventListener("click", function () {
@@ -235,9 +235,10 @@
 
   /* ---------- overview ---------- */
   if (P.overview.length) {
-    var ov = section("overview", "Overview", "About " + P.name);
+    var SP = window.SkrineProfile;
+    var ov = section("overview", "Overview", "About " + (SP ? SP.givenName(P.name) : P.name));
     ov.classList.add("pf-overview");
-    P.overview.forEach(function (t, i) { ov.appendChild(el("p", i === 0 ? "pf-lede" : null, t)); });
+    (SP ? SP.shortOverview(P.overview) : P.overview).forEach(function (t, i) { ov.appendChild(el("p", i === 0 ? "pf-lede" : null, t)); });
   }
 
   /* ---------- experience ---------- */
@@ -257,7 +258,6 @@
       t.setAttribute("aria-selected", String(i === 0));
       t.tabIndex = i === 0 ? 0 : -1;
       t.appendChild(el("span", null, e.area));
-      t.appendChild(el("span", "pf-tab-count", String(e.matters.length)));
       tabs.appendChild(t);
 
       var panel = el("div", "pf-panel");
@@ -273,7 +273,8 @@
         ol.appendChild(li);
       });
       panel.appendChild(ol);
-      var more = expandable(ol, MATTERS_SHOWN, "matters");
+      // top 3 first; the rest sit behind "Show more"
+      var more = expandable(ol, window.SkrineProfile ? window.SkrineProfile.TOP_MATTERS : 3, "matters");
       if (more) panel.appendChild(more);
       ex.appendChild(panel);
       panels.push({ tab: t, panel: panel });
@@ -361,7 +362,7 @@
 
   /* ---------- credentials ---------- */
   if (P.credentials.length) {
-    var cr = section("credentials", "Credentials", "Qualifications & affiliations");
+    var cr = section("credentials", "Credentials", "Qualifications & memberships");
     var grid = el("div", "pf-cred-grid");
     var ICONS = { qualifications: "fa-solid fa-graduation-cap", directorships: "fa-solid fa-building-columns", mediation: "fa-solid fa-handshake" };
     P.credentials.forEach(function (c) {

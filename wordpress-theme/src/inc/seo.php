@@ -43,7 +43,6 @@ function skrine_item_pages() {
 		'alert'           => array( 'a', 'skrine_alert' ),
 		'news'            => array( 'n', 'skrine_news' ),
 		'profile'         => array( 'p', 'skrine_person' ),
-		'profile-classic' => array( 'p', 'skrine_person' ),
 		'job'             => array( 'j', 'skrine_job' ),
 	);
 }
@@ -178,7 +177,7 @@ function skrine_no_page_ids() {
 			}
 		}
 	}
-	foreach ( array( 'alert', 'news', 'job', 'profile', 'profile-classic', 'life-story', 'practice-area', 'sector', 'search' ) as $slug ) {
+	foreach ( array( 'alert', 'news', 'job', 'profile', 'life-story', 'practice-area', 'sector', 'search' ) as $slug ) {
 		$p = get_page_by_path( $slug );
 		if ( $p ) {
 			$ids[] = (int) $p->ID;
