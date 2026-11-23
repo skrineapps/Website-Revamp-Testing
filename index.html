@@ -230,15 +230,26 @@
       <noscript><p class="section-deck">Please enable JavaScript to see the latest legal updates and publications.</p></noscript>
     </section>
 
-    <!-- ============ UPCOMING EVENTS ============ -->
-    <!-- Filled by js/upcoming-events.js from SKRINE_UPCOMING (js/news-data.js).
-         Shown only while an event is still to come; with none, the section stays hidden. -->
+    <!-- ============ UPCOMING EVENTS ============
+         Filled from js/news-data.js (SKRINE_UPCOMING). Hidden unless
+         at least one event is still to come, so with none the page skips it.
+         Two layouts to compare (review aid, js/upcoming-events.js):
+           A  home.js            next event featured + "Also coming up"   (#newsEvents)
+           B  upcoming-events.js banner / cards                            (#upcomingEvents) -->
     <section class="section section--events section--art" id="events" data-watermark="Events" hidden>
       <header class="section-head reveal">
-        <p class="eyebrow">Join Us</p>
+        <p class="eyebrow">What's Happening</p>
         <h2 class="section-title">Upcoming Events</h2>
       </header>
-      <div class="ue-board" id="upcomingEvents"></div>
+
+      <div class="ue-layout-switch" role="group" aria-label="Upcoming events layout (review)">
+        <span>Layout</span>
+        <button type="button" data-ev-layout="a" aria-pressed="true">A · Featured + list</button>
+        <button type="button" data-ev-layout="b" aria-pressed="false">B · Banner / cards</button>
+      </div>
+
+      <div class="ne-board ev-board reveal" id="newsEvents" data-ev-option="a"></div>
+      <div class="ue-board" id="upcomingEvents" data-ev-option="b" hidden></div>
     </section>
 
     <!-- ============ AWARDS ============ -->
@@ -436,8 +447,9 @@
   <script src="new%20design/js/spotlight-options.js"></script>
   <script src="new%20design/js/main.js"></script>
   <script src="new%20design/js/news-data.js"></script>
-  <script src="new%20design/js/people-data.js"></script>      <!-- speaker photos for Upcoming Events -->
-  <script src="new%20design/js/upcoming-events.js"></script>
+  <script src="new%20design/js/events-demo.js"></script><!-- review aid: sample events, delete before launch -->
+  <script src="new%20design/js/people-data.js"></script>      <!-- speaker photos for Upcoming Events, layout B -->
+  <script src="new%20design/js/upcoming-events.js"></script>  <!-- review aid: Upcoming Events layout B + the A / B switch -->
   <script src="new%20design/js/globe-land.js"></script>
   <script src="new%20design/js/home.js"></script>
   <script src="new%20design/js/ranked-carousel.js"></script>

@@ -1,26 +1,21 @@
 /* =========================================================
-   SKRINE — Home: Upcoming Events
-   Replaces the homepage's News & Events. Shown only while there is
-   at least one event that hasn't finished; otherwise the whole
-   section is hidden. Events drop off by themselves once their end
-   date (or date) has passed.
-     1 event     a feature banner
-     2-3 events  cards side by side
-     4+ events   the next three, plus "See all upcoming events"
-   Each event: date block, a countdown ("In 12 days"), format, time
-   and place, speaker photos, Register (when there is a link) and
-   Add to calendar (downloads an .ics file).
+   SKRINE — Home: Upcoming Events, layout B + the A / B switch (review aid)
+   The section, its data and its show / hide rule belong to home.js
+   (layout A: the next event featured, "Also coming up" beside it).
+   Sample events come from js/events-demo.js ("Test events" pill,
+   bottom left). This file adds a second way to show the same events:
+     B  one event: a feature banner; two or three: cards side by side;
+        four or more: the next three plus "See all upcoming events".
+        Countdown, format, CPD, why attend, speaker photos,
+        Register and Add to calendar (.ics).
+   and the "Layout A / B" switch in the section to compare them.
+   ?evlayout=a|b picks one; remembered for the visit.
 
-   Data: SKRINE_UPCOMING in js/news-data.js (format described there);
-   speakers are matched to js/people-data.js for their photos.
-
-   REVIEW AID: there are no real upcoming events yet, so the
-   "Events preview" pill (bottom left) swaps in sample events:
-     Live (the real data) · None · 1 · 3
-   ?events=live|0|1|3 picks one; remembered for the visit.
-   Remove the pill and SAMPLES once the design is chosen.
-
-   Load after js/main.js, js/news-data.js and js/people-data.js.
+   Data: SKRINE_UPCOMING (js/news-data.js, or the samples from
+   js/events-demo.js); speaker photos from js/people-data.js.
+   Load after js/main.js, js/news-data.js, js/events-demo.js and
+   js/people-data.js. With no upcoming events it draws nothing:
+   home.js keeps the whole section hidden.
    ========================================================= */
 (function () {
   "use strict";
@@ -40,12 +35,10 @@
   function pad(n) { return (n < 10 ? "0" : "") + n; }
   function isoOf(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
   function dateOf(iso) { var p = iso.split("-"); return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2])); }
-  function addDays(n) { var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + n); return isoOf(d); }
   var TODAY = isoOf(new Date());
 
   function countdown(e) {
-    var start = dateOf(e.date), today = dateOf(TODAY);
-    var days = Math.round((start - today) / 86400000);
+    var days = Math.round((dateOf(e.date) - dateOf(TODAY)) / 86400000);
     if (days < 0) return "Happening now";          // started, not yet ended
     if (days === 0) return "Today";
     if (days === 1) return "Tomorrow";
@@ -61,43 +54,11 @@
     return s;
   }
 
-  /* ---------- sample events (review only; dates kept in the future) ---------- */
-  var SAMPLES = [
-    {
-      sample: true,
-      title: "Employment Law Update 2027: The Starting Basic Salary Guidelines and What Employers Should Do Now",
-      date: addDays(12),
-      time: "9.00am – 12.30pm",
-      location: "Skrine, Kuala Lumpur",
-      type: "Seminar",
-      people: ["Foo Siew Li", "Selvamalar Alagaratnam"],
-      summary: "A practical half-day briefing on the new salary guidelines announced in the 2027 Budget: who they cover, the timeline to June 2027, and the steps HR and legal teams should take now.",
-      register: "#"
-    },
-    {
-      sample: true,
-      title: "Cross-Border Insolvency Act 2026: A Practical Briefing for Creditors and Insolvency Practitioners",
-      date: addDays(33),
-      time: "3.00pm – 4.30pm",
-      location: "Online",
-      type: "Webinar",
-      people: ["Sharon Chong Tze Ying", "Lee Ai Hsian"],
-      summary: "How foreign proceedings are recognised under the new Act and Order 88A, and what it means for creditors with assets in Malaysia.",
-      register: "#"
-    },
-    {
-      sample: true,
-      title: "Malaysia M&A Outlook 2027",
-      date: addDays(61),
-      endDate: addDays(62),
-      time: "9.00am – 5.00pm",
-      location: "Kuala Lumpur Convention Centre",
-      type: "Conference",
-      people: ["To' Puan Janet Looi", "Tan Wei Liang"],
-      summary: "Skrine partners join regional deal-makers to discuss the year ahead in public M&A, private equity and cross-border joint ventures.",
-      register: ""
-    }
-  ];
+  /* ---------- links: same rule as home.js (a full URL as is, a page of this site from new design/) ---------- */
+  function registerHref(e) {
+    if (!e.register) return "";
+    return /^(https?:)?\/\//.test(e.register) || e.register.charAt(0) === "#" ? e.register : ROOT + e.register;
+  }
 
   /* ---------- speakers: photo from the People data ---------- */
   var PEOPLE = window.SKRINE_PEOPLE || {};
@@ -109,13 +70,17 @@
     ["partners", "consultants", "seniorAssociates", "associates"].some(function (r) {
       return (PEOPLE[r] || []).some(function (p) {
         var pk = key(p.name);
-        if (pk === k || pk.indexOf(k) === 0 || k.indexOf(pk) === 0) { found = p; return true; }
+        // "Leela Devi Baskaran" and "Leela Baskaran" are the same person: all of the shorter name's words appear in the longer
+        var a = pk.split(" "), b = k.split(" ");
+        var shorter = a.length <= b.length ? a : b, longer = a.length <= b.length ? b : a;
+        if (pk === k || pk.indexOf(k) === 0 || k.indexOf(pk) === 0 ||
+            (shorter.length > 1 && shorter.every(function (w) { return longer.indexOf(w) > -1; }))) { found = p; return true; }
         return false;
       });
     });
     return {
       name: found ? found.name : name,
-      photo: found && (found.photo || found.name + ".png") ? PHOTO_DIR + encodeURIComponent(found.photo || found.name + ".png") : null,
+      photo: found ? PHOTO_DIR + encodeURIComponent(found.photo || found.name + ".png") : null,
       href: ROOT + "people.html?q=" + encodeURIComponent(found ? found.name : name)
     };
   }
@@ -126,13 +91,14 @@
   }
 
   /* ---------- Add to calendar (.ics) ---------- */
+  var TIME_RE = /(\d{1,2})(?:[.:](\d{2}))?\s*(am|pm)/gi;
   function icsTime(t, which) {
-    // "9.00am – 12.30pm" -> "090000" for start (which=0) or end (which=1); null if not readable
-    var m = String(t || "").match(/(\d{1,2})[.:](\d{2})\s*(am|pm)/gi);
-    if (!m || !m[which]) return null;
-    var x = m[which].match(/(\d{1,2})[.:](\d{2})\s*(am|pm)/i);
+    // "9.00am – 12.30pm" / "9:00 am – 12:30 pm" -> "090000" (which=0) / "123000" (which=1); null if not readable
+    var all = String(t || "").match(TIME_RE);
+    if (!all || !all[which]) return null;
+    var x = all[which].match(/(\d{1,2})(?:[.:](\d{2}))?\s*(am|pm)/i);
     var h = Number(x[1]) % 12 + (x[3].toLowerCase() === "pm" ? 12 : 0);
-    return pad(h) + x[2] + "00";
+    return pad(h) + (x[2] || "00") + "00";
   }
   function icsEscape(s) { return String(s || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n"); }
   function icsHref(e) {
@@ -151,7 +117,8 @@
     }
     lines.push("SUMMARY:" + icsEscape(e.title));
     if (e.location) lines.push("LOCATION:" + icsEscape(e.location));
-    if (e.summary) lines.push("DESCRIPTION:" + icsEscape(e.summary + (e.register && e.register !== "#" ? "\nRegister: " + e.register : "")));
+    var reg = registerHref(e);
+    if (e.summary) lines.push("DESCRIPTION:" + icsEscape(e.summary + (/^https?:/.test(reg) ? "\nRegister: " + reg : "")));
     lines.push("END:VEVENT", "END:VCALENDAR");
     return "data:text/calendar;charset=utf-8," + encodeURIComponent(lines.join("\r\n"));
   }
@@ -167,12 +134,20 @@
     return '<span class="ue-date" aria-hidden="true"><b>' + d.getDate() + "</b>" + MONTHS[d.getMonth()] + "<small>" + d.getFullYear() + "</small></span>";
   }
   function badges(e) {
-    var online = /online|webinar/i.test((e.location || "") + " " + (e.type || ""));
+    var online = /online|webinar|virtual/i.test((e.format || "") + " " + (e.location || "") + " " + (e.type || ""));
+    var mode = e.format && !/webinar/i.test(e.format) ? e.format : online ? "Online" : "In person";
+    var showType = e.type && key(e.type) !== key(mode);
     return '<span class="ue-badges">' +
-      (e.type ? '<span class="ue-type">' + esc(e.type) + "</span>" : "") +
-      '<span class="ue-mode">' + (online ? '<i class="fa-solid fa-video" aria-hidden="true"></i> Online' : '<i class="fa-solid fa-location-dot" aria-hidden="true"></i> In person') + "</span>" +
+      (showType ? '<span class="ue-type">' + esc(e.type) + "</span>" : "") +
+      '<span class="ue-mode"><i class="fa-solid ' + (online ? "fa-video" : "fa-location-dot") + '" aria-hidden="true"></i> ' + esc(online && !e.format ? "Online" : (/webinar/i.test(e.format || "") ? "Online" : mode)) + "</span>" +
+      (e.cpd ? '<span class="ue-cpd"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> ' + esc(e.cpd) + "</span>" : "") +
       (e.sample ? '<span class="ue-sample">Sample</span>' : "") +
       "</span>";
+  }
+  function why(e, max) {
+    if (!e.takeaways || !e.takeaways.length) return "";
+    return '<span class="ue-why"><span class="ue-label">Why attend</span><ul>' +
+      e.takeaways.slice(0, max).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul></span>";
   }
   function speakers(e, big) {
     if (!e.people || !e.people.length) return "";
@@ -187,8 +162,9 @@
     return h + "</span></span>";
   }
   function actions(e) {
+    var reg = registerHref(e);
     var h = '<span class="ue-actions">';
-    if (e.register) h += '<a class="btn btn--solid ue-register" href="' + esc(e.register) + '"' + (/^https?:/.test(e.register) ? ' target="_blank" rel="noopener"' : "") + ">Register now" + arrow() + "</a>";
+    if (reg) h += '<a class="btn btn--solid ue-register" href="' + esc(reg) + '"' + (/^https?:/.test(reg) ? ' target="_blank" rel="noopener"' : "") + ">Register now" + arrow() + "</a>";
     else h += '<a class="btn btn--outline" href="' + ALL_EVENTS + '">Event details' + arrow() + "</a>";
     h += '<a class="ue-cal" href="' + icsHref(e) + '" download="' + icsName(e) + '"><i class="fa-regular fa-calendar-plus" aria-hidden="true"></i> Add to calendar</a>';
     return h + "</span>";
@@ -206,6 +182,7 @@
         '<h3 class="ue-title">' + esc(e.title) + "</h3>" +
         when(e) +
         (e.summary ? '<p class="ue-summary">' + esc(e.summary) + "</p>" : "") +
+        why(e, 3) +
         speakers(e, true) +
         actions(e) +
       "</div></article>";
@@ -221,16 +198,11 @@
       "</article>";
   }
 
-  /* ---------- render ---------- */
-  function render(list) {
-    var events = list
-      .filter(function (e) { return e && e.date && (e.endDate || e.date) >= TODAY; })
-      .sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-
-    section.hidden = !events.length;      // nothing coming up: no section at all
-    board.textContent = "";
-    if (!events.length) return;
-
+  /* ---------- render layout B ---------- */
+  var events = (window.SKRINE_UPCOMING || [])
+    .filter(function (e) { return e && e.date && (e.endDate || e.date) >= TODAY; })
+    .sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+  if (events.length) {
     var shown = events.slice(0, 3);
     var html = shown.length === 1 ? feature(shown[0]) : '<div class="ue-grid ue-grid--' + shown.length + '">' + shown.map(card).join("") + "</div>";
     if (events.length > 3) {
@@ -241,48 +213,30 @@
     board.querySelectorAll("[data-tilt]").forEach(function (n) { FX.attachTilt(n); });
   }
 
-  /* ---------- review pill: Live · None · 1 · 3 ---------- */
-  var KEY = "skrine-events-preview";
-  var MODES = ["live", "0", "1", "3"];
-  var LABELS = { live: "Live", "0": "None", "1": "1", "3": "3" };
+  /* ---------- the A / B switch (review aid) ---------- */
+  var KEY = "skrine-events-layout";
+  var LAYOUTS = ["a", "b"];
   function remember(v) { try { sessionStorage.setItem(KEY, v); } catch (e) { /* storage blocked */ } }
-  function recall() { try { var v = sessionStorage.getItem(KEY); return MODES.indexOf(v) > -1 ? v : null; } catch (e) { return null; } }
-  var asked = new URLSearchParams(location.search).get("events");
-  if (MODES.indexOf(asked) < 0) asked = null;
+  function recall() { try { var v = sessionStorage.getItem(KEY); return LAYOUTS.indexOf(v) > -1 ? v : null; } catch (e) { return null; } }
+  var asked = (new URLSearchParams(location.search).get("evlayout") || "").toLowerCase();
+  if (LAYOUTS.indexOf(asked) < 0) asked = null;
   if (asked) remember(asked);
-  var mode = asked || recall() || "1";
 
-  function dataFor(m) {
-    if (m === "live") return window.SKRINE_UPCOMING || [];
-    return SAMPLES.slice(0, Number(m));
-  }
-
-  var pill = document.createElement("nav");
-  pill.className = "ue-switch";
-  pill.setAttribute("aria-label", "Upcoming events preview (review)");
-  var lab = document.createElement("span");
-  lab.className = "ue-switch-label";
-  lab.textContent = "Events preview";
-  pill.appendChild(lab);
-  var btns = MODES.map(function (m) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.textContent = LABELS[m];
-    b.title = m === "live" ? "The real upcoming events (none right now)" : m === "0" ? "No events: the section is hidden" : m + " sample event" + (m === "1" ? "" : "s");
-    b.addEventListener("click", function () {
-      remember(m);
-      setMode(m);
-      if (!section.hidden) section.scrollIntoView({ behavior: "smooth", block: "start" });
+  var buttons = Array.prototype.slice.call(section.querySelectorAll("[data-ev-layout]"));
+  function show(layout, fromUser) {
+    section.querySelectorAll("[data-ev-option]").forEach(function (box) {
+      var on = box.getAttribute("data-ev-option") === layout;
+      box.hidden = !on;
+      // shown after the page loaded: reveal its content straight away
+      if (on && fromUser) {
+        if (box.classList.contains("reveal")) box.classList.add("is-visible");
+        box.querySelectorAll(".reveal").forEach(function (n) { n.classList.add("is-visible"); });
+      }
     });
-    pill.appendChild(b);
-    return b;
-  });
-  document.body.appendChild(pill);
-
-  function setMode(m) {
-    mode = m;
-    btns.forEach(function (b, i) { b.setAttribute("aria-pressed", String(MODES[i] === m)); });
-    render(dataFor(m));
+    buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-ev-layout") === layout)); });
   }
-  setMode(mode);
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () { var l = b.getAttribute("data-ev-layout"); remember(l); show(l, true); });
+  });
+  show(asked || recall() || "a", false);
 })();
