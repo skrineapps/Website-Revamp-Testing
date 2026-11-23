@@ -137,7 +137,6 @@
 }
 .life-route li.is-world::before { border-top-style: solid; border-color: var(--red); }
 
-.life-regatta { margin-bottom: clamp(40px, 5vw, 72px); }
 
 /* ---------- Stories ---------- */
 .life-stories { padding: clamp(72px, 9vw, 120px) 0 clamp(64px, 8vw, 110px); border-top: 1px solid var(--grey-300); }
