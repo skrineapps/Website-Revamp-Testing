@@ -383,8 +383,9 @@
 .themed .st-step::before { background: var(--canvas); }
 .themed .st-step::before { box-shadow: 0 0 0 6px var(--canvas); }
 .themed .st-quote { background: linear-gradient(140deg, var(--dark) 0%, var(--dark) 55%, var(--wine-deep) 100%); }
-.themed .st-quote::before { background-image: var(--t-art); }
+/* Our Story quote keeps the Skrine Dragons photo in every design (css/story.css) */
 .themed .st-deed-paper { background-color: var(--white); }
+.themed .st-vc { background: rgba(var(--canvas-rgb), 0.82); border-color: rgba(var(--tint-rgb), 0.6); }
 
 /* profile portrait: the photo melts into the design's own tone instead of near-white */
 .themed .pf-portrait-frame { background: linear-gradient(180deg, rgb(var(--pale-rgb)) 0%, rgb(var(--tint-rgb)) 100%); }
@@ -423,7 +424,6 @@
 .themed .ct-address::before,
 .themed .life-quote,
 .themed .life-lead::before,
-.themed .st-v-panel,
 .themed .ne-up {
   border-left-color: var(--wine);
   border-radius: 4px 22px 22px 4px;

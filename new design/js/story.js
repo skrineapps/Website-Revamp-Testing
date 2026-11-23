@@ -101,34 +101,5 @@
     update();
   }
 
-  /* ---------- Values ---------- */
-  var vbox = document.getElementById("stValues");
-  if (vbox) {
-    var items = Array.prototype.slice.call(vbox.querySelectorAll(".st-v"));
-    var wide = window.matchMedia("(min-width: 901px)");
-    var open = function (item) {
-      items.forEach(function (it) {
-        var on = it === item;
-        // on phones each word opens and closes on its own
-        if (!wide.matches && it !== item) return;
-        if (!wide.matches) on = !it.classList.contains("is-active");
-        it.classList.toggle("is-active", on);
-        it.querySelector(".st-v-word").setAttribute("aria-expanded", String(on));
-      });
-    };
-    items.forEach(function (it) {
-      var b = it.querySelector(".st-v-word");
-      b.addEventListener("click", function () { open(it); });
-      // desktop: hovering a word previews it
-      b.addEventListener("mouseenter", function () { if (wide.matches) open(it); });
-      b.addEventListener("focus", function () { if (wide.matches) open(it); });
-    });
-    // phones: start with every value open so nothing is hidden
-    var sync = function () {
-      if (!wide.matches) items.forEach(function (it) { it.classList.add("is-active"); it.querySelector(".st-v-word").setAttribute("aria-expanded", "true"); });
-      else open(items.filter(function (it) { return it.classList.contains("is-active"); })[0] || items[0]);
-    };
-    if (wide.addEventListener) wide.addEventListener("change", sync);
-    if (!wide.matches) sync();
-  }
+  /* Values: all three are shown side by side (no script needed) */
 })();

@@ -232,9 +232,27 @@
 }
 .st-roll-item.is-visible .st-roll-note { opacity: 1; transform: none; }
 /* hover: the name turns red and a short rule draws in before the label */
-.st-roll-note::before { content: ""; display: inline-block; width: 0; height: 2px; margin-right: 0; vertical-align: middle; background: var(--red); transition: width 0.4s var(--ease), margin 0.4s var(--ease); }
+/* the rule is drawn beside the label (on the side facing the name) and takes no space,
+   so hovering never changes the row's layout (a long name like William Donald Bewsher
+   used to be squeezed onto two lines and the row jumped) */
+.st-roll-name { min-width: 0; }
+.st-roll-note { position: relative; }
+.st-roll-note::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 10px);
+  width: 34px;
+  height: 2px;
+  margin-top: -1px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.4s var(--ease);
+}
+.st-roll-item:nth-child(even) .st-roll-note::before { right: auto; left: calc(100% + 10px); transform-origin: left center; }
 .st-roll-item:hover .st-roll-name { color: var(--red); transition-delay: 0s; }
-.st-roll-item:hover .st-roll-note::before { width: 34px; margin-right: 10px; }
+.st-roll-item:hover .st-roll-note::before { transform: scaleX(1); }
 /* keep the roll call steady: no tilt-in from the shared reveal */
 .st-roll-item.reveal { transform: none; opacity: 1; }
 
@@ -255,14 +273,18 @@
   color: var(--white);
   background: linear-gradient(140deg, #2a2a2a 0%, #1f1f1f 60%, #3a0d13 100%);
 }
+/* the Skrine Dragons crew shows through the dark panel: the founders' "we trusted each other",
+   still pulling together today. Faded to the right so the words stay clear on the left. */
 .st-quote::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: url("../images/bg/paint-wash.jpg") 70% 50% / cover no-repeat;
-  opacity: 0.28;
-  mix-blend-mode: screen;
+  background: url("../images/story/skrine-dragons.jpg") 60% 70% / cover no-repeat;
+  opacity: 0.38;
+  mix-blend-mode: luminosity;
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.6) 45%, #000 80%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.6) 45%, #000 80%);
 }
 .st-quote-mark { font: 900 clamp(110px, 12vw, 180px)/0.8 var(--font-display); color: var(--red); text-align: right; }
 .st-quote blockquote { margin: 0; max-width: 980px; }
@@ -280,64 +302,101 @@
 /* =========================================================
    Values: words on the left, meaning on the right
    ========================================================= */
-.st-values { padding: clamp(40px, 5vw, 72px) 0; }
-.st-values-head { margin-bottom: 30px; }
-.st-vlist {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  grid-template-rows: repeat(3, auto) 1fr;
-  column-gap: clamp(32px, 6vw, 100px);
-}
-.st-v { display: contents; }
-.st-v-word {
-  grid-column: 1;
-  position: relative;
-  justify-self: start;
-  padding: 6px 0 14px;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  text-align: left;
-  font: 900 clamp(48px, 6vw, 92px)/1.05 var(--font-display);
-  letter-spacing: -0.02em;
-  color: rgba(117, 117, 117, 0.35);
-  transition: color 0.4s var(--ease);
-}
-.st-v-word::after {
+.st-values { position: relative; isolation: isolate; padding: clamp(40px, 5vw, 72px) 0; }
+/* the Skrine Dragons photo, very faint and feathered on every side, behind the values */
+.st-values::before {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: 6px;
-  height: 4px;
-  width: 100%;
-  background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s var(--ease);
+  z-index: -1;
+  top: 0;
+  bottom: -40px;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: url("../images/story/skrine-dragons.jpg") 55% 72% / cover no-repeat;
+  opacity: 0.24;
+  mix-blend-mode: multiply;
+  filter: grayscale(0.35);
+  -webkit-mask-image: radial-gradient(60% 62% at 62% 58%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(60% 62% at 62% 58%, #000 30%, transparent 80%);
+  pointer-events: none;
 }
-.st-v-word:hover { color: rgba(42, 42, 42, 0.6); }
-.st-v.is-active .st-v-word { color: var(--ink); }
-.st-v.is-active .st-v-word::after { transform: scaleX(1); }
-.st-v-word:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; border-radius: 6px; }
-.st-v-panel {
-  grid-column: 2;
-  grid-row: 1 / span 4;
-  align-self: center;
+.st-values-head { margin-bottom: clamp(28px, 3.4vw, 44px); max-width: 820px; }
+.st-values-head .st-h2 { max-width: none; }
+.st-values-line { margin-top: 12px; font: italic 400 clamp(17px, 1.4vw, 20px)/1.6 var(--font-display); color: var(--grey-700); }
+
+/* three values side by side, all visible: each is a promise to the client */
+.st-vcards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  counter-reset: none;
+}
+.st-vc {
   position: relative;
-  padding: clamp(28px, 3vw, 44px);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 2.6vw, 38px) clamp(22px, 2.2vw, 32px) clamp(22px, 2.2vw, 30px);
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--grey-100);
-  border-left: 4px solid var(--red);
-  box-shadow: 0 24px 50px -34px rgba(0, 0, 0, 0.4);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(14px);
-  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease), visibility 0s 0.45s;
+  box-shadow: 0 24px 50px -36px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  transition-delay: calc(var(--i, 0) * 0.08s);
 }
-.st-v.is-active .st-v-panel { opacity: 1; visibility: visible; transform: none; transition: opacity 0.45s var(--ease) 0.08s, transform 0.45s var(--ease) 0.08s, visibility 0s; }
-.st-v-lead { font: 700 clamp(21px, 1.8vw, 26px)/1.35 var(--font-display); color: var(--ink); margin-bottom: 14px; }
-.st-v-panel p:not(.st-v-lead) { font-size: 16.5px; line-height: 1.85; color: var(--ink-soft); }
+/* brand-red edge along the top, drawing across on hover */
+.st-vc::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--red);
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.st-vc:hover { transform: translateY(-6px); box-shadow: 0 34px 60px -34px rgba(0, 0, 0, 0.45); transition-delay: 0s; }
+.st-vc:hover::before { transform: scaleX(1); }
+.st-vc-num {
+  font: 700 13px var(--font-body);
+  letter-spacing: 0.24em;
+  color: var(--red);
+}
+.st-vc-word {
+  margin-top: 10px;
+  font: 900 clamp(38px, 3.6vw, 56px)/1.05 var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.st-vc-lead {
+  margin-top: 16px;
+  font: 700 clamp(18px, 1.4vw, 21px)/1.4 var(--font-display);
+  color: var(--ink);
+}
+.st-vc-body {
+  margin-top: 12px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+/* the selling point: what the value means for the client, set apart at the foot of the card */
+.st-vc-promise {
+  margin-top: auto;
+  padding-top: 22px;
+  font: italic 400 clamp(16px, 1.25vw, 18px)/1.5 var(--font-display);
+  color: var(--red);
+}
+.st-vc-promise span {
+  display: block;
+  margin-bottom: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--grey-300);
+  font: normal 700 11px var(--font-body);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey-700);
+}
 
 /* =========================================================
    Onward
@@ -368,17 +427,11 @@
   .st-bigyear, .st-rail { display: none; }
   .st-step { min-height: 0; padding-bottom: 40px; opacity: 1; transform: none; }
   .st-step.is-past { opacity: 1; }
-  /* values become an accordion */
-  .st-vlist { display: block; }
-  .st-v { display: block; border-top: 1px solid var(--grey-300); }
-  .st-v:last-child { border-bottom: 1px solid var(--grey-300); }
-  .st-v-word { width: 100%; padding: 16px 0; font-size: clamp(36px, 10vw, 54px); color: var(--ink); }
-  .st-v-word::after { bottom: 10px; width: 56px; }
-  .st-v-panel { display: none; opacity: 1; visibility: visible; transform: none; margin-bottom: 20px; }
-  .st-v.is-active .st-v-panel { display: block; }
+  .st-vcards { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 640px) {
   .st-roll-item, .st-roll-item:nth-child(even) { flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; }
+  .st-roll-note::before { display: none; }
   .st-open-year { -webkit-text-stroke-width: 1.5px; }
   .st-deed-paper { transform: rotate(-1.2deg); }
   .st-deed-paper { padding: 30px 24px 24px; }
@@ -394,5 +447,5 @@
   .st-open-cue i, .st-deed-seal { animation: none; }
   .st-step { transition: none; }
   .st-roll-name, .st-roll-note { transition: none; }
-  .st-v-panel { transition: none; }
+  .st-vc, .st-vc::before { transition: none; }
 }

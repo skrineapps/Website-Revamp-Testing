@@ -101,8 +101,8 @@
   aspect-ratio: 4 / 5;
   border-radius: 20px;
   overflow: hidden;
-  /* the photo is multiplied onto this, so its white studio background takes this colour:
-     a soft step of the brand greys rather than near-white (Designs 2+ use their own tones, css/themes.css) */
+  /* sits behind the cut-out portrait: a soft step of the brand greys rather than near-white
+     (Designs 2+ use their own tones, css/themes.css) */
   background: linear-gradient(180deg, var(--grey-100) 0%, #dedcdd 100%);
   box-shadow: 0 40px 70px -40px rgba(0, 0, 0, 0.45);
 }
@@ -122,7 +122,8 @@
   height: 92%;
   object-fit: cover;
   object-position: center top;
-  mix-blend-mode: multiply; /* white photo backgrounds melt into the panel */
+  /* the portraits are cut-outs (transparent background): the panel colour shows behind the person only,
+     and their skin tones and clothes keep their true colours */
 }
 .pf-monogram {
   position: absolute;
@@ -372,7 +373,7 @@
 }
 .pf-other:hover { border-color: var(--red); transform: translateY(-2px); box-shadow: 0 14px 28px -22px rgba(0, 0, 0, 0.4); }
 .pf-other-photo { position: relative; display: block; width: 64px; height: 64px; border-radius: 50%; overflow: hidden; background: var(--grey-100); }
-.pf-other-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 10%; transform: scale(1.3); transform-origin: center 15%; mix-blend-mode: multiply; }
+.pf-other-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 10%; transform: scale(1.3); transform-origin: center 15%; }
 .pf-other-photo .pf-monogram { font-size: 22px; }
 .pf-other-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .pf-other-name { font: 700 15.5px/1.3 var(--font-display); color: var(--ink); }

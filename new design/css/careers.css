@@ -241,3 +241,6 @@
   .cr-service b { font-size: 19px; }
   .cr-lead { margin-left: 8px; margin-right: 8px; }
 }
+
+/* each chapter ends with a button to its own page */
+.cr-chapter-cta { margin-top: 24px; }
