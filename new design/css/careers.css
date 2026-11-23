@@ -225,6 +225,9 @@
 .cr-route--pupil .cr-route-num { color: var(--red); }
 
 .cr-join .kit-painted { margin-top: clamp(48px, 6vw, 80px); }
+/* "Ready to paddle with us?": the Skrine Dragons crew on the water, in every design */
+.cr-join .kit-painted::before,
+html.themed .cr-join .kit-painted::before { background: url("../images/story/skrine-dragons.jpg") 58% 70% / cover no-repeat; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
