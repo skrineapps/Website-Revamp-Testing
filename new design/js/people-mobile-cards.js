@@ -2,13 +2,14 @@
    SKRINE — People: partner practice areas on phones (review aid)
    On laptops the partner cards show their practice areas on hover
    (Layout 1 flips, Layout 2 fades). Phones have no hover, so this
-   adds four ways to show them, picked with the "Mobile cards" pill
+   adds three ways to show them, picked with the "Mobile cards" pill
    (only shown on phone-sized screens, 640 px and below):
-     1  Line      the first two practice areas under the name, "+N more"
      2  Tap       first tap plays the flip / fade, second tap opens the profile
      3  List      one partner per row: photo, name, and up to three chips
      4  Sheet     a tap slides up a panel with every practice area
-   ?mcard=1..4 in the address picks one; the choice is remembered for
+   (Option 1, "Line", was dropped after review; the others keep their
+   numbers so earlier feedback still matches.)
+   ?mcard=2..4 in the address picks one; the choice is remembered for
    the visit (sessionStorage), across Layout 1 and Layout 2.
    Laptop and desktop are unchanged: everything here is scoped to
    phone widths in css/people-mobile-cards.css.
@@ -26,8 +27,8 @@
 
   var html = document.documentElement;
   var phone = window.matchMedia("(max-width: 640px)");
-  var OPTIONS = ["1", "2", "3", "4"];
-  var NAMES = { "1": "Line", "2": "Tap", "3": "List", "4": "Sheet" };
+  var OPTIONS = ["2", "3", "4"];
+  var NAMES = { "2": "Tap", "3": "List", "4": "Sheet" };
   var KEY = "skrine-mcard";
 
   function el(tag, cls, text) {
@@ -52,15 +53,6 @@
   partners.forEach(function (p) {
     var card = p._el;
     var areas = p._areas || [];
-
-    // 1: two practice areas under the name, on the photo
-    var info = card.querySelector(".photo-card-info");
-    if (info && areas.length) {
-      var line = el("p", "mc-line");
-      areas.slice(0, 2).forEach(function (a) { line.appendChild(el("span", null, a)); });
-      if (areas.length > 2) line.appendChild(el("span", "mc-more", "+" + (areas.length - 2) + " more"));
-      info.appendChild(line);
-    }
 
     // 2: a small hint on the photo that a tap shows more
     var front = card.querySelector(".photo-card-inner");
@@ -202,7 +194,7 @@
   var asked = new URLSearchParams(location.search).get("mcard");
   if (OPTIONS.indexOf(asked) < 0) asked = null;
   if (asked) remember(asked);
-  var current = asked || recall() || "1";
+  var current = asked || recall() || "2";
 
   var nav = el("nav", "mc-switch");
   nav.setAttribute("aria-label", "Partner cards on phones (review)");

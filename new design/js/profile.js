@@ -431,8 +431,7 @@
   var band = el("section", "pf-contact reveal");
   band.setAttribute("aria-label", "Contact " + P.name);
   var bt = el("div");
-  bt.appendChild(el("p", "eyebrow", "Get in touch"));
-  bt.appendChild(el("h2", null, "Speak with " + P.name));
+  bt.appendChild(el("h2", null, "Get in touch"));
   band.appendChild(bt);
   var ba = el("div", "pf-contact-actions");
   if (P.email) { var be = el("a", "btn btn--light"); be.href = "mailto:" + P.email; be.appendChild(icon("fa-regular fa-envelope")); be.appendChild(document.createTextNode(" Email")); ba.appendChild(be); }

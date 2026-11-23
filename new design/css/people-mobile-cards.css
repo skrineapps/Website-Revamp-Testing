@@ -7,7 +7,6 @@
    ========================================================= */
 
 /* hidden everywhere unless an option below shows them */
-.mc-line,
 .mc-hint,
 .mc-row,
 .mc-switch,
@@ -50,44 +49,18 @@
   }
   .mc-switch button[aria-pressed="true"] { background: var(--red); color: #fff; }
 
-  /* =========================================================
-     1 · Line: two practice areas under the name, on the photo
-     ========================================================= */
-  .mc-1 .mc-line {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin-top: 6px;
-  }
-  .mc-line span {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font: 600 11.5px/1.35 var(--font-body);
-    color: rgba(255, 255, 255, 0.86);
-  }
-  .mc-line .mc-more { font-weight: 700; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6); }
-  /* a little more shade behind the extra lines */
-  .mc-1 #grid-partners .photo-card-inner::after {
-    background: linear-gradient(to top, rgba(18, 18, 20, 0.96) 0%, rgba(18, 18, 20, 0.85) 34%, rgba(18, 18, 20, 0.2) 60%, transparent 70%);
-  }
-  .mc-1 #grid-partners .photo-card-inner::before {
-    -webkit-mask-image: linear-gradient(to top, #000 30%, transparent 56%);
-    mask-image: linear-gradient(to top, #000 30%, transparent 56%);
-  }
-
-  /* ---------- no hover effect on phones (options 1, 3 and 4) ----------
+  /* ---------- no hover effect on phones (options 3 and 4) ----------
      A tap counts as a hover on phones, so the card would start its flip / fade
      and then open the profile straight away. Hold every hover state at rest.
      (Option 2 keeps the effect: there the first tap is meant to show it.) */
-  :is(.mc-1, .mc-3, .mc-4) .photo-card--flip:hover .pd-flip { transform: none; }
-  :is(.mc-1, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel::before { opacity: 0; }
-  :is(.mc-1, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel > *,
-  :is(.mc-1, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-back-areas li,
-  :is(.mc-1, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-go { opacity: 0; transform: translateY(12px); }
-  :is(.mc-1, .mc-3, .mc-4) .photo-card--fade:hover .photo-card-info { opacity: 1; }
-  :is(.mc-1, .mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-img { transform: scale(1.02); }
-  :is(.mc-1, .mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-info { transform: translateZ(30px); }
+  :is(.mc-3, .mc-4) .photo-card--flip:hover .pd-flip { transform: none; }
+  :is(.mc-3, .mc-4) .photo-card--fade:hover .pd-panel::before { opacity: 0; }
+  :is(.mc-3, .mc-4) .photo-card--fade:hover .pd-panel > *,
+  :is(.mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-back-areas li,
+  :is(.mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-go { opacity: 0; transform: translateY(12px); }
+  :is(.mc-3, .mc-4) .photo-card--fade:hover .photo-card-info { opacity: 1; }
+  :is(.mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-img { transform: scale(1.02); }
+  :is(.mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-info { transform: translateZ(30px); }
 
   /* =========================================================
      2 · Tap: first tap plays the flip / fade, second tap opens the profile
