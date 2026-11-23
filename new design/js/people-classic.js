@@ -50,6 +50,11 @@
     { label: "Technology, Media and Telecommunications", keys: ["technology", "media", "telecommunications", "fintech", "data protection"] }
   ];
 
+  // the Practice Area and Sector dropdowns list A–Z (new entries can go anywhere above)
+  function byLabel(a, b) { return a.label.localeCompare(b.label, "en", { sensitivity: "base" }); }
+  PRACTICE_FILTERS.sort(byLabel);
+  INDUSTRY_FILTERS.sort(byLabel);
+
   /* ---------- helpers ---------- */
   function norm(s) {
     return String(s || "")
