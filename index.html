@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="new%20design/css/style.css">
   <link rel="stylesheet" href="new%20design/css/home.css">
   <link rel="stylesheet" href="new%20design/css/spotlight-options.css">
+  <link rel="stylesheet" href="new%20design/css/upcoming-events.css">
   <link rel="stylesheet" href="new%20design/css/themes.css">
   <script src="new%20design/js/design.js"></script>
   <link rel="icon" type="image/png" sizes="32x32" href="new%20design/images/favicon-32.png">
@@ -229,28 +230,15 @@
       <noscript><p class="section-deck">Please enable JavaScript to see the latest legal updates and publications.</p></noscript>
     </section>
 
-    <!-- ============ NEWS & EVENTS ============ -->
-    <section class="section section--events section--art" id="events" data-watermark="News">
+    <!-- ============ UPCOMING EVENTS ============ -->
+    <!-- Filled by js/upcoming-events.js from SKRINE_UPCOMING (js/news-data.js).
+         Shown only while an event is still to come; with none, the section stays hidden. -->
+    <section class="section section--events section--art" id="events" data-watermark="Events" hidden>
       <header class="section-head reveal">
-        <p class="eyebrow">What's Happening</p>
-        <h2 class="section-title">News &amp; Events</h2>
+        <p class="eyebrow">Join Us</p>
+        <h2 class="section-title">Upcoming Events</h2>
       </header>
-
-      <!-- filled by home.js from js/news-data.js (SKRINE_NEWS + SKRINE_UPCOMING, both from skrine.com);
-           the fallback below is the latest story, shown without JavaScript -->
-      <div class="ne-board reveal" id="newsEvents">
-        <a href="new%20design/news-events.html" class="ne-feature">
-          <img src="new%20design/images/news/2026-07-mybar-academy-x-working-committee-of-huangpu-lawyers-trainin.jpg" alt="" class="ne-feature-img">
-          <div class="ne-feature-body">
-            <p class="ne-kicker"><span>Latest News</span>Speaking &amp; Events · 07 Jul 2026</p>
-            <h3>MyBar Academy X Working Committee of Huangpu Lawyers Training Programme</h3>
-          </div>
-        </a>
-      </div>
-
-      <div class="section-cta reveal">
-        <a href="new%20design/news-events.html" class="btn btn--outline">All News &amp; Events <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
+      <div class="ue-board" id="upcomingEvents"></div>
     </section>
 
     <!-- ============ AWARDS ============ -->
@@ -448,6 +436,8 @@
   <script src="new%20design/js/spotlight-options.js"></script>
   <script src="new%20design/js/main.js"></script>
   <script src="new%20design/js/news-data.js"></script>
+  <script src="new%20design/js/people-data.js"></script>      <!-- speaker photos for Upcoming Events -->
+  <script src="new%20design/js/upcoming-events.js"></script>
   <script src="new%20design/js/globe-land.js"></script>
   <script src="new%20design/js/home.js"></script>
   <script src="new%20design/js/ranked-carousel.js"></script>
