@@ -439,13 +439,11 @@
   mask: none;
 }
 
-/* ---------- Footer: dark, with the artwork running through ---------- */
+/* ---------- Footer: dark, with a thin brand line along the top ---------- */
+/* plain dark footer in the design's own tone (the artwork is no longer shown here) */
 .themed .site-footer {
   position: relative;
-  background:
-    linear-gradient(var(--t-foot-dir), rgba(var(--dark-rgb), 0.97) 0%, rgba(var(--dark-rgb), 0.9) 45%, rgba(var(--dark-rgb), 0.55) 100%),
-    var(--t-art) var(--t-foot-pos) / cover no-repeat,
-    var(--dark);
+  background: linear-gradient(180deg, var(--dark) 0%, rgb(var(--dark-rgb)) 100%);
   color: #f6f0e8;
 }
 .themed .site-footer::before {
@@ -1160,7 +1158,9 @@ html.skin-8 { --brush-mask: none; }
 /* ---- Design 9: scroll-through (laptop) and swipe (phone) ---- */
 .skin-9 .hero.v9-hero { height: auto; min-height: 0; overflow: visible; perspective: none; }
 .skin-9 .v9-stage { position: relative; height: 100vh; min-height: 620px; overflow: hidden; perspective: 1200px; }
-.skin-9 .hero.v9-scroll { height: 360vh; }                         /* a screen of scroll per value, plus the finish */
+/* scroll run is a fixed distance (not a multiple of the screen), so it feels the same on every
+   screen size: ~300px per value plus ~300px for the finish */
+.skin-9 .hero.v9-scroll { height: calc(max(100vh, 620px) + 1200px); }
 .skin-9 .hero.v9-scroll .v9-stage { position: sticky; top: 0; }
 .skin-9 .v9-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0), var(--canvas)); }
 /* one photo; the zoom follows the scroll (laptop) or steps per value (phone) */
