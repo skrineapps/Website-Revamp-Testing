@@ -15,7 +15,11 @@
      to move between values; a three-step bar shows where you are.
 
    Value lines are quoted from skrine.com/profile/our-values.
-   After all three values have been seen, "Our Story" pulses once.
+   After the third value the hero settles into the finished look (all three
+   words, "Ingenuity." on the red band, the original tagline) and "Our Story"
+   pulses once. Scrolling back up (or tapping a word) returns to the values.
+   Hover (laptop): a gentle zoom-in and a soft light follow the cursor; the
+   photo never slides, so its edges are never shown.
    ========================================================= */
 (function () {
   "use strict";
@@ -76,10 +80,28 @@
   hint.setAttribute("aria-hidden", "true");
   panel.insertBefore(hint, panel.querySelector(".hero-foot"));
 
-  var current = -1, seen = {};
+  var subOriginal = sub ? sub.innerHTML : "";
+  var current = -1, seen = {}, DONE = VALUES.length;
+
+  // the finished look, shown once all three values have been seen
+  function finish() {
+    if (current === DONE) return;
+    current = DONE;
+    hero.classList.add("v9-done");
+    words.forEach(function (w) { w.classList.remove("is-on"); w.setAttribute("aria-pressed", "false"); });
+    Array.prototype.forEach.call(steps.children, function (s) { s.classList.remove("is-on"); s.classList.add("is-done"); });
+    if (sub) {
+      sub.classList.add("is-swapping");
+      setTimeout(function () { sub.innerHTML = subOriginal; sub.classList.remove("is-swapping"); }, reduce ? 0 : 320);
+    }
+    hint.classList.add("is-gone");
+    if (story && !story.classList.contains("v9-ready")) story.classList.add("v9-ready");
+  }
+
   function show(i) {
     if (i === current) return;
     current = i;
+    hero.classList.remove("v9-done");
     if (mode !== "scroll") photo.style.setProperty("--zoom", VALUES[i].zoom);   // phone: step to this value's zoom
     words.forEach(function (w, k) { w.classList.toggle("is-on", k === i); w.setAttribute("aria-pressed", String(k === i)); });
     Array.prototype.forEach.call(steps.children, function (s, k) { s.classList.toggle("is-on", k === i); s.classList.toggle("is-done", k < i); });
@@ -91,8 +113,11 @@
       }, reduce ? 0 : 320);
     }
     seen[i] = true;
-    if (story && Object.keys(seen).length === VALUES.length && !story.classList.contains("v9-ready")) story.classList.add("v9-ready");
+    clearTimeout(settle);
+    // phone: after resting on the last value, settle into the finished look
+    if (mode === "swipe" && i === VALUES.length - 1 && Object.keys(seen).length === VALUES.length) settle = setTimeout(finish, reduce ? 0 : 3200);
   }
+  var settle = null;
 
   words.forEach(function (w) { w.setAttribute("tabindex", "0"); w.setAttribute("role", "button"); });
 
@@ -124,8 +149,9 @@
     function update() {
       ticking = false;
       var p = progress();
-      // three equal bands of scroll; a little dead zone at the end before release
-      show(Math.min(VALUES.length - 1, Math.floor(p * VALUES.length * 0.999)));
+      // four bands of scroll: Wisdom, Fortitude, Ingenuity, then the finished look
+      var band = Math.floor(p * (VALUES.length + 1) * 0.999);
+      if (band >= VALUES.length) finish(); else show(band);
       hero.style.setProperty("--v9-p", p.toFixed(3));
       // zoom glides continuously with the scroll, from the first value's framing to the last
       var z = VALUES[0].zoom + (VALUES[VALUES.length - 1].zoom - VALUES[0].zoom) * p;
@@ -140,23 +166,23 @@
       function go() {
         var top = hero.getBoundingClientRect().top + window.scrollY;
         var run = hero.offsetHeight - window.innerHeight;
-        window.scrollTo({ top: top + run * ((i + 0.5) / VALUES.length), behavior: "smooth" });
+        window.scrollTo({ top: top + run * ((i + 0.5) / (VALUES.length + 1)), behavior: "smooth" });
       }
       on(w, "click", go);
       on(w, "keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
     });
 
-    // the photo drifts with the cursor; a soft light follows it
-    var raf = null, tx = 0, ty = 0;
+    // hover: a gentle zoom-in (never a slide, so no edge shows) and a soft light under the cursor
+    on(hero, "pointerenter", function () { photo.style.setProperty("--hz", "1.035"); });
+    on(hero, "pointerleave", function () { photo.style.setProperty("--hz", "1"); });
+    var raf = null, mx = 50, my = 50;
     on(hero, "pointermove", function (e) {
       var r = stage.getBoundingClientRect();
-      var nx = (e.clientX - r.left) / r.width, ny = (e.clientY - r.top) / r.height;
-      tx = (0.5 - nx) * 28; ty = (0.5 - ny) * 18;
-      light.style.setProperty("--mx", (nx * 100).toFixed(1) + "%");
-      light.style.setProperty("--my", (ny * 100).toFixed(1) + "%");
+      mx = (e.clientX - r.left) / r.width * 100; my = (e.clientY - r.top) / r.height * 100;
       if (!raf) raf = requestAnimationFrame(function () {
         raf = null;
-        layers.forEach(function (l) { l.style.setProperty("--px", tx.toFixed(1) + "px"); l.style.setProperty("--py", ty.toFixed(1) + "px"); });
+        light.style.setProperty("--mx", mx.toFixed(1) + "%");
+        light.style.setProperty("--my", my.toFixed(1) + "%");
       });
     });
     update();
@@ -166,8 +192,8 @@
   function startSwipe() {
     hint.textContent = "Swipe to explore our values";
     hint.classList.remove("is-gone");
-    layers.forEach(function (l) { l.style.removeProperty("--px"); l.style.removeProperty("--py"); });
-    photo.style.setProperty("--zoom", VALUES[Math.max(0, current)].zoom);
+    photo.style.setProperty("--hz", "1");
+    photo.style.setProperty("--zoom", VALUES[Math.min(VALUES.length - 1, Math.max(0, current))].zoom);
 
     words.forEach(function (w, i) {
       on(w, "click", function () { show(i); hint.classList.add("is-gone"); });
@@ -183,7 +209,8 @@
       x0 = null;
       if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
       var n = current + (dx < 0 ? 1 : -1);
-      if (n < 0 || n >= VALUES.length) return;
+      if (n < 0) return;
+      if (n >= VALUES.length) { if (current < DONE) finish(); return; }
       show(n);
       hint.classList.add("is-gone");
     }, { passive: true });
