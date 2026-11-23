@@ -177,75 +177,75 @@
     restartRotate();
   }
 
-  /* ---------- News & Events: everything visible at once ----------
-     Left: the latest story, large. Right: upcoming events (or skrine.com's
-     "no upcoming events" state) above the next few stories.
-     Data: js/news-data.js — SKRINE_NEWS and SKRINE_UPCOMING, from skrine.com. */
+  /* ---------- Upcoming events ----------
+     Only events still to come (js/news-data.js: SKRINE_UPCOMING). The next
+     one is featured; up to two more sit beside it. With nothing scheduled
+     the whole section stays hidden, so the landing page simply skips it. */
+  var evSection = document.getElementById("events");
   var neBoard = document.getElementById("newsEvents");
-  if (neBoard && window.SKRINE_NEWS && window.SKRINE_NEWS.length) {
+  if (evSection && neBoard) {
     var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var IMG = "new%20design/images/news/";
-    var LIST_URL = "new%20design/news-events.html";
+    var MON_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var WDAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var LIST_URL = "new%20design/news-events.html#upcoming";
     var todayISO = new Date().toISOString().slice(0, 10);
     var UP = (window.SKRINE_UPCOMING || [])
       .filter(function (e) { return (e.endDate || e.date) >= todayISO; })
       .sort(function (x, y) { return x.date < y.date ? -1 : 1; })
       .slice(0, 3);
-    var NEWS5 = window.SKRINE_NEWS.slice(0, 5);
 
-    function esc(s) {
-      return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
-    }
-    function fmt(iso) { var d = iso.split("-"); return d[2] + " " + MON[Number(d[1]) - 1] + " " + d[0]; }
-    // a file name in images/news/, or a full URL (WordPress media library)
-    function img(v) { return /^(https?:)?\/\//.test(v) ? esc(v) : IMG + esc(v); }
-
-    var f = NEWS5[0];
-    var html =
-      '<a href="' + LIST_URL + '#latest" class="ne-feature">' +
-        (f.image ? '<img src="' + img(f.image) + '" alt="" class="ne-feature-img">' : "") +
-        '<div class="ne-feature-body">' +
-          '<p class="ne-kicker"><span>Latest News</span>' + esc(f.category) + " · " + fmt(f.date) + "</p>" +
-          "<h3>" + esc(f.title) + "</h3>" +
-          (f.summary ? '<p class="ne-feature-sum">' + esc(f.summary) + "</p>" : "") +
-          '<span class="ne-more">Read the story <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>' +
-        "</div>" +
-      "</a>";
-
-    html += '<div class="ne-side">';
-
-    // upcoming events
-    html += '<section class="ne-up" aria-labelledby="neUpHead"><h3 class="ne-side-head" id="neUpHead">Upcoming Events</h3>';
     if (UP.length) {
-      html += '<ul class="ne-up-rows">';
-      UP.forEach(function (e) {
-        var d = e.date.split("-");
-        html += '<li><a href="' + (e.register || LIST_URL + "#upcoming") + '" class="ne-up-row">' +
-          '<span class="ne-up-date"><b>' + d[2] + "</b>" + MON[Number(d[1]) - 1] + "</span>" +
-          '<span class="ne-up-text"><small>' + esc([e.type, e.location, e.time].filter(Boolean).join(" · ")) + "</small>" + esc(e.title) + "</span>" +
+      var esc = function (v) {
+        return String(v == null ? "" : v).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+      };
+      var until = function (iso) {
+        var n = Math.round((new Date(iso + "T00:00:00") - new Date(todayISO + "T00:00:00")) / 86400000);
+        return n <= 0 ? "Today" : n === 1 ? "Tomorrow" : "In " + n + " days";
+      };
+      // a full registration URL as is; a page of this site (e.g. contact.html) from new design/
+      var href = function (e) {
+        if (!e.register) return LIST_URL;
+        return /^(https?:)?\/\//.test(e.register) ? e.register : "new%20design/" + e.register;
+      };
+
+      var e0 = UP[0], d0 = e0.date.split("-"), wd = WDAY[new Date(e0.date + "T00:00:00").getDay()];
+      var html = '<article class="ev-feature">' +
+        '<div class="ev-when">' +
+          '<span class="ev-next">Next event</span>' +
+          '<time class="ev-date" datetime="' + esc(e0.date) + '"><b>' + Number(d0[2]) + "</b>" + MON_LONG[Number(d0[1]) - 1] + " " + d0[0] + "<small>" + wd + "</small></time>" +
+          '<span class="ev-count">' + esc(until(e0.date)) + "</span>" +
+        "</div>" +
+        '<div class="ev-body">' +
+          '<p class="ev-tags">' + [e0.type, e0.format, e0.cpd].filter(Boolean).map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") +
+            (e0.sample ? '<span class="ev-sample">Sample</span>' : "") + "</p>" +
+          '<h3 class="ev-title">' + esc(e0.title) + "</h3>" +
+          '<p class="ev-info">' + [e0.time, e0.location].filter(Boolean).map(esc).join('<span aria-hidden="true"> · </span>') + "</p>" +
+          (e0.summary ? '<p class="ev-summary">' + esc(e0.summary) + "</p>" : "") +
+          (e0.takeaways && e0.takeaways.length ? '<ul class="ev-why">' + e0.takeaways.slice(0, 3).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>" : "") +
+          (e0.people && e0.people.length ? '<p class="ev-who">With <b>' + e0.people.map(esc).join("</b> &amp; <b>") + "</b></p>" : "") +
+          '<a class="btn btn--solid ev-cta" href="' + esc(href(e0)) + '">' + (e0.register ? "Register your place" : "See the event") + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>' +
+        "</div>" +
+      "</article>";
+
+      if (UP.length > 1) {
+        html += '<div class="ev-more"><h3 class="ne-side-head">Also coming up</h3><ul>';
+        UP.slice(1).forEach(function (e) {
+          var d = e.date.split("-");
+          html += '<li><a class="ev-row" href="' + esc(href(e)) + '">' +
+            '<span class="ev-chip"><b>' + Number(d[2]) + "</b>" + MON[Number(d[1]) - 1] + "</span>" +
+            '<span class="ev-row-text"><small>' + esc(until(e.date)) + (e.type ? " · " + esc(e.type) : "") + (e.sample ? " · Sample" : "") + "</small>" +
+            esc(e.title) + "<em>" + esc([e.time, e.location].filter(Boolean).join(" · ")) + "</em></span>" +
+            '<i class="fa-solid fa-arrow-right ev-row-go" aria-hidden="true"></i>' +
           "</a></li>";
-      });
-      html += "</ul>";
-    } else {
-      html += '<div class="ne-up-none">' +
-        '<span class="ne-up-icon"><i class="fa-regular fa-calendar" aria-hidden="true"></i></span>' +
-        "<p><strong>No upcoming events right now.</strong> Our lawyers speak regularly at conferences, seminars and webinars — new events will appear here.</p>" +
-        '<a href="' + LIST_URL + '#upcoming" class="ne-up-link">Get notified <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>' +
-      "</div>";
+        });
+        html += "</ul></div>";
+      } else {
+        neBoard.classList.add("ev-board--single");
+      }
+
+      neBoard.innerHTML = html;
+      evSection.hidden = false;
     }
-    html += "</section>";
-
-    // more news
-    html += '<section class="ne-list" aria-labelledby="neListHead"><h3 class="ne-side-head" id="neListHead">More News</h3><ul>';
-    NEWS5.slice(1).forEach(function (n) {
-      html += '<li><a href="' + LIST_URL + '#latest" class="ne-row">' +
-        (n.image ? '<img src="' + img(n.image) + '" alt="" loading="lazy">' : '<span class="ne-row-noimg"></span>') +
-        '<span class="ne-row-text"><small>' + esc(n.category) + " · " + fmt(n.date) + "</small>" + esc(n.title) + "</span>" +
-        "</a></li>";
-    });
-    html += "</ul></section></div>";
-
-    neBoard.innerHTML = html;
   }
 
   /* ---------- Count-up figures ---------- */
