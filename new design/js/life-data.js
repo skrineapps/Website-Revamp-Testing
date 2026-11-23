@@ -91,13 +91,6 @@ window.SKRINE_LIFE = {
    "slug": "welcoming-the-year-of-the-rat"
   },
   {
-   "title": "Lawyers’ Drinks",
-   "date": "2019-11-29",
-   "url": "https://www.skrine.com/more/life-at-skrine/socials-and-sports/november-2019/lawyers’-drinks",
-   "image": "images/life/socials/2019-11-lawyers-drinks.jpg",
-   "slug": "lawyers-drinks"
-  },
-  {
    "title": "Quiz NIght 2019",
    "date": "2019-10-11",
    "url": "https://www.skrine.com/more/life-at-skrine/socials-and-sports/october-2019/quiz-night-2019",
