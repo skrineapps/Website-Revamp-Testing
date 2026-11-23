@@ -386,6 +386,9 @@
 .themed .st-quote::before { background-image: var(--t-art); }
 .themed .st-deed-paper { background-color: var(--white); }
 
+/* profile portrait: the photo melts into the design's own tone instead of near-white */
+.themed .pf-portrait-frame { background: linear-gradient(180deg, rgb(var(--pale-rgb)) 0%, rgb(var(--tint-rgb)) 100%); }
+
 /* ---------- Components: softer and warmer; brand red stays for the active state ---------- */
 .themed .pa-tile {
   border: 1px solid var(--grey-300);

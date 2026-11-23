@@ -346,6 +346,8 @@
 .mini-card:hover,
 .mini-card:focus-visible { box-shadow: 0 22px 44px rgba(0, 0, 0, 0.14); border-left-color: var(--red); }
 .mini-card[hidden] { display: none; }
+/* a filtered-out photo card: the card styles set display, so hidden needs to win */
+.photo-card[hidden] { display: none !important; }
 /* associates: plain name card, nothing to open */
 .mini-card--static { height: auto; min-height: 104px; justify-content: center; cursor: default; }
 .mini-card--static:hover { box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06); border-left-color: var(--red); }

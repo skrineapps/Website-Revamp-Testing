@@ -497,7 +497,7 @@
       var stats = el("p", "pa-hero-stats");
       stats.textContent = [
         area.related.length ? area.related.length + " related capabilities" : null,
-        area.team.length ? area.team.length + " team members" : null
+        area.team.length ? area.team.length + (area.team.length === 1 ? " team member" : " team members") : null
       ].filter(Boolean).join("  ·  ");
       head.appendChild(stats);
       detail.appendChild(head);
@@ -600,7 +600,8 @@
   /* =========================================================
      Sectors (formerly "Industries")
      ========================================================= */
-  var SECTORS = window.SKRINE_SECTORS || [];
+  // listed A–Z wherever they appear (index, numbering, previous/next), whatever order the data file has
+  var SECTORS = (window.SKRINE_SECTORS || []).slice().sort(function (a, b) { return a.title.localeCompare(b.title, "en", { sensitivity: "base" }); });
   function sectorUrl(slug) { return "sector.html?sector=" + encodeURIComponent(slug); }
 
   // practice areas sharing the most team members with a sector
@@ -673,7 +674,7 @@
       a.appendChild(el("span", "sr-num", pad(i + 1)));
       var txt = el("span", "sr-text");
       txt.appendChild(el("span", "sr-name", s.title));
-      if (s.team.length) txt.appendChild(el("span", "sr-meta", s.team.length + " team members"));
+      if (s.team.length) txt.appendChild(el("span", "sr-meta", s.team.length + (s.team.length === 1 ? " team member" : " team members")));
       a.appendChild(txt);
       var arrow = el("i", "fa-solid fa-arrow-right sr-arrow");
       arrow.setAttribute("aria-hidden", "true");
@@ -709,7 +710,7 @@
       scrumbs.innerHTML = '<a href="capabilities.html">Capabilities</a><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><a href="sectors.html">Sectors</a>';
       shead.appendChild(scrumbs);
       shead.appendChild(el("h1", "page-title", sector.title));
-      if (sector.team.length) shead.appendChild(el("p", "pa-hero-stats", sector.team.length + " team members"));
+      if (sector.team.length) shead.appendChild(el("p", "pa-hero-stats", sector.team.length + (sector.team.length === 1 ? " team member" : " team members")));
       sectorDetail.appendChild(shead);
       FX.observeReveal(shead);
 

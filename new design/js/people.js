@@ -314,6 +314,50 @@
   var roleButtons = document.querySelectorAll("#roleTabs button");
   var dropCounts = { practice: drops[0].querySelector(".pd-drop-count"), industry: drops[1].querySelector(".pd-drop-count") };
 
+  // the filters in use, as chips under the filter bar: each × removes that one
+  var GROUPS = { practice: { label: "Practice area", list: PRACTICE_FILTERS }, industry: { label: "Sector", list: INDUSTRY_FILTERS } };
+  var activeBox = el("div", "pd-active");
+  activeBox.setAttribute("aria-label", "Filters in use");
+  activeBox.hidden = true;
+  document.getElementById("filtersPanel").after(activeBox);
+
+  function chip(groupLabel, value, onRemove) {
+    var b = el("button", "pd-chip");
+    b.type = "button";
+    b.setAttribute("aria-label", "Remove " + groupLabel.toLowerCase() + " filter: " + value);
+    b.appendChild(el("span", "pd-chip-group", groupLabel));
+    b.appendChild(el("span", "pd-chip-value", value));
+    b.insertAdjacentHTML("beforeend", '<i class="fa-solid fa-xmark" aria-hidden="true"></i>');
+    b.addEventListener("click", onRemove);
+    return b;
+  }
+  function renderActive() {
+    activeBox.textContent = "";
+    var n = 0;
+    if (state.q.trim()) {
+      n++;
+      activeBox.appendChild(chip("Search", "“" + state.q.trim() + "”", function () { state.q = ""; searchInput.value = ""; apply(); searchInput.focus(); }));
+    }
+    ["practice", "industry"].forEach(function (g) {
+      state[g].forEach(function (i) {
+        n++;
+        activeBox.appendChild(chip(GROUPS[g].label, GROUPS[g].list[i].label, function () {
+          var box = document.getElementById(g + "-" + i);
+          if (box) box.checked = false;
+          state[g] = state[g].filter(function (v) { return v !== i; });
+          apply();
+        }));
+      });
+    });
+    if (n > 1) {
+      var all = el("button", "pd-chip-clear", "Clear all");
+      all.type = "button";
+      all.addEventListener("click", function () { clearBtn.click(); });
+      activeBox.appendChild(all);
+    }
+    activeBox.hidden = !n;
+  }
+
   function apply() {
     var words = norm(state.q).split(" ").filter(Boolean);
     // a search looks across everyone; otherwise show the chosen group
@@ -351,6 +395,7 @@
       dropCounts[g].closest(".pd-drop").classList.toggle("has-value", !!state[g].length);
     });
     roleButtons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.role === role)); });
+    renderActive();
     fitBacks();
   }
 

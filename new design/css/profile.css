@@ -101,7 +101,9 @@
   aspect-ratio: 4 / 5;
   border-radius: 20px;
   overflow: hidden;
-  background: linear-gradient(180deg, #f4f4f4 0%, var(--grey-100) 100%);
+  /* the photo is multiplied onto this, so its white studio background takes this colour:
+     a soft step of the brand greys rather than near-white (Designs 2+ use their own tones, css/themes.css) */
+  background: linear-gradient(180deg, var(--grey-100) 0%, #dedcdd 100%);
   box-shadow: 0 40px 70px -40px rgba(0, 0, 0, 0.45);
 }
 .pf-portrait-frame::after {
