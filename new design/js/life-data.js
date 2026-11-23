@@ -54,13 +54,6 @@ window.SKRINE_LIFE = {
    "slug": "skrine-dragons-back-from-penang"
   },
   {
-   "title": "Skrine Regatta 2019",
-   "date": "2019-08-03",
-   "url": "https://www.skrine.com/more/life-at-skrine/skrine-dragons/august-2019/skrine-regatta-2019",
-   "image": "images/life/dragons/2019-08-skrine-regatta-2019.jpg",
-   "slug": "skrine-regatta-2019"
-  },
-  {
    "title": "Skrine Dragons at the Penang Race 2018",
    "date": "2018-12-09",
    "url": "https://www.skrine.com/more/life-at-skrine/skrine-dragons/december-2018/skrine-dragons-at-the-penang-race-2018",
@@ -73,13 +66,6 @@ window.SKRINE_LIFE = {
    "url": "https://www.skrine.com/more/life-at-skrine/skrine-dragons/january-2019/life-of-a-detail-1",
    "image": "images/life/dragons/2018-05-5th-sabah-fcas-international-dragon-boat-race.jpg",
    "slug": "5th-sabah-fcas-international-dragon-boat-race"
-  },
-  {
-   "title": "Skrine Regatta 2017",
-   "date": "2017-11-04",
-   "url": "https://www.skrine.com/more/life-at-skrine/skrine-dragons/november-2017/skrine-regatta-2017",
-   "image": "images/life/dragons/2017-11-skrine-regatta-2017.jpg",
-   "slug": "skrine-regatta-2017"
   },
   {
    "title": "Sun Life Stanley Dragon Boat Championships",
