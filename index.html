@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="new%20design/css/style.css">
   <link rel="stylesheet" href="new%20design/css/home.css">
   <link rel="stylesheet" href="new%20design/css/spotlight-options.css">
-  <link rel="stylesheet" href="new%20design/css/upcoming-events.css">
   <link rel="stylesheet" href="new%20design/css/themes.css">
   <script src="new%20design/js/design.js"></script>
   <link rel="icon" type="image/png" sizes="32x32" href="new%20design/images/favicon-32.png">
@@ -231,25 +230,15 @@
     </section>
 
     <!-- ============ UPCOMING EVENTS ============
-         Filled from js/news-data.js (SKRINE_UPCOMING). Hidden unless
-         at least one event is still to come, so with none the page skips it.
-         Two layouts to compare (review aid, js/upcoming-events.js):
-           A  home.js            next event featured + "Also coming up"   (#newsEvents)
-           B  upcoming-events.js banner / cards                            (#upcomingEvents) -->
+         Filled by home.js from js/news-data.js (SKRINE_UPCOMING). Hidden unless
+         at least one event is still to come, so with none the page skips it. -->
     <section class="section section--events section--art" id="events" data-watermark="Events" hidden>
       <header class="section-head reveal">
         <p class="eyebrow">What's Happening</p>
         <h2 class="section-title">Upcoming Events</h2>
       </header>
 
-      <div class="ue-layout-switch" role="group" aria-label="Upcoming events layout (review)">
-        <span>Layout</span>
-        <button type="button" data-ev-layout="a" aria-pressed="true">A · Featured + list</button>
-        <button type="button" data-ev-layout="b" aria-pressed="false">B · Banner / cards</button>
-      </div>
-
-      <div class="ne-board ev-board reveal" id="newsEvents" data-ev-option="a"></div>
-      <div class="ue-board" id="upcomingEvents" data-ev-option="b" hidden></div>
+      <div class="ne-board ev-board reveal" id="newsEvents"></div>
     </section>
 
     <!-- ============ AWARDS ============ -->
@@ -448,8 +437,6 @@
   <script src="new%20design/js/main.js"></script>
   <script src="new%20design/js/news-data.js"></script>
   <script src="new%20design/js/events-demo.js"></script><!-- review aid: sample events, delete before launch -->
-  <script src="new%20design/js/people-data.js"></script>      <!-- speaker photos for Upcoming Events, layout B -->
-  <script src="new%20design/js/upcoming-events.js"></script>  <!-- review aid: Upcoming Events layout B + the A / B switch -->
   <script src="new%20design/js/globe-land.js"></script>
   <script src="new%20design/js/home.js"></script>
   <script src="new%20design/js/ranked-carousel.js"></script>
