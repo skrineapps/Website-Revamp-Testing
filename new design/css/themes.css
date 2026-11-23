@@ -1113,21 +1113,22 @@ html.skin-8 { --brush-mask: none; }
 .skin-9 .ht-swatch { display: none; }
 .skin-9 .ht-text { color: inherit; animation: none; }
 .skin-9 .ht-word--swatch { padding: 0; margin: 0; }
-.skin-9 .ht-word::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.02em;
-  height: 0.16em;
-  background: var(--red);
-  -webkit-mask: var(--brush-mask) center / 100% 100% no-repeat;
-  mask: var(--brush-mask) center / 100% 100% no-repeat;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.6s cubic-bezier(0.7, 0, 0.2, 1);
-}
-.skin-9 .ht-word.is-on::after { transform: scaleX(1); }
+/* the active value comes into focus, like the camera on the painting: the others soften
+   and blur back; no lines or markers */
+.skin-9 .ht-word { filter: blur(1.6px); transition: color 0.5s, filter 0.6s var(--ease), transform 0.6s var(--ease), padding 0.4s, margin 0.4s; transform-origin: left center; }
+.skin-9 .ht-word.is-on { filter: none; transform: translateX(0.1em) scale(1.03); }
+.skin-9 .ht-word:hover:not(.is-on) { filter: blur(0.6px); color: rgba(var(--dark-rgb), 0.45); }
+.skin-9 .ht-word::after { display: none; }
+.skin-9 .v9-done .ht-word { filter: none; transform: none; }
+
+/* after the third value: the finished look (as Design 3), Ingenuity on the red band */
+.skin-9 .v9-done .ht-word { color: var(--ink); }
+.skin-9 .v9-done .ht-word:nth-child(2) { color: var(--muted-word); }
+.skin-9 .v9-done .ht-word--swatch { margin-top: 0.08em; padding: 0.04em 0.28em 0.1em 0.2em; margin-left: -0.2em; }
+.skin-9 .v9-done .ht-swatch { display: block; transform: scaleX(0); animation: swatchIn 0.75s cubic-bezier(0.7, 0, 0.2, 1) 0.15s forwards; }
+.skin-9 .v9-done .ht-text { color: var(--white); transition: color 0.3s ease 0.55s; }
+.skin-9 .ht-text { transition: color 0.4s; }
+
 
 /* the value line under the words */
 .skin-9 .hero-sub {
@@ -1159,21 +1160,21 @@ html.skin-8 { --brush-mask: none; }
 /* ---- Design 9: scroll-through (laptop) and swipe (phone) ---- */
 .skin-9 .hero.v9-hero { height: auto; min-height: 0; overflow: visible; perspective: none; }
 .skin-9 .v9-stage { position: relative; height: 100vh; min-height: 620px; overflow: hidden; perspective: 1200px; }
-.skin-9 .hero.v9-scroll { height: 300vh; }                         /* one screen of scroll per value */
+.skin-9 .hero.v9-scroll { height: 360vh; }                         /* a screen of scroll per value, plus the finish */
 .skin-9 .hero.v9-scroll .v9-stage { position: sticky; top: 0; }
 .skin-9 .v9-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0), var(--canvas)); }
 /* one photo; the zoom follows the scroll (laptop) or steps per value (phone) */
 .skin-9 .v9-layer,
 .skin-9 .v9-layer.is-on {
   opacity: 1;
-  transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(var(--zoom, 1.04));
+  transform: scale(calc(var(--zoom, 1.04) * var(--hz, 1)));
   transform-origin: var(--origin, 50% 40%);
 }
-.skin-9 .v9-scroll .v9-layer { transition: transform 0.35s ease-out; }
+.skin-9 .v9-scroll .v9-layer { transition: transform 0.6s ease-out; }
 .skin-9 .v9-swipe .v9-layer { transition: transform 1.3s var(--ease); }
 
 /* progress: three short bars above the words */
-.skin-9 .v9-steps { display: flex; gap: 6px; margin: -4px 0 18px; }
+.skin-9 .v9-steps { display: none; }   /* progress lines removed */
 .skin-9 .v9-steps span { width: 34px; height: 3px; background: rgba(var(--dark-rgb), 0.16); transition: background 0.4s, width 0.4s var(--ease); }
 .skin-9 .v9-steps span.is-done { background: var(--accent); }
 .skin-9 .v9-steps span.is-on { width: 56px; background: var(--red); }
