@@ -1,0 +1,265 @@
+/* =========================================================
+   SKRINE — People: partner practice areas on phones (review aid)
+   Styles for js/people-mobile-cards.js. Every option is scoped to
+   phone widths (640 px and below); above that, nothing here shows,
+   so laptop and desktop keep their hover effects unchanged.
+   Uses the site's colour variables, so all designs restyle it.
+   ========================================================= */
+
+/* hidden everywhere unless an option below shows them */
+.mc-line,
+.mc-hint,
+.mc-row,
+.mc-switch,
+.mc-sheet { display: none; }
+
+@media (max-width: 640px) {
+
+  /* ---------- the switch (review aid) ---------- */
+  .mc-switch {
+    position: fixed;
+    right: 8px;
+    bottom: 116px;
+    z-index: 61;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(42, 42, 42, 0.92);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+  .mc-switch-label,
+  .mc-switch-name {
+    padding: 0 6px 0 10px;
+    font: 700 10px var(--font-body);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .mc-switch-name { padding: 0 10px 0 4px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.06em; }
+  .mc-switch button {
+    min-width: 30px;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    font: 700 13px var(--font-body);
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+  }
+  .mc-switch button[aria-pressed="true"] { background: var(--red); color: #fff; }
+
+  /* =========================================================
+     1 · Line: two practice areas under the name, on the photo
+     ========================================================= */
+  .mc-1 .mc-line {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 6px;
+  }
+  .mc-line span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font: 600 11.5px/1.35 var(--font-body);
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .mc-line .mc-more { font-weight: 700; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6); }
+  /* a little more shade behind the extra lines */
+  .mc-1 #grid-partners .photo-card-inner::after {
+    background: linear-gradient(to top, rgba(18, 18, 20, 0.96) 0%, rgba(18, 18, 20, 0.85) 34%, rgba(18, 18, 20, 0.2) 60%, transparent 70%);
+  }
+  .mc-1 #grid-partners .photo-card-inner::before {
+    -webkit-mask-image: linear-gradient(to top, #000 30%, transparent 56%);
+    mask-image: linear-gradient(to top, #000 30%, transparent 56%);
+  }
+
+  /* =========================================================
+     2 · Tap: first tap plays the flip / fade, second tap opens the profile
+     ========================================================= */
+  .mc-2 .mc-hint {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(18, 18, 20, 0.6);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    font: 700 9.5px var(--font-body);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+    transition: opacity 0.3s;
+  }
+  .mc-2 .mc-hint i { font-size: 9px; color: var(--red); background: #fff; border-radius: 50%; width: 14px; height: 14px; display: grid; place-items: center; }
+  .mc-2 .mc-open .mc-hint { opacity: 0; }
+
+  /* Layout 1: flip */
+  .mc-2 .photo-card--flip.mc-open .pd-flip { transform: rotateY(180deg); }
+  /* Layout 2: the same fade as on hover, a little quicker for a tap */
+  .mc-2 .photo-card--fade.mc-open .pd-panel::before { opacity: 1; transition: opacity 0.7s ease; }
+  .mc-2 .photo-card--fade.mc-open .pd-panel > *,
+  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-areas li {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 0.7, 0.2, 1);
+  }
+  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-role  { transition-delay: 0.15s; }
+  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-name  { transition-delay: 0.25s; }
+  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-label { transition-delay: 0.35s; }
+  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-areas li { transition-delay: calc(0.45s + var(--i, 0) * 0.12s); }
+  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-go { opacity: 1; transform: none; transition-delay: 0.9s; }
+  .mc-2 .photo-card--fade.mc-open .photo-card-info { opacity: 0; }
+
+  /* =========================================================
+     3 · List: one partner per row, with practice-area chips
+     ========================================================= */
+  .mc-3 .people-page #grid-partners { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .mc-3 #grid-partners .photo-card { padding: 0; border-radius: 16px; background: var(--white); }
+  .mc-3 #grid-partners .photo-card > :not(.mc-row) { display: none; }
+  .mc-3 #grid-partners .mc-row {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr) 14px;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 14px 8px 8px;
+  }
+  .mc-row-photo {
+    position: relative;
+    display: block;
+    aspect-ratio: 263 / 330;
+    overflow: hidden;
+    border-radius: 11px;
+    background: linear-gradient(180deg, #f4f4f4 0%, #d6d6d6 45%, #9d9d9d 100%);
+  }
+  .mc-row-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .mc-row-text { display: flex; flex-direction: column; min-width: 0; }
+  .mc-row-name { font: 700 16px/1.3 var(--font-body); color: var(--ink); }
+  .mc-row-role {
+    margin-top: 3px;
+    font: 700 10.5px var(--font-body);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--grey-500);
+  }
+  .mc-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+  .mc-chips span {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(195, 32, 48, 0.08);
+    font: 600 11.5px/1.3 var(--font-body);
+    color: var(--red-dark);
+  }
+  .mc-chips .mc-more { background: var(--grey-100); color: var(--grey-700); }
+  .mc-row-go { color: var(--red); font-size: 13px; }
+
+  /* =========================================================
+     4 · Sheet: a tap slides up a panel with every practice area
+     ========================================================= */
+  .mc-sheet:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 200; }
+  .mc-sheet-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(12, 12, 14, 0.5);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .mc-sheet-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 82vh;
+    overflow-y: auto;
+    padding: 14px 20px 28px;
+    border-radius: 20px 20px 0 0;
+    background: var(--white);
+    box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.25);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.22, 0.7, 0.2, 1);
+    outline: none;
+  }
+  .mc-sheet.is-open .mc-sheet-backdrop { opacity: 1; }
+  .mc-sheet.is-open .mc-sheet-panel { transform: none; }
+  html.mc-sheet-open { overflow: hidden; }
+
+  .mc-sheet-handle { display: block; width: 40px; height: 4px; margin: 0 auto 14px; border-radius: 4px; background: var(--grey-300); }
+  .mc-sheet-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--grey-100);
+    color: var(--ink);
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .mc-sheet-head { display: flex; align-items: center; gap: 14px; padding-right: 40px; }
+  .mc-sheet-photo {
+    position: relative;
+    flex: 0 0 72px;
+    height: 88px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #f4f4f4 0%, #d6d6d6 45%, #9d9d9d 100%);
+  }
+  .mc-sheet-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .mc-sheet-name { font-family: var(--font-display); font-size: 21px; font-weight: 700; line-height: 1.25; color: var(--ink); }
+  .mc-sheet-role { margin-top: 4px; font: 700 11px var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-500); }
+  .mc-sheet-label {
+    margin: 22px 0 10px;
+    font: 700 11px var(--font-body);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .mc-sheet-areas { list-style: none; margin: 0; padding: 0; }
+  .mc-sheet-areas li {
+    position: relative;
+    padding: 9px 0 9px 18px;
+    border-top: 1px solid var(--grey-100);
+    font: 600 15px/1.4 var(--font-body);
+    color: var(--ink);
+  }
+  .mc-sheet-areas li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 17px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+  .mc-sheet-go { display: flex; justify-content: center; width: 100%; margin-top: 20px; }
+
+  /* initials when a photo is missing */
+  .mc-initials {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 24px;
+    color: rgba(195, 32, 48, 0.75);
+  }
+}
+
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+  .mc-sheet-backdrop, .mc-sheet-panel { transition: none; }
+}
