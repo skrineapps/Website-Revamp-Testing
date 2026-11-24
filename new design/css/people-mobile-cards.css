@@ -49,18 +49,20 @@
   }
   .mc-switch button[aria-pressed="true"] { background: var(--red); color: #fff; }
 
-  /* ---------- no hover effect on phones (options 3 and 4) ----------
-     A tap counts as a hover on phones, so the card would start its flip / fade
-     and then open the profile straight away. Hold every hover state at rest.
-     (Option 2 keeps the effect: there the first tap is meant to show it.) */
-  :is(.mc-3, .mc-4) .photo-card--flip:hover .pd-flip { transform: none; }
-  :is(.mc-3, .mc-4) .photo-card--fade:hover .pd-panel::before { opacity: 0; }
-  :is(.mc-3, .mc-4) .photo-card--fade:hover .pd-panel > *,
-  :is(.mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-back-areas li,
-  :is(.mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-go { opacity: 0; transform: translateY(12px); }
-  :is(.mc-3, .mc-4) .photo-card--fade:hover .photo-card-info { opacity: 1; }
-  :is(.mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-img { transform: scale(1.02); }
-  :is(.mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-info { transform: translateZ(30px); }
+  /* ---------- no hover effect on phones (all options) ----------
+     Phones treat a touch as a hover: a tap would start the flip / fade and then
+     open the profile, and a finger starting a scroll on a card would flip it.
+     Hold every hover state at rest. Option 2 flips only through its own
+     .mc-open class (set by the first tap); those rules come later in this
+     file with the same specificity, so they still win. */
+  :is(.mc-2, .mc-3, .mc-4) .photo-card--flip:hover .pd-flip { transform: none; }
+  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel::before { opacity: 0; }
+  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel > *,
+  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-back-areas li,
+  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-go { opacity: 0; transform: translateY(12px); }
+  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .photo-card-info { opacity: 1; }
+  :is(.mc-2, .mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-img { transform: scale(1.02); }
+  :is(.mc-2, .mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-info { transform: translateZ(30px); }
 
   /* =========================================================
      2 · Tap: first tap plays the flip / fade, second tap opens the profile
