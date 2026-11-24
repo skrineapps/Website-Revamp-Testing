@@ -4,12 +4,12 @@
    (Layout 1 flips, Layout 2 fades). Phones have no hover, so this
    adds three ways to show them, picked with the "Mobile cards" pill
    (only shown on phone-sized screens, 640 px and below):
-     2  Tap       first tap plays the flip / fade, second tap opens the profile
-     3  List      one partner per row: photo, name, and up to three chips
-     4  Sheet     a tap slides up a panel with every practice area
-   (Option 1, "Line", was dropped after review; the others keep their
-   numbers so earlier feedback still matches.)
-   ?mcard=2..4 in the address picks one; the choice is remembered for
+     1  Tap       first tap plays the flip / fade, second tap opens the profile
+     2  List      one partner per row: photo, name, and up to three chips
+     3  Sheet     a tap slides up a panel with every practice area
+   (An earlier "Line" option was dropped after review and the rest
+   renumbered 1 to 3.)
+   ?mcard=1..3 in the address picks one; the choice is remembered for
    the visit (sessionStorage), across Layout 1 and Layout 2.
    Laptop and desktop are unchanged: everything here is scoped to
    phone widths in css/people-mobile-cards.css.
@@ -27,9 +27,9 @@
 
   var html = document.documentElement;
   var phone = window.matchMedia("(max-width: 640px)");
-  var OPTIONS = ["2", "3", "4"];
-  var NAMES = { "2": "Tap", "3": "List", "4": "Sheet" };
-  var KEY = "skrine-mcard";
+  var OPTIONS = ["1", "2", "3"];
+  var NAMES = { "1": "Tap", "2": "List", "3": "Sheet" };
+  var KEY = "skrine-mcard-v2";
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -54,7 +54,7 @@
     var card = p._el;
     var areas = p._areas || [];
 
-    // 2: a small hint on the photo that a tap shows more
+    // 1: a small hint on the photo that a tap shows more
     var front = card.querySelector(".photo-card-inner");
     if (front && areas.length) {
       var hint = el("span", "mc-hint");
@@ -64,7 +64,7 @@
       front.appendChild(hint);
     }
 
-    // 3: a row for the list view
+    // 2: a row for the list view
     var row = el("span", "mc-row");
     var ph = el("span", "mc-row-photo");
     var src = photoOf(card);
@@ -94,7 +94,7 @@
     card.appendChild(row);
   });
 
-  /* ---------- 4: the bottom sheet ---------- */
+  /* ---------- 3: the bottom sheet ---------- */
   var sheet = el("div", "mc-sheet");
   sheet.hidden = true;
   var backdrop = el("div", "mc-sheet-backdrop");
@@ -163,21 +163,21 @@
   backdrop.addEventListener("click", closeSheet);
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSheet(); });
 
-  /* ---------- taps on partner cards (options 2 and 4, phones only) ---------- */
+  /* ---------- taps on partner cards (options 1 and 3, phones only) ---------- */
   function closeOpenCards(except) {
     partners.forEach(function (p) { if (p._el !== except) p._el.classList.remove("mc-open"); });
   }
   partners.forEach(function (p) {
     p._el.addEventListener("click", function (e) {
       if (!phone.matches) return;
-      if (current === "2") {
+      if (current === "1") {
         // first tap: show the practice areas; second tap: follow the link to the profile
         if (!p._el.classList.contains("mc-open")) {
           e.preventDefault();
           closeOpenCards(p._el);
           p._el.classList.add("mc-open");
         }
-      } else if (current === "4") {
+      } else if (current === "3") {
         e.preventDefault();
         openSheet(p);
       }
@@ -185,7 +185,7 @@
   });
   // a tap anywhere else closes an open card
   document.addEventListener("click", function (e) {
-    if (current === "2" && !e.target.closest(".mc-open")) closeOpenCards(null);
+    if (current === "1" && !e.target.closest(".mc-open")) closeOpenCards(null);
   });
 
   /* ---------- the switch ---------- */
@@ -194,7 +194,7 @@
   var asked = new URLSearchParams(location.search).get("mcard");
   if (OPTIONS.indexOf(asked) < 0) asked = null;
   if (asked) remember(asked);
-  var current = asked || recall() || "2";
+  var current = asked || recall() || "1";
 
   var nav = el("nav", "mc-switch");
   nav.setAttribute("aria-label", "Partner cards on phones (review)");

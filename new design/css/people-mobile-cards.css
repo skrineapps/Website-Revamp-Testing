@@ -52,22 +52,22 @@
   /* ---------- no hover effect on phones (all options) ----------
      Phones treat a touch as a hover: a tap would start the flip / fade and then
      open the profile, and a finger starting a scroll on a card would flip it.
-     Hold every hover state at rest. Option 2 flips only through its own
+     Hold every hover state at rest. Option 1 flips only through its own
      .mc-open class (set by the first tap); those rules come later in this
      file with the same specificity, so they still win. */
-  :is(.mc-2, .mc-3, .mc-4) .photo-card--flip:hover .pd-flip { transform: none; }
-  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel::before { opacity: 0; }
-  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel > *,
-  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-back-areas li,
-  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .pd-panel .pd-go { opacity: 0; transform: translateY(12px); }
-  :is(.mc-2, .mc-3, .mc-4) .photo-card--fade:hover .photo-card-info { opacity: 1; }
-  :is(.mc-2, .mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-img { transform: scale(1.02); }
-  :is(.mc-2, .mc-3, .mc-4) #grid-partners .photo-card:hover .photo-card-info { transform: translateZ(30px); }
+  :is(.mc-1, .mc-2, .mc-3) .photo-card--flip:hover .pd-flip { transform: none; }
+  :is(.mc-1, .mc-2, .mc-3) .photo-card--fade:hover .pd-panel::before { opacity: 0; }
+  :is(.mc-1, .mc-2, .mc-3) .photo-card--fade:hover .pd-panel > *,
+  :is(.mc-1, .mc-2, .mc-3) .photo-card--fade:hover .pd-panel .pd-back-areas li,
+  :is(.mc-1, .mc-2, .mc-3) .photo-card--fade:hover .pd-panel .pd-go { opacity: 0; transform: translateY(12px); }
+  :is(.mc-1, .mc-2, .mc-3) .photo-card--fade:hover .photo-card-info { opacity: 1; }
+  :is(.mc-1, .mc-2, .mc-3) #grid-partners .photo-card:hover .photo-card-img { transform: scale(1.02); }
+  :is(.mc-1, .mc-2, .mc-3) #grid-partners .photo-card:hover .photo-card-info { transform: translateZ(30px); }
 
   /* =========================================================
-     2 · Tap: first tap plays the flip / fade, second tap opens the profile
+     1 · Tap: first tap plays the flip / fade, second tap opens the profile
      ========================================================= */
-  .mc-2 .mc-hint {
+  .mc-1 .mc-hint {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -86,33 +86,33 @@
     color: #fff;
     transition: opacity 0.3s;
   }
-  .mc-2 .mc-hint i { font-size: 9px; color: var(--red); background: #fff; border-radius: 50%; width: 14px; height: 14px; display: grid; place-items: center; }
-  .mc-2 .mc-open .mc-hint { opacity: 0; }
+  .mc-1 .mc-hint i { font-size: 9px; color: var(--red); background: #fff; border-radius: 50%; width: 14px; height: 14px; display: grid; place-items: center; }
+  .mc-1 .mc-open .mc-hint { opacity: 0; }
 
   /* Layout 1: flip */
-  .mc-2 .photo-card--flip.mc-open .pd-flip { transform: rotateY(180deg); }
+  .mc-1 .photo-card--flip.mc-open .pd-flip { transform: rotateY(180deg); }
   /* Layout 2: the same fade as on hover, a little quicker for a tap */
-  .mc-2 .photo-card--fade.mc-open .pd-panel::before { opacity: 1; transition: opacity 0.7s ease; }
-  .mc-2 .photo-card--fade.mc-open .pd-panel > *,
-  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-areas li {
+  .mc-1 .photo-card--fade.mc-open .pd-panel::before { opacity: 1; transition: opacity 0.7s ease; }
+  .mc-1 .photo-card--fade.mc-open .pd-panel > *,
+  .mc-1 .photo-card--fade.mc-open .pd-panel .pd-back-areas li {
     opacity: 1;
     transform: none;
     transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 0.7, 0.2, 1);
   }
-  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-role  { transition-delay: 0.15s; }
-  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-name  { transition-delay: 0.25s; }
-  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-label { transition-delay: 0.35s; }
-  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-back-areas li { transition-delay: calc(0.45s + var(--i, 0) * 0.12s); }
-  .mc-2 .photo-card--fade.mc-open .pd-panel .pd-go { opacity: 1; transform: none; transition-delay: 0.9s; }
-  .mc-2 .photo-card--fade.mc-open .photo-card-info { opacity: 0; }
+  .mc-1 .photo-card--fade.mc-open .pd-panel .pd-back-role  { transition-delay: 0.15s; }
+  .mc-1 .photo-card--fade.mc-open .pd-panel .pd-back-name  { transition-delay: 0.25s; }
+  .mc-1 .photo-card--fade.mc-open .pd-panel .pd-back-label { transition-delay: 0.35s; }
+  .mc-1 .photo-card--fade.mc-open .pd-panel .pd-back-areas li { transition-delay: calc(0.45s + var(--i, 0) * 0.12s); }
+  .mc-1 .photo-card--fade.mc-open .pd-panel .pd-go { opacity: 1; transform: none; transition-delay: 0.9s; }
+  .mc-1 .photo-card--fade.mc-open .photo-card-info { opacity: 0; }
 
   /* =========================================================
-     3 · List: one partner per row, with practice-area chips
+     2 · List: one partner per row, with practice-area chips
      ========================================================= */
-  .mc-3 .people-page #grid-partners { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-  .mc-3 #grid-partners .photo-card { padding: 0; border-radius: 16px; background: var(--white); }
-  .mc-3 #grid-partners .photo-card > :not(.mc-row) { display: none; }
-  .mc-3 #grid-partners .mc-row {
+  .mc-2 .people-page #grid-partners { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .mc-2 #grid-partners .photo-card { padding: 0; border-radius: 16px; background: var(--white); }
+  .mc-2 #grid-partners .photo-card > :not(.mc-row) { display: none; }
+  .mc-2 #grid-partners .mc-row {
     display: grid;
     grid-template-columns: 92px minmax(0, 1fr) 14px;
     align-items: center;
@@ -153,7 +153,7 @@
   .mc-row-go { color: var(--red); font-size: 13px; }
 
   /* =========================================================
-     4 · Sheet: a tap slides up a panel with every practice area
+     3 · Sheet: a tap slides up a panel with every practice area
      ========================================================= */
   .mc-sheet:not([hidden]) { display: block; position: fixed; inset: 0; z-index: 200; }
   .mc-sheet-backdrop {
