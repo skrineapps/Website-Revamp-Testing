@@ -1217,3 +1217,35 @@ html.skin-8 { --brush-mask: none; }
 
 /* the light that follows the cursor: neutral, not warm */
 .skin-9 .v9-light { background: radial-gradient(520px circle at var(--mx, 30%) var(--my, 50%), rgba(255, 252, 244, 0.34), transparent 60%); }
+
+/* =========================================================
+   "Ingenuity." on the home hero — every design
+   A clean, straight-edged brand-red block (no brush texture) that
+   slides in from the left; the word turns white on it.
+   ========================================================= */
+html .ht-word--swatch,
+html .skin-9 .v9-done .ht-word--swatch { margin: 0.08em 0 0 -0.16em; padding: 0.02em 0.22em 0.08em 0.16em; text-shadow: none; }
+html .ht-swatch,
+html .skin-9 .v9-done .ht-swatch {
+  display: block !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+  border-radius: 2px;
+  box-shadow: none;
+  background: var(--red) !important;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: swatchIn 0.7s cubic-bezier(0.7, 0, 0.2, 1) 1.15s forwards;
+}
+html .ht-text { color: var(--ink); font-style: normal; animation: swatchText 0.3s ease 1.4s forwards; }
+html.skin-5 .ht-text, html.skin-8 .ht-text { color: #fff; }
+/* Design 9 shows the block once the third value is reached */
+html.skin-9 .ht-swatch { display: none !important; }
+html.skin-9 .v9-done .ht-swatch { display: block !important; animation-delay: 0.15s; }
+html.skin-9 .ht-word--swatch { margin: 0; padding: 0; }
+html.skin-9 .ht-text { animation: none; color: inherit; }
+html.skin-9 .v9-done .ht-text { color: #fff; transition: color 0.3s ease 0.5s; }
+@media (prefers-reduced-motion: reduce) {
+  html .ht-swatch { animation: none; transform: none; }
+  html:not(.skin-9) .ht-text { animation: none; color: #fff; }
+}

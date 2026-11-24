@@ -185,7 +185,7 @@
   /* ---------- hero ---------- */
   document.getElementById("pfCrumbRole").textContent = entry.group;
   document.getElementById("pfCrumbName").textContent = P.name;
-  document.getElementById("pfRole").textContent = P.role + (division ? " · " + division : "");
+  // (role · division label above the name removed)
   document.getElementById("pfName").textContent = P.name;
 
   var areasEl = document.getElementById("pfAreas");
