@@ -7,6 +7,7 @@
      1  People   the partners at the firm's 56th anniversary
      2  1963     no photo: a large, faint "1963" on a paper texture
      3  Design   the art of the chosen design (hero image), faded
+     4  Design + 1963   option 3's art with option 2's "1963" mark on top
    ========================================================= */
 
 /* ---------- 1 · People ---------- */
@@ -18,7 +19,7 @@
   mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.5) 45%, #000 85%);
 }
 
-/* ---------- 2 · 1963 ---------- */
+/* ---------- 2 · 1963 (the "1963" mark is shared with option 4) ---------- */
 .st-quote.qbg-2::before {
   background: url("../images/bg/canvas-relief.jpg") 40% 50% / cover no-repeat;
   opacity: 0.1;
@@ -26,7 +27,8 @@
   -webkit-mask-image: none;
   mask-image: none;
 }
-.st-quote.qbg-2::after {
+.st-quote.qbg-2::after,
+.st-quote.qbg-4::after {
   content: "1963";
   position: absolute;
   right: clamp(-12px, -1vw, 0px);
@@ -44,13 +46,19 @@
 }
 
 /* ---------- 3 · Design art (each design's hero image; design 1's palette by default) ---------- */
-.st-quote.qbg-3::before {
+.st-quote.qbg-3::before,
+.st-quote.qbg-4::before {
   background: var(--t-art, url("../images/hero-palette.jpg")) 50% 50% / cover no-repeat;
   opacity: 0.28;
   mix-blend-mode: normal;
   -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.4) 50%, #000 90%);
   mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.4) 50%, #000 90%);
 }
+
+/* Designs 7 and 8: the stock photos carry a watermark about 60% of the way
+   down. Show only the top ~55% of the picture so it never appears. */
+.skin-7 .st-quote:is(.qbg-3, .qbg-4)::before,
+.skin-8 .st-quote:is(.qbg-3, .qbg-4)::before { background-size: auto 180%; background-position: 50% 0; }
 
 /* ---------- the switch (review aid, not part of the final site) ---------- */
 .qbg-switch {

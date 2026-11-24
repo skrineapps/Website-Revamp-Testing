@@ -4,7 +4,8 @@
      1  People   the partners at the firm's 56th anniversary
      2  1963     no photo: a large, faint "1963" on a paper texture
      3  Design   the art of the chosen design, faded
-   ?qbg=1..3 in the address picks one; the choice is remembered for the
+     4  Design + 1963   the design's art with the "1963" mark on top
+   ?qbg=1..4 in the address picks one; the choice is remembered for the
    visit (sessionStorage). Styles: css/quote-bg-options.css.
    Delete this file, its CSS and their two tags once one is chosen.
    ========================================================= */
@@ -14,8 +15,8 @@
   var quote = document.querySelector(".st-quote");
   if (!quote) return;
 
-  var OPTIONS = ["1", "2", "3"];
-  var NAMES = { "1": "People", "2": "1963", "3": "Design" };
+  var OPTIONS = ["1", "2", "3", "4"];
+  var NAMES = { "1": "People", "2": "1963", "3": "Design", "4": "Design + 1963" };
   var KEY = "skrine-qbg";
 
   function remember(v) { try { sessionStorage.setItem(KEY, v); } catch (e) { /* storage blocked */ } }
