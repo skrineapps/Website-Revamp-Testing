@@ -273,18 +273,38 @@
   color: var(--white);
   background: linear-gradient(140deg, #2a2a2a 0%, #1f1f1f 60%, #3a0d13 100%);
 }
-/* the Skrine Dragons crew shows through the dark panel: the founders' "we trusted each other",
-   still pulling together today. Faded to the right so the words stay clear on the left. */
+/* the chosen design's art shows through the dark panel (design 1: the red palette painting),
+   faded to the right so the words stay clear on the left */
 .st-quote::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: url("../images/story/skrine-dragons.jpg") 60% 70% / cover no-repeat;
-  opacity: 0.38;
-  mix-blend-mode: luminosity;
-  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.6) 45%, #000 80%);
-  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.6) 45%, #000 80%);
+  background: var(--t-art, url("../images/hero-palette.jpg")) 50% 50% / cover no-repeat;
+  opacity: 0.28;
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.4) 50%, #000 90%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.4) 50%, #000 90%);
+}
+/* designs 7 and 8: the stock photos carry a watermark about 60% of the way down;
+   show only the top ~55% of the picture so it never appears */
+.skin-7 .st-quote::before,
+.skin-8 .st-quote::before { background-size: auto 180%; background-position: 50% 0; }
+/* the founding year, large and faint in the corner, like a date mark in a history book */
+.st-quote::after {
+  content: "1963";
+  position: absolute;
+  right: clamp(-12px, -1vw, 0px);
+  bottom: clamp(-40px, -3vw, -20px);
+  z-index: -1;
+  font: 900 clamp(150px, 20vw, 300px)/1 var(--font-display);
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  -webkit-background-clip: text;
+  background-clip: text;
+  pointer-events: none;
+  user-select: none;
 }
 .st-quote-mark { font: 900 clamp(110px, 12vw, 180px)/0.8 var(--font-display); color: var(--red); text-align: right; }
 .st-quote blockquote { margin: 0; max-width: 980px; }
