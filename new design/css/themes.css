@@ -8,7 +8,7 @@
      .skin-6  Peaks     images/d6/peaks.jpg     misty karst mountains
      .skin-7  Steel     images/d7/metal.jpg     brushed corrugated steel (Getty comp: needs a licence)
      .skin-8  Bridge    images/d8/bridge.jpg    cable-stayed bridge at sunrise (Getty comp: needs a licence)
-     .skin-9  Heritage  images/d3/artistic.jpg  Design 3's painting as an immersive, zooming hero
+     .skin-9  Heritage  images/d9/heritage.jpg  grey plaster, crimson strokes, gold scales; immersive, zooming hero
    Design 1 (no class) is the original look and is untouched.
 
    How this file is laid out
@@ -457,11 +457,13 @@
 
 /* ---------- Review pills ---------- */
 .themed .design-switch,
-.themed .layout-switch { background: rgba(var(--dark-rgb), 0.92); box-shadow: 0 10px 30px -10px rgba(var(--dark-rgb), 0.6); }
+.themed .layout-switch,
+.themed .scene-switch { background: rgba(var(--dark-rgb), 0.92); box-shadow: 0 10px 30px -10px rgba(var(--dark-rgb), 0.6); }
 .themed .design-switch a,
 .themed .layout-switch a { color: rgba(var(--canvas-rgb), 0.8); }
 .themed .design-switch a[aria-current],
-.themed .layout-switch a[aria-current] { background: linear-gradient(120deg, var(--wine), var(--red)); color: #fff; }
+.themed .layout-switch a[aria-current],
+.themed .scene-switch a[aria-current] { background: linear-gradient(120deg, var(--wine), var(--red)); color: #fff; }
 
 /* phones: the artwork runs behind the words, so the light reaches across the lower half */
 @media (max-width: 760px) {
@@ -1027,8 +1029,9 @@ html.skin-8 { --brush-mask: none; }
    words sit on the open cream canvas on the right.
    The active word gets the red brush underline and its line from
    skrine.com/profile/our-values. Behaviour: js/hero-immersive.js.
-   Palette follows Design 3: cream canvas, charcoal ink, gold accent;
-   brand red stays the main accent.
+   Palette from images/d9/heritage.jpg: cool grey plaster (close to the brand's
+   secondary greys), crimson brush strokes, gold from the scales and threads.
+   Brand red stays the main accent.
    ========================================================= */
 .skin-9 {
   --red: #c32030;
@@ -1036,30 +1039,32 @@ html.skin-8 { --brush-mask: none; }
   --red-soft: rgba(138, 26, 42, 0.08);
   --wine: #8a1a2a;
   --wine-deep: #5a0f1a;
-  --accent: #b08d57;        /* gold, from the scales */
+  --accent: #b8955a;        /* gold, from the scales and the gold threads */
 
-  --grey-100: #efe8dc;
-  --grey-300: #d9cdbb;
-  --grey-500: #988c7e;
-  --grey-700: #6b6157;
-  --ink: #2a2522;
-  --ink-soft: #574e47;
-  --white: #fffcf6;
-  --muted-word: #8b8073;
+  /* cool greys of the plaster (the brand's secondary greys) */
+  --grey-100: #ecedec;
+  --grey-300: #d4d3d3;
+  --grey-500: #959897;
+  --grey-700: #6f6f70;
+  --ink: #262628;
+  --ink-soft: #535356;
+  --white: #fcfcfc;
+  --muted-word: #8f8f92;
 
-  --canvas: #f6f0e6;
-  --canvas-rgb: 246, 240, 230;
-  --pale-rgb: 237, 228, 212;
-  --tint-rgb: 216, 202, 180;
-  --dark: #2b2522;
-  --dark-rgb: 43, 37, 34;
-  --shade-rgb: 60, 45, 30;
+  --canvas: #efefee;
+  --canvas-rgb: 239, 239, 238;
+  --pale-rgb: 230, 230, 229;
+  --tint-rgb: 206, 203, 204;
+  --dark: #2a2a2c;
+  --dark-rgb: 42, 42, 44;
+  --shade-rgb: 40, 30, 32;
 
-  --ribbon: linear-gradient(100deg, #6a1220 0%, #a01c2c 35%, #c32030 70%, #a8202e 100%);
-  --rule: linear-gradient(90deg, #8a1a2a, #c32030 65%, #b08d57);
+  /* crimson of the brush strokes */
+  --ribbon: linear-gradient(100deg, #6e1020 0%, #8f1626 35%, #c32030 72%, #a51a2b 100%);
+  --rule: linear-gradient(90deg, #8f1626, #c32030 65%, #b8955a);
 
-  --t-art: url("../images/d3/artistic.jpg");
-  --t-wash: url("../images/d3/artistic-wash.jpg");
+  --t-art: url("../images/d9/heritage.jpg");
+  --t-wash: url("../images/d9/heritage-wash.jpg");
   --t-hero-pos: 0% 50%;
   --t-field-pos: 0% 60%;
   --t-head-pos: 0% 40%;
@@ -1209,3 +1214,6 @@ html.skin-8 { --brush-mask: none; }
   .design-switch::before { display: none; }
   .design-switch a { min-width: 30px; padding: 6px 8px; }
 }
+
+/* the light that follows the cursor: neutral, not warm */
+.skin-9 .v9-light { background: radial-gradient(520px circle at var(--mx, 30%) var(--my, 50%), rgba(255, 252, 244, 0.34), transparent 60%); }

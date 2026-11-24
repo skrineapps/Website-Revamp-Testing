@@ -2,8 +2,8 @@
    SKRINE — Design 9 immersive hero (home page only)
    Runs only when Design 9 is chosen (html.skin-9).
 
-   One image: Design 3's palette-knife painting. Each value brings the
-   camera closer to the scales of justice and the KL skyline.
+   One image: images/d9/heritage.jpg (Sultan Abdul Samad building, the scales
+   of justice, the KL skyline). Each value brings the camera closer to the scales.
 
    Laptop / desktop (wide screen with a mouse):
      the hero pins in place while the page scrolls through it.
@@ -30,11 +30,11 @@
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var BASE = (document.querySelector('link[href*="themes.css"]') || {}).href;
-  var IMG = BASE ? BASE.replace(/css\/themes\.css.*$/, "images/d3/") : "new%20design/images/d3/";
+  var IMG = BASE ? BASE.replace(/css\/themes\.css.*$/, "images/d9/") : "new%20design/images/d9/";
 
-  // Design 3's painting; each value moves the camera closer to the scales and skyline on its left
-  var PHOTO = "artistic.jpg";
-  var ORIGIN = "20% 58%";            // the scales of justice, with the skyline behind
+  // the Design 9 painting; each value moves the camera closer to the scales on its left
+  var PHOTO = "heritage.jpg";
+  var ORIGIN = "18% 66%";            // the scales of justice, with the clock tower and skyline behind
   var VALUES = [
     { zoom: 1.0, line: "We believe that wisdom comes from being open to learning." },
     { zoom: 1.16, line: "Just ‘good’ is never good enough — we strive for excellence in all that we do." },

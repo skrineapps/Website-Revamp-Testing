@@ -1601,3 +1601,45 @@ main {
 .events-test a { padding: 6px 12px; border-radius: 999px; color: rgba(255, 255, 255, 0.8); }
 .events-test a[aria-current] { background: #f0b400; color: #2a2a2a; }
 @media (max-width: 760px) { .events-test { bottom: 64px; } }
+
+/* ---------- Heading scenes (js/design.js: html.scene-on, --scene) ----------
+   A Malaysian scene behind the page heading instead of the design's painting,
+   inner pages only. Photos are softened and multiplied onto the page colour so
+   they sit in the background like the paintings do. */
+html.scene-on .page-main::before,
+html.scene-on main.contact::before,
+html.scene-on main.life::before {
+  height: clamp(440px, 54vw, 680px);
+  background: var(--scene) 50% 40% / cover no-repeat;
+  transform: none;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  filter: saturate(0.8) contrast(1.02);
+  -webkit-mask-image: radial-gradient(72% 100% at 100% 0%, #000 28%, rgba(0, 0, 0, 0.45) 55%, transparent 80%);
+  mask-image: radial-gradient(72% 100% at 100% 0%, #000 28%, rgba(0, 0, 0, 0.45) 55%, transparent 80%);
+}
+@media (max-width: 760px) {
+  html.scene-on .page-main::before,
+  html.scene-on main.contact::before,
+  html.scene-on main.life::before { opacity: 0.35; }
+}
+
+/* review aid: Heading pill (Painting / Malaysia), above the design pill */
+.scene-switch {
+  position: fixed;
+  right: 16px;
+  bottom: 66px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(42, 42, 42, 0.92);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+.scene-switch.is-stacked { bottom: 116px; }   /* above the Layout pill */
+.scene-switch a { padding: 6px 12px; border-radius: 999px; font: 700 13px var(--font-body); letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.8); transition: background 0.2s, color 0.2s; }
+.scene-switch a:hover { color: #fff; }
+.scene-switch a[aria-current] { background: var(--red); color: #fff; }
+@media print { .scene-switch { display: none; } }
