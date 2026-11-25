@@ -4,10 +4,8 @@
      .skin-2  Ribbons   images/d2/ribbons.jpg   warm taupe, crimson ribbons
      .skin-3  Artistic  images/d3/artistic.jpg  palette-knife KL skyline, cream, gold
      .skin-4  Songket   images/d4/songket.jpg   woven songket, linen, gold thread
-     .skin-5  Steps     images/d5/steps.jpg     Batu Caves stairs (Getty comp: needs a licence)
      .skin-6  Peaks     images/d6/peaks.jpg     misty karst mountains
      .skin-7  Steel     images/d7/metal.jpg     brushed corrugated steel (Getty comp: needs a licence)
-     .skin-8  Bridge    images/d8/bridge.jpg    cable-stayed bridge at sunrise (Getty comp: needs a licence)
      .skin-9  Heritage  images/d9/heritage.jpg  grey plaster, crimson strokes, gold scales; immersive, zooming hero
    Design 1 (no class) is the original look and is untouched.
 
@@ -621,115 +619,6 @@ html.skin-4 {
 .skin-4 .role-tabs button[aria-pressed="true"] { background: var(--songket-band); box-shadow: var(--songket-edge), 0 14px 28px -14px rgba(82, 16, 25, 0.7); }
 
 /* =========================================================
-   Design 5 (Steps): the Batu Caves stairs
-   A full, colourful photograph with no empty canvas, so the hero
-   darkens the left side and the words sit on it in white. The
-   stairs' red handrails are the brand red and their finials are
-   gold, so red + gold carry the branding; the rest stays a calm
-   warm white so the photo's colours don't take over the site.
-   NOTE: images/d5/steps.jpg is a Getty Images comp (watermarked).
-   It needs a licence, or a replacement photo, before going live.
-   ========================================================= */
-.skin-5 {
-  --red: #c32030;
-  --red-dark: #9a1824;
-  --red-soft: rgba(154, 24, 36, 0.08);
-  --wine: #9a1824;
-  --wine-deep: #5f0e16;
-  --accent: #d4a017;        /* gold of the handrail finials */
-
-  --grey-100: #f1ece4;
-  --grey-300: #dcd3c6;
-  --grey-500: #96908a;
-  --grey-700: #6a645e;
-  --ink: #221f1c;
-  --ink-soft: #55504a;
-  --white: #fffdf9;
-  --muted-word: rgba(255, 255, 255, 0.72);
-
-  --canvas: #faf7f2;
-  --canvas-rgb: 250, 247, 242;
-  --pale-rgb: 240, 234, 224;
-  --tint-rgb: 226, 214, 196;
-  --dark: #1d1a17;
-  --dark-rgb: 29, 26, 23;
-  --shade-rgb: 40, 30, 20;
-
-  --ribbon: linear-gradient(100deg, #7a1420 0%, #c32030 55%, #a8202e 100%);
-  --rule: linear-gradient(90deg, #c32030 0 70%, #d4a017 70% 100%);
-
-  --t-art: url("../images/d5/steps.jpg");
-  --t-wash: url("../images/d5/steps-wash.jpg");
-  --t-hero-pos: 50% 40%;
-  --t-field-pos: 50% 50%;
-  --t-head-pos: 50% 30%;
-  --t-head-flip: none;
-  --t-head-mask: radial-gradient(70% 100% at 100% 0%, #000 25%, rgba(0, 0, 0, 0.45) 55%, transparent 80%);
-  --t-head-opacity: 0.42;
-  --t-foot-dir: 90deg;
-  --t-foot-pos: 50% 60%;
-}
-
-/* hero: dark on the left, white words */
-.skin-5 .hero-shade {
-  background:
-    linear-gradient(180deg, rgba(var(--dark-rgb), 0.35) 0%, rgba(var(--dark-rgb), 0) 24%),
-    linear-gradient(90deg, rgba(var(--dark-rgb), 0.86) 0%, rgba(var(--dark-rgb), 0.66) 34%, rgba(var(--dark-rgb), 0.18) 58%, rgba(var(--dark-rgb), 0) 72%);
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 91%);
-  mask-image: linear-gradient(180deg, #000 70%, transparent 91%);
-}
-.skin-5 .hero-bg {
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.12) 87%, transparent 91%);
-  mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.12) 87%, transparent 91%);
-}
-.skin-5 .hero-panel {
-  left: clamp(20px, 6vw, 104px);
-  right: auto;
-  bottom: clamp(120px, 21vh, 200px);
-  width: min(600px, calc(100% - 40px));
-}
-.skin-5 .hero-eyebrow { color: rgba(255, 255, 255, 0.82); }
-.skin-5 .ht-word { color: #fff; }
-.skin-5 .ht-word:nth-child(2) { color: var(--muted-word); }
-.skin-5 .ht-word,
-.skin-5 .hero-sub { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45); }
-.skin-5 .ht-word--swatch { text-shadow: none; }
-.skin-5 .ht-text { color: #fff; }
-.skin-5 .hero-sub { color: rgba(255, 255, 255, 0.88); }
-.skin-5 .hero-foot { border-top-color: rgba(255, 255, 255, 0.28); }
-.skin-5 .hero .btn--outline { border-color: rgba(255, 255, 255, 0.85); color: #fff; background: rgba(255, 255, 255, 0.06); }
-.skin-5 .hero .btn--outline:hover { border-color: transparent; background: var(--red); }
-.skin-5 .scroll-cue { left: auto; right: clamp(16px, 4vw, 64px); bottom: 150px; color: rgba(255, 255, 255, 0.85); }
-.skin-5 .scroll-cue span { background: rgba(255, 255, 255, 0.6); }
-.skin-5 .site-header:not(.is-scrolled) { background: rgba(var(--canvas-rgb), 0.82); }
-/* the award badges are dark ink: give them a small white backing on the dark photo */
-.skin-5 .hero-rosettes li { padding: 5px; border-radius: 10px; background: rgba(255, 255, 255, 0.92); box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5); }
-
-/* highlight: a flat brand-red band with a gold top edge, like the handrail and its finials */
-html.skin-5 { --brush-mask: none; }
-.skin-5 .ht-swatch,
-.skin-5 .brush::before {
-  -webkit-mask: none;
-  mask: none;
-  border-radius: 3px;
-  background: linear-gradient(180deg, #d0283a 0%, #c32030 50%, #a81b2a 100%);
-  box-shadow: inset 0 3px 0 var(--accent), 0 12px 24px -12px rgba(95, 14, 22, 0.6);
-}
-.skin-5 .brush--ink::before { background: linear-gradient(180deg, #34302c, var(--dark)); }
-.skin-5 .brush-tag::before,
-.skin-5 .life-route li.is-world span::before { border-radius: 3px; background: var(--red); box-shadow: inset 0 2px 0 var(--accent); }
-.skin-5 .kit-polaroid::after { height: 12px; border-radius: 2px; background: var(--red); box-shadow: inset 0 2px 0 var(--accent); }
-.skin-5 .section-title::after,
-.skin-5 .life-head .page-title::after { border-radius: 0; }
-.skin-5 .pa-tile.is-active,
-.skin-5 .role-tabs button[aria-pressed="true"] { background: var(--red); box-shadow: inset 0 3px 0 var(--accent), 0 14px 28px -14px rgba(95, 14, 22, 0.6); }
-@media (max-width: 760px) {
-  .skin-5 .hero-panel { left: 20px; right: 20px; width: auto; bottom: 64px; }
-  .skin-5 .hero-shade { background: linear-gradient(180deg, rgba(var(--dark-rgb), 0.35) 0%, rgba(var(--dark-rgb), 0.55) 40%, rgba(var(--dark-rgb), 0.82) 75%); }
-  .skin-5 .hero-shade::after { display: none; }
-}
-
-/* =========================================================
    Design 6 (Peaks): misty karst mountains
    Cool mist greys and slate from the photograph, a hint of
    rainforest green; brand red stays the accent. The words sit
@@ -863,11 +752,9 @@ html.skin-6 { --brush-mask: none; }
 
 /* hero artwork: shown larger and pinned to the top, so the watermark (low in the picture)
    lands in the part of the hero that fades out. Very wide screens fall back to "cover". */
-.skin-7 .hero-bg,
-.skin-8 .hero-bg { background-size: auto 142%; background-position: 50% 0; }
+.skin-7 .hero-bg { background-size: auto 142%; background-position: 50% 0; }
 @media (min-aspect-ratio: 21/10) {
-  .skin-7 .hero-bg,
-  .skin-8 .hero-bg { background-size: cover; }
+  .skin-7 .hero-bg { background-size: cover; }
 }
 
 /* hero: a veil of canvas on the left behind the words, the steel showing on the right */
@@ -907,118 +794,6 @@ html.skin-7 {
 .skin-7 .role-tabs button[aria-pressed="true"] { background: var(--steel-ribs), var(--red); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.35), 0 14px 28px -14px rgba(95, 14, 22, 0.6); }
 @media (max-width: 760px) {
   .skin-7 .hero-panel { left: 20px; right: 20px; width: auto; }
-}
-
-/* =========================================================
-   Design 8 (Bridge): a cable-stayed bridge at sunrise
-   Warm cream canvas, with the sky's peach as the second
-   colour and the deep teal of the water for the dark areas;
-   brand red stays the accent. A full, colourful photograph
-   with no empty canvas, so the hero darkens the left and the
-   words sit on it in white. The highlight is a red band that
-   warms to sunset orange, with a peach line like the horizon.
-   NOTE: images/d8/bridge.jpg is a Getty Images comp (watermarked,
-   small). It needs a licence, or a replacement photo, before
-   going live. The watermark sits in the part of the artwork the
-   page fades out.
-   ========================================================= */
-.skin-8 {
-  --red: #c32030;
-  --red-dark: #9a1824;
-  --red-soft: rgba(154, 24, 36, 0.08);
-  --wine: #9a1824;
-  --wine-deep: #5f0e16;
-  --accent: #e0955a;        /* sunrise peach */
-
-  --grey-100: #efeae5;
-  --grey-300: #dbd3cc;
-  --grey-500: #948c86;
-  --grey-700: #675f59;
-  --ink: #1d2224;
-  --ink-soft: #4b5457;
-  --white: #fffdfb;
-  --muted-word: rgba(255, 255, 255, 0.72);
-
-  --canvas: #f8f4ef;
-  --canvas-rgb: 248, 244, 239;
-  --pale-rgb: 236, 230, 223;
-  --tint-rgb: 222, 212, 200;
-  --dark: #14202a;
-  --dark-rgb: 20, 32, 42;
-  --shade-rgb: 24, 34, 40;
-
-  --ribbon: linear-gradient(100deg, #7a1420 0%, #c32030 60%, #cf4a2e 100%);
-  --rule: linear-gradient(90deg, #c32030 0 70%, #e0955a 70% 100%);
-
-  --t-art: url("../images/d8/bridge.jpg");
-  --t-wash: url("../images/d8/bridge-wash.jpg");
-  --t-hero-pos: 50% 35%;
-  --t-field-pos: 50% 50%;
-  --t-head-pos: 60% 30%;
-  --t-head-flip: none;
-  --t-head-mask: radial-gradient(70% 100% at 100% 0%, #000 25%, rgba(0, 0, 0, 0.45) 55%, transparent 80%);
-  --t-head-opacity: 0.42;
-  --t-foot-dir: 90deg;
-  --t-foot-pos: 50% 12%;   /* high in the picture, clear of the watermark */
-}
-
-/* hero: dark teal on the left, white words */
-.skin-8 .hero-shade {
-  background:
-    linear-gradient(180deg, rgba(var(--dark-rgb), 0.35) 0%, rgba(var(--dark-rgb), 0) 24%),
-    linear-gradient(90deg, rgba(var(--dark-rgb), 0.86) 0%, rgba(var(--dark-rgb), 0.66) 34%, rgba(var(--dark-rgb), 0.18) 58%, rgba(var(--dark-rgb), 0) 72%);
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 91%);
-  mask-image: linear-gradient(180deg, #000 70%, transparent 91%);
-}
-.skin-8 .hero-bg {
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.12) 87%, transparent 91%);
-  mask-image: linear-gradient(180deg, #000 70%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.12) 87%, transparent 91%);
-}
-.skin-8 .hero-panel {
-  left: clamp(20px, 6vw, 104px);
-  right: auto;
-  bottom: clamp(120px, 21vh, 200px);
-  width: min(600px, calc(100% - 40px));
-}
-.skin-8 .hero-eyebrow { color: rgba(255, 255, 255, 0.82); }
-.skin-8 .ht-word { color: #fff; }
-.skin-8 .ht-word:nth-child(2) { color: var(--muted-word); }
-.skin-8 .ht-word,
-.skin-8 .hero-sub { text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45); }
-.skin-8 .ht-word--swatch { text-shadow: none; }
-.skin-8 .ht-text { color: #fff; }
-.skin-8 .hero-sub { color: rgba(255, 255, 255, 0.88); }
-.skin-8 .hero-foot { border-top-color: rgba(255, 255, 255, 0.28); }
-.skin-8 .hero .btn--outline { border-color: rgba(255, 255, 255, 0.85); color: #fff; background: rgba(255, 255, 255, 0.06); }
-.skin-8 .hero .btn--outline:hover { border-color: transparent; background: var(--red); }
-.skin-8 .scroll-cue { left: auto; right: clamp(16px, 4vw, 64px); bottom: 150px; color: rgba(255, 255, 255, 0.85); }
-.skin-8 .scroll-cue span { background: rgba(255, 255, 255, 0.6); }
-.skin-8 .site-header:not(.is-scrolled) { background: rgba(var(--canvas-rgb), 0.82); }
-/* the award badges are dark ink: give them a small white backing on the dark photo */
-.skin-8 .hero-rosettes li { padding: 5px; border-radius: 10px; background: rgba(255, 255, 255, 0.92); box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5); }
-
-/* highlight: a red band warming to sunset orange, with a peach line along its foot like the horizon */
-html.skin-8 { --brush-mask: none; }
-.skin-8 .ht-swatch,
-.skin-8 .brush::before {
-  -webkit-mask: none;
-  mask: none;
-  border-radius: 3px;
-  background: linear-gradient(100deg, #a81b2a 0%, #c32030 45%, #d4572f 100%);
-  box-shadow: inset 0 -3px 0 var(--accent), 0 12px 24px -12px rgba(95, 14, 22, 0.6);
-}
-.skin-8 .brush--ink::before { background: linear-gradient(180deg, #24343f, var(--dark)); }
-.skin-8 .brush-tag::before,
-.skin-8 .life-route li.is-world span::before { border-radius: 3px; background: var(--red); box-shadow: inset 0 -2px 0 var(--accent); }
-.skin-8 .kit-polaroid::after { height: 12px; border-radius: 2px; background: var(--red); box-shadow: inset 0 -2px 0 var(--accent); }
-.skin-8 .section-title::after,
-.skin-8 .life-head .page-title::after { border-radius: 0; }
-.skin-8 .pa-tile.is-active,
-.skin-8 .role-tabs button[aria-pressed="true"] { background: var(--red); box-shadow: inset 0 -3px 0 var(--accent), 0 14px 28px -14px rgba(95, 14, 22, 0.6); }
-@media (max-width: 760px) {
-  .skin-8 .hero-panel { left: 20px; right: 20px; width: auto; bottom: 64px; }
-  .skin-8 .hero-shade { background: linear-gradient(180deg, rgba(var(--dark-rgb), 0.35) 0%, rgba(var(--dark-rgb), 0.55) 40%, rgba(var(--dark-rgb), 0.82) 75%); }
-  .skin-8 .hero-shade::after { display: none; }
 }
 
 /* =========================================================
@@ -1076,15 +851,15 @@ html.skin-8 { --brush-mask: none; }
 }
 
 /* ---- hero: the painting as one zooming layer, a soft light following the cursor ---- */
-.skin-9 .hero { background: var(--canvas); }
-.skin-9 .hero-bg { background: none; animation: none; }
-.skin-9 .v9-layer {
+.imm .hero { background: var(--canvas); }
+.imm .hero-bg { background: none; animation: none; }
+.imm .v9-layer {
   position: absolute;
   inset: 0;
   background: var(--img) var(--pos, 0% 50%) / cover no-repeat;
   will-change: transform;
 }
-.skin-9 .v9-light {
+.imm .v9-light {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -1105,48 +880,48 @@ html.skin-8 { --brush-mask: none; }
   right: clamp(24px, 6vw, 112px);
   width: min(600px, 46vw);
 }
-.skin-9 .hero-eyebrow { color: var(--grey-700); }
-.skin-9 .hero-eyebrow span { background: var(--rule); }
+.imm .hero-eyebrow { color: var(--grey-700); }
+.imm .hero-eyebrow span { background: var(--rule); }
 
 /* the three words: the active one is full ink and underlined in red brush */
-.skin-9 .ht-word { color: rgba(var(--dark-rgb), 0.28); cursor: pointer; text-shadow: none; transition: color 0.5s; }
-.skin-9 .ht-word:nth-child(2) { color: rgba(var(--dark-rgb), 0.28); }
-.skin-9 .ht-word.is-on { color: var(--ink); }
-.skin-9 .ht-word:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
-.skin-9 .ht-swatch { display: none; }
-.skin-9 .ht-text { color: inherit; animation: none; }
-.skin-9 .ht-word--swatch { padding: 0; margin: 0; }
+.imm .ht-word { color: rgba(var(--dark-rgb), 0.28); cursor: pointer; text-shadow: none; transition: color 0.5s; }
+.imm .ht-word:nth-child(2) { color: rgba(var(--dark-rgb), 0.28); }
+.imm .ht-word.is-on { color: var(--ink); }
+.imm .ht-word:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+.imm .ht-swatch { display: none; }
+.imm .ht-text { color: inherit; animation: none; }
+.imm .ht-word--swatch { padding: 0; margin: 0; }
 /* the active value comes into focus, like the camera on the painting: the others soften
    and blur back; no lines or markers */
-.skin-9 .ht-word { filter: blur(1.6px); transition: color 0.5s, filter 0.6s var(--ease), transform 0.6s var(--ease), padding 0.4s, margin 0.4s; transform-origin: left center; }
-.skin-9 .ht-word.is-on { filter: none; transform: translateX(0.1em) scale(1.03); }
-.skin-9 .ht-word:hover:not(.is-on) { filter: blur(0.6px); color: rgba(var(--dark-rgb), 0.45); }
-.skin-9 .ht-word::after { display: none; }
-.skin-9 .v9-done .ht-word { filter: none; transform: none; }
+.imm .ht-word { filter: blur(1.6px); transition: color 0.5s, filter 0.6s var(--ease), transform 0.6s var(--ease), padding 0.4s, margin 0.4s; transform-origin: left center; }
+.imm .ht-word.is-on { filter: none; transform: translateX(0.1em) scale(1.03); }
+.imm .ht-word:hover:not(.is-on) { filter: blur(0.6px); color: rgba(var(--dark-rgb), 0.45); }
+.imm .ht-word::after { display: none; }
+.imm .v9-done .ht-word { filter: none; transform: none; }
 
 /* after the third value: the finished look (as Design 3), Ingenuity on the red band */
-.skin-9 .v9-done .ht-word { color: var(--ink); }
-.skin-9 .v9-done .ht-word:nth-child(2) { color: var(--muted-word); }
-.skin-9 .v9-done .ht-word--swatch { margin-top: 0.08em; padding: 0.04em 0.28em 0.1em 0.2em; margin-left: -0.2em; }
-.skin-9 .v9-done .ht-swatch { display: block; transform: scaleX(0); animation: swatchIn 0.75s cubic-bezier(0.7, 0, 0.2, 1) 0.15s forwards; }
-.skin-9 .v9-done .ht-text { color: var(--white); transition: color 0.3s ease 0.55s; }
-.skin-9 .ht-text { transition: color 0.4s; }
+.imm .v9-done .ht-word { color: var(--ink); }
+.imm .v9-done .ht-word:nth-child(2) { color: var(--muted-word); }
+.imm .v9-done .ht-word--swatch { margin-top: 0.08em; padding: 0.04em 0.28em 0.1em 0.2em; margin-left: -0.2em; }
+.imm .v9-done .ht-swatch { display: block; transform: scaleX(0); animation: swatchIn 0.75s cubic-bezier(0.7, 0, 0.2, 1) 0.15s forwards; }
+.imm .v9-done .ht-text { color: var(--white); transition: color 0.3s ease 0.55s; }
+.imm .ht-text { transition: color 0.4s; }
 
 
 /* the value line under the words */
-.skin-9 .hero-sub {
+.imm .hero-sub {
   min-height: 3.4em;
   color: var(--ink-soft);
   text-shadow: 0 1px 10px rgba(var(--canvas-rgb), 0.6);
   transition: opacity 0.4s;
 }
-.skin-9 .hero-sub.is-swapping { opacity: 0; }
-.skin-9 .v9-from { display: block; margin-top: 6px; font: 700 11px var(--font-body); font-style: normal; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); text-shadow: none; }
+.imm .hero-sub.is-swapping { opacity: 0; }
+.imm .v9-from { display: block; margin-top: 6px; font: 700 11px var(--font-body); font-style: normal; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); text-shadow: none; }
 
-.skin-9 .hero .btn--outline { border-color: var(--red); color: var(--red); background: rgba(var(--canvas-rgb), 0.6); }
-.skin-9 .hero .btn--outline:hover { background: var(--red); color: #fff; }
+.imm .hero .btn--outline { border-color: var(--red); color: var(--red); background: rgba(var(--canvas-rgb), 0.6); }
+.imm .hero .btn--outline:hover { background: var(--red); color: #fff; }
 /* after all three values, "Our Story" invites the click */
-.skin-9 .hero .btn--solid.v9-ready { animation: v9Pulse 2.4s ease-out 2; }
+.imm .hero .btn--solid.v9-ready { animation: v9Pulse 2.4s ease-out 2; }
 @keyframes v9Pulse { 0% { box-shadow: 0 0 0 0 rgba(195, 32, 48, 0.55); } 100% { box-shadow: 0 0 0 18px rgba(195, 32, 48, 0); } }
 @media (max-width: 900px) {
   .skin-9 .hero-panel { right: clamp(16px, 4vw, 40px); width: min(560px, 62vw); }
@@ -1156,36 +931,36 @@ html.skin-8 { --brush-mask: none; }
   .skin-9 .hero-shade { background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0.4) 0%, rgba(var(--canvas-rgb), 0.15) 30%, rgba(var(--canvas-rgb), 0.82) 55%, rgba(var(--canvas-rgb), 0.95) 100%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .skin-9 .v9-layer { transform: none !important; }
-  .skin-9 .v9-light { display: none; }
+  .imm .v9-layer { transform: none !important; }
+  .imm .v9-light { display: none; }
 }
 
 /* ---- Design 9: scroll-through (laptop) and swipe (phone) ---- */
-.skin-9 .hero.v9-hero { height: auto; min-height: 0; overflow: visible; perspective: none; }
-.skin-9 .v9-stage { position: relative; height: 100vh; min-height: 620px; overflow: hidden; perspective: 1200px; }
+.imm .hero.v9-hero { height: auto; min-height: 0; overflow: visible; perspective: none; }
+.imm .v9-stage { position: relative; height: 100vh; min-height: 620px; overflow: hidden; perspective: 1200px; }
 /* scroll run is a fixed distance (not a multiple of the screen), so it feels the same on every
    screen size: ~300px per value plus ~300px for the finish */
-.skin-9 .hero.v9-scroll { height: calc(max(100vh, 620px) + 1200px); }
-.skin-9 .hero.v9-scroll .v9-stage { position: sticky; top: 0; }
-.skin-9 .v9-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0), var(--canvas)); }
+.imm .hero.v9-scroll { height: calc(max(100vh, 620px) + 1200px); }
+.imm .hero.v9-scroll .v9-stage { position: sticky; top: 0; }
+.imm .v9-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 70px; z-index: 2; pointer-events: none; background: linear-gradient(180deg, rgba(var(--canvas-rgb), 0), var(--canvas)); }
 /* one photo; the zoom follows the scroll (laptop) or steps per value (phone) */
-.skin-9 .v9-layer,
-.skin-9 .v9-layer.is-on {
+.imm .v9-layer,
+.imm .v9-layer.is-on {
   opacity: 1;
   transform: scale(calc(var(--zoom, 1.04) * var(--hz, 1)));
   transform-origin: var(--origin, 50% 40%);
 }
-.skin-9 .v9-scroll .v9-layer { transition: transform 0.6s ease-out; }
-.skin-9 .v9-swipe .v9-layer { transition: transform 1.3s var(--ease); }
+.imm .v9-scroll .v9-layer { transition: transform 0.6s ease-out; }
+.imm .v9-swipe .v9-layer { transition: transform 1.3s var(--ease); }
 
 /* progress: three short bars above the words */
-.skin-9 .v9-steps { display: none; }   /* progress lines removed */
-.skin-9 .v9-steps span { width: 34px; height: 3px; background: rgba(var(--dark-rgb), 0.16); transition: background 0.4s, width 0.4s var(--ease); }
-.skin-9 .v9-steps span.is-done { background: var(--accent); }
-.skin-9 .v9-steps span.is-on { width: 56px; background: var(--red); }
+.imm .v9-steps { display: none; }   /* progress lines removed */
+.imm .v9-steps span { width: 34px; height: 3px; background: rgba(var(--dark-rgb), 0.16); transition: background 0.4s, width 0.4s var(--ease); }
+.imm .v9-steps span.is-done { background: var(--accent); }
+.imm .v9-steps span.is-on { width: 56px; background: var(--red); }
 
 /* hint: "Scroll / Swipe to explore our values" */
-.skin-9 .v9-hint {
+.imm .v9-hint {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -1196,14 +971,14 @@ html.skin-8 { --brush-mask: none; }
   color: var(--grey-700);
   transition: opacity 0.4s;
 }
-.skin-9 .v9-hint::before { content: ""; width: 1px; height: 22px; background: linear-gradient(var(--accent), transparent); animation: v9Hint 1.8s ease-in-out infinite; }
-.skin-9 .v9-swipe .v9-hint::before { width: 22px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); animation-name: v9HintX; }
-.skin-9 .v9-hint.is-gone { opacity: 0; }
+.imm .v9-hint::before { content: ""; width: 1px; height: 22px; background: linear-gradient(var(--accent), transparent); animation: v9Hint 1.8s ease-in-out infinite; }
+.imm .v9-swipe .v9-hint::before { width: 22px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); animation-name: v9HintX; }
+.imm .v9-hint.is-gone { opacity: 0; }
 @keyframes v9Hint { 0%, 100% { transform: translateY(-4px); opacity: 0.4; } 50% { transform: translateY(4px); opacity: 1; } }
 @keyframes v9HintX { 0%, 100% { transform: translateX(4px); opacity: 0.4; } 50% { transform: translateX(-4px); opacity: 1; } }
 /* on the laptop the scroll cue is replaced by the hint */
-.skin-9 .v9-scroll .scroll-cue { display: none; }
-.skin-9 .v9-swipe .v9-stage { touch-action: pan-y; }
+.imm .v9-scroll .scroll-cue { display: none; }
+.imm .v9-swipe .v9-stage { touch-action: pan-y; }
 
 /* =========================================================
    Design pill: nine designs. On phones the pill would run off
@@ -1216,7 +991,7 @@ html.skin-8 { --brush-mask: none; }
 }
 
 /* the light that follows the cursor: neutral, not warm */
-.skin-9 .v9-light { background: radial-gradient(520px circle at var(--mx, 30%) var(--my, 50%), rgba(255, 252, 244, 0.34), transparent 60%); }
+.imm .v9-light { background: radial-gradient(520px circle at var(--mx, 30%) var(--my, 50%), rgba(255, 252, 244, 0.34), transparent 60%); }
 
 /* =========================================================
    "Ingenuity." on the home hero — every design
@@ -1224,9 +999,9 @@ html.skin-8 { --brush-mask: none; }
    slides in from the left; the word turns white on it.
    ========================================================= */
 html .ht-word--swatch,
-html .skin-9 .v9-done .ht-word--swatch { margin: 0.08em 0 0 -0.16em; padding: 0.02em 0.22em 0.08em 0.16em; text-shadow: none; }
+html.imm .v9-done .ht-word--swatch { margin: 0.08em 0 0 -0.16em; padding: 0.02em 0.22em 0.08em 0.16em; text-shadow: none; }
 html .ht-swatch,
-html .skin-9 .v9-done .ht-swatch {
+html.imm .v9-done .ht-swatch {
   display: block !important;
   -webkit-mask: none !important;
   mask: none !important;
@@ -1238,14 +1013,74 @@ html .skin-9 .v9-done .ht-swatch {
   animation: swatchIn 0.7s cubic-bezier(0.7, 0, 0.2, 1) 1.15s forwards;
 }
 html .ht-text { color: var(--ink); font-style: normal; animation: swatchText 0.3s ease 1.4s forwards; }
-html.skin-5 .ht-text, html.skin-8 .ht-text { color: #fff; }
-/* Design 9 shows the block once the third value is reached */
-html.skin-9 .ht-swatch { display: none !important; }
-html.skin-9 .v9-done .ht-swatch { display: block !important; animation-delay: 0.15s; }
-html.skin-9 .ht-word--swatch { margin: 0; padding: 0; }
-html.skin-9 .ht-text { animation: none; color: inherit; }
-html.skin-9 .v9-done .ht-text { color: #fff; transition: color 0.3s ease 0.5s; }
+/* the immersive hero (every design) shows the block once the third value is reached */
+html.imm .ht-swatch { display: none !important; }
+html.imm .v9-done .ht-swatch { display: block !important; animation-delay: 0.15s; }
+html.imm .ht-word--swatch { margin: 0; padding: 0; }
+html.imm .ht-text { animation: none; color: inherit; }
+html.imm .v9-done .ht-text { color: #fff; transition: color 0.3s ease 0.5s; }
 @media (prefers-reduced-motion: reduce) {
   html .ht-swatch { animation: none; transform: none; }
-  html:not(.skin-9) .ht-text { animation: none; color: #fff; }
+  html:not(.imm) .ht-text { animation: none; color: #fff; }
 }
+
+/* =========================================================
+   Design 10 (Kuala Lumpur): Design 9's immersive hero and behaviour
+   (html gets skin-9 too) on the bright KL painting, images/d10/kl.jpg:
+   Sultan Abdul Samad's clock tower, the Malaysian flag, the Twin Towers,
+   KL Tower and Merdeka 118 under a pale sky; white plaster, crimson
+   strokes, gold threads. Only the painting and the palette change.
+   ========================================================= */
+html.skin-9.skin-10 {
+  --accent: #b8955a;         /* gold threads */
+
+  /* clean, cool white plaster */
+  --grey-100: #eef0f1;
+  --grey-300: #d5d8db;
+  --grey-500: #949aa0;
+  --grey-700: #6b7178;
+  --ink: #23262a;
+  --ink-soft: #4f545a;
+  --white: #fdfdfd;
+  --muted-word: #8c9298;
+
+  --canvas: #f4f5f6;
+  --canvas-rgb: 244, 245, 246;
+  --pale-rgb: 235, 237, 239;
+  --tint-rgb: 210, 214, 218;
+  --dark: #26292d;
+  --dark-rgb: 38, 41, 45;
+  --shade-rgb: 34, 30, 34;
+
+  /* crimson of the brush strokes and the domes */
+  --ribbon: linear-gradient(100deg, #7a1020 0%, #a3172a 35%, #c32030 72%, #b01c2c 100%);
+  --rule: linear-gradient(90deg, #a3172a, #c32030 65%, #b8955a);
+
+  --t-art: url("../images/d10/kl.jpg");
+  --t-wash: url("../images/d10/kl-wash.jpg");
+}
+/* Merdeka 118 rises right behind the hero words in this painting: a softer, stronger light keeps them clear */
+html.skin-9.skin-10 .hero-shade {
+  background:
+    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.5) 0%, rgba(var(--canvas-rgb), 0) 22%),
+    radial-gradient(44% 58% at 70% 50%, rgba(var(--canvas-rgb), 0.82) 0%, rgba(var(--canvas-rgb), 0.55) 50%, rgba(var(--canvas-rgb), 0) 100%);
+}
+
+/* =========================================================
+   Immersive hero on every design (html.imm, js/hero-immersive.js).
+   The behaviour rules above are shared; each design keeps its own
+   painting, colours and text position. Design 1 has no theme
+   variables, so the hero gets brand-grey defaults here.
+   ========================================================= */
+html.imm:not(.themed) {
+  --canvas: #fbfbfb;
+  --canvas-rgb: 251, 251, 251;
+  --dark-rgb: 42, 42, 42;
+  --muted-word: #757575;
+  --accent: #959897;
+  --rule: linear-gradient(90deg, #9a1825, #c32030);
+}
+/* Design 7: the image carries a watermark low in the picture; show it larger and pinned to
+   the top (as the old hero did) so the watermark stays below the visible area */
+html.imm.skin-7 .v9-layer { background-size: auto 230%; }
+@media (min-aspect-ratio: 21/10) { html.imm.skin-7 .v9-layer { background-size: cover; } }

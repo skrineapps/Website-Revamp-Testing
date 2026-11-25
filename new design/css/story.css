@@ -288,7 +288,6 @@
 /* designs 7 and 8: the stock photos carry a watermark about 60% of the way down;
    show only the top ~55% of the picture so it never appears */
 .skin-7 .st-quote::before,
-.skin-8 .st-quote::before { background-size: auto 180%; background-position: 50% 0; }
 /* the founding year, large and faint in the corner, like a date mark in a history book */
 .st-quote::after {
   content: "1963";

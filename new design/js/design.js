@@ -2,17 +2,16 @@
    SKRINE — Design switch (review aid)
    Loaded in <head> on every page, before anything is drawn.
 
-   The site has nine looks. Pick one on any page (the "Design" pill,
+   The site has ten looks. Pick one on any page (the "Design" pill,
    bottom right) and every page after that uses it:
      Design 1  the current painted look (no extra class)
      Design 2  ribbons        html.skin-2.themed
      Design 3  artistic       html.skin-3.themed
      Design 4  songket        html.skin-4.themed
-     Design 5  steps          html.skin-5.themed  (Batu Caves stairs)
      Design 6  peaks          html.skin-6.themed  (misty karst mountains)
      Design 7  steel          html.skin-7.themed  (brushed corrugated steel)
-     Design 8  bridge         html.skin-8.themed  (cable-stayed bridge at sunrise)
      Design 9  heritage       html.skin-9.themed  (immersive hero, js/hero-immersive.js)
+     Design 10 kuala lumpur   html.skin-9.skin-10.themed  (Design 9 with the KL painting, images/d10/)
    The looks live in css/themes.css; every page keeps one copy of its markup.
 
    - ?design=N in the address picks a look; the choice is remembered for
@@ -30,7 +29,7 @@
    ========================================================= */
 (function () {
   var KEY = "skrine-design";
-  var SKINS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  var SKINS = ["1", "2", "3", "4", "6", "7", "9", "10"];   // 5 and 8 removed; numbers kept so links stay the same
   var html = document.documentElement;
   var params = new URLSearchParams(location.search);
   var asked = params.get("design");
@@ -42,6 +41,10 @@
   if (asked) remember(asked);
   var skin = asked || recall() || "1";
   if (skin !== "1") { html.classList.add("skin-" + skin); html.classList.add("themed"); }
+  // Design 10 is Design 9 (same immersive hero and behaviour) with its own painting and colours
+  if (skin === "10") html.classList.add("skin-9");
+  // every design gets the immersive home hero (js/hero-immersive.js)
+  html.classList.add("imm");
   window.SKRINE_DESIGN = skin;
 
   /* ---------- heading style: painting or design elements ---------- */

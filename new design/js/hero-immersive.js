@@ -24,17 +24,27 @@
 (function () {
   "use strict";
   var html = document.documentElement;
-  if (!html.classList.contains("skin-9")) return;
+  if (!html.classList.contains("imm")) return;
   var hero = document.querySelector(".hero");
   if (!hero) return;
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var BASE = (document.querySelector('link[href*="themes.css"]') || {}).href;
-  var IMG = BASE ? BASE.replace(/css\/themes\.css.*$/, "images/d9/") : "new%20design/images/d9/";
-
-  // the Design 9 painting; each value moves the camera closer to the scales on its left
-  var PHOTO = "heritage.jpg";
-  var ORIGIN = "18% 66%";            // the scales of justice, with the clock tower and skyline behind
+  // every design's own painting: [file under images/, where it sits, where the camera moves in]
+  var ART = {
+    "1": ["hero-palette.jpg", "50% 50%", "62% 45%"],
+    "2": ["d2/ribbons.jpg", "68% 50%", "76% 50%"],
+    "3": ["d3/artistic.jpg", "0% 50%", "20% 58%"],
+    "4": ["d4/songket.jpg", "0% 50%", "20% 50%"],
+    "6": ["d6/peaks.jpg", "50% 30%", "50% 40%"],
+    "7": ["d7/metal.jpg", "50% 0%", "50% 25%"],   // pinned to the top: the image watermark sits low
+    "9": ["d9/heritage.jpg", "0% 50%", "18% 66%"],
+    "10": ["d10/kl.jpg", "0% 50%", "30% 52%"]
+  };
+  var art = ART[window.SKRINE_DESIGN] || ART["1"];
+  var IMG = BASE ? BASE.replace(/css\/themes\.css.*$/, "images/") : "new%20design/images/";
+  var PHOTO = art[0];
+  var ORIGIN = art[2];
   var VALUES = [
     { zoom: 1.0, line: "We believe that wisdom comes from being open to learning." },
     { zoom: 1.16, line: "Just ‘good’ is never good enough — we strive for excellence in all that we do." },
@@ -53,7 +63,7 @@
   photo.className = "v9-layer is-on";
   photo.setAttribute("aria-hidden", "true");
   photo.style.setProperty("--img", 'url("' + IMG + PHOTO + '")');
-  photo.style.setProperty("--pos", "0% 50%");
+  photo.style.setProperty("--pos", art[1]);
   photo.style.setProperty("--origin", ORIGIN);
   photo.style.setProperty("--zoom", VALUES[0].zoom);
   bg.insertAdjacentElement("afterend", photo);
