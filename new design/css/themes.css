@@ -6,7 +6,7 @@
      .skin-4  Songket   images/d4/songket.jpg   woven songket, linen, gold thread
      .skin-6  Peaks     images/d6/peaks.jpg     misty karst mountains
      .skin-7  Steel     images/d7/metal.jpg     brushed corrugated steel (Getty comp: needs a licence)
-     .skin-9  Heritage  images/d9/heritage.jpg  grey plaster, crimson strokes, gold scales; immersive, zooming hero
+     .skin-9  Heritage  images/d9/heritage.jpg  grey KL painting (clock tower, Twin Towers, Merdeka 118), crimson strokes, gold threads; immersive hero
    Design 1 (no class) is the original look and is untouched.
 
    How this file is laid out
@@ -1060,7 +1060,7 @@ html.skin-9.skin-10 {
   --t-wash: url("../images/d10/kl-wash.jpg");
 }
 /* Merdeka 118 rises right behind the hero words in this painting: a softer, stronger light keeps them clear */
-html.skin-9.skin-10 .hero-shade {
+html.skin-9 .hero-shade {   /* Designs 9 and 10: Merdeka 118 rises behind the words */
   background:
     linear-gradient(180deg, rgba(var(--canvas-rgb), 0.5) 0%, rgba(var(--canvas-rgb), 0) 22%),
     radial-gradient(44% 58% at 70% 50%, rgba(var(--canvas-rgb), 0.82) 0%, rgba(var(--canvas-rgb), 0.55) 50%, rgba(var(--canvas-rgb), 0) 100%);

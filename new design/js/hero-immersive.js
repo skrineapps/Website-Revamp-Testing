@@ -38,7 +38,7 @@
     "4": ["d4/songket.jpg", "0% 50%", "20% 50%"],
     "6": ["d6/peaks.jpg", "50% 30%", "50% 40%"],
     "7": ["d7/metal.jpg", "50% 0%", "50% 25%"],   // pinned to the top: the image watermark sits low
-    "9": ["d9/heritage.jpg", "0% 50%", "18% 66%"],
+    "9": ["d9/heritage.jpg", "0% 50%", "30% 52%"],   // clock tower, Twin Towers, Merdeka 118
     "10": ["d10/kl.jpg", "0% 50%", "30% 52%"]
   };
   var art = ART[window.SKRINE_DESIGN] || ART["1"];
