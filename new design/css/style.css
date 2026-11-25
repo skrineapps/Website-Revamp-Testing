@@ -1665,3 +1665,10 @@ html.head-fx-on .page-main::after, html.head-fx-on main.contact::after, html.hea
 @media (max-width: 380px) {
   .scene-switch a { padding: 6px 5px; font-size: 10.5px; }
 }
+
+/* ---------- Smooth scrolling (js/smooth-scroll.js, Lenis) ---------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }

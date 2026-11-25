@@ -67,6 +67,14 @@
     document.head.appendChild(fxScript);
   }
 
+  // smooth scrolling on every page (js/smooth-scroll.js, Lenis)
+  (function () {
+    var ss = document.createElement("script");
+    ss.src = new URL("smooth-scroll.js", (document.currentScript && document.currentScript.src) || location.href).href;
+    ss.defer = true;
+    document.head.appendChild(ss);
+  })();
+
   function fileOf(path) {
     var f = decodeURIComponent(path.split("#")[0].split("?")[0].split("/").pop() || "");
     return f || "index.html";
