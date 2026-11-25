@@ -8,7 +8,6 @@
    - Practice Area and Sector dropdowns narrow the list
    - partner cards on hover: Design 1 (people.html) turns them over slowly;
      Design 2 (people-fade.html) darkens the photo and fades the practice areas in
-   Design 3 (sidebar filters) is people-classic.html + js/people-classic.js.
    ========================================================= */
 (function () {
   "use strict";

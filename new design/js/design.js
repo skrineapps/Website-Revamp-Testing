@@ -21,10 +21,12 @@
    - Pages with more than one layout (People, Practice Areas, Profile) list
      them in their own <nav class="layout-switch">. The layout pill sits
      above the design pill; switching layout keeps the chosen design.
-   - Heading scenes (inner pages only): the "Heading" pill swaps the art
-     behind each page heading between the design's painting and a
-     Malaysian scene chosen for that page (images/scenes/, see SCENES).
-     ?scene=photo / ?scene=art, remembered for the visit like the design.
+   - Heading style (inner pages only): the "Heading" pill swaps the art
+     behind each page heading between the design's painting and one of two
+     immersive, animated element styles drawn live in the browser (no photos;
+     js/heading-fx.js, css/style.css): silk, velvet.
+     ?heading=<style> or ?heading=art,
+     remembered for the visit like the design.
    ========================================================= */
 (function () {
   var KEY = "skrine-design";
@@ -42,32 +44,27 @@
   if (skin !== "1") { html.classList.add("skin-" + skin); html.classList.add("themed"); }
   window.SKRINE_DESIGN = skin;
 
-  /* ---------- heading scenes ---------- */
-  // page file -> scene (images/scenes/<scene>.jpg); pages not listed keep the painting
-  var SCENES = {
-    "people.html": "kl-skyline", "people-fade.html": "kl-skyline", "people-classic.html": "kl-skyline", "profile.html": "kl-skyline",
-    "capabilities.html": "sultan-abdul-samad", "capabilities-classic.html": "sultan-abdul-samad", "practice-area.html": "sultan-abdul-samad",
-    "sectors.html": "putrajaya", "sector.html": "putrajaya",
-    "our-story.html": "melaka",
-    "news-events.html": "kl-tower", "news.html": "kl-tower", "alerts.html": "kl-tower", "alert.html": "kl-tower",
-    "publications.html": "kl-tower", "archive.html": "kl-tower", "search.html": "kl-tower",
-    "contact.html": "kl-skyline", "job.html": "kl-skyline",
-    "professional-development.html": "putrajaya", "skrine-dragons.html": "langkawi",
-    "sports-social.html": "penang", "social-responsibility.html": "kinabalu", "life-story.html": "penang"
-    // china-desk / india-desk keep their own hero photo; kek-lok-si.jpg and batu-caves.jpg are spare
-  };
-  var SCENE_KEY = "skrine-scene";
+  /* ---------- heading style: painting or design elements ---------- */
+  // pages whose heading area is their own (home hero, Career collage, desk photos) are left alone
+  var NO_HEADING_ART = { "index.html": 1, "careers.html": 1, "china-desk.html": 1, "india-desk.html": 1 };
+  var HEAD_KEY = "skrine-heading";
   var hereFile = decodeURIComponent(location.pathname.split("/").pop() || "index.html") || "index.html";
-  var sceneAsked = params.get("scene");
-  if (sceneAsked !== "photo" && sceneAsked !== "art") sceneAsked = null;
-  try { if (sceneAsked) sessionStorage.setItem(SCENE_KEY, sceneAsked); } catch (e) {}
-  var sceneMode = sceneAsked || (function () { try { return sessionStorage.getItem(SCENE_KEY); } catch (e) { return null; } })() || "art";
-  var scene = SCENES[hereFile] || null;
-  if (scene && sceneMode === "photo") {
-    html.classList.add("scene-on");
-    // an absolute URL, so it resolves the same from any stylesheet
-    var sceneUrl = new URL("images/scenes/" + scene + ".jpg", (document.currentScript && document.currentScript.src) ? new URL("../", document.currentScript.src) : location.href).href;
-    html.style.setProperty("--scene", 'url("' + sceneUrl + '")');
+  var headAsked = params.get("heading");
+  var HEAD_STYLES = [["art", "Painting"], ["silk", "Silk"], ["velvet", "Velvet"]];
+  var isStyle = function (v) { return HEAD_STYLES.some(function (h) { return h[0] === v; }); };
+  if (!isStyle(headAsked)) headAsked = null;
+  try { if (headAsked) sessionStorage.setItem(HEAD_KEY, headAsked); } catch (e) {}
+  var headMode = headAsked || (function () { try { var v = sessionStorage.getItem(HEAD_KEY); return isStyle(v) ? v : null; } catch (e) { return null; } })() || "art";
+  var headingPage = !NO_HEADING_ART[hereFile];
+  if (headingPage && headMode !== "art") { html.classList.add("heading-el"); html.classList.add("el-" + headMode); }
+  // the animated styles live in js/heading-fx.js, loaded only when one is chosen
+  if (headingPage && headMode !== "art") {
+    var fxSrc = new URL("heading-fx.js", (document.currentScript && document.currentScript.src) || location.href).href;
+    var fxScript = document.createElement("script");
+    fxScript.src = fxSrc;
+    fxScript.defer = true;
+    fxScript.setAttribute("data-style", headMode);
+    document.head.appendChild(fxScript);
   }
 
   function fileOf(path) {
@@ -106,17 +103,17 @@
     });
     document.body.appendChild(nav);
 
-    // heading scene pill: inner pages with a scene
-    if (scene) {
+    // heading pill: inner pages only
+    if (headingPage) {
       var sp = document.createElement("nav");
       sp.className = "scene-switch";
-      sp.setAttribute("aria-label", "Heading background");
+      sp.setAttribute("aria-label", "Heading style");
       sp.innerHTML = '<span class="layout-switch-label">Heading</span>';
-      [["art", "Painting"], ["photo", "Malaysia"]].forEach(function (m) {
+      HEAD_STYLES.forEach(function (m) {
         var a = document.createElement("a");
         a.textContent = m[1];
-        if (m[0] === sceneMode) a.setAttribute("aria-current", "true");
-        var set = function () { var u = new URL(hrefFor(here, null)); u.searchParams.set("scene", m[0]); a.href = u.href; };
+        if (m[0] === headMode) a.setAttribute("aria-current", "true");
+        var set = function () { var u = new URL(hrefFor(here, null)); u.searchParams.delete("scene"); u.searchParams.set("heading", m[0]); a.href = u.href; };
         set();
         ["pointerdown", "focus"].forEach(function (ev) { a.addEventListener(ev, set); });
         sp.appendChild(a);

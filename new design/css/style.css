@@ -1602,29 +1602,41 @@ main {
 .events-test a[aria-current] { background: #f0b400; color: #2a2a2a; }
 @media (max-width: 760px) { .events-test { bottom: 64px; } }
 
-/* ---------- Heading scenes (js/design.js: html.scene-on, --scene) ----------
-   A Malaysian scene behind the page heading instead of the design's painting,
-   inner pages only. Photos are softened and multiplied onto the page colour so
-   they sit in the background like the paintings do. */
-html.scene-on .page-main::before,
-html.scene-on main.contact::before,
-html.scene-on main.life::before {
-  height: clamp(440px, 54vw, 680px);
-  background: var(--scene) 50% 40% / cover no-repeat;
-  transform: none;
-  mix-blend-mode: multiply;
-  opacity: 0.5;
-  filter: saturate(0.8) contrast(1.02);
-  -webkit-mask-image: radial-gradient(72% 100% at 100% 0%, #000 28%, rgba(0, 0, 0, 0.45) 55%, transparent 80%);
-  mask-image: radial-gradient(72% 100% at 100% 0%, #000 28%, rgba(0, 0, 0, 0.45) 55%, transparent 80%);
+/* ---------- Immersive heading elements (js/heading-fx.js) ----------
+   A live layer (div.head-fx) behind the page heading replaces the painting:
+   silk / velvet. It fades out toward the heading text. */
+html.head-fx-on .page-main::before, html.head-fx-on main.contact::before, html.head-fx-on main.life::before,
+html.head-fx-on .page-main::after, html.head-fx-on main.contact::after, html.head-fx-on main.life::after { display: none; }
+
+.head-fx {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  height: clamp(380px, 38vw, 500px);   /* ends before the page content */
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.12) 40%, #000 72%), linear-gradient(180deg, #000 52%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.12) 40%, #000 72%), linear-gradient(180deg, #000 52%, transparent 100%);
+  mask-composite: intersect;
+  animation: headFxIn 1.4s var(--ease) both;
 }
+/* .page-main > * is capped at --page-max and centred; the effect layer must span the full width */
+.page-main > .head-fx, main.contact > .head-fx, main.life > .head-fx { max-width: none; margin: 0; }
+.head-fx canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.head-fx--silk canvas { filter: blur(1.2px); }   /* soft-focus satin */
+@keyframes headFxIn { from { opacity: 0; } to { opacity: 1; } }
+
 @media (max-width: 760px) {
-  html.scene-on .page-main::before,
-  html.scene-on main.contact::before,
-  html.scene-on main.life::before { opacity: 0.35; }
+  .head-fx { height: 420px; opacity: 0.55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .head-fx { animation: none; }
 }
 
-/* review aid: Heading pill (Painting / Malaysia), above the design pill */
+/* review aid: Heading pill (Painting / immersive styles), above the design pill */
 .scene-switch {
   position: fixed;
   right: 16px;
@@ -1643,3 +1655,13 @@ html.scene-on main.life::before {
 .scene-switch a:hover { color: #fff; }
 .scene-switch a[aria-current] { background: var(--red); color: #fff; }
 @media print { .scene-switch { display: none; } }
+
+/* the Heading pill: on narrower screens drop its label and tighten up */
+@media (max-width: 760px) {
+  .scene-switch { right: 8px; gap: 2px; max-width: calc(100vw - 16px); }
+  .scene-switch .layout-switch-label { display: none; }
+  .scene-switch a { padding: 6px 7px; font-size: 11px; letter-spacing: 0; white-space: nowrap; }
+}
+@media (max-width: 380px) {
+  .scene-switch a { padding: 6px 5px; font-size: 10.5px; }
+}
