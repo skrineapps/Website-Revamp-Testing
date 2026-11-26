@@ -1637,7 +1637,8 @@ html.head-fx-on .page-main::after, html.head-fx-on main.contact::after, html.hea
 }
 
 /* review aid: Heading pill (Painting / immersive styles), above the design pill */
-.scene-switch {
+.scene-switch,
+.photo-switch {
   position: fixed;
   right: 16px;
   bottom: 66px;
@@ -1651,10 +1652,10 @@ html.head-fx-on .page-main::after, html.head-fx-on main.contact::after, html.hea
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 .scene-switch.is-stacked { bottom: 116px; }   /* above the Layout pill */
-.scene-switch a { padding: 6px 12px; border-radius: 999px; font: 700 13px var(--font-body); letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.8); transition: background 0.2s, color 0.2s; }
-.scene-switch a:hover { color: #fff; }
-.scene-switch a[aria-current] { background: var(--red); color: #fff; }
-@media print { .scene-switch { display: none; } }
+.scene-switch a, .photo-switch a { padding: 6px 12px; border-radius: 999px; font: 700 13px var(--font-body); letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.8); transition: background 0.2s, color 0.2s; }
+.scene-switch a:hover, .photo-switch a:hover { color: #fff; }
+.scene-switch a[aria-current], .photo-switch a[aria-current] { background: var(--red); color: #fff; }
+@media print { .scene-switch, .photo-switch { display: none; } }
 
 /* the Heading pill: on narrower screens drop its label and tighten up */
 @media (max-width: 760px) {

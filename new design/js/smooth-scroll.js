@@ -29,14 +29,19 @@
     return false;
   }
 
+  // a laptop that struggled once keeps native scrolling for the rest of the visit
+  var OFF_KEY = "skrine-smooth-off";
+  function offForVisit() { try { return sessionStorage.getItem(OFF_KEY) === "1"; } catch (e) { return false; } }
+
   function start() {
-    if (!window.Lenis) return;
+    if (!window.Lenis || offForVisit()) return;
+    // very low-powered machines: keep the browser's own scrolling
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) return;
     // Lenis replaces the browser's own smooth scroll
     document.documentElement.style.scrollBehavior = "auto";
 
     var lenis = new window.Lenis({
-      duration: 1.15,                                   // how long each glide lasts
-      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      lerp: 0.14,                                       // each frame closes 14% of the gap: smooth, but stays close to the wheel
       wheelMultiplier: 1,
       smoothWheel: true,
       anchors: { offset: -90 },                         // in-page links (#section) glide too, clear of the header
@@ -44,11 +49,36 @@
     });
     window.SkrineLenis = lenis;
 
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    // watchdog: if frames come too slowly while gliding, smooth scrolling is making it worse,
+    // so hand scrolling back to the browser (here and on the next pages of this visit)
+    var alive = true, last = 0, slow = 0, seen = 0;
+    function raf(time) {
+      if (!alive) return;
+      lenis.raf(time);
+      if (lenis.isScrolling && last) {
+        var dt = time - last;
+        seen++;
+        if (dt > 28) slow++;                            // under ~35 frames a second
+        if (seen >= 90) {
+          if (slow / seen > 0.35) {
+            alive = false;
+            lenis.destroy();
+            window.SkrineLenis = null;
+            document.documentElement.style.scrollBehavior = "";
+            try { sessionStorage.setItem(OFF_KEY, "1"); } catch (e) {}
+            return;
+          }
+          seen = 0; slow = 0;
+        }
+      }
+      last = time;
+      requestAnimationFrame(raf);
+    }
     requestAnimationFrame(raf);
 
     // pause while a pop-up is open
     function sync() {
+      if (!alive) return;
       var open = document.body.classList.contains("modal-open") || !!document.querySelector("dialog[open]");
       if (open) lenis.stop(); else lenis.start();
     }
@@ -57,7 +87,7 @@
     document.addEventListener("toggle", sync, true);
 
     // content that grows or shrinks (filters, "Load more", accordions) keeps the scroll limits right
-    if (window.ResizeObserver) new ResizeObserver(function () { lenis.resize(); }).observe(document.body);
+    if (window.ResizeObserver) new ResizeObserver(function () { if (alive) lenis.resize(); }).observe(document.body);
   }
 
   var src = (document.currentScript && document.currentScript.src) || "";

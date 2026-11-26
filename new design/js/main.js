@@ -22,6 +22,9 @@
   function onScrollHeader() {
     var y = window.scrollY;
     header.classList.toggle("is-scrolled", y > 40);
+    // smooth scrolling eases out in tiny (sometimes zero or sub-pixel) steps: only act on a
+    // real movement, or the header flickers between shown and hidden at the end of each glide
+    if (Math.abs(y - lastY) < 6 && y > 0) return;
     var goingDown = y > lastY && y > 300;
     var menuOpen = !!document.querySelector(".nav-item.is-open") || header.classList.contains("nav-open");
     var hide = goingDown && !menuOpen;

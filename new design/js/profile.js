@@ -229,6 +229,16 @@
   });
   actions.appendChild(vc);
 
+  // Download profile (the partner's CV as a PDF). The files are supplied later, on WordPress:
+  // set P.cv to the file's URL (e.g. from the media library); until then it points at
+  // files/cv/<slug>.pdf, the place to drop each partner's PDF.
+  var cv = el("a", "pf-vcard pf-cv");
+  cv.href = P.cv || "files/cv/" + slug + ".pdf";
+  cv.setAttribute("download", slug + "-skrine-profile.pdf");
+  cv.appendChild(icon("fa-regular fa-file-pdf"));
+  cv.appendChild(document.createTextNode(" Download profile"));
+  actions.appendChild(cv);
+
 
   var fig = document.getElementById("pfPortrait");
   fig.appendChild(portrait(slug, P.name, "pf-portrait-frame"));

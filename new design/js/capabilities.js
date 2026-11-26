@@ -503,11 +503,63 @@
       detail.appendChild(head);
       FX.observeReveal(head);
 
-      // wide banner photo under the heading
-      var hero = banner(area);
-      hero.classList.add("pa-hero", "reveal");
-      detail.appendChild(hero);
-      FX.observeReveal(hero);
+      // wide banner photo under the heading; without photos (html.pa-nophoto) a full-width dark
+      // band of directory quotes about the practice (js/practice-recognition.js). No quotes: no band.
+      var hero = null;
+      if (document.documentElement.classList.contains("pa-nophoto")) {
+        var REC = (window.SKRINE_PRACTICE_RECOGNITION || {})[area.slug] || { quotes: [] };
+        if (REC.quotes.length) {
+          hero = el("section", "pa-qband reveal");
+          hero.setAttribute("aria-label", "What the directories say");
+          var inner = el("div", "pa-qband-inner");
+          var qMark = el("span", "pa-qband-mark", "“");
+          qMark.setAttribute("aria-hidden", "true");
+          inner.appendChild(qMark);
+          var qStage = el("div", "pa-qband-stage");
+          qStage.setAttribute("aria-live", "polite");
+          inner.appendChild(qStage);
+          var foot = el("div", "pa-qband-foot");
+          var count = el("span", "pa-qband-count");
+          foot.appendChild(count);
+          var bar = el("span", "pa-qband-bar");
+          var fill = el("span", "pa-qband-fill");
+          bar.appendChild(fill);
+          foot.appendChild(bar);
+          var qi = 0, qTimer = null, many = REC.quotes.length > 1;
+          var prevB = el("button", "pa-qband-btn"); prevB.type = "button"; prevB.setAttribute("aria-label", "Previous quote"); prevB.innerHTML = '<i class="fa-solid fa-arrow-left" aria-hidden="true"></i>';
+          var nextB = el("button", "pa-qband-btn"); nextB.type = "button"; nextB.setAttribute("aria-label", "Next quote"); nextB.innerHTML = '<i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+          if (many) { foot.appendChild(prevB); foot.appendChild(nextB); } else { bar.hidden = true; }
+          inner.appendChild(foot);
+          hero.appendChild(inner);
+          var showQ = function (i) {
+            qi = (i + REC.quotes.length) % REC.quotes.length;
+            var q = REC.quotes[qi];
+            qStage.textContent = "";
+            var bq = el("blockquote", "pa-qband-quote" + (q.quote.length > 110 ? " is-long" : ""));
+            bq.appendChild(el("p", null, q.quote));
+            bq.appendChild(el("cite", null, q.source));
+            qStage.appendChild(bq);
+            count.textContent = many ? String(qi + 1).padStart(2, "0") + " / " + String(REC.quotes.length).padStart(2, "0") : "";
+            // the bar fills over the time each quote is shown
+            fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = "";
+          };
+          var reduceQ = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          var restart = function () { clearInterval(qTimer); if (many && !reduceQ) qTimer = setInterval(function () { showQ(qi + 1); }, 7000); };
+          prevB.addEventListener("click", function () { showQ(qi - 1); restart(); });
+          nextB.addEventListener("click", function () { showQ(qi + 1); restart(); });
+          hero.addEventListener("mouseenter", function () { clearInterval(qTimer); hero.classList.add("is-paused"); });
+          hero.addEventListener("mouseleave", function () { hero.classList.remove("is-paused"); showQ(qi); restart(); });
+          showQ(0);
+          restart();
+        }
+      } else {
+        hero = banner(area);
+        hero.classList.add("pa-hero", "reveal");
+      }
+      if (hero) {
+        detail.appendChild(hero);
+        FX.observeReveal(hero);
+      }
 
       // overview + team
       var cols = el("div", "pa-detail-cols");

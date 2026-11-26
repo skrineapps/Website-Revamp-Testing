@@ -456,12 +456,14 @@
 /* ---------- Review pills ---------- */
 .themed .design-switch,
 .themed .layout-switch,
-.themed .scene-switch { background: rgba(var(--dark-rgb), 0.92); box-shadow: 0 10px 30px -10px rgba(var(--dark-rgb), 0.6); }
+.themed .scene-switch,
+.themed .photo-switch { background: rgba(var(--dark-rgb), 0.92); box-shadow: 0 10px 30px -10px rgba(var(--dark-rgb), 0.6); }
 .themed .design-switch a,
 .themed .layout-switch a { color: rgba(var(--canvas-rgb), 0.8); }
 .themed .design-switch a[aria-current],
 .themed .layout-switch a[aria-current],
-.themed .scene-switch a[aria-current] { background: linear-gradient(120deg, var(--wine), var(--red)); color: #fff; }
+.themed .scene-switch a[aria-current],
+.themed .photo-switch a[aria-current] { background: linear-gradient(120deg, var(--wine), var(--red)); color: #fff; }
 
 /* phones: the artwork runs behind the words, so the light reaches across the lower half */
 @media (max-width: 760px) {
