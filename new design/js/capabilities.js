@@ -72,11 +72,15 @@
     var extra = [];
     team.forEach(function (m, i) {
       var li = el("li", "pa-team-item");
-      li.appendChild(avatar(m));
+      // linked to the person's profile (js/people-links.js) when they have one
+      var to = window.SkrinePeople && window.SkrinePeople.href(m.name);
+      var box = li;
+      if (to) { box = el("a", "pa-team-link"); box.href = to; li.appendChild(box); }
+      box.appendChild(avatar(m));
       var txt = el("span", "pa-team-text");
       txt.appendChild(el("span", "pa-team-name", m.name));
       txt.appendChild(el("span", "pa-team-role", m.role));
-      li.appendChild(txt);
+      box.appendChild(txt);
       if (limit && i >= limit) { li.hidden = true; li.classList.add("pa-team-extra"); extra.push(li); }
       ul.appendChild(li);
     });

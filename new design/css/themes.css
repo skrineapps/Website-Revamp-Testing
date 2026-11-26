@@ -1086,3 +1086,56 @@ html.imm:not(.themed) {
    the top (as the old hero did) so the watermark stays below the visible area */
 html.imm.skin-7 .v9-layer { background-size: auto 230%; }
 @media (min-aspect-ratio: 21/10) { html.imm.skin-7 .v9-layer { background-size: cover; } }
+
+/* =========================================================
+   Design 2.5 (Arches): Design 2 with its own artwork
+   Same layout and satin-ribbon treatments as Design 2 (the html also
+   carries .skin-2); only the artwork and the palette change: white
+   architectural arches and a single crimson ribbon, so the neutrals turn
+   cool and clean instead of warm taupe. images/d25/arches.jpg
+   ========================================================= */
+html.skin-2.skin-2-5 {
+  --red: #c32030;
+  --red-dark: #9a1824;
+  --red-soft: rgba(195, 32, 48, 0.08);
+  --wine: #9a1824;
+  --wine-deep: #5f0e16;
+  --accent: #d24a57;
+
+  --grey-100: #e2e4e7;
+  --grey-300: #c9ccd0;
+  --grey-500: #8b8f95;
+  --grey-700: #5e6268;
+  --ink: #222326;
+  --ink-soft: #4c4e52;
+  --white: #f3f4f6;
+  --muted-word: #858a90;
+
+  --canvas: #e9ebee;
+  --canvas-rgb: 233, 235, 238;
+  --pale-rgb: 222, 225, 229;
+  --tint-rgb: 200, 204, 210;
+  --dark: #1f2023;
+  --dark-rgb: 31, 32, 35;
+  --shade-rgb: 40, 40, 44;
+
+  --ribbon: linear-gradient(100deg, #6d0f1c 0%, #9a1824 30%, #c32030 62%, #b01c2c 100%);
+  --rule: linear-gradient(90deg, #6d0f1c, #c32030 70%, #d24a57);
+  --ribbon-satin:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 22%, rgba(0, 0, 0, 0) 68%, rgba(40, 0, 6, 0.22) 100%),
+    linear-gradient(100deg, #6d0f1c 0%, #9a1824 20%, #c32030 52%, #b01c2c 78%, #7a1220 100%);
+
+  --t-art: url("../images/d25/arches.jpg");
+  --t-wash: url("../images/d25/arches-wash.jpg");
+  --t-hero-pos: 70% 50%;
+  --t-field-pos: 82% 50%;
+  --t-head-pos: 100% 50%;   /* the ribbon and arches are on the right of the artwork */
+  --t-head-flip: none;
+  --t-head-mask: radial-gradient(75% 105% at 100% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
+  --t-head-opacity: 0.7;
+  --t-foot-dir: 90deg;
+  --t-foot-pos: 100% 60%;
+}
+/* the artwork is light: the scroll cue goes dark instead of white */
+.skin-2-5 .scroll-cue { color: var(--grey-700); }
+.skin-2-5 .scroll-cue span { background: rgba(var(--dark-rgb), 0.35); }

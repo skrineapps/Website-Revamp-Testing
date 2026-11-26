@@ -165,6 +165,11 @@
   gap: 12px 16px;
 }
 .pa-team-item { display: flex; align-items: center; gap: 10px; min-width: 0; }
+/* a contact with a profile page: the whole row is the link */
+.pa-team-link { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; margin: -6px; padding: 6px; border-radius: 12px; color: inherit; transition: background 0.2s; }
+.pa-team-link:hover, .pa-team-link:focus-visible { background: rgba(255, 255, 255, 0.7); }
+.pa-team-link:hover .pa-team-name, .pa-team-link:focus-visible .pa-team-name { color: var(--red); }
+.pa-team-link:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .pa-avatar {
   flex: 0 0 auto;
   width: 44px;
@@ -265,15 +270,17 @@
   top: calc(var(--sticky-top) + 24px);
   padding: 28px;
   border-radius: 20px;
-  background: var(--white);
-  box-shadow: var(--shadow-sm);
-  border-top: 3px solid var(--red);
+  /* a soft tinted panel, no border */
+  background: var(--grey-100);
   scroll-margin-top: calc(var(--header-h) + 24px);
   max-height: calc(100vh - var(--header-h) - 48px);
   overflow-y: auto;
   scrollbar-width: thin;
 }
 .pa-team-box .pa-team { grid-template-columns: 1fr; gap: 12px; }
+.pa-team-box .pa-section-title { font-size: clamp(20px, 1.7vw, 24px); color: var(--ink); margin-bottom: 16px; }
+.pa-team-box .pa-section-title::after { content: ""; display: block; width: 28px; height: 2px; margin-top: 10px; background: var(--red); }
+.pa-team-box .pa-avatar { box-shadow: 0 0 0 3px var(--white); }
 
 .pa-related { margin-top: clamp(48px, 6vw, 80px); scroll-margin-top: calc(var(--header-h) + 24px); }
 .pa-related-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }

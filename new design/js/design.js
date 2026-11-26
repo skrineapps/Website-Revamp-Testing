@@ -2,10 +2,11 @@
    SKRINE — Design switch (review aid)
    Loaded in <head> on every page, before anything is drawn.
 
-   The site has ten looks. Pick one on any page (the "Design" pill,
+   The site has eleven looks. Pick one on any page (the "Design" pill,
    bottom right) and every page after that uses it:
      Design 1  the current painted look (no extra class)
      Design 2  ribbons        html.skin-2.themed
+     Design 2.5 arches        html.skin-2.skin-2-5.themed  (Design 2 with the white arches and red ribbon, images/d25/)
      Design 3  artistic       html.skin-3.themed
      Design 4  songket        html.skin-4.themed
      Design 6  peaks          html.skin-6.themed  (misty karst mountains)
@@ -29,7 +30,7 @@
    ========================================================= */
 (function () {
   var KEY = "skrine-design";
-  var SKINS = ["1", "2", "3", "4", "6", "7", "9", "10"];   // 5 and 8 removed; numbers kept so links stay the same
+  var SKINS = ["1", "2", "2.5", "3", "4", "6", "7", "9", "10"];   // 5 and 8 removed; numbers kept so links stay the same
   var html = document.documentElement;
   var params = new URLSearchParams(location.search);
   var asked = params.get("design");
@@ -40,7 +41,9 @@
 
   if (asked) remember(asked);
   var skin = asked || recall() || "1";
-  if (skin !== "1") { html.classList.add("skin-" + skin); html.classList.add("themed"); }
+  if (skin !== "1") { html.classList.add("skin-" + skin.replace(".", "-")); html.classList.add("themed"); }
+  // Design 2.5 is Design 2 (same ribbon treatments and layout) with its own artwork and cool palette
+  if (skin === "2.5") html.classList.add("skin-2");
   // Design 10 is Design 9 (same immersive hero and behaviour) with its own painting and colours
   if (skin === "10") html.classList.add("skin-9");
   // every design gets the immersive home hero (js/hero-immersive.js)
@@ -61,7 +64,7 @@
   var headingPage = !NO_HEADING_ART[hereFile];
 
   // practice area pages: with or without the practice photos (?photos=off), remembered for the visit
-  var PHOTO_PAGES = { "capabilities.html": 1, "capabilities-classic.html": 1, "practice-area.html": 1 };
+  var PHOTO_PAGES = { "capabilities.html": 1, "capabilities-classic.html": 1, "practice-area.html": 1, "capabilities-v2.html": 1, "practice-area-v2.html": 1 };
   var photoPage = !!PHOTO_PAGES[hereFile];
   var photosAsked = params.get("photos");
   if (photosAsked !== "on" && photosAsked !== "off") photosAsked = null;

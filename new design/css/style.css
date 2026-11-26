@@ -179,11 +179,10 @@ body.header-hidden { --sticky-top: 0px; }
   padding: 10px;
   border-radius: 14px;
   background: var(--white);
-  border-top: 3px solid var(--red);
   box-shadow: var(--shadow-lg);
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, 8px) perspective(600px) rotateX(-8deg);
+  transform: translate(-50%, 6px);
   transform-origin: top center;
   transition: opacity 0.25s var(--ease), transform 0.3s var(--ease), visibility 0s 0.3s;
   z-index: 140;

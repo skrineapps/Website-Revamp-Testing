@@ -1,0 +1,95 @@
+/* =========================================================
+   SKRINE — Capabilities, new structure (Practice Areas layout 3,
+   Sectors layout 2). Builds on css/capabilities.css and uses only
+   the site's variables, so every design (1–9) restyles it.
+   ========================================================= */
+
+/* ---------- tiles: link tiles with a small "Advisory & disputes" tag ---------- */
+.cv2-tile { flex-direction: column; gap: 6px; padding: 18px 44px 18px 22px; text-align: left; align-items: flex-start; justify-content: center; color: var(--ink); text-decoration: none; }
+.cv2-tile-name { font-weight: 600; line-height: 1.3; }
+.cv2-tile-tag { font: 700 10.5px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); }
+.cv2-tile .pa-tile-chev { top: 50%; transform: translateY(-50%); transition: transform 0.3s var(--ease), color 0.3s; }
+.cv2-tile:hover .pa-tile-chev, .cv2-tile:focus-visible .pa-tile-chev { color: var(--red); transform: translateY(calc(-50% + 2px)); }
+/* open tile (its preview panel is showing) */
+.cv2-tile.is-active .cv2-tile-tag { color: rgba(255, 255, 255, 0.78); }
+.cv2-tile.is-active .pa-tile-chev { color: var(--white); transform: translateY(-50%) rotate(180deg); }
+/* the "Disputes" cross-reference inside the preview panel */
+.cv2-dlink--panel { margin: 28px 0 0; }
+
+/* ---------- the "Disputes" link on a practice area / sector page ----------
+   A cross-reference rather than a box: hairlines above and below, the
+   title on the left, a round arrow that fills red on hover. */
+.cv2-dlink {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "label go" "title go" "text go";
+  column-gap: 16px;
+  row-gap: 4px;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 18px 0;
+  border-top: 1px solid var(--grey-300);
+  border-bottom: 1px solid var(--grey-300);
+  color: var(--ink);
+  text-decoration: none;
+}
+.cv2-dlink-label { grid-area: label; font: 700 11px var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey-500); }
+.cv2-dlink-title { grid-area: title; font: 700 clamp(18px, 1.5vw, 21px)/1.3 var(--font-display); transition: color 0.3s; }
+.cv2-dlink-title i { display: none; }
+.cv2-dlink-text { grid-area: text; font-size: 14px; color: var(--grey-700); }
+.cv2-dlink::after {
+  content: "\f061";
+  grid-area: go;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--red);
+  color: var(--red);
+  font: 900 14px "Font Awesome 6 Free";
+  transition: background 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+.cv2-dlink:hover .cv2-dlink-title, .cv2-dlink:focus-visible .cv2-dlink-title { color: var(--red); }
+.cv2-dlink:hover::after, .cv2-dlink:focus-visible::after { background: var(--red); color: #fff; transform: translateX(3px); }
+
+/* "Also under Banking and Finance · Dispute Resolution" under a title */
+.cv2-ways { margin-top: 12px; font-family: var(--font-alt); font-size: 14px; letter-spacing: 0.04em; color: var(--grey-700); }
+.cv2-ways a { color: var(--red); font-weight: 700; border-bottom: 1px solid currentColor; }
+.cv2-ways a:hover { border-bottom-color: transparent; }
+
+.cv2-cols--single { grid-template-columns: minmax(0, 1fr); }
+.cv2-points { margin: 18px 0 0; columns: 2; column-gap: 40px; }
+.cv2-points li { break-inside: avoid; }
+
+/* ---------- Dispute Resolution: the areas of dispute ---------- */
+.cv2-dr { margin-top: clamp(48px, 6vw, 80px); }
+.cv2-dr-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 56px); border-top: 2px solid var(--ink); }
+.cv2-dr-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 18px;
+  align-items: baseline;
+  gap: 12px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--grey-300);
+  color: var(--ink);
+  text-decoration: none;
+  transition: padding 0.25s var(--ease), color 0.25s;
+}
+a.cv2-dr-row:hover, a.cv2-dr-row:focus-visible { padding-left: 12px; color: var(--red); }
+.cv2-dr-name { font: 700 17px/1.35 var(--font-display); }
+.cv2-dr-where { font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; color: var(--grey-500); text-align: right; }
+.cv2-dr-arrow { font-size: 12px; color: var(--red); transition: transform 0.25s var(--ease); }
+a.cv2-dr-row:hover .cv2-dr-arrow { transform: translateX(4px); }
+.cv2-dr-row.is-pending { color: var(--grey-500); }
+.cv2-dr-row.is-pending .cv2-dr-where { font-style: italic; font-weight: 400; }
+
+@media (max-width: 1024px) {
+  .cv2-dr-list { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .cv2-points { columns: 1; }
+  .cv2-dr-row { grid-template-columns: minmax(0, 1fr) 16px; }
+  .cv2-dr-where { grid-column: 1; grid-row: 2; text-align: left; }
+  .cv2-dr-arrow { grid-row: 1 / span 2; grid-column: 2; align-self: center; }
+}
