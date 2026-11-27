@@ -1,9 +1,8 @@
 /* =========================================================
-   SKRINE — Design 9 immersive hero (home page only)
-   Runs only when Design 9 is chosen (html.skin-9).
+   SKRINE — immersive hero (home page only), on both designs (html.imm)
 
-   One image: images/d9/heritage.jpg (Sultan Abdul Samad building, the scales
-   of justice, the KL skyline). Each value brings the camera closer to the scales.
+   One image per design (ART below): Design 1 images/d25/arches.jpg,
+   Design 2 images/d9/heritage.jpg. Each value brings the camera closer.
 
    Laptop / desktop (wide screen with a mouse):
      the hero pins in place while the page scrolls through it.
@@ -32,15 +31,8 @@
   var BASE = (document.querySelector('link[href*="themes.css"]') || {}).href;
   // every design's own painting: [file under images/, where it sits, where the camera moves in]
   var ART = {
-    "1": ["hero-palette.jpg", "50% 50%", "62% 45%"],
-    "2": ["d2/ribbons.jpg", "68% 50%", "76% 50%"],
-    "2.5": ["d25/arches.jpg", "70% 50%", "78% 50%"],
-    "3": ["d3/artistic.jpg", "0% 50%", "20% 58%"],
-    "4": ["d4/songket.jpg", "0% 50%", "20% 50%"],
-    "6": ["d6/peaks.jpg", "50% 30%", "50% 40%"],
-    "7": ["d7/metal.jpg", "50% 0%", "50% 25%"],   // pinned to the top: the image watermark sits low
-    "9": ["d9/heritage.jpg", "0% 50%", "30% 52%"],   // clock tower, Twin Towers, Merdeka 118
-    "10": ["d10/kl.jpg", "0% 50%", "30% 52%"]
+    "1": ["d25/arches.jpg", "70% 50%", "78% 50%"],     // white arches, a red ribbon
+    "2": ["d9/heritage.jpg", "0% 50%", "30% 52%"]      // clock tower, Twin Towers, Merdeka 118
   };
   var art = ART[window.SKRINE_DESIGN] || ART["1"];
   var IMG = BASE ? BASE.replace(/css\/themes\.css.*$/, "images/") : "new%20design/images/";

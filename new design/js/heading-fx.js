@@ -1,13 +1,11 @@
 /* =========================================================
    SKRINE — Immersive heading elements (inner pages)
-   Loaded by js/design.js when a Heading style other than
-   "Painting" is chosen (html.heading-el.el-<style>).
+   Loaded by js/design.js on every inner page (html.heading-el.el-velvet).
 
-   Two styles, both drawn live (no photos), coloured from the active
-   design's own variables (brand red, its dark red, greys, gold accent):
-     silk     layered satin ribbons flowing across, rippling to the cursor
-     velvet   a draped surface of fine lines folding slowly from grey into
-              brand red, swelling under the cursor, one gold thread
+   Velvet, drawn live (no photos) and coloured from the active design's
+   own variables (brand red, its dark red, greys, gold accent): a draped
+   surface of fine lines folding slowly from grey into brand red,
+   swelling under the cursor, with one gold thread.
 
    Everything sits in a layer behind the page heading (div.head-fx),
    fades out before the heading text, pauses while scrolled out of
@@ -16,7 +14,7 @@
 (function () {
   "use strict";
   var html = document.documentElement;
-  var STYLE = ["silk", "velvet"].filter(function (s) { return html.classList.contains("el-" + s); })[0];
+  var STYLE = ["velvet"].filter(function (s) { return html.classList.contains("el-" + s); })[0];
   if (!STYLE) return;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -66,8 +64,7 @@
       new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(layer);
     }
 
-    var run = { silk: silk, velvet: velvet }[STYLE];
-    run(layer, mouse, function () { return visible && !document.hidden; });
+    velvet(layer, mouse, function () { return visible && !document.hidden; });
   }
 
   /* a canvas that fills the layer, sharp on retina, resized with it */
@@ -95,61 +92,6 @@
     })(t0);
   }
   function ease(m) { m.x += (m.tx - m.x) * 0.05; m.y += (m.ty - m.y) * 0.05; }
-
-  /* ---------- silk: satin ribbons ---------- */
-  function silk(layer, mouse, active) {
-    var cv = canvasIn(layer), ctx = cv.ctx, box = cv.box;
-    var RIBBONS = [
-      { c: C.light, a: 0.5, w: 86, amp: 30, f: 1.4, sp: 0.11, ph: 0.0, off: 0.20 },
-      { c: C.grey, a: 0.18, w: 56, amp: 24, f: 1.8, sp: 0.14, ph: 1.4, off: 0.08 },
-      { c: C.dark, a: 0.26, w: 70, amp: 34, f: 1.3, sp: 0.12, ph: 2.6, off: 0.0 },
-      { c: C.red, a: 0.36, w: 54, amp: 26, f: 1.7, sp: 0.15, ph: 4.1, off: -0.09 },
-      { c: C.gold, a: 0.0, w: 2, amp: 22, f: 2.1, sp: 0.16, ph: 5.2, off: -0.15, line: true }
-    ];
-    function centre(r, x, t) {
-      var n = x / box.w;
-      var lift = (mouse.inside ? (0.5 - mouse.y) * 26 : 0) * Math.exp(-Math.pow((n - mouse.x) * 3, 2));
-      // rises from lower-left to upper-right, with two overlapping waves
-      return box.h * (1.02 - 0.92 * n + r.off) +
-        Math.sin(n * Math.PI * r.f + t * r.sp * 2 + r.ph) * r.amp +
-        Math.sin(n * Math.PI * r.f * 2.3 - t * r.sp * 1.3 + r.ph) * r.amp * 0.35 + lift;
-    }
-    loop(function (t) {
-      ease(mouse);
-      ctx.clearRect(0, 0, box.w, box.h);
-      var step = 8;
-      RIBBONS.forEach(function (r) {
-        var top = [], bot = [];
-        for (var x = -20; x <= box.w + 20; x += step) {
-          var y = centre(r, x, t);
-          var half = r.w * (0.55 + 0.45 * Math.sin(x / box.w * Math.PI * 1.3 + t * 0.4 + r.ph)) / 2;
-          top.push([x, y - half]); bot.push([x, y + half]);
-        }
-        if (r.line) {
-          ctx.beginPath();
-          top.forEach(function (p, i) { var yy = (p[1] + bot[i][1]) / 2; if (i) ctx.lineTo(p[0], yy); else ctx.moveTo(p[0], yy); });
-          ctx.strokeStyle = rgba(r.c, 0.5); ctx.lineWidth = 1.1; ctx.stroke();
-          return;
-        }
-        // body: colour deepening toward the right, with a satin sheen band
-        var g = ctx.createLinearGradient(0, 0, box.w, 0);
-        g.addColorStop(0, rgba(r.c, 0));
-        g.addColorStop(0.35, rgba(r.c, r.a * 0.55));
-        g.addColorStop(1, rgba(r.c, r.a));
-        ctx.beginPath();
-        top.forEach(function (p, i) { if (i) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); });
-        for (var i = bot.length - 1; i >= 0; i--) ctx.lineTo(bot[i][0], bot[i][1]);
-        ctx.closePath();
-        ctx.fillStyle = g; ctx.fill();
-        // light catching the upper edge
-        ctx.beginPath();
-        top.forEach(function (p, i) { if (i) ctx.lineTo(p[0], p[1] + 1); else ctx.moveTo(p[0], p[1] + 1); });
-        var s = ctx.createLinearGradient(0, 0, box.w, 0);
-        s.addColorStop(0, "rgba(255,255,255,0)"); s.addColorStop(0.6, "rgba(255,255,255,0.2)"); s.addColorStop(1, "rgba(255,255,255,0.3)");
-        ctx.strokeStyle = s; ctx.lineWidth = 1.2; ctx.stroke();
-      });
-    }, active);
-  }
 
   /* ---------- velvet: a draped surface of fine lines ---------- */
   function velvet(layer, mouse, active) {
