@@ -1,0 +1,180 @@
+/* =========================================================
+   SKRINE — Practice Areas, Layout 4: the directory
+   Styles for js/capabilities-directory.js. Builds on style.css /
+   capabilities.css and uses only the site's variables, so every
+   design restyles it.
+   ========================================================= */
+
+/* ---------- Dispute Resolution band ---------- */
+.pd-band {
+  margin-top: clamp(28px, 4vw, 48px);
+  padding: clamp(26px, 3.4vw, 44px);
+  border-radius: var(--radius, 14px);
+  background: linear-gradient(140deg, var(--dark, #262626) 0%, var(--dark, #262626) 60%, var(--wine-deep, #3a0d13) 100%);
+  color: var(--white);
+}
+.pd-band-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.pd-band-eyebrow { font: 700 11.5px var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); }
+.pd-band-title { margin-top: 6px; font: 900 clamp(26px, 3vw, 38px)/1.2 var(--font-display); }
+.pd-band-title a { color: var(--white); }
+.pd-band-title a:hover { color: rgba(255, 255, 255, 0.8); }
+.pd-band-text { max-width: 720px; margin-top: 10px; font-size: 15.5px; line-height: 1.7; color: rgba(255, 255, 255, 0.78); }
+.pd-band-go {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--white);
+  transition: background 0.25s, border-color 0.25s;
+}
+.pd-band-go:hover { background: var(--red); border-color: var(--red); }
+.pd-band-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; padding: 0; list-style: none; }
+.pd-chip {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--white);
+  transition: background 0.2s, color 0.2s;
+}
+a.pd-chip:hover, a.pd-chip:focus-visible { background: var(--white); color: var(--red); }
+.pd-chip.is-pending { background: none; border: 1px dashed rgba(255, 255, 255, 0.3); color: rgba(255, 255, 255, 0.55); }
+
+/* ---------- count + filter ---------- */
+.pd-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin: clamp(40px, 5vw, 64px) 0 14px; }
+.pd-count { font: 700 12px var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey-500); }
+.pd-filter { display: flex; gap: 6px; }
+.pd-filter button {
+  padding: 8px 16px;
+  border: 1px solid var(--grey-300);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  font: 700 13px var(--font-body);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.pd-filter button:hover { border-color: var(--red); color: var(--red); }
+.pd-filter button[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: var(--white); }
+
+/* ---------- row style switch (review aid) ---------- */
+.pd-bar { justify-content: flex-start; }
+.pd-count { margin-right: auto; }
+.pd-style {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(42, 42, 42, 0.92);
+}
+.pd-style-label { padding: 0 6px 0 10px; font: 700 10px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.55); }
+.pd-style button { min-width: 30px; padding: 6px 9px; border: 0; border-radius: 999px; background: none; font: 700 13px var(--font-body); color: rgba(255, 255, 255, 0.8); cursor: pointer; }
+.pd-style button[aria-pressed="true"] { background: var(--red); color: #fff; }
+
+/* ---------- A–Z rows (shared) ---------- */
+.pd-list { margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--ink); }
+.pd-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(14px, 2.4vw, 32px);
+  padding: 20px 0;
+  border-bottom: 1px solid var(--grey-300);
+}
+.pd-row[hidden] { display: none; }
+.pd-letter { align-self: start; padding-top: 2px; font: 900 22px var(--font-display); color: var(--red); }
+.is-filtered .pd-letter { visibility: hidden; }
+.pd-name { font: 700 clamp(17px, 1.5vw, 20px)/1.35 var(--font-display); color: var(--ink); transition: color 0.25s; }
+.pd-name:hover { color: var(--red); }
+.pd-desc {
+  margin-top: 5px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* =========================================================
+   Style 1 · Rows: the whole row opens the practice area;
+   a small "Disputes team" link under the description
+   ========================================================= */
+.pd-s1 .pd-row { padding: 22px 12px 22px 0; transition: background 0.25s; }
+.pd-s1 .pd-row:hover { background: rgba(255, 255, 255, 0.6); }
+/* the name's link covers the whole row */
+.pd-s1 .pd-name::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.pd-s1 .pd-row:hover .pd-name { color: var(--red); }
+.pd-go { font-size: 15px; color: var(--red); transition: transform 0.25s var(--ease); }
+.pd-s1 .pd-row:hover .pd-go { transform: translateX(4px); }
+.pd-tag {
+  position: relative;
+  z-index: 2;   /* above the row-wide link, so it opens the Disputes page */
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--red-soft);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--red);
+  transition: background 0.2s, color 0.2s;
+}
+.pd-tag i { font-size: 11px; }
+a.pd-tag:hover, a.pd-tag:focus-visible { background: var(--red); color: var(--white); }
+.pd-tag--plain { background: none; padding-left: 0; color: var(--grey-500); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 11px; }
+
+/* =========================================================
+   Style 2 · Columns: Advisory / Disputes headings, a dot
+   where a page exists, a quiet dash where it does not
+   ========================================================= */
+.pd-s2 .pd-row { grid-template-columns: 44px minmax(0, 1fr) 110px 110px; }
+.pd-cell { display: flex; justify-content: center; }
+.pd-head { padding: 10px 0; border-bottom-color: var(--grey-300); }
+.pd-head .pd-cell { font: 700 11px var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey-500); }
+.pd-head .pd-cell:last-child { color: var(--red); }
+.pd-dot {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  font-size: 13px;
+  transition: background 0.2s, color 0.2s, transform 0.2s var(--ease);
+}
+.pd-cell:last-child .pd-dot { border-color: var(--red); background: var(--red); color: var(--white); }
+.pd-dot:hover, .pd-dot:focus-visible { background: var(--ink); color: var(--white); transform: scale(1.08); }
+.pd-cell:last-child .pd-dot:hover { background: var(--red-dark); border-color: var(--red-dark); }
+.pd-dash { font-size: 18px; color: var(--grey-300); }
+
+/* ---------- smaller screens ---------- */
+@media (max-width: 860px) {
+  .pd-row { grid-template-columns: 32px minmax(0, 1fr); }
+  .pd-s1 .pd-row { grid-template-columns: 32px minmax(0, 1fr) auto; }
+  .pd-s2 .pd-row { grid-template-columns: 32px minmax(0, 1fr) 76px 76px; }
+  .pd-band-head { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .pd-row { grid-template-columns: minmax(0, 1fr); }
+  .pd-letter { display: none; }
+  .pd-s1 .pd-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .pd-s2 .pd-row { grid-template-columns: minmax(0, 1fr) 62px 62px; gap: 8px; }
+  .pd-s2 .pd-desc { display: none; }
+  .pd-head .pd-cell { font-size: 9.5px; letter-spacing: 0.08em; }
+  .pd-dot { width: 34px; height: 34px; }
+}
