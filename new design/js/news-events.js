@@ -285,7 +285,7 @@
     empty.appendChild(tx);
     upEl.appendChild(empty);
 
-    var recent = NEWS.filter(function (n) { return n.category === "Speaking & Events"; }).slice(0, 3);
+    var recent = NEWS.filter(function (n) { return n.category === "Speaking Events"; }).slice(0, 3);
     if (recent.length) {
       var head = el("div", "alerts-subhead ne-recent-head");
       head.appendChild(el("h2", null, "Recent events"));

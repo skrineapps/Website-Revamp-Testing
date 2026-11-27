@@ -2,7 +2,7 @@
    SKRINE — News & Events
    Source: skrine.com/news-events/latest (2024 – Jul 2026, 165 posts) and
    skrine.com/news-events/upcoming (no upcoming events listed, Nov 2026).
-   - category: Speaking & Events, Awards & Rankings, Firm News, SkrineCast,
+   - category: Speaking Events, Awards & Rankings, Firm News, SkrineCast,
                Community & Celebrations — matched from the title and write-up
    - image:    file in images/news/ (from skrine.com)
    - people:   Skrine lawyers named in the post who are in the current People data
@@ -11,7 +11,7 @@ window.SKRINE_NEWS = [
  {
   "title": "MyBar Academy X Working Committee of Huangpu Lawyers Training Programme",
   "date": "2026-07-07",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-07-mybar-academy-x-working-committee-of-huangpu-lawyers-trainin.jpg",
   "people": [
    "To' Puan Janet Looi",
@@ -24,7 +24,7 @@ window.SKRINE_NEWS = [
  {
   "title": "FIRE International: Vilamoura",
   "date": "2026-05-19",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-05-fire-international-vilamoura.png",
   "people": [
    "Aufa Radzi"
@@ -42,7 +42,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Commonwealth Legal Education Association (CLEA) Conference 2026",
   "date": "2026-04-02",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-04-commonwealth-legal-education-association-clea-conference-202.jpg",
   "people": [
    "To' Puan Janet Looi"
@@ -73,7 +73,7 @@ window.SKRINE_NEWS = [
  {
   "title": "JILPT Tokyo Comparative Labour Policy Seminar 2026",
   "date": "2026-03-26",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-03-jilpt-tokyo-comparative-labour-policy-seminar-2026.jpg",
   "people": [
    "Ashreyna Kaur Bhatia"
@@ -103,7 +103,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Strategic Engagement Session with the Commissioner for Personal Data Protection",
   "date": "2026-02-12",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-02-strategic-engagement-session-with-the-commissioner-for-perso.jpg",
   "people": [
    "Jillian Chia Yan Ping",
@@ -124,7 +124,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Setting Sail into Unchartered Territory: Third Party Funding & Implications",
   "date": "2026-01-27",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-01-setting-sail-into-unchartered-territory-third-party-funding-.jpg",
   "people": [
    "Kalaiarasan Rasadurai"
@@ -134,7 +134,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Cyber Risk & Data Privacy: Trends and Strategies for 2026",
   "date": "2026-01-20",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-01-cyber-risk-and-data-privacy-trends-and-strategies-for-2026.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -144,7 +144,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Skrine Signature Event",
   "date": "2025-12-10",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-12-skrine-signature-event.jpg",
   "people": [
    "Sheba Gumis",
@@ -159,7 +159,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Malaysian Institute of Chartered Secretaries and Administrators (MAICSA) Regulatory Forum 2025",
   "date": "2025-12-09",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-12-malaysian-institute-of-chartered-secretaries-and-administrat.jpg",
   "people": [
    "Claudia Cheah Pek Yee"
@@ -169,7 +169,7 @@ window.SKRINE_NEWS = [
  {
   "title": "WIPO – Thailand Innovation Policy Forum 2025 and LESI YMC APAC Conference",
   "date": "2025-11-27",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-11-wipo-thailand-innovation-policy-forum-2025-and-lesi-ymc-apac.jpg",
   "people": [
    "Joshua Teoh Beni Chris",
@@ -204,7 +204,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Skrine Series: Penang Edition People, Projects, Places: Legal Perspectives on Employment, Construction and Strata Management",
   "date": "2025-11-19",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-11-skrine-series-penang-edition-people-projects-places-legal-pe.jpg",
   "people": [
    "Selvamalar Alagaratnam",
@@ -219,7 +219,7 @@ window.SKRINE_NEWS = [
  {
   "title": "&#119825;&#119816;&#119826;&#119820;-&#119808;&#119816;&#119808;&#119810; &#119808;&#119811;&#119825; &#119810;&#119848;&#119847;&#119839;&#119838;&#119851;&#119838;&#119847;&#119836;&#119838; &#120784;&#120782;&#120784;&#120787;",
   "date": "2025-11-10",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-11-and-119825-and-119816-and-119826-and-119820-and-119808-and-1.jpg",
   "people": [
    "Loshini Ramarmuty",
@@ -231,7 +231,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Digital, Technology & Transformation (DTX) Conference 2025",
   "date": "2025-11-03",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-11-digital-technology-and-transformation-dtx-conference-2025.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -241,7 +241,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Getting Ahead of Data Protection Impact Assessments (DPIA): Learning from GDPR and International Perspectives",
   "date": "2025-10-29",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-10-getting-ahead-of-data-protection-impact-assessments-dpia-lea.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -251,7 +251,7 @@ window.SKRINE_NEWS = [
  {
   "title": "“So you want to be an Influencer: IP Issues in Social Media”",
   "date": "2025-10-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-10-so-you-want-to-be-an-influencer-ip-issues-in-social-media.jpg",
   "people": [
    "Gooi Yang Shuh"
@@ -261,7 +261,7 @@ window.SKRINE_NEWS = [
  {
   "title": "&#119826;&#119844;&#119851;&#119842;&#119847;&#119838; &#119834;&#119853; &#119808;&#119816;&#119808;&#119810;’&#119852; &#119808;&#119852;&#119842;&#119834; &#119808;&#119811;&#119825; &#119830;&#119838;&#119838;&#119844; &#120784;&#120782;&#120784;&#120787;",
   "date": "2025-10-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-10-and-119826-and-119844-and-119851-and-119842-and-119847-and-1.jpg",
   "people": [
    "Sharon Chong Tze Ying",
@@ -273,7 +273,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Road to Kairos: Sarawak & Penang Editions",
   "date": "2025-10-01",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-10-road-to-kairos-sarawak-and-penang-editions.jpg",
   "people": [
    "Sharon Chong Tze Ying"
@@ -283,7 +283,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Malaysian Institute of Chartered Secretaries and Administrators (MAICSA) Annual Conference 2025",
   "date": "2025-09-23",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-09-malaysian-institute-of-chartered-secretaries-and-administrat.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -303,7 +303,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Lex Mundi - Europe/Middle East/Africa Regional Conference",
   "date": "2025-09-17",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-09-lex-mundi-europe-middle-east-africa-regional-conference.jpg",
   "people": [
    "Phua Pao Yii",
@@ -315,7 +315,7 @@ window.SKRINE_NEWS = [
  {
   "title": "AIPPI World Congress 2025",
   "date": "2025-09-13",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-09-aippi-world-congress-2025.jpg",
   "people": [
    "Joshua Teoh Beni Chris",
@@ -353,7 +353,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Kuala Lumpur In-House Community Congress 2025",
   "date": "2025-09-11",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-09-kuala-lumpur-in-house-community-congress-2025.jpg",
   "people": [
    "Louise Jacqueline Azmi",
@@ -364,7 +364,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Regional Arbitral Institutes Forum (RAIF) Conference 2025",
   "date": "2025-09-11",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-09-regional-arbitral-institutes-forum-raif-conference-2025.jpg",
   "people": [
    "Muhammad Suhaib Ibrahim"
@@ -411,7 +411,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Young Solicitors’ Group of the Law Society of Hong Kong",
   "date": "2025-08-22",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-08-young-solicitors-group-of-the-law-society-of-hong-kong.jpg",
   "people": [
    "Nimalan Devaraja",
@@ -438,7 +438,7 @@ window.SKRINE_NEWS = [
  {
   "title": "The Role of In-House Counsel: Why Winnable Cases Are Lost?",
   "date": "2025-08-20",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-08-the-role-of-in-house-counsel-why-winnable-cases-are-lost.jpg",
   "people": [
    "Mubashir Mansor"
@@ -448,7 +448,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Employment Law Conference 2025",
   "date": "2025-07-31",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-07-employment-law-conference-2025.jpg",
   "people": [
    "Selvamalar Alagaratnam",
@@ -459,7 +459,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Sole Prop or Sdn Bhd? Your Guide to This Big Decision.",
   "date": "2025-07-28",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-07-sole-prop-or-sdn-bhd-your-guide-to-this-big-decision.jpg",
   "people": [
    "Sheba Gumis"
@@ -469,7 +469,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Persidangan Perlindungan Data Peribadi 2025",
   "date": "2025-07-21",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-07-persidangan-perlindungan-data-peribadi-2025.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -479,7 +479,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Staying Ahead of the Curve: Legal Appetite for Sanctions and Tariffs Risks",
   "date": "2025-07-15",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-07-staying-ahead-of-the-curve-legal-appetite-for-sanctions-and-.jpg",
   "people": [
    "Manshan Singh",
@@ -490,7 +490,7 @@ window.SKRINE_NEWS = [
  {
   "title": "‘Is Hot Tub Boiling Over? – The Different Roles in Concurrent Expert Evidence’",
   "date": "2025-07-03",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-07-is-hot-tub-boiling-over-the-different-roles-in-concurrent-ex.jpg",
   "people": [
    "Ivan Loo"
@@ -500,7 +500,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Asia-Pacific Employment Summit",
   "date": "2025-07-03",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-07-asia-pacific-employment-summit.jpg",
   "people": [
    "Selvamalar Alagaratnam"
@@ -510,7 +510,7 @@ window.SKRINE_NEWS = [
  {
   "title": "SSM to Cosecs: Your Licence is on the Line. What Now?",
   "date": "2025-06-24",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-06-ssm-to-cosecs-your-licence-is-on-the-line-what-now.jpg",
   "people": [
    "Sheba Gumis"
@@ -528,7 +528,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Energy Efficiency and Conservation Act 2024 (‘EECA 2024’)",
   "date": "2025-06-17",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-06-energy-efficiency-and-conservation-act-2024-eeca-2024.jpg",
   "people": [
    "Rachel Chiah"
@@ -538,7 +538,7 @@ window.SKRINE_NEWS = [
  {
   "title": "London International Disputes Week (LIDW)",
   "date": "2025-06-01",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-06-london-international-disputes-week-lidw.jpg",
   "people": [
    "Mubashir Mansor",
@@ -557,7 +557,7 @@ window.SKRINE_NEWS = [
  {
   "title": "6th Global Legal Association Conference 2025",
   "date": "2025-05-28",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-05-6th-global-legal-association-conference-2025.jpg",
   "people": [
    "Mubashir Mansor"
@@ -575,7 +575,7 @@ window.SKRINE_NEWS = [
  {
   "title": "DPO Intensive Training - 22 May 2025 session",
   "date": "2025-05-27",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-05-dpo-intensive-training-22-may-2025-session.jpg",
   "people": [
    "Jillian Chia Yan Ping",
@@ -619,7 +619,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Fire International: Vilamoura Conference",
   "date": "2025-05-22",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-05-fire-international-vilamoura-conference.jpg",
   "people": [
    "Claudia Cheah Pek Yee"
@@ -629,7 +629,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Asset Recovery Asia 2025",
   "date": "2025-05-21",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-05-asset-recovery-asia-2025.jpg",
   "people": [],
   "summary": "Our partner, Kumar Kanagasabai, had the pleasure of speaking at the Asset Recovery Asia 2025 conference, held from 20–22 May 2025 at the Park Hyatt Saigon, Vietnam. During the event, Kumar joined a panel alongside Joe Yuan Wang, Jill Ann Koh, Tony DongWook KANG, and Philipp Mueller for a session titled: “Fraud Claims, From Cradle to Grave”."
@@ -637,7 +637,7 @@ window.SKRINE_NEWS = [
  {
   "title": "IRLaw Conference 2025",
   "date": "2025-05-21",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-05-irlaw-conference-2025.jpg",
   "people": [
    "Foo Siew Li"
@@ -647,7 +647,7 @@ window.SKRINE_NEWS = [
  {
   "title": "ThoughtLeaders4’s FIRE International: Vilamoura 2025",
   "date": "2025-05-20",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-05-thoughtleaders4s-fire-international-vilamoura-2025.jpg",
   "people": [
    "Claudia Cheah Pek Yee"
@@ -657,7 +657,7 @@ window.SKRINE_NEWS = [
  {
   "title": "BIM-AIAC ADR Summit 2025",
   "date": "2025-05-19",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-05-bim-aiac-adr-summit-2025.jpg",
   "people": [
    "Muhammad Suhaib Ibrahim",
@@ -668,7 +668,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Green Data, Solid Deals: Structuring and Dispute-Proofing Renewable-Powered Data Centres",
   "date": "2025-05-14",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-05-green-data-solid-deals-structuring-and-dispute-proofing-rene.jpg",
   "people": [
    "Louise Jacqueline Azmi",
@@ -695,7 +695,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Cross Border Personal Data Transfer (CBPDT) Guidelines Launch",
   "date": "2025-04-29",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-cross-border-personal-data-transfer-cbpdt-guidelines-launch.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -705,7 +705,7 @@ window.SKRINE_NEWS = [
  {
   "title": "IBA Conference on Global Insurance Trends 2025",
   "date": "2025-04-28",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-iba-conference-on-global-insurance-trends-2025.jpg",
   "people": [
    "Loo Peh Fern"
@@ -715,7 +715,7 @@ window.SKRINE_NEWS = [
  {
   "title": "LESI YMC Asia Pacific Conference",
   "date": "2025-04-25",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-lesi-ymc-asia-pacific-conference.jpg",
   "people": [
    "Joshua Teoh Beni Chris",
@@ -727,7 +727,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Industry Insight Xchange with Commissioner",
   "date": "2025-04-21",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-industry-insight-xchange-with-commissioner.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -737,7 +737,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Women in Leadership Conference 2025",
   "date": "2025-04-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-women-in-leadership-conference-2025.jpg",
   "people": [
    "Sara Lau"
@@ -747,7 +747,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Asia Pacific International Arbitration Chamber (Malaysia)",
   "date": "2025-04-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-asia-pacific-international-arbitration-chamber-malaysia.jpg",
   "people": [
    "Mubashir Mansor"
@@ -757,7 +757,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Navigating the rising tide of U.S. Reciprocal Tariffs",
   "date": "2025-04-14",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-navigating-the-rising-tide-of-u-s-reciprocal-tariffs.jpg",
   "people": [
    "Manshan Singh"
@@ -767,7 +767,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Solar & Storage Live Malaysia 2025",
   "date": "2025-04-09",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-solar-and-storage-live-malaysia-2025.jpg",
   "people": [
    "Rachel Chiah"
@@ -777,7 +777,7 @@ window.SKRINE_NEWS = [
  {
   "title": "National Climate Governance Summit (NCGS) 2025",
   "date": "2025-04-09",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-national-climate-governance-summit-ncgs-2025.jpg",
   "people": [
    "To' Puan Janet Looi"
@@ -787,7 +787,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Navigating Data Protection in 2025: Regional Trends, Risks & Readiness",
   "date": "2025-04-03",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-04-navigating-data-protection-in-2025-regional-trends-risks-and.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -797,7 +797,7 @@ window.SKRINE_NEWS = [
  {
   "title": "“Questions You’ve Always Wanted to Ask”",
   "date": "2025-03-20",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-03-questions-youve-always-wanted-to-ask.jpg",
   "people": [
    "Kalaiarasan Rasadurai"
@@ -807,7 +807,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Data Protection Officer Appointment (DPO) Guidelines and Data Breach Notification (DBN) Guidelines",
   "date": "2025-02-28",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-02-data-protection-officer-appointment-dpo-guidelines-and-data-.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -827,7 +827,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Persidangan Perlindungan Data Peribadi Siri 1/2025 & Majlis Peluncuran Dokumen Berkaitan Akta Perlindungan Data Peribadi (Pindaan) 2024",
   "date": "2025-02-25",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-02-persidangan-perlindungan-data-peribadi-siri-1-2025-and-majli.jpg",
   "people": [
    "Jillian Chia Yan Ping",
@@ -838,7 +838,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Malaysia Cross-Border Insolvency Conference 2025",
   "date": "2025-02-25",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-02-malaysia-cross-border-insolvency-conference-2025.jpg",
   "people": [
    "Sharon Chong Tze Ying"
@@ -848,7 +848,7 @@ window.SKRINE_NEWS = [
  {
   "title": "8th International Bar Association (IBA) Asia Pacific Regional Forum Biennial Conference",
   "date": "2025-02-19",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-02-8th-international-bar-association-iba-asia-pacific-regional-.jpg",
   "people": [
    "Selvamalar Alagaratnam",
@@ -862,7 +862,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Environment, Corporations, and Private International Law in Asia Symposium",
   "date": "2025-02-06",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-02-environment-corporations-and-private-international-law-in-as.jpg",
   "people": [
    "To' Puan Janet Looi"
@@ -872,7 +872,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Equal Representation in Arbitration (ERA)",
   "date": "2025-02-05",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-02-equal-representation-in-arbitration-era.jpg",
   "people": [
    "Louise Jacqueline Azmi"
@@ -911,7 +911,7 @@ window.SKRINE_NEWS = [
  {
   "title": "International Centre for Dispute Resolution (ICDR) Malaysia Committee Launch",
   "date": "2025-01-23",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-01-international-centre-for-dispute-resolution-icdr-malaysia-co.jpg",
   "people": [
    "Louise Jacqueline Azmi"
@@ -921,7 +921,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Exploring the Path to Modern Arbitration with ICC Rules",
   "date": "2025-01-21",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-01-exploring-the-path-to-modern-arbitration-with-icc-rules.jpg",
   "people": [
    "Louise Jacqueline Azmi",
@@ -967,7 +967,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Kolej Tuanku Ja’afar (KTJ) Law Symposium and Workshop",
   "date": "2025-01-12",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-01-kolej-tuanku-jaafar-ktj-law-symposium-and-workshop.jpg",
   "people": [
    "Fariz Abdul Aziz"
@@ -977,7 +977,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Construction Law 101 Series",
   "date": "2025-01-09",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2025-01-construction-law-101-series.jpg",
   "people": [
    "Loshini Ramarmuty"
@@ -1012,7 +1012,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Flexible Work Arrangement (FWA) Guidelines",
   "date": "2024-12-05",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-12-flexible-work-arrangement-fwa-guidelines.jpg",
   "people": [
    "Selvamalar Alagaratnam",
@@ -1024,7 +1024,7 @@ window.SKRINE_NEWS = [
  {
   "title": "MSLSSL Webinar - “Unlocking the Myths of Fixed Term Contracts”",
   "date": "2024-11-29",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-11-mslssl-webinar-unlocking-the-myths-of-fixed-term-contracts.jpg",
   "people": [
    "Selvamalar Alagaratnam"
@@ -1034,7 +1034,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Addressing Key Challenges Faced by Bankruptcy Practitioners",
   "date": "2024-11-26",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-11-addressing-key-challenges-faced-by-bankruptcy-practitioners.jpg",
   "people": [
    "Trevor Jason Mark Padasian",
@@ -1045,7 +1045,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Bar Council Advocacy Training",
   "date": "2024-11-23",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-11-bar-council-advocacy-training.jpg",
   "people": [
    "Louise Jacqueline Azmi"
@@ -1055,7 +1055,7 @@ window.SKRINE_NEWS = [
  {
   "title": "14th China International Trademark & Brand Festival",
   "date": "2024-11-22",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-11-14th-china-international-trademark-and-brand-festival.jpg",
   "people": [
    "Teh Hong Koon"
@@ -1065,7 +1065,7 @@ window.SKRINE_NEWS = [
  {
   "title": "National Employment Law Conference",
   "date": "2024-11-20",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-11-national-employment-law-conference.jpg",
   "people": [
    "Foo Siew Li"
@@ -1083,7 +1083,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Regional Arbitral Institutes Forum (RAIF) Conference 2024",
   "date": "2024-11-07",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-11-regional-arbitral-institutes-forum-raif-conference-2024.jpg",
   "people": [
    "Muhammad Suhaib Ibrahim"
@@ -1093,7 +1093,7 @@ window.SKRINE_NEWS = [
  {
   "title": "MICCI Networking session",
   "date": "2024-11-07",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-11-micci-networking-session.jpg",
   "people": [
    "Foo Siew Li",
@@ -1104,7 +1104,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Society of Construction Law, Malaysia’s Webinar Series",
   "date": "2024-11-07",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-11-society-of-construction-law-malaysias-webinar-series.jpg",
   "people": [
    "Kalaiarasan Rasadurai"
@@ -1114,7 +1114,7 @@ window.SKRINE_NEWS = [
  {
   "title": "PNB Tea Talk",
   "date": "2024-10-22",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-10-pnb-tea-talk.jpg",
   "people": [
    "Louise Jacqueline Azmi"
@@ -1124,7 +1124,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Asian International Arbitration Centre (AIAC) Asia ADR Week 2024",
   "date": "2024-10-17",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-10-asian-international-arbitration-centre-aiac-asia-adr-week-20.jpg",
   "people": [],
   "summary": "Skrine was a Bronze Sponsor at the Asian International Arbitration Centre (AIAC) Asia ADR Week 2024. Our partner, Mr. Khoo Guan Huat, expertly moderated a session titled “In or Out of the (Arbitration) Orbit? Exploring Jurisdictional Issues in Intellectual Property Disputes”."
@@ -1140,7 +1140,7 @@ window.SKRINE_NEWS = [
  {
   "title": "13th Asia Privacy Bridge (APB) Forum 2024",
   "date": "2024-10-17",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-10-13th-asia-privacy-bridge-apb-forum-2024.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -1150,7 +1150,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Asia Pacific Semiconductor Summit and Expo",
   "date": "2024-10-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-10-asia-pacific-semiconductor-summit-and-expo.jpg",
   "people": [
    "Tan Wei Xian",
@@ -1161,7 +1161,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Book Launch - Judicial Review in Malaysia : Case Commentaries on Key Topics",
   "date": "2024-10-07",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-10-book-launch-judicial-review-in-malaysia-case-commentaries-on.jpg",
   "people": [
    "Foo Siew Li"
@@ -1171,7 +1171,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Junior Family Law Conference 2024",
   "date": "2024-10-04",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-10-junior-family-law-conference-2024.jpg",
   "people": [
    "Trevor Jason Mark Padasian"
@@ -1205,7 +1205,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Inter-Pacific Bar Association (IPBA) Mid-Year Council Meeting",
   "date": "2024-09-27",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-09-inter-pacific-bar-association-ipba-mid-year-council-meeting.jpg",
   "people": [],
   "summary": "Our partner, Kumar Kanagasabai, had the privilege of attending the Inter-Pacific Bar Association (IPBA) Mid-Year Council Meeting in Warsaw, Poland as the Jurisdictional Council Member for Malaysia from 27 – 29 September. The event culminated with a one-day regional conference on September 30 titled \"Asia Pacific and CEE – Far Away, So Close! Opportunities…"
@@ -1224,7 +1224,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Bankruptcy and Insolvency Course",
   "date": "2024-09-25",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-09-bankruptcy-and-insolvency-course.jpg",
   "people": [
    "Aufa Radzi"
@@ -1272,7 +1272,7 @@ window.SKRINE_NEWS = [
  {
   "title": "National Climate Governance Summit 2024",
   "date": "2024-09-11",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-09-national-climate-governance-summit-2024.jpg",
   "people": [
    "To' Puan Janet Looi",
@@ -1298,7 +1298,7 @@ window.SKRINE_NEWS = [
  {
   "title": "GIR Live: Asia-Pacific Investigations Summit 2024",
   "date": "2024-09-03",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-09-gir-live-asia-pacific-investigations-summit-2024.jpg",
   "people": [
    "Lim Koon Huan"
@@ -1308,7 +1308,7 @@ window.SKRINE_NEWS = [
  {
   "title": "INSOL International Singapore Seminar",
   "date": "2024-08-27",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-08-insol-international-singapore-seminar.jpg",
   "people": [
    "Claudia Cheah Pek Yee",
@@ -1341,7 +1341,7 @@ window.SKRINE_NEWS = [
  {
   "title": "National Chamber of Commerce and Industry of Malaysia Gala Dinner",
   "date": "2024-07-31",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-07-national-chamber-of-commerce-and-industry-of-malaysia-gala-d.jpg",
   "people": [
    "To' Puan Janet Looi",
@@ -1379,7 +1379,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Borneo ADR Week (BAW)",
   "date": "2024-07-18",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-07-borneo-adr-week-baw.jpg",
   "people": [
    "Loshini Ramarmuty"
@@ -1400,7 +1400,7 @@ window.SKRINE_NEWS = [
  {
   "title": "IEL Asia-Pacific Employment Summit",
   "date": "2024-07-03",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-07-iel-asia-pacific-employment-summit.jpg",
   "people": [
    "Selvamalar Alagaratnam",
@@ -1422,7 +1422,7 @@ window.SKRINE_NEWS = [
  {
   "title": "CBBL Deutschsprachige Wirtschaftsanw&#228;lte weltweit’s Annual Conference",
   "date": "2024-06-13",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-06-cbbl-deutschsprachige-wirtschaftsanwand-228-lte-weltweits-an.jpg",
   "people": [],
   "summary": "Our Foreign Lawyer Dr. Harald Sippel represented Skrine at CBBL Deutschsprachige Wirtschaftsanwälte weltweit’s Annual Conference, which took place in Constance at Lake Constance. During the event, Harald among others shared a panel with his colleagues from ADWA – Allianz Deutscher Wirtschaftsanwälte in Asien Christian Brendel (Vietnam), Rainer Burkardt…"
@@ -1430,7 +1430,7 @@ window.SKRINE_NEWS = [
  {
   "title": "MECA Industrial Relations Convention",
   "date": "2024-06-11",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-06-meca-industrial-relations-convention.jpg",
   "people": [
    "Foo Siew Li"
@@ -1440,7 +1440,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Skrine India Desk’s visit to Malaysian Investment Development Authority (MIDA)",
   "date": "2024-06-10",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-06-skrine-india-desks-visit-to-malaysian-investment-development.jpg",
   "people": [
    "Ashok Kumar Mahadev Ranai",
@@ -1471,7 +1471,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Key Principles in Drafting Islamic Debt and Equity Finance Documents",
   "date": "2024-05-29",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-key-principles-in-drafting-islamic-debt-and-equity-finance-d.jpg",
   "people": [],
   "summary": "Our partner, Sharifah Shafika Alsagoff participated in a seminar entitled “Key Principles in Drafting Islamic Debt and Equity Finance Documents”. The seminar, organised by The Bar Council, is on 29 May 2024 from 3.00pm – 5.00pm at the Raja Aziz Addruse Auditorium."
@@ -1479,7 +1479,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Workforce Employment Law Webinar",
   "date": "2024-05-23",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-workforce-employment-law-webinar.jpg",
   "people": [
    "Sara Lau"
@@ -1489,7 +1489,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Forum on Mental Capacity Act for Malaysia 2024",
   "date": "2024-05-21",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-forum-on-mental-capacity-act-for-malaysia-2024.jpg",
   "people": [
    "Trevor Jason Mark Padasian"
@@ -1499,7 +1499,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Adjudicators Continuing Competency Development Workshop Series",
   "date": "2024-05-17",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-adjudicators-continuing-competency-development-workshop-seri.jpg",
   "people": [
    "Loshini Ramarmuty"
@@ -1509,7 +1509,7 @@ window.SKRINE_NEWS = [
  {
   "title": "New Osha Rules: What All Workplaces Need To Know ASAP",
   "date": "2024-05-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-new-osha-rules-what-all-workplaces-need-to-know-asap.png",
   "people": [
    "Selvamalar Alagaratnam"
@@ -1519,7 +1519,7 @@ window.SKRINE_NEWS = [
  {
   "title": "IRLaw Conference",
   "date": "2024-05-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-irlaw-conference.jpg",
   "people": [
    "Foo Siew Li"
@@ -1529,7 +1529,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Construction Claims and ADR Conference Marathon 2024",
   "date": "2024-05-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-construction-claims-and-adr-conference-marathon-2024.jpg",
   "people": [],
   "summary": "The Construction Claims and ADR Conference Marathon 2024 was co-organised by L2 i-CON International and LegalPlus on 16 May 2024. The Conference brought together a lineup of distinguished moderators and speakers who shared their expertise, experiences, and insights on navigating the evolving landscape of construction disputes. Our Dispute Resolution Partner,…"
@@ -1537,7 +1537,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Property Rental and Leasing Conference",
   "date": "2024-05-15",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-property-rental-and-leasing-conference.jpg",
   "people": [],
   "summary": "Our Senior Associate, Witter Yee took the stage at the Property Rental and Leasing Conference on May 15 at Hotel Royal Signature, K.L. Witter lead a discussion on ‘Addressing Commercial Defaults and Solutions’. Attendees learnt how to tackle common leasing challenges, negotiate tenant-subtenant agreements and effectively manage commercial lease defaults."
@@ -1555,7 +1555,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Legal Sustainability Practitioner Training Course (ESG)",
   "date": "2024-05-11",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-legal-sustainability-practitioner-training-course-esg.jpg",
   "people": [],
   "summary": "Asian Institute of Alternative Dispute Resolution (AIADR) in collaboration with the United Nations Global Compact Malaysia & Brunei Academy recently hosted the Legal Sustainability Practitioner Training Course (ESG) on 11 and 12 May 2024. Our partner, Shannon Rajan, took the lead as one of the trainers, guiding participants through comprehensive insights…"
@@ -1578,7 +1578,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Women in Arbitration: How far have we come & what can we do for the future",
   "date": "2024-05-03",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-05-women-in-arbitration-how-far-have-we-come-and-what-can-we-do.jpg",
   "people": [
    "Sharon Chong Tze Ying"
@@ -1600,7 +1600,7 @@ window.SKRINE_NEWS = [
  {
   "title": "The Extra-territorial Effect of ESG Legislation From the EU: What Malaysian Lawyers Should Know?",
   "date": "2024-04-29",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-04-the-extra-territorial-effect-of-esg-legislation-from-the-eu-.jpg",
   "people": [],
   "summary": "Our Head of European Desk, Dr. Harald Sippel, conducted a seminar at the Bar Council of Malaysia entitled The extraterritorial effects of EU Law in the field of ESG. During the two-hour session, Dr. Sippel made it clear that ESG requirements in the EU ultimately force Malaysian companies in supply chains of large EU companies to comply with the ESG standards…"
@@ -1608,7 +1608,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Anti-Sexual Harassment Act: What does it mean for employers and employees",
   "date": "2024-04-29",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-04-anti-sexual-harassment-act-what-does-it-mean-for-employers-a.jpg",
   "people": [
    "Selvamalar Alagaratnam",
@@ -1619,7 +1619,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Singapore Corporate Counsel Association (SCCA) APAC Legal Congress 2024",
   "date": "2024-04-23",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-04-singapore-corporate-counsel-association-scca-apac-legal-cong.jpg",
   "people": [
    "Jillian Chia Yan Ping"
@@ -1629,7 +1629,7 @@ window.SKRINE_NEWS = [
  {
   "title": "IBA Annual Litigation Forum 2024",
   "date": "2024-04-17",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-04-iba-annual-litigation-forum-2024.jpg",
   "people": [
    "Louise Jacqueline Azmi"
@@ -1649,7 +1649,7 @@ window.SKRINE_NEWS = [
  {
   "title": "“No I in Team” – Legal Stakeholders in Arbitration",
   "date": "2024-04-04",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-04-no-i-in-team-legal-stakeholders-in-arbitration.jpg",
   "people": [
    "Louise Jacqueline Azmi"
@@ -1659,7 +1659,7 @@ window.SKRINE_NEWS = [
  {
   "title": "BIM – AIAC Summit on Appropriate Dispute Resolution",
   "date": "2024-03-15",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-03-bim-aiac-summit-on-appropriate-dispute-resolution.jpg",
   "people": [],
   "summary": "Balai ikhtisas Malaysia (BIM) in collaboration with the AIAC recently hosted the “BIM – AIAC Summit on Appropriate Dispute Resolution.” Our partners, Shannon Rajan explored the various avenues of appropriate dispute resolution methods such as litigation and arbitration, further highlighting that mediation may be used as a risk management tool while Hemalatha…"
@@ -1678,7 +1678,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Legal Executive Apprentice Program 2024 (LEAP)",
   "date": "2024-03-08",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-03-legal-executive-apprentice-program-2024-leap.jpg",
   "people": [
    "Joshua Teoh Beni Chris",
@@ -1689,7 +1689,7 @@ window.SKRINE_NEWS = [
  {
   "title": "The Jonathan Yoon Debate Series",
   "date": "2024-02-29",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-02-the-jonathan-yoon-debate-series.png",
   "people": [
    "Sharon Chong Tze Ying"
@@ -1699,7 +1699,7 @@ window.SKRINE_NEWS = [
  {
   "title": "CPD Legal Learning Lab | Companies (Amendment) Bill 2023: Corporate Rescue Mechanisms, “Restructured”",
   "date": "2024-02-22",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-02-cpd-legal-learning-lab-companies-amendment-bill-2023-corpora.jpg",
   "people": [],
   "summary": "Our dispute resolution partner, Janice Ooi paticipated in ’Companies (Amendment) Bill 2023: Corporate Rescue Mechanisms, “Restructured”’ - a talk organised by the Malaysian Bar Council. Janice discussed key amendments to the restructuring and insolvency provisions which are soon to be introduced by the Companies (Amendment) Bill 2023, and offered her insight…"
@@ -1735,7 +1735,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Official Launch of AIAC Islamic Standard Form of Building Contract (i-SFC) 2024",
   "date": "2024-01-18",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-01-official-launch-of-aiac-islamic-standard-form-of-building-co.jpg",
   "people": [
    "Mubashir Mansor"
@@ -1745,7 +1745,7 @@ window.SKRINE_NEWS = [
  {
   "title": "Mediation Seminar by the Malaysian International Mediation Centre (MIMC)",
   "date": "2024-01-16",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2024-01-mediation-seminar-by-the-malaysian-international-mediation-c.jpg",
   "people": [],
   "summary": "Our Foreign Lawyer Dr. Harald Sippel spoke on the suitability and usefulness of mediation in supply chain disputes at the Malaysian International Mediation Centre’s seminar. Sharing the stage with Shanti Abraham, Sujatha Sekhar Naik, Tony Ngyen and Shannon Rajan, Harald focused highlighted that in an ESG supply chain dispute, there are typically many…"

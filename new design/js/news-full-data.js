@@ -11,7 +11,7 @@ window.SKRINE_NEWS_FULL = {
   "slug": "mybar-academy-x-working-committee-of-huangpu-lawyers-training-programme",
   "title": "MyBar Academy X Working Committee of Huangpu Lawyers Training Programme",
   "date": "2026-07-07",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-07-mybar-academy-x-working-committee-of-huangpu-lawyers-trainin.jpg",
   "people": [
    "To' Puan Janet Looi",
@@ -46,7 +46,7 @@ window.SKRINE_NEWS_FULL = {
   "slug": "fire-international-vilamoura",
   "title": "FIRE International: Vilamoura",
   "date": "2026-05-19",
-  "category": "Speaking & Events",
+  "category": "Speaking Events",
   "image": "2026-05-fire-international-vilamoura.png",
   "people": [
    "Aufa Radzi"

@@ -469,30 +469,169 @@
     });
   }
 
-  /* ---------- in the news ---------- */
-  var mine = NEWS.filter(function (n) { return (n.people || []).indexOf(P.name) > -1 || (entry.person.name && n.people.indexOf(entry.person.name) > -1); }).slice(0, 3);
-  if (mine.length) {
-    var nw = section("news", "In the news", "Latest from " + P.name);
-    var ng = el("div", "pf-news");
-    mine.forEach(function (n) {
+  /* ---------- in the news: a self-moving carousel ----------
+     Only publications, articles (alerts) and speaking engagements / SkrineCast that name this
+     person, newest first (no awards, firm news or community posts).
+     Data: js/publications-data.js, js/alerts-data.js, js/news-data.js
+     (+ js/alerts-full-data.js, js/news-full-data.js for links, js/topic-images.js for alert photos). */
+  var NEWS_MAX = 10;
+  var STOP = { bin: 1, binti: 1, to: 1, puan: 1, dato: 1, sri: 1 };
+  function nameTokens(n) { return String(n).toLowerCase().replace(/[’'.]/g, "").split(/[^a-z]+/).filter(function (t) { return t && !STOP[t]; }); }
+  // the same person: every part of the shorter name appears in the longer one ("Charmayne Ong" / "Charmayne Ong Poh Yin")
+  function samePerson(a, b) {
+    var x = nameTokens(a), y = nameTokens(b);
+    var s = x.length <= y.length ? x : y, l = s === x ? y : x;
+    return s.length > 1 && s.every(function (t) { return l.indexOf(t) > -1; });
+  }
+  var myNames = [P.name, entry && entry.person && entry.person.name].filter(Boolean);
+  function isMe(n) { return myNames.some(function (m) { return samePerson(m, n); }); }
+  function linkSlug(s) { return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80).replace(/-$/, ""); }
+  var ALERTS_FULL = window.SKRINE_ALERTS_FULL || {}, NEWS_FULL = window.SKRINE_NEWS_FULL || {};
+
+  var feed = [];
+  (window.SKRINE_PUBLICATIONS || []).forEach(function (p) {
+    if (!(p.authors || []).some(isMe)) return;
+    feed.push({ type: "Publication", date: p.date, title: p.title, sub: p.publisher || "",
+      img: p.cover ? "images/publications/" + p.cover : "", cover: true,
+      href: p.pdf || "publications.html?q=" + encodeURIComponent(p.title), ext: !!p.pdf });
+  });
+  (window.SKRINE_ALERTS || []).forEach(function (a) {
+    if (!a.authors || !a.authors.split(/,\s*|\s+and\s+|\s*&\s*/).some(isMe)) return;
+    var s = linkSlug(a.title);
+    feed.push({ type: "Article", date: a.date, title: a.title, sub: a.label || a.topic || "",
+      img: window.SkrineTopicImage ? window.SkrineTopicImage(a.topic, a.title, a.practice) : "",
+      href: ALERTS_FULL[s] ? "alert.html?a=" + encodeURIComponent(s) : "alerts.html?q=" + encodeURIComponent(a.title) });
+  });
+  NEWS.forEach(function (n) {
+    if (!/^(Speaking Events|SkrineCast)$/.test(n.category) || !(n.people || []).some(isMe)) return;
+    var s = linkSlug(n.title);
+    feed.push({ type: n.category === "SkrineCast" ? "SkrineCast" : "Speaking", date: n.date, title: n.title, sub: "",
+      img: n.image ? (/^(https?:)?\/\//.test(n.image) ? n.image : "images/news/" + encodeURIComponent(n.image)) : "",
+      href: NEWS_FULL[s] ? "news.html?n=" + encodeURIComponent(s) : "news-events.html" });
+  });
+  feed.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+  feed = feed.slice(0, NEWS_MAX);
+
+  if (feed.length) {
+    var nw = section("news", "In the news", "Publications & speaking");
+    var car = el("div", "pf-car");
+    car.setAttribute("aria-roledescription", "carousel");
+    car.setAttribute("aria-label", "Publications and speaking engagements");
+    var ctr = el("div", "pf-car-controls");
+    var prev = el("button", "pf-car-btn"); prev.type = "button"; prev.setAttribute("aria-label", "Previous"); prev.appendChild(icon("fa-solid fa-arrow-left"));
+    var next = el("button", "pf-car-btn"); next.type = "button"; next.setAttribute("aria-label", "Next"); next.appendChild(icon("fa-solid fa-arrow-right"));
+    ctr.appendChild(prev);
+    ctr.appendChild(next);
+    // the arrows sit under the section heading (left column), clear of the sticky profile menu
+    var newsSec = nw.parentNode;
+    newsSec.querySelector(".pf-section-head").appendChild(ctr);
+    var track = el("div", "pf-car-track");
+    feed.forEach(function (it, i) {
       var a = el("a", "pf-news-card");
-      a.href = "news-events.html";
-      var media = el("span", "pf-news-media");
-      if (n.image) {
-        var img = el("img");
-        img.src = /^(https?:)?\/\//.test(n.image) ? n.image : "images/news/" + encodeURIComponent(n.image);
-        img.alt = "";
-        img.loading = "lazy";
-        media.appendChild(img);
-      }
+      a.href = it.href;
+      if (it.ext) { a.target = "_blank"; a.rel = "noopener"; }
+      a.setAttribute("aria-label", it.type + ": " + it.title + " (" + (i + 1) + " of " + feed.length + ")");
+      var media = el("span", "pf-news-media" + (it.cover ? " is-cover" : ""));
+      var img = el("img");
+      img.src = it.img || "images/hero-palette.jpg";
+      img.alt = "";
+      img.loading = "lazy";
+      img.addEventListener("error", function () { img.src = "images/hero-palette.jpg"; media.classList.remove("is-cover"); });
+      media.appendChild(img);
+      media.appendChild(el("span", "pf-news-type pf-news-type--" + it.type.toLowerCase(), it.type));
       a.appendChild(media);
       var b = el("span", "pf-news-body");
-      b.appendChild(el("span", "pf-news-meta", n.category + " · " + fmtDate(n.date)));
-      b.appendChild(el("span", "pf-news-title", n.title));
+      b.appendChild(el("span", "pf-news-meta", fmtDate(it.date) + (it.sub ? " · " + it.sub : "")));
+      b.appendChild(el("span", "pf-news-title", it.title));
+      var more = el("span", "pf-news-more", it.type === "Publication" ? "Read publication " : "Read more ");
+      more.appendChild(icon("fa-solid fa-arrow-right"));
+      b.appendChild(more);
       a.appendChild(b);
-      ng.appendChild(a);
+      track.appendChild(a);
     });
-    nw.appendChild(ng);
+    car.appendChild(track);
+    var foot = el("div", "pf-car-foot");
+    var dots = el("div", "pf-car-dots");
+    foot.appendChild(dots);
+    foot.appendChild(el("p", "pf-src-note", "Content from skrine.com, shown for design review."));
+    car.appendChild(foot);
+    nw.appendChild(car);
+
+    // one card per step; dots show the position
+    var step = function () { var c = track.firstElementChild; return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : track.clientWidth; };
+    var maxLeft = function () { return track.scrollWidth - track.clientWidth; };
+    var positions = function () { return Math.max(1, Math.round(maxLeft() / step()) + 1); };
+    var at = function () { return Math.min(positions() - 1, Math.round(track.scrollLeft / step())); };
+    // an eased glide; snapping is off while it runs
+    var anim = 0;
+    var glide = function (left, dur) {
+      cancelAnimationFrame(anim);
+      var from = track.scrollLeft, to = Math.max(0, Math.min(left, maxLeft()));
+      if (Math.abs(to - from) < 2) return;
+      var t0 = performance.now(), d = dur || 800;
+      var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+      track.style.scrollSnapType = "none";
+      (function frame(now) {
+        var t = Math.min(1, (now - t0) / d);
+        track.scrollLeft = from + (to - from) * ease(t);
+        if (t < 1) anim = requestAnimationFrame(frame); else track.style.scrollSnapType = "";
+      })(t0);
+    };
+    var goTo = function (i) { glide(i * step()); };
+    var sync = function () {
+      var n = positions(), c = at();
+      if (dots.children.length !== n) {
+        dots.textContent = "";
+        for (var i = 0; i < n; i++) (function (i) {
+          var d = el("button", "pf-car-dot");
+          d.type = "button";
+          d.setAttribute("aria-label", "Go to item " + (i + 1));
+          d.addEventListener("click", function () { goTo(i); restart(); });
+          dots.appendChild(d);
+        })(i);
+      }
+      Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle("is-current", i === c); });
+      prev.disabled = track.scrollLeft < 4;
+      next.disabled = track.scrollLeft > maxLeft() - 4;
+      newsSec.classList.toggle("is-static", maxLeft() < 4);
+    };
+    prev.addEventListener("click", function () { goTo(Math.max(0, at() - 1)); restart(); });
+    next.addEventListener("click", function () { goTo(Math.min(positions() - 1, at() + 1)); restart(); });
+    var raf = 0;
+    track.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+    window.addEventListener("resize", sync);
+    requestAnimationFrame(sync);
+
+    // moves on by itself: pauses on hover, keyboard focus, touch, off screen, hidden tab; never with reduced motion
+    var EVERY = 1500, timer = 0, touchT = 0;
+    var hold = { hover: false, focus: false, touch: false, away: true };
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function restart() {
+      clearInterval(timer);
+      if (reduce) return;
+      timer = setInterval(function () {
+        if (hold.hover || hold.focus || hold.touch || hold.away || document.hidden || newsSec.classList.contains("is-static")) return;
+        if (track.scrollLeft > maxLeft() - 4) glide(0, 1000);
+        else glide((at() + 1) * step(), 650);
+      }, EVERY);
+    }
+    car.addEventListener("mouseenter", function () { hold.hover = true; });
+    car.addEventListener("mouseleave", function () { hold.hover = false; restart(); });
+    car.addEventListener("focusin", function () { hold.focus = true; });
+    car.addEventListener("focusout", function () { hold.focus = false; });
+    ["touchstart", "wheel", "pointerdown"].forEach(function (ev) {
+      track.addEventListener(ev, function () {
+        cancelAnimationFrame(anim);
+        track.style.scrollSnapType = "";
+        hold.touch = true;
+        clearTimeout(touchT);
+        touchT = setTimeout(function () { hold.touch = false; }, 6000);
+      }, { passive: true });
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (en) { hold.away = !en[0].isIntersecting; }, { threshold: 0.4 }).observe(track);
+    } else hold.away = false;
+    restart();
   }
 
   /* ---------- contact band + more profiles ---------- */
