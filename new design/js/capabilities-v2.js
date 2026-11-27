@@ -276,11 +276,11 @@
   function disputesLink(x) {
     var a = el("a", "cv2-dlink");
     a.href = disputesUrl(x.slug);
-    a.appendChild(el("span", "cv2-dlink-label", "See also · Disputes"));
+    a.appendChild(el("span", "cv2-dlink-label", "Disputes · a separate team"));
     var t = el("span", "cv2-dlink-title", x.title + " ");
     t.appendChild(icon("fa-solid fa-arrow-right"));
     a.appendChild(t);
-    a.appendChild(el("span", "cv2-dlink-text", "Our disputes team and experience in this area."));
+    a.appendChild(el("span", "cv2-dlink-text", "Contentious matters in this area are handled by our disputes team. See its partners and work."));
     return a;
   }
   function others(root, label, items, current, url) {
@@ -305,16 +305,19 @@
       ov.appendChild(el("h2", "pa-section-title", overviewTitle || "Overview"));
       page.intro.forEach(function (p) { ov.appendChild(el("p", "pa-overview-text", p)); });
     }
+    // the Disputes link sits under the overview, away from the Key Contacts, so it reads as
+    // a separate team (its own partners are on its own page)
+    side.forEach(function (n) { if (n) { n.classList.add("cv2-dlink--card"); ov.appendChild(n); } });
     cols.appendChild(show(ov));
-    // the side column: Key Contacts in their own box, the Disputes link as a separate card below
+    // the side column: this page's own Key Contacts, named after the page
     var aside = el("aside", "cv2-side reveal");
     if (page.contacts.length) {
       var box = el("div", "pa-team-box");
+      box.appendChild(el("p", "cv2-team-for", page.title));
       box.appendChild(el("h2", "pa-section-title", "Key Contacts"));
       box.appendChild(teamList(page.contacts));
       aside.appendChild(box);
     }
-    side.forEach(function (n) { if (n) aside.appendChild(n); });
     if (aside.children.length) cols.appendChild(show(aside));
     else cols.classList.add("cv2-cols--single");
     root.appendChild(cols);
@@ -632,24 +635,384 @@
 
   /* ---------- practice area / disputes page ---------- */
   /* ---------- Selected Matters + Insights (practice area / disputes pages, after "Our Work")
-     Matters:  js/practice-deals.js (Transaction News), by the old practice slugs below.
-     Insights: js/alerts-data.js + js/publications-data.js, by practice / topic names below.
-     Styles:   css/capabilities-v2.css (.cv2-matters, .cv2-ins). ---------- */
+     Both are carousels (carousel() below), each with a small note saying where the content is from.
+     Matters:  the "Selected matters" on the page's Key Contacts' profiles (js/profiles-data.js,
+               from skrine.com), kept to the profile headings that fit this page (MATTER_AREAS);
+               no deal values. Falls back to Transaction News titles, then to example text.
+     Insights: js/alerts-data.js + js/publications-data.js, by practice / topic names (INSIGHT_KEYS).
+     Styles:   css/capabilities-v2.css (.cv2-car, .cv2-mt, .cv2-ins). ---------- */
+  var PROFILES = window.SKRINE_PROFILES || {};
   var DEALS = window.SKRINE_PRACTICE_DEALS || [];
   var ALERTS = window.SKRINE_ALERTS || [];
   var PUBS = window.SKRINE_PUBLICATIONS || [];
   var FULL = window.SKRINE_ALERTS_FULL || {};
-  var MATTER_KEYS = {
-    "corporate-and-commercial": ["corporate"],
-    "mergers-and-acquisitions": ["corporate"],
-    "real-estate": ["real-estate"],
-    "construction-engineering-projects-and-infrastructure": ["construction-and-engineering"],
-    "employment": ["employment"],
-    "banking-and-finance": ["banking-and-finance"],
-    "intellectual-property": ["intellectual-property-and-tmt"],
-    "technology-media-and-telecommunications-tmt": ["intellectual-property-and-tmt"],
-    "restructuring-and-insolvency": ["restructuring-and-insolvency"]
+  var MONTHS_S = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function shortDate(iso) { var p = String(iso).split("-"); return Number(p[2]) + " " + MONTHS_S[Number(p[1]) - 1] + " " + p[0]; }
+  // same rule as js/alerts.js, for the alert.html?a= links
+  function alertSlug(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80).replace(/-$/, "");
+  }
+
+  /* a carousel section: heading + arrows, a scroll-snapped track, page dots, a source note */
+  function carousel(cls, title, cards, note, opts) {
+    var sec = el("section", "cv2-car " + cls + " reveal");
+    sec.setAttribute("aria-roledescription", "carousel");
+    sec.setAttribute("aria-label", title);
+    var head = el("div", "pa-related-head cv2-car-head");
+    head.appendChild(el("h2", "pa-section-title", title));
+    var ctr = el("div", "cv2-car-controls");
+    var prev = el("button", "cv2-car-btn"); prev.type = "button"; prev.setAttribute("aria-label", "Previous"); prev.appendChild(icon("fa-solid fa-arrow-left"));
+    var next = el("button", "cv2-car-btn"); next.type = "button"; next.setAttribute("aria-label", "Next"); next.appendChild(icon("fa-solid fa-arrow-right"));
+    ctr.appendChild(prev);
+    ctr.appendChild(next);
+    head.appendChild(ctr);
+    sec.appendChild(head);
+    var track = el("div", "cv2-car-track");
+    cards.forEach(function (c) { track.appendChild(c); });
+    sec.appendChild(track);
+    var foot = el("div", "cv2-car-foot");
+    var dots = el("div", "cv2-car-dots");
+    foot.appendChild(dots);
+    if (note) foot.appendChild(el("p", "cv2-src-note", note));
+    sec.appendChild(foot);
+
+    // one "page" = as many cards as fit; the arrows and dots move a page at a time
+    function step() {
+      var c = track.firstElementChild;
+      return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : track.clientWidth;
+    }
+    function perPage() { return Math.max(1, Math.floor((track.clientWidth + 2) / step())); }
+    function pages() { return Math.max(1, Math.ceil((cards.length - perPage()) / perPage()) + 1); }
+    function current() {
+      if (track.scrollLeft + track.clientWidth > track.scrollWidth - 4) return pages() - 1;
+      return Math.min(pages() - 1, Math.round(track.scrollLeft / (step() * perPage())));
+    }
+    // an eased glide (smoother than the browser's own smooth scroll); snapping is off while it runs
+    var anim = 0;
+    function glide(left, dur) {
+      cancelAnimationFrame(anim);
+      var from = track.scrollLeft, to = Math.max(0, Math.min(left, track.scrollWidth - track.clientWidth));
+      if (Math.abs(to - from) < 2) return;
+      var t0 = performance.now(), d = dur || 900;
+      var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+      track.style.scrollSnapType = "none";
+      (function frame(now) {
+        var t = Math.min(1, (now - t0) / d);
+        track.scrollLeft = from + (to - from) * ease(t);
+        if (t < 1) anim = requestAnimationFrame(frame);
+        else track.style.scrollSnapType = "";
+      })(t0);
+    }
+    function stopGlide() { cancelAnimationFrame(anim); track.style.scrollSnapType = ""; }
+    function goTo(p) { glide(p * step() * perPage()); }
+    function sync() {
+      var n = pages(), c = current();
+      if (dots.children.length !== n) {
+        dots.textContent = "";
+        for (var i = 0; i < n; i++) (function (i) {
+          var b = el("button", "cv2-car-dot");
+          b.type = "button";
+          b.setAttribute("aria-label", "Go to page " + (i + 1));
+          b.addEventListener("click", function () { goTo(i); });
+          dots.appendChild(b);
+        })(i);
+      }
+      Array.prototype.forEach.call(dots.children, function (b, i) { b.classList.toggle("is-current", i === c); });
+      var atStart = track.scrollLeft < 4, atEnd = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
+      prev.disabled = atStart;
+      next.disabled = atEnd;
+      sec.classList.toggle("is-static", atStart && atEnd);
+    }
+    prev.addEventListener("click", function () { goTo(Math.max(0, current() - 1)); });
+    next.addEventListener("click", function () { goTo(Math.min(pages() - 1, current() + 1)); });
+    var raf = 0;
+    track.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+    window.addEventListener("resize", sync);
+    requestAnimationFrame(sync);
+
+    /* autoplay (opts.autoplay = ms between moves): one card at a time, back to the start at the
+       end; pauses on hover, keyboard focus, touch, while off screen or the tab is hidden,
+       and never runs for people who ask for reduced motion */
+    var every = opts && opts.autoplay;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (every && !reduce) {
+      var hold = { hover: false, focus: false, touch: false, away: true }, timer = 0, touchTimer = 0;
+      var held = function () { return hold.hover || hold.focus || hold.touch || hold.away || document.hidden; };
+      var tick = function () {
+        if (held() || sec.classList.contains("is-static")) return;
+        var atEnd = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
+        if (atEnd) glide(0, 1400);
+        else glide(Math.round((track.scrollLeft + step()) / step()) * step(), 800);
+      };
+      var restart = function () { clearInterval(timer); timer = setInterval(tick, every); };
+      sec.addEventListener("mouseenter", function () { hold.hover = true; sec.classList.add("is-paused"); });
+      sec.addEventListener("mouseleave", function () { hold.hover = false; sec.classList.remove("is-paused"); restart(); });
+      sec.addEventListener("focusin", function () { hold.focus = true; });
+      sec.addEventListener("focusout", function () { hold.focus = false; restart(); });
+      // a swipe or wheel takes over; autoplay comes back a few seconds later
+      ["touchstart", "wheel", "pointerdown"].forEach(function (ev) {
+        track.addEventListener(ev, function () {
+          stopGlide();
+          hold.touch = true;
+          clearTimeout(touchTimer);
+          touchTimer = setTimeout(function () { hold.touch = false; restart(); }, 6000);
+        }, { passive: true });
+      });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (en) { hold.away = !en[0].isIntersecting; if (!hold.away) restart(); }, { threshold: 0.4 }).observe(track);
+      } else hold.away = false;
+      prev.addEventListener("click", restart);
+      next.addEventListener("click", restart);
+      restart();
+    }
+    return show(sec);
+  }
+
+  /* ---------- Selected Matters ---------- */
+  // which profile "Selected matters" headings belong on each page (matched against the heading)
+  var MATTER_AREAS = {
+    "arbitration-and-alternative-dispute-resolution": /arbitrat|adjudicat|mediat/i,
+    "banking-and-finance": /banking|finance/i,
+    "competition-and-antitrust": /competition/i,
+    "constitutional-and-administrative-law": /public law|administrative|constitution/i,
+    "construction-engineering-projects-and-infrastructure": /construction|projects|infrastructure|government contracts/i,
+    "corporate-and-commercial": /corporate (advisory|and commercial$)|company law|corporate restructuring/i,
+    "employment": /employ|workplace|occupational|immigration/i,
+    "environmental-social-and-governance-esg": /environment/i,
+    "family-law": /family|probate/i,
+    "fraud-and-asset-recovery": /fraud|asset recovery/i,
+    "insurance-and-reinsurance": /insurance/i,
+    "intellectual-property": /\bip\b|intellectual|brand|trade ?mark|patent/i,
+    "international-trade": /trade remed|anti-dumping|customs/i,
+    "investigations": /investigat|bribery|corruption/i,
+    "mergers-and-acquisitions": /merger|acquisitions(?! and disposal)/i,
+    "oil-gas-and-energy": /energy|oil/i,
+    "privacy-and-data-protection": /privacy|data/i,
+    "professional-liability-and-indemnity": /negligence|professional/i,
+    "real-estate": /real estate|land|strata|tenancy|rates/i,
+    "regulatory-compliance-and-white-collar-defence": /regulat|bribery|corruption|white collar/i,
+    "restructuring-and-insolvency": /restructur|insolven/i,
+    "tax-and-revenue": /\btax/i,
+    "technology-media-and-telecommunications-tmt": /technology|telecom|media|entertainment/i
   };
+  var CONTENTIOUS = /litigation|disput|arbitrat|adjudicat|cases|enforcement|defence|negligence/i;
+  // some profile text still carries HTML entities (e.g. "&pound;")
+  var decoder = document.createElement("textarea");
+  function decode(s) { if (String(s).indexOf("&") < 0) return s; decoder.innerHTML = s; return decoder.value; }
+  var PROFILE_LIST = Object.keys(PROFILES).map(function (k) { return PROFILES[k]; });
+  // the page's matters, from the "Selected matters" headings on lawyer profiles that fit this page
+  function mattersFor(page, isDisputes, parentSlug) {
+    var re = MATTER_AREAS[page.slug] || MATTER_AREAS[parentSlug];
+    var anyKind = page.kind === "disputes-only" || page.slug === "arbitration-and-alternative-dispute-resolution";
+    function fits(area) {
+      if (!re) return isDisputes && CONTENTIOUS.test(area);
+      if (!re.test(area)) return false;
+      if (isDisputes) return CONTENTIOUS.test(area);     // a disputes page: the contentious headings
+      return anyKind || !CONTENTIOUS.test(area);          // an advisory page: the non-contentious ones
+    }
+    var out = [], seen = {};
+    function take(p) {
+      if (!p) return;
+      (p.experience || []).forEach(function (e) {
+        if (!fits(e.area)) return;
+        e.matters.forEach(function (m) {
+          var key = m.slice(0, 80);
+          if (seen[key]) return;
+          seen[key] = 1;
+          out.push({ text: decode(m), area: decode(e.area), who: p.name, slug: p.slug });
+        });
+      });
+    }
+    // every lawyer's profile, not the page's contacts first
+    PROFILE_LIST.forEach(take);
+    // mix the sources so one profile's matters do not fill the carousel
+    var byWho = {};
+    out.forEach(function (m) { (byWho[m.who] = byWho[m.who] || []).push(m); });
+    var mixed = [], lists = Object.keys(byWho).map(function (k) { return byWho[k]; });
+    for (var i = 0; mixed.length < out.length; i++) lists.forEach(function (l) { if (l[i]) mixed.push(l[i]); });
+    return mixed.slice(0, 12);
+  }
+  var EXAMPLE_MATTERS = [
+    "Advised a regional client on a cross-border matter in this practice area, from structuring through to completion.",
+    "Acted for a listed company on a significant transaction, including regulatory approvals and documentation.",
+    "Represented a multinational group in proceedings arising from this practice area, at first instance and on appeal.",
+    "Advised a financial institution on its obligations and risk under new legislation affecting this practice area."
+  ];
+
+  // a short title for a matter, from what it is about (first rule that matches)
+  var MATTER_TITLES = [
+    [/syndicated/i, "Syndicated Loan Facility"],
+    [/sukuk/i, "Sukuk Issuance"],
+    [/\bbonds?\b|medium term notes|notes programme/i, "Bond Issuance"],
+    [/initial public offering|\bIPO\b|listing on the main market/i, "IPO and Listing"],
+    [/refinanc/i, "Refinancing"],
+    [/islamic (bank|financ)|shariah|syariah|murabahah|ijarah|tawarruq|musharakah/i, "Islamic Financing"],
+    [/revolving credit|borrowing base/i, "Revolving Credit Facility"],
+    [/term loan/i, "Term Loan Facility"],
+    [/rights issue|placement of|new ordinary shares/i, "Equity Fundraising"],
+    [/private equity/i, "Private Equity Investment"],
+    [/joint venture/i, "Joint Venture"],
+    [/share subscription|subscription (of|for) (new )?shares/i, "Share Subscription"],
+    [/take-?over|general offer/i, "Takeover Offer"],
+    [/merger/i, "Merger"],
+    [/land acquisition|acquisitions? of (approximately )?[\d,]+ acres|compulsory acquisition/i, "Land Acquisition"],
+    [/acquisition of (a |an )?[\d.]+\s?(%|percent|per cent)|stake in/i, "Stake Acquisition"],
+    [/acquisition|acquire/i, "Acquisition"],
+    [/disposal|divest/i, "Disposal"],
+    [/anti-dumping|countervailing|safeguard/i, "Trade Remedies Investigation"],
+    [/judicial review/i, "Judicial Review"],
+    [/adjudicat|cipaa/i, "Construction Adjudication"],
+    [/uncitral|\bicc\b|\bsiac\b|\baiac\b|international arbitration/i, "International Arbitration"],
+    [/arbitrat/i, "Arbitration"],
+    [/restraining order|scheme of arrangement|debt restructur/i, "Debt Restructuring"],
+    [/restructur/i, "Restructuring"],
+    [/winding[- ]up|liquidat|insolven|receiver/i, "Insolvency Proceedings"],
+    [/trade ?mark|passing off/i, "Trademark Dispute"],
+    [/copyright/i, "Copyright Infringement"],
+    [/industrial design/i, "Industrial Design"],
+    [/patent/i, "Patent Matter"],
+    [/franchis/i, "Franchising"],
+    [/licen[cs]e agreement|licensing/i, "Licensing Arrangement"],
+    [/personal data|data protection|privacy/i, "Data Protection"],
+    [/telecommunication|spectrum|communications and multimedia/i, "Telecoms Regulation"],
+    [/competition|cartel|mycc/i, "Competition Law"],
+    [/trade union|collective agreement/i, "Industrial Relations"],
+    [/dismiss|employ|industrial court/i, "Employment Matter"],
+    [/negligen/i, "Negligence Claim"],
+    [/defamat|libel/i, "Defamation"],
+    [/fraud|misappropriat|asset recovery|tracing/i, "Fraud and Asset Recovery"],
+    [/corrupt|bribe|macc/i, "Anti-Corruption"],
+    [/insur|takaful/i, "Insurance and Takaful"],
+    [/\btax|stamp duty/i, "Tax Matter"],
+    [/tenan|lease/i, "Lease and Tenancy"],
+    [/strata|management corporation/i, "Strata Management"],
+    [/solar|renewable|power plant|hydro/i, "Renewable Energy Project"],
+    [/\boil\b|\bgas\b|petroleum|energy/i, "Oil, Gas and Energy"],
+    [/construction|contractor|infrastructure|highway|railway/i, "Construction Project"],
+    [/financ|loan|facilit(y|ies)|lender/i, "Financing"],
+    [/development of|developer/i, "Property Development"],
+    [/environment/i, "Environmental Matter"],
+    [/aircraft|aviation|air carrier|airline/i, "Aviation"],
+    [/\bipp\b|\d\s?mw\b|power station/i, "Power Project"],
+    [/concession/i, "Concession"],
+    [/due diligence/i, "Due Diligence"],
+    [/hotel|hospitality|resort/i, "Hospitality"],
+    [/shareholder/i, "Shareholder Dispute"],
+    [/acquitt|charge[ds]? (under|on|for)|prosecut/i, "Regulatory Defence"],
+    [/investigat|inquiry/i, "Investigation"],
+    [/sale of|purchase price/i, "Sale and Purchase"],
+    [/investment/i, "Investment"],
+    [/breach of contract/i, "Contract Dispute"],
+    [/agreement/i, "Commercial Agreements"],
+    [/setting aside|enforcement proceedings|enforce/i, "Enforcement Proceedings"],
+    [/debt recovery|recover/i, "Debt Recovery"],
+    [/regulat|licen[cs]/i, "Regulatory Advice"],
+    [/court|appeal|suit|proceedings|dispute|claim/i, "Litigation"]
+  ];
+  // rules for matters under a given profile heading, tried before the general ones,
+  // so (say) an employment matter on a takeover reads as employment work
+  var AREA_TITLES = [
+    [/(banking|finance).*(litigation|disput)/i, [
+      [/guarant/i, "Guarantee Claim"],
+      [/winding[- ]up|insolven|liquidat|receiver|restraining order/i, "Insolvency Proceedings"],
+      [/islamic|syariah|shariah|\bbba\b|bai bithaman/i, "Islamic Finance Dispute"],
+      [/foreclos|auction|charge|security|debenture/i, "Enforcement of Security"],
+      [/fraud|forg|misappropriat/i, "Banking Fraud Claim"],
+      [/recover|default|repay|outstanding/i, "Debt Recovery Action"],
+      [/./, "Banking Litigation"]
+    ]],
+    [/employ|workplace|industrial relations|occupational|immigration/i, [
+      [/retrench|redundan|voluntary separation|\bvss\b|mutual separation/i, "Retrenchment Exercise"],
+      [/trade union|collective agreement|union/i, "Industrial Relations"],
+      [/harass/i, "Workplace Harassment"],
+      [/misconduct|domestic inquiry|investigat/i, "Workplace Investigation"],
+      [/dismiss|termination|industrial court/i, "Dismissal Claim"],
+      [/work pass|work permit|expatriate|immigration|foreign worker/i, "Work Passes"],
+      [/bonus|remuneration|salary|wage|benefit|pension|retirement/i, "Pay and Benefits"],
+      [/non-?compet|restraint|restrictive covenant|confidential/i, "Restrictive Covenants"],
+      [/handbook|polic(y|ies)|contracts? of employment|employment contract/i, "Employment Policies"],
+      [/acquisition|merger|takeover|transfer of (business|employees)|due diligence|listing|bond/i, "Employment Aspects of a Transaction"],
+      [/./, "Employment Advisory"]
+    ]],
+    [/\bip\b|intellectual|trade ?mark|patent|brand|copyright|franchis/i, [
+      [/trade ?mark|passing off/i, "Trademark Protection"],
+      [/patent/i, "Patent Matter"],
+      [/copyright/i, "Copyright"],
+      [/franchis/i, "Franchising"],
+      [/licen[cs]/i, "IP Licensing"],
+      [/counterfeit|raid|trade description/i, "Anti-Counterfeiting"],
+      [/./, "Intellectual Property"]
+    ]],
+    [/real estate|land|strata|tenan|rates|valuation/i, [
+      [/rates|assessment|valuation/i, "Rates and Valuation"],
+      [/strata|management corporation/i, "Strata Management"],
+      [/tenan|lease/i, "Lease and Tenancy"],
+      [/acquisition of .*land|land acquisition|acres/i, "Land Acquisition"],
+      [/joint venture|development/i, "Property Development"],
+      [/sale|purchase|dispos|acquisition/i, "Property Transaction"],
+      [/./, "Real Estate Advisory"]
+    ]]
+  ];
+  function matterTitle(text, area, fallback) {
+    // a reported case ("A v B [2015] 1 LNS 1140"): "Reported Case, 2015"
+    var c = String(text).match(/\s(?:v|lwn)\.?\s.+?\[(\d{4})\]/i);
+    if (c) return "Reported Case, " + c[1];
+    var i, set = AREA_TITLES.filter(function (a) { return a[0].test(area || ""); })[0];
+    if (set) for (i = 0; i < set[1].length; i++) if (set[1][i][0].test(text)) return set[1][i][1];
+    for (i = 0; i < MATTER_TITLES.length; i++) if (MATTER_TITLES[i][0].test(text)) return MATTER_TITLES[i][1];
+    return fallback || "Advisory Mandate";
+  }
+  // order the cards so the same title does not show twice in a row where it can be avoided
+  function spreadTitles(list) {
+    var groups = {}, order = [];
+    list.forEach(function (m) { if (!groups[m.title]) { groups[m.title] = []; order.push(m.title); } groups[m.title].push(m); });
+    var out = [], last = null;
+    while (out.length < list.length) {
+      // the largest group that is not the last one used
+      var pick = order.filter(function (t) { return groups[t].length && t !== last; })
+        .sort(function (a, b) { return groups[b].length - groups[a].length; })[0]
+        || order.filter(function (t) { return groups[t].length; })[0];
+      out.push(groups[pick].shift());
+      last = pick;
+    }
+    return out;
+  }
+
+  function addMatters(root, page, isDisputes, parentSlug) {
+    var list = mattersFor(page, isDisputes, parentSlug), note = "Matters from lawyer profiles on skrine.com; card titles generated. Shown for design review.";
+    if (!list.length) {
+      // the Transaction News titles for this area (no values), else example text
+      var key = { "corporate-and-commercial": "corporate", "mergers-and-acquisitions": "corporate", "real-estate": "real-estate", "construction-engineering-projects-and-infrastructure": "construction-and-engineering", "employment": "employment", "banking-and-finance": "banking-and-finance" }[page.slug];
+      list = key ? DEALS.filter(function (d) { return d.areas.indexOf(key) > -1; }).slice(0, 8).map(function (d) { return { text: d.title, area: "Transaction News", href: d.url }; }) : [];
+      note = "Matters from Transaction News on skrine.com; card titles generated. Shown for design review.";
+    }
+    if (!list.length) {
+      list = EXAMPLE_MATTERS.map(function (t) { return { text: t, area: page.title }; });
+      note = "Example content for design review only.";
+    }
+    list.forEach(function (m) { m.title = matterTitle(m.text, m.area); });
+    list = spreadTitles(list);
+    var cards = list.map(function (m, i) {
+      var card = el("article", "cv2-mt");
+      var top = el("div", "cv2-mt-top");
+      top.appendChild(el("span", "cv2-mt-no", String(i + 1).padStart(2, "0")));
+      top.appendChild(el("h3", "cv2-mt-title", m.title));
+      card.appendChild(top);
+      card.appendChild(el("p", "cv2-mt-text", m.text));
+      if (m.href) {
+        var src = el("a", "cv2-mt-by cv2-mt-by--plain", "Read on skrine.com ");
+        src.href = m.href;
+        src.target = "_blank";
+        src.rel = "noopener";
+        src.appendChild(icon("fa-solid fa-arrow-right"));
+        card.appendChild(src);
+      }
+      return card;
+    });
+    root.appendChild(carousel("cv2-matters", "Selected Matters", cards, note, { autoplay: 2500 }));
+  }
+
+  /* ---------- Insights ---------- */
   // [alert practices, publication topics]
   var INSIGHT_KEYS = {
     "arbitration-and-alternative-dispute-resolution": [["Dispute Resolution", "Construction and Arbitration"], ["Litigation and Arbitration"]],
@@ -675,65 +1038,7 @@
     "regulatory-compliance-and-white-collar-defence-disputes": [["White Collar Crimes"], ["Litigation and Arbitration"]],
     "_disputes": [["Dispute Resolution", "Banking and Finance Litigation", "Construction and Arbitration"], ["Litigation and Arbitration"]]
   };
-  var MATTERS_SHOWN = 5, INSIGHTS_MAX = 10;
-  var MONTHS_S = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  function shortDate(iso) { var p = String(iso).split("-"); return Number(p[2]) + " " + MONTHS_S[Number(p[1]) - 1] + " " + p[0]; }
-  // same rule as js/alerts.js, for the alert.html?a= links
-  function alertSlug(s) {
-    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80).replace(/-$/, "");
-  }
-
-  function addMatters(root, slug) {
-    var keys = MATTER_KEYS[slug];
-    if (!keys || !DEALS.length) return;
-    var list = DEALS.filter(function (d) { return d.areas.some(function (a) { return keys.indexOf(a) > -1; }); })
-      .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
-    if (!list.length) return;
-    var sec = el("section", "cv2-matters reveal");
-    var head = el("div", "pa-related-head");
-    head.appendChild(el("h2", "pa-section-title", "Selected Matters"));
-    sec.appendChild(head);
-    var ol = el("ol", "cv2-matters-list");
-    list.forEach(function (d, i) {
-      var li = el("li", "cv2-matter");
-      if (i >= MATTERS_SHOWN) li.hidden = true;
-      var a = el("a", "cv2-matter-link");
-      a.href = d.url;
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.appendChild(el("span", "cv2-matter-date", shortDate(d.date)));
-      a.appendChild(el("span", "cv2-matter-title", d.title));
-      var v = el("span", "cv2-matter-value");
-      if (d.value) {
-        v.appendChild(el("strong", null, d.value.num + (d.value.unit || "")));
-        if (d.value.label) v.appendChild(el("span", null, d.value.label));
-      }
-      a.appendChild(v);
-      a.appendChild(icon("fa-solid fa-arrow-right cv2-matter-go"));
-      li.appendChild(a);
-      ol.appendChild(li);
-    });
-    sec.appendChild(ol);
-    if (list.length > MATTERS_SHOWN) {
-      var more = el("button", "cv2-matters-more");
-      more.type = "button";
-      var label = function (open) {
-        more.textContent = open ? "Show fewer " : "Show all " + list.length + " matters ";
-        more.appendChild(icon("fa-solid fa-chevron-down"));
-        more.classList.toggle("is-open", open);
-        more.setAttribute("aria-expanded", String(open));
-      };
-      label(false);
-      more.addEventListener("click", function () {
-        var open = !more.classList.contains("is-open");
-        ol.querySelectorAll(".cv2-matter").forEach(function (li, i) { if (i >= MATTERS_SHOWN) li.hidden = !open; });
-        label(open);
-        if (!open) sec.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-      sec.appendChild(more);
-    }
-    root.appendChild(show(sec));
-  }
+  var INSIGHTS_MAX = 10;
 
   function addInsights(root, slug, isDisputes) {
     var keys = INSIGHT_KEYS[slug] || (isDisputes ? INSIGHT_KEYS._disputes : null);
@@ -759,22 +1064,7 @@
     if (!items.length) return;
     items.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
     items = items.slice(0, INSIGHTS_MAX);
-
-    var sec = el("section", "cv2-ins reveal");
-    sec.setAttribute("aria-roledescription", "carousel");
-    sec.setAttribute("aria-label", "Insights");
-    var head = el("div", "pa-related-head cv2-ins-head");
-    head.appendChild(el("h2", "pa-section-title", "Insights"));
-    var ctr = el("div", "cv2-ins-controls");
-    var prev = el("button", "cv2-ins-btn"); prev.type = "button"; prev.setAttribute("aria-label", "Previous insights"); prev.appendChild(icon("fa-solid fa-arrow-left"));
-    var next = el("button", "cv2-ins-btn"); next.type = "button"; next.setAttribute("aria-label", "Next insights"); next.appendChild(icon("fa-solid fa-arrow-right"));
-    ctr.appendChild(prev);
-    ctr.appendChild(next);
-    head.appendChild(ctr);
-    sec.appendChild(head);
-
-    var track = el("div", "cv2-ins-track");
-    items.forEach(function (it, i) {
+    var cards = items.map(function (it, i) {
       var card = el("a", "cv2-ins-card");
       card.href = it.href;
       if (it.ext) { card.target = "_blank"; card.rel = "noopener"; }
@@ -796,49 +1086,9 @@
       more.appendChild(icon("fa-solid fa-arrow-right"));
       bodyEl.appendChild(more);
       card.appendChild(bodyEl);
-      track.appendChild(card);
+      return card;
     });
-    sec.appendChild(track);
-    var dots = el("div", "cv2-ins-dots");
-    sec.appendChild(dots);
-
-    // one "page" = as many cards as fit; the arrows and dots move a page at a time
-    function step() {
-      var c = track.querySelector(".cv2-ins-card");
-      return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : track.clientWidth;
-    }
-    function perPage() { return Math.max(1, Math.floor((track.clientWidth + 2) / step())); }
-    function pages() { return Math.max(1, Math.ceil((items.length - perPage()) / perPage()) + 1); }
-    function current() {
-      if (track.scrollLeft + track.clientWidth > track.scrollWidth - 4) return pages() - 1;
-      return Math.min(pages() - 1, Math.round(track.scrollLeft / (step() * perPage())));
-    }
-    function goTo(p) { track.scrollTo({ left: p * step() * perPage(), behavior: "smooth" }); }
-    function sync() {
-      var n = pages(), c = current();
-      if (dots.children.length !== n) {
-        dots.textContent = "";
-        for (var i = 0; i < n; i++) (function (i) {
-          var b = el("button", "cv2-ins-dot");
-          b.type = "button";
-          b.setAttribute("aria-label", "Go to page " + (i + 1));
-          b.addEventListener("click", function () { goTo(i); });
-          dots.appendChild(b);
-        })(i);
-      }
-      Array.prototype.forEach.call(dots.children, function (b, i) { b.classList.toggle("is-current", i === c); });
-      var atStart = track.scrollLeft < 4, atEnd = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
-      prev.disabled = atStart;
-      next.disabled = atEnd;
-      sec.classList.toggle("is-static", atStart && atEnd);
-    }
-    prev.addEventListener("click", function () { goTo(Math.max(0, current() - 1)); });
-    next.addEventListener("click", function () { goTo(Math.min(pages() - 1, current() + 1)); });
-    var raf = 0;
-    track.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
-    window.addEventListener("resize", sync);
-    root.appendChild(show(sec));
-    requestAnimationFrame(sync);
+    root.appendChild(carousel("cv2-ins", "Insights", cards, "Content from Alerts and Publications on skrine.com, shown for design review."));
   }
 
   var detail = document.getElementById("paDetailV2");
@@ -871,6 +1121,7 @@
       addHero(detail, X, true);
       body(detail, X, [], "Overview");
       if (X.groups.length) detail.appendChild(groupsSection(X.groups, "Our Work"));
+      addMatters(detail, X, true, X.parent);
       addInsights(detail, X.slug, true);
       // other disputes areas
       var all = D.drList.filter(function (r) { return !r.pending; }).map(function (r) {
@@ -1010,7 +1261,7 @@
       addHero(detail, A, false);
       body(detail, A, [A.disputes ? disputesLink(D.disputes[A.disputes]) : null]);
       if (A.groups.length) detail.appendChild(groupsSection(A.groups, "Our Work"));
-      addMatters(detail, A.slug);
+      addMatters(detail, A, false);
       addInsights(detail, A.slug, A.kind === "disputes-only");
       others(detail, "Other Practice Areas", PRACTICES, A.slug, areaUrl);
     } else {

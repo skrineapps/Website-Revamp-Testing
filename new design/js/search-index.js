@@ -30,7 +30,7 @@
   var PAGES = [
     ["Home", "../index.html", "Skrine — Malaysia's full-service law firm with global insight and local expertise.", "home skrine advocates solicitors awards rankings network lex mundi deals"],
     ["People", "people.html", "Meet Skrine's partners, consultants and associates.", "lawyers team partners consultants associates directory"],
-    ["Practice Areas", "capabilities.html", "Skrine's practice areas — litigation, corporate, intellectual property and more.", "capabilities services expertise"],
+    ["Practice Areas", "capabilities-v2.html", "Skrine's practice areas — litigation, corporate, intellectual property and more.", "capabilities services expertise"],
     ["Sectors", "sectors.html", "The sectors Skrine serves — aviation, financial institutions, energy and more.", "industries capabilities"],
     ["Alerts", "alerts.html", "Legal alerts from Skrine on developments in Malaysian law and regulation.", "insights legal updates newsletter subscribe"],
     ["Publications", "publications.html", "Chapters and guides by Skrine lawyers in leading international legal publications.", "insights books guides chapters"],
