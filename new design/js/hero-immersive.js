@@ -70,7 +70,6 @@
   var words = Array.prototype.slice.call(stage.querySelectorAll(".ht-word"));
   var sub = stage.querySelector(".hero-sub");
   var story = stage.querySelector(".hero-actions .btn--solid");
-  var names = words.map(function (w) { return w.textContent.trim().replace(/\.$/, ""); });
 
   // progress: a rail beside the words (desktop) / a three-step bar (phone)
   var steps = document.createElement("div");
@@ -78,10 +77,6 @@
   steps.setAttribute("aria-hidden", "true");
   VALUES.forEach(function () { steps.appendChild(document.createElement("span")); });
   panel.insertBefore(steps, panel.querySelector(".hero-tagline"));
-  var hint = document.createElement("p");
-  hint.className = "v9-hint";
-  hint.setAttribute("aria-hidden", "true");
-  panel.insertBefore(hint, panel.querySelector(".hero-foot"));
 
   var subOriginal = sub ? sub.innerHTML : "";
   var current = -1, seen = {}, DONE = VALUES.length;
@@ -97,7 +92,6 @@
       sub.classList.add("is-swapping");
       setTimeout(function () { sub.innerHTML = subOriginal; sub.classList.remove("is-swapping"); }, reduce ? 0 : 320);
     }
-    hint.classList.add("is-gone");
     if (story && !story.classList.contains("v9-ready")) story.classList.add("v9-ready");
   }
 
@@ -111,7 +105,7 @@
     if (sub) {
       sub.classList.add("is-swapping");
       setTimeout(function () {
-        sub.innerHTML = "“" + VALUES[i].line + "”<span class=\"v9-from\">" + names[i] + " · Our values</span>";
+        sub.textContent = "“" + VALUES[i].line + "”";
         sub.classList.remove("is-swapping");
       }, reduce ? 0 : 320);
     }
@@ -142,7 +136,6 @@
 
   /* ---------- laptop: scroll through the values ---------- */
   function startScroll() {
-    hint.textContent = "Scroll to explore our values";
     var ticking = false;
     function progress() {
       var r = hero.getBoundingClientRect();
@@ -159,7 +152,6 @@
       // zoom glides continuously with the scroll, from the first value's framing to the last
       var z = VALUES[0].zoom + (VALUES[VALUES.length - 1].zoom - VALUES[0].zoom) * p;
       photo.style.setProperty("--zoom", z.toFixed(3));
-      hint.classList.toggle("is-gone", p > 0.04);
     }
     on(window, "scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     on(window, "resize", update);
@@ -193,13 +185,11 @@
 
   /* ---------- phone: swipe or tap ---------- */
   function startSwipe() {
-    hint.textContent = "Swipe to explore our values";
-    hint.classList.remove("is-gone");
     photo.style.setProperty("--hz", "1");
     photo.style.setProperty("--zoom", VALUES[Math.min(VALUES.length - 1, Math.max(0, current))].zoom);
 
     words.forEach(function (w, i) {
-      on(w, "click", function () { show(i); hint.classList.add("is-gone"); });
+      on(w, "click", function () { show(i); });
       on(w, "keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(i); } });
     });
 
@@ -215,7 +205,6 @@
       if (n < 0) return;
       if (n >= VALUES.length) { if (current < DONE) finish(); return; }
       show(n);
-      hint.classList.add("is-gone");
     }, { passive: true });
   }
 

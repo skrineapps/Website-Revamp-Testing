@@ -121,6 +121,10 @@ a.ar-person:hover .ar-person-name { color: var(--red); }
 .ar-body { font-size: 18px; line-height: 1.85; color: var(--ink-soft); min-width: 0; }
 .ar-body > p:first-child { font: 400 clamp(19px, 1.6vw, 22px)/1.7 var(--font-display); color: var(--ink); }
 .ar-body p { margin: 0 0 1.15em; overflow-wrap: anywhere; }
+/* long-form reading (alert and news articles): paragraphs and list items justified, with
+   hyphenation so lines don't open wide gaps; left-aligned on phones, where the column is too narrow */
+.ar-body p, .ar-body li { text-align: justify; -webkit-hyphens: auto; hyphens: auto; }
+@media (max-width: 560px) { .ar-body p, .ar-body li { text-align: left; } }
 .ar-body h2 {
   position: relative;
   margin: 2em 0 0.8em;
