@@ -43,6 +43,22 @@
   z-index: -1;
 }
 .deal-feature-art.is-leaving { opacity: 0.25; }
+/* hover: the card stays flat and lifts a little; the photo eases in closer and
+   the dark wash thins so more of it shows (scale adds to the slow drift) */
+/* kept on its own layer at all times: without this the browser stops clipping the
+   zooming photo to the rounded corners while the card moves (square corner bug) */
+.deal-feature { transform: translate3d(0, 0, 0); will-change: transform; transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease); }
+.deal-feature-art { transition: opacity 0.26s var(--ease), scale 1.4s var(--ease); }
+.deal-feature::after { transition: opacity 0.8s var(--ease); }
+@media (hover: hover) {
+  .deal-feature:hover { transform: translate3d(0, -4px, 0); box-shadow: 0 34px 60px -28px rgba(0, 0, 0, 0.55); }
+  .deal-feature:hover .deal-feature-art { scale: 1.07; }
+  .deal-feature:hover::after { opacity: 0.82; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deal-feature:hover { transform: translate3d(0, 0, 0); }
+  .deal-feature:hover .deal-feature-art { scale: 1; }
+}
 /* dark wash so the white text stays readable over any photo */
 .deal-feature::after {
   content: "";
@@ -202,6 +218,74 @@
   text-transform: uppercase;
   color: var(--grey-500);
 }
+
+/* deal cards, with depth: each carries its deal's photo (set in js/home.js as
+   --dl-img), faded in from the right in greyscale and coming into colour on
+   hover; the chosen one turns dark like the feature card, so the two read as a
+   pair, and a fine line along its foot fills while that deal is on show
+   (paused while the board is hovered). The old red side bar is gone. */
+.deal-list button { overflow: hidden; isolation: isolate; transform: translate3d(0, 0, 0); } /* own layer: keeps the photo inside the rounded corners */
+.deal-list button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60%;
+  z-index: -1;
+  background: var(--dl-img) center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.5) 45%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.5) 45%, #000 100%);
+  filter: grayscale(1);
+  opacity: 0.22;
+  transform: translateX(10%);
+  transition: opacity 0.5s var(--ease), filter 0.5s var(--ease), transform 0.8s var(--ease), width 0.6s var(--ease);
+}
+.deal-list button:hover::after { opacity: 0.5; filter: grayscale(0.15); transform: none; }
+.dl-sector {
+  justify-self: end;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.86);
+  transition: background 0.35s, color 0.35s, border-color 0.35s;
+  border: 1px solid transparent;
+}
+
+/* the chosen deal: a small dark card with its photo, like the feature */
+.deal-list button[aria-selected="true"] {
+  background: var(--dark, #232225);
+  border-color: transparent;
+  box-shadow: 0 20px 36px -20px rgba(0, 0, 0, 0.65);
+}
+.deal-list button[aria-selected="true"]::after { width: 100%; opacity: 0.6; filter: none; transform: none; }
+.deal-list button[aria-selected="true"] .dl-figure,
+.deal-list button[aria-selected="true"]:hover .dl-figure,
+.deal-list button[aria-selected="true"] .dl-client { color: #fff; }
+.deal-list button[aria-selected="true"] .dl-sector {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* the timing line (replaces the side bar) */
+.deal-list button::before,
+.deal-list button[aria-selected="true"]::before {
+  top: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: 3px;
+  border-radius: 0;
+  background: linear-gradient(90deg, var(--red), #e0485a);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.deal-list button.is-timing::before { animation: dlTime 7s linear forwards; }
+.deals-board.is-paused .deal-list button::before { animation-play-state: paused; }
+@keyframes dlTime { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* ---------- Global Network ---------- */
 .network-wrap {
@@ -796,6 +880,77 @@
 .accolade--lead::before { display: none; }
 .accolade--lead figcaption { margin: 0; padding: 0; border: 0; max-width: 22em; }
 
+/* ---------- Awards: "18 partners individually ranked" opens a plain list ---------- */
+.award-note-btn { display: inline-flex; align-items: baseline; gap: 6px; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; border-bottom: 1px solid rgba(255, 255, 255, 0.35); transition: border-color 0.25s; }
+.award-note-btn:hover, .award-note-btn:focus-visible { border-color: #fff; }
+.award-note-btn i { font-size: 12px; transition: transform 0.3s var(--ease); }
+.award-note-btn[aria-expanded="true"] i { transform: rotate(180deg); }
+.award-names { margin: 14px 0 0; padding: 0; list-style: none; columns: 2; column-gap: 28px; }
+.award-names li { break-inside: avoid; padding: 5px 0; font-size: 14.5px; line-height: 1.35; border-bottom: 1px solid rgba(236, 237, 236, 0.14); }
+.award-names a { color: rgba(255, 255, 255, 0.92); }
+.award-names a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 520px) { .award-names { columns: 1; } }
+
+/* ---------- Awards: firm awards rolodex (2025-2026) ----------
+   Not a slider: the award title rolls over on a drum, like a desk rolodex,
+   beside an index of every award in the window. js/home.js turns it. */
+.aw-roll {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+  padding: clamp(40px, 5vw, 64px) 0 clamp(36px, 4.5vw, 56px);
+  border-bottom: 1px solid rgba(236, 237, 236, 0.25);
+}
+.aw-stage { display: grid; perspective: 900px; perspective-origin: 50% 50%; }
+.aw-item {
+  grid-area: 1 / 1;
+  margin: 0;
+  align-self: center;
+  transform-origin: 50% 50% -60px;
+  opacity: 0;
+  transform: rotateX(-70deg) translateY(30px);
+  transition: opacity 0.55s var(--ease), transform 0.8s var(--ease);
+  backface-visibility: hidden;
+  pointer-events: none;
+}
+.aw-item.is-current { opacity: 1; transform: none; pointer-events: auto; }
+.aw-item.is-gone { opacity: 0; transform: rotateX(70deg) translateY(-30px); }
+.aw-item blockquote {
+  margin: 0;
+  font: 900 clamp(30px, 3.6vw, 52px)/1.1 var(--font-display);
+  letter-spacing: -0.01em;
+  background: linear-gradient(100deg, var(--foil-1) 0%, var(--foil-2) 30%, var(--foil-3) 50%, var(--foil-2) 70%, var(--foil-1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.aw-item figcaption { margin-top: 16px; max-width: 46ch; font: 400 13.5px/1.55 var(--font-alt); letter-spacing: 0.03em; color: rgba(236, 237, 236, 0.78); }
+.aw-side-label { margin-bottom: 10px; font: 700 11px var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(236, 237, 236, 0.65); }
+.aw-index { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(236, 237, 236, 0.3); }
+.aw-index button {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  width: 100%;
+  padding: 11px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(236, 237, 236, 0.16);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: rgba(236, 237, 236, 0.55);
+  transition: color 0.3s, padding 0.3s var(--ease);
+}
+.aw-index button:hover { color: rgba(255, 255, 255, 0.85); }
+.aw-index button[aria-selected="true"] { color: #fff; padding-left: 8px; }
+.aw-yr { flex: 0 0 auto; font: 700 12px var(--font-body); letter-spacing: 0.12em; }
+.aw-src { font: 700 15px/1.3 var(--font-display); }
+@media (max-width: 900px) { .aw-roll { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  .aw-item, .aw-item.is-gone { transform: none; transition: opacity 0.2s; }
+}
+
 /* ---------- Awards: individually ranked lawyers ---------- */
 .ranked { padding-top: clamp(40px, 5vw, 64px); }
 .ranked-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-bottom: 26px; }
@@ -841,9 +996,9 @@
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   align-items: end;
   column-gap: clamp(24px, 4vw, 64px);
-  min-height: clamp(380px, 34vw, 460px);
+  min-height: clamp(280px, 24vw, 330px);
 }
-.rk-copy { align-self: center; padding: 20px 0 30px; }
+.rk-copy { align-self: center; padding: 14px 0 22px; }
 .rk-copy > * { opacity: 0; transform: translateY(14px); transition: opacity 0.7s, transform 0.7s var(--ease); }
 .rk-slide.is-shown .rk-copy > * { opacity: 1; transform: none; }
 .rk-slide.is-shown .rk-copy > :nth-child(2) { transition-delay: 0.08s; }
@@ -854,36 +1009,36 @@
 .rk-dir::before { content: ""; width: 34px; height: 2px; background: linear-gradient(90deg, var(--foil-1), var(--foil-3)); }
 .rk-tier {
   margin-top: 10px;
-  font: 900 clamp(56px, 7.4vw, 112px)/0.98 var(--font-display);
+  font: 900 clamp(40px, 4.6vw, 68px)/1 var(--font-display);
   letter-spacing: -0.015em;
   background: linear-gradient(100deg, var(--foil-1) 0%, var(--foil-2) 25%, var(--foil-3) 48%, var(--foil-2) 70%, var(--foil-1) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-.rk-tier--long { font-size: clamp(40px, 4.8vw, 72px); line-height: 1.02; }
-.rk-area { margin-top: 12px; font: italic 400 clamp(18px, 1.6vw, 23px)/1.35 var(--font-display); color: rgba(255, 255, 255, 0.92); }
+.rk-tier--long { font-size: clamp(30px, 3.4vw, 48px); line-height: 1.04; }
+.rk-area { margin-top: 10px; font: italic 400 clamp(16px, 1.3vw, 19px)/1.35 var(--font-display); color: rgba(255, 255, 255, 0.92); }
 .rk-name {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 4px 14px;
-  margin-top: 26px;
-  padding-top: 18px;
+  margin-top: 18px;
+  padding-top: 14px;
   border-top: 1px solid rgba(236, 237, 236, 0.35);
-  font: 900 clamp(22px, 2vw, 28px)/1.2 var(--font-display);
+  font: 900 clamp(19px, 1.6vw, 23px)/1.2 var(--font-display);
 }
 .rk-name a { color: var(--white); }
 .rk-name span { font: 700 11.5px var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(236, 237, 236, 0.65); }
 .rk-more { margin-top: 12px; display: grid; gap: 6px; }
-.rk-more li { font-size: 14.5px; line-height: 1.45; color: rgba(255, 255, 255, 0.82); }
+.rk-more li { font-size: 14px; line-height: 1.45; color: rgba(255, 255, 255, 0.82); }
 .rk-more span { margin-right: 10px; font: 700 10.5px var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(236, 237, 236, 0.6); }
 .rk-more b { font-weight: 700; color: var(--white); }
-.rk-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; font-weight: 700; font-size: 14.5px; color: var(--white); border-bottom: 1px solid rgba(255, 255, 255, 0.4); padding-bottom: 3px; transition: gap 0.3s, border-color 0.3s; }
+.rk-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 16px; font-weight: 700; font-size: 14.5px; color: var(--white); border-bottom: 1px solid rgba(255, 255, 255, 0.4); padding-bottom: 3px; transition: gap 0.3s, border-color 0.3s; }
 .rk-link:hover { gap: 16px; border-color: #fff; }
 
 /* portrait: large cut-out standing on the bottom edge */
-.rk-photo { position: relative; display: block; align-self: end; height: clamp(360px, 32vw, 450px); isolation: isolate; }
+.rk-photo { position: relative; display: block; align-self: end; height: clamp(260px, 22vw, 320px); isolation: isolate; }
 .rk-photo::before {
   content: "";
   position: absolute;
@@ -924,15 +1079,92 @@
 
 @media (max-width: 760px) {
   .rk-slide { grid-template-columns: minmax(0, 1fr) 42%; min-height: 0; column-gap: 12px; }
-  .rk-photo { height: 260px; }
-  .rk-tier { font-size: clamp(40px, 11vw, 56px); }
-  .rk-tier--long { font-size: clamp(28px, 7.4vw, 36px); }
+  .rk-photo { height: 210px; }
+  .rk-tier { font-size: clamp(34px, 9vw, 44px); }
+  .rk-tier--long { font-size: clamp(24px, 6.4vw, 30px); }
   .rk-copy { padding-bottom: 20px; }
 }
 @media (max-width: 480px) {
   .rk-slide { grid-template-columns: 1fr; }
-  .rk-photo { grid-row: 1; height: 220px; }
+  .rk-photo { grid-row: 1; height: 190px; }
   .rk-copy { padding-top: 6px; }
+}
+
+/* ---------- Individually ranked: portrait carousel ----------
+   Every ranked lawyer, no boxes: cut-out portraits that drift past on their own (js/home.js;
+   paused on hover / focus, still with "reduce motion"). On each card the
+   ranking is the loudest line, large bold white; a white tag names the
+   directory. Each card opens the profile. */
+.ranked-head { align-items: flex-end; }
+.rs-nav { display: flex; gap: 8px; }
+.rs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(190px, 16vw, 216px);
+  gap: clamp(14px, 1.4vw, 20px);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 8px 2px 14px;
+  margin: 0;
+  list-style: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%);
+}
+.rs::-webkit-scrollbar { display: none; }
+.rs-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: #fff;
+  transition: transform 0.4s var(--ease);
+}
+.rs-card:hover, .rs-card:focus-visible { transform: translateY(-4px); }
+/* the cut-out portrait on a soft glow, standing on a fine line */
+.rs-photo {
+  position: relative;
+  display: block;
+  height: 172px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  background: radial-gradient(55% 75% at 50% 100%, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06) 60%, transparent 75%);
+}
+.rs-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  transform-origin: bottom center;
+  filter: drop-shadow(0 0 1.5px rgba(40, 4, 10, 0.8)) drop-shadow(-8px 10px 16px rgba(20, 2, 6, 0.35));
+  transition: transform 0.5s var(--ease);
+}
+.rs-card:hover .rs-photo img { transform: scale(1.05); }
+/* directory and year: a small white tag on the line */
+.rs-dir {
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  padding: 4px 9px;
+  border-radius: 20px;
+  background: #fff;
+  color: var(--red);
+  font: 700 10px/1 var(--font-body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.rs-body { display: flex; flex-direction: column; flex: 1; padding: 20px 2px 4px; }
+/* the ranking: the loudest line, large bold white serif */
+.rs-tier {
+  font: 900 23px/1.12 var(--font-display);
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(40, 4, 10, 0.35);
+}
+.rs-name { margin-top: 10px; font: 700 15px/1.3 var(--font-display); color: rgba(255, 255, 255, 0.95); }
+.rs-meta { margin-top: 3px; font-size: 12.5px; line-height: 1.4; color: rgba(255, 255, 255, 0.72); }
+@media (max-width: 640px) {
+  .rs { grid-auto-columns: 64%; }
+  .rs-nav { display: none; }
 }
 
 /* ---------- Honour roll: colour layering ----------

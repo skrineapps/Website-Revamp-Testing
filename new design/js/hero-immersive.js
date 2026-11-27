@@ -10,8 +10,8 @@
      zooms in smoothly; after the third the page carries on as normal.
      Clicking a word scrolls to it. A rail beside the words shows progress.
    Phone / tablet (touch, or narrow):
-     scrolling is never hijacked. Swipe across the photo, or tap a word,
-     to move between values; a three-step bar shows where you are.
+     no scroll-through (a phone can't pin the hero), so it opens straight
+     on the finished look, with no animation to wait for.
 
    Value lines are quoted from skrine.com/profile/our-values.
    After the third value the hero settles into the finished look (all three
@@ -131,6 +131,10 @@
     mode = next;
     hero.classList.toggle("v9-scroll", mode === "scroll");
     hero.classList.toggle("v9-swipe", mode === "swipe");
+    if (mode === "scroll") {
+      hero.classList.remove("v9-static");
+      words.forEach(function (w) { w.setAttribute("tabindex", "0"); w.setAttribute("role", "button"); });
+    }
     if (mode === "scroll") startScroll(); else startSwipe();
   }
 
@@ -183,33 +187,22 @@
     update();
   }
 
-  /* ---------- phone: swipe or tap ---------- */
+  /* ---------- phone / tablet: the finished look straight away ---------- */
   function startSwipe() {
+    clearTimeout(settle);
     photo.style.setProperty("--hz", "1");
-    photo.style.setProperty("--zoom", VALUES[Math.min(VALUES.length - 1, Math.max(0, current))].zoom);
-
-    words.forEach(function (w, i) {
-      on(w, "click", function () { show(i); });
-      on(w, "keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(i); } });
-    });
-
-    // horizontal swipe changes value; vertical movement is left to the page
-    var x0 = null, y0 = null;
-    on(stage, "touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
-    on(stage, "touchend", function (e) {
-      if (x0 === null) return;
-      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
-      x0 = null;
-      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
-      var n = current + (dx < 0 ? 1 : -1);
-      if (n < 0) return;
-      if (n >= VALUES.length) { if (current < DONE) finish(); return; }
-      show(n);
-    }, { passive: true });
+    photo.style.setProperty("--zoom", VALUES[VALUES.length - 1].zoom);
+    hero.classList.add("v9-static");
+    if (current === DONE) return;
+    current = DONE;
+    hero.classList.add("v9-done");
+    words.forEach(function (w) { w.classList.remove("is-on"); w.setAttribute("aria-pressed", "false"); w.removeAttribute("tabindex"); w.removeAttribute("role"); });
+    Array.prototype.forEach.call(steps.children, function (s) { s.classList.remove("is-on"); s.classList.add("is-done"); });
+    if (sub) sub.innerHTML = subOriginal;
   }
 
-  show(0);
   setMode();
+  if (mode === "scroll" && current < 0) show(0);
   if (desktopMQ.addEventListener) desktopMQ.addEventListener("change", setMode);
   else if (desktopMQ.addListener) desktopMQ.addListener(setMode);
 })();

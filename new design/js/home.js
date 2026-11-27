@@ -150,16 +150,29 @@
         t.setAttribute("aria-selected", String(k === current));
         t.tabIndex = k === current ? 0 : -1;
       });
+      timeLine();
+    }
+
+    // the line along the foot of the chosen card fills over ROTATE_MS (css: dlTime)
+    function timeLine() {
+      tabs.forEach(function (t) { t.classList.remove("is-timing"); });
+      if (reduceMotion) return;
+      void tabs[current].offsetWidth; // restart the fill
+      tabs[current].classList.add("is-timing");
     }
 
     function restartRotate() {
       if (reduceMotion) return;
       clearInterval(rotate);
+      board.classList.remove("is-paused");
+      timeLine();
       rotate = setInterval(function () { show(current + 1); }, ROTATE_MS);
     }
 
     tabs.forEach(function (t, k) {
       t.tabIndex = k === 0 ? 0 : -1;
+      // each card carries its deal's photo (css: .deal-list button::after)
+      if (DEALS[k]) t.style.setProperty("--dl-img", "url(\"" + new URL(DEALS[k].img, location.href).href + "\")");
       t.addEventListener("click", function () { show(k, true); restartRotate(); });
       t.addEventListener("keydown", function (e) {
         var dir = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
@@ -171,10 +184,121 @@
       });
     });
 
-    board.addEventListener("mouseenter", function () { clearInterval(rotate); });
+    board.addEventListener("mouseenter", function () { clearInterval(rotate); board.classList.add("is-paused"); });
     board.addEventListener("mouseleave", restartRotate);
-    board.addEventListener("focusin", function () { clearInterval(rotate); });
+    board.addEventListener("focusin", function () { clearInterval(rotate); board.classList.add("is-paused"); });
     restartRotate();
+  }
+
+  /* ---------- Individually ranked: portrait carousel ----------
+     The cards drift left on their own and loop (the set is copied once so the
+     join never shows). Hover, focus or a touch pauses it; the arrows jump a
+     screenful; off screen or with "reduce motion" it stands still. */
+  var strip = document.getElementById("rankedStrip");
+  if (strip) {
+    var originals = Array.prototype.slice.call(strip.children);
+    originals.forEach(function (li) {
+      var c = li.cloneNode(true);
+      c.setAttribute("aria-hidden", "true");
+      Array.prototype.forEach.call(c.querySelectorAll("a"), function (a) { a.tabIndex = -1; });
+      strip.appendChild(c);
+    });
+    var SPEED = 28; // px per second
+    var pos = 0, last = 0, held = false, hover = false, inView = true, waitUntil = 0;
+    var loopWidth = function () { return strip.children[originals.length].offsetLeft - strip.children[0].offsetLeft; };
+    var tick = function (t) {
+      var dt = last ? Math.min(t - last, 64) / 1000 : 0;
+      last = t;
+      if (!reduceMotion && inView && !hover && !held && Date.now() > waitUntil) {
+        pos += SPEED * dt;
+        var w = loopWidth();
+        if (pos >= w) pos -= w;
+        strip.scrollLeft = pos;
+      }
+      requestAnimationFrame(tick);
+    };
+    // a swipe, wheel or arrow moved it: carry on from there
+    strip.addEventListener("scroll", function () {
+      if (Math.abs(strip.scrollLeft - pos) > 2) {
+        pos = strip.scrollLeft;
+        var w = loopWidth();
+        if (pos >= w) { pos -= w; strip.scrollLeft = pos; }
+      }
+    }, { passive: true });
+    strip.addEventListener("mouseenter", function () { hover = true; });
+    strip.addEventListener("mouseleave", function () { hover = false; });
+    strip.addEventListener("focusin", function () { held = true; });
+    strip.addEventListener("focusout", function () { held = false; });
+    strip.addEventListener("touchstart", function () { waitUntil = Date.now() + 4000; }, { passive: true });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }).observe(strip);
+    }
+    Array.prototype.slice.call(document.querySelectorAll("[data-rs]")).forEach(function (b) {
+      b.addEventListener("click", function () {
+        var step = strip.children[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(strip).columnGap) || 0);
+        var per = Math.max(1, Math.floor(strip.clientWidth / step));
+        var dir = +b.getAttribute("data-rs");
+        // going back from the start: hop to the same spot in the copy first
+        if (dir < 0 && strip.scrollLeft < step * per) { pos = strip.scrollLeft + loopWidth(); strip.scrollLeft = pos; }
+        waitUntil = Date.now() + 2500; // let the jump finish before drifting again
+        strip.scrollBy({ left: dir * step * per, behavior: reduceMotion ? "auto" : "smooth" });
+      });
+    });
+    requestAnimationFrame(tick);
+  }
+
+  /* ---------- Awards: "18 partners individually ranked" list ---------- */
+  var noteBtn = document.querySelector(".award-note-btn");
+  if (noteBtn) {
+    var noteList = document.getElementById(noteBtn.getAttribute("aria-controls"));
+    noteBtn.addEventListener("click", function () {
+      var open = noteBtn.getAttribute("aria-expanded") !== "true";
+      noteBtn.setAttribute("aria-expanded", String(open));
+      noteList.hidden = !open;
+    });
+  }
+
+  /* ---------- Awards: firm awards rolodex ----------
+     The current title rolls up and away, the next rolls in from below.
+     Turns every 5 s; hover or focus holds it; the index picks one. */
+  var roll = document.getElementById("awRoll");
+  if (roll) {
+    var awItems = Array.prototype.slice.call(roll.querySelectorAll(".aw-item"));
+    var awTabs = Array.prototype.slice.call(roll.querySelectorAll(".aw-index button"));
+    var awAt = 0, awTimer = null, awHeld = false;
+    var awShow = function (i) {
+      i = (i + awItems.length) % awItems.length;
+      if (i === awAt) return;
+      var out = awItems[awAt];
+      out.classList.remove("is-current");
+      out.classList.add("is-gone");
+      setTimeout(function () { out.classList.remove("is-gone"); }, 800);
+      awAt = i;
+      awItems[i].classList.remove("is-gone");
+      awItems[i].classList.add("is-current");
+      awTabs.forEach(function (t, k) { t.setAttribute("aria-selected", String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    };
+    var awRun = function () {
+      clearInterval(awTimer);
+      if (reduceMotion || awHeld) return;
+      awTimer = setInterval(function () { awShow(awAt + 1); }, 5000);
+    };
+    awTabs.forEach(function (t, k) {
+      t.tabIndex = k === 0 ? 0 : -1;
+      t.addEventListener("click", function () { awShow(k); awRun(); });
+      t.addEventListener("keydown", function (e) {
+        var d = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        awShow(awAt + d);
+        awTabs[awAt].focus();
+      });
+    });
+    roll.addEventListener("mouseenter", function () { awHeld = true; awRun(); });
+    roll.addEventListener("mouseleave", function () { awHeld = false; awRun(); });
+    roll.addEventListener("focusin", function () { awHeld = true; awRun(); });
+    roll.addEventListener("focusout", function () { awHeld = false; awRun(); });
+    awRun();
   }
 
   /* ---------- Upcoming events ----------

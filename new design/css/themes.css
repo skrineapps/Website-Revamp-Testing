@@ -609,6 +609,14 @@ html.skin-2 {
 /* on the laptop the scroll cue is replaced by the hint */
 .imm .v9-scroll .scroll-cue { display: none; }
 .imm .v9-swipe .v9-stage { touch-action: pan-y; }
+/* phone / tablet: the finished look from the start, nothing animating in */
+.imm .v9-static .v9-hint,
+.imm .v9-static .v9-steps { display: none; }
+.imm .v9-static .ht-swatch { animation: none !important; transform: none !important; }
+.imm .v9-static .ht-word,
+.imm .v9-static .ht-text,
+.imm .v9-static .v9-layer { transition: none !important; }
+.imm .v9-static .ht-word { cursor: default; }
 
 /* =========================================================
    Design pill. On phones the pill would run off
