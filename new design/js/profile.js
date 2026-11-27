@@ -243,12 +243,70 @@
   var fig = document.getElementById("pfPortrait");
   fig.appendChild(portrait(slug, P.name, "pf-portrait-frame"));
 
+  // full names for institutions that profiles list by short form only (panel memberships)
+  var PANEL_ORGS = {
+    AIAC: "Asian International Arbitration Centre",
+    SIAC: "Singapore International Arbitration Centre",
+    HKIAC: "Hong Kong International Arbitration Centre",
+    ICC: "International Chamber of Commerce",
+    ICSID: "International Centre for Settlement of Investment Disputes",
+    THAC: "Thailand Arbitration Center",
+    SIDREC: "Securities Industry Dispute Resolution Center",
+    KCAB: "Korean Commercial Arbitration Board",
+    LCIA: "London Court of International Arbitration"
+  };
+
   /* ---------- overview ---------- */
   if (P.overview.length) {
     var SP = window.SkrineProfile;
     var ov = section("overview", "Overview", "About " + (SP ? SP.givenName(P.name) : P.name));
     ov.classList.add("pf-overview");
     (SP ? SP.shortOverview(P.overview) : P.overview).forEach(function (t, i) { ov.appendChild(el("p", i === 0 ? "pf-lede" : null, t)); });
+
+    // panel memberships (arbitration centres, disciplinary boards…) move out of Credentials
+    // into their own container under the write-up (css/profile.css .pf-panels)
+    var panelItems = [];
+    P.credentials = P.credentials.map(function (c) {
+      var keep = c.items.filter(function (it) {
+        if (/\bpanel\b/i.test(it)) { panelItems.push(it); return false; }
+        return true;
+      });
+      return { heading: c.heading, items: keep };
+    }).filter(function (c) { return c.items.length; });
+    if (panelItems.length) {
+      // an editorial list: grouped by role, institution in the display serif, short form as a quiet tag
+      var groups = [], byRole = {};
+      panelItems.forEach(function (it) {
+        var txt = it.replace(/\.\s*$/, "");
+        // "Panel Arbitrator, AIAC" / "Panel Member of SIAC" / "Panel Member AIAC" → role + institution
+        var m = txt.match(/^(Panel\s+[A-Z][a-z]+)(?:\s*,\s*|\s+of\s+|\s+)(.+)$/);
+        var role = m ? m[1].replace(/\b(\w)(\w*)$/, function (w, a, b) { return a.toUpperCase() + b; }) : "Panel Member";
+        var org = m ? m[2] : txt, abbr = "";
+        if (PANEL_ORGS[org]) { abbr = org; org = PANEL_ORGS[org]; }   // short form only: give the full name
+        else {
+          var ab = org.match(/^(.+?)\s*\(([A-Z]{2,})\)\s*$/);
+          if (ab) { org = ab[1]; abbr = ab[2]; }
+        }
+        if (!byRole[role]) { byRole[role] = []; groups.push(role); }
+        byRole[role].push({ org: org, abbr: abbr });
+      });
+      var pb = el("div", "pf-panels");
+      pb.appendChild(el("p", "pf-panels-eyebrow", "Panel memberships"));
+      groups.forEach(function (role) {
+        var g = el("div", "pf-pg");
+        g.appendChild(el("p", "pf-pg-role", byRole[role].length > 1 ? role.replace(/(\w+)$/, "$1s") : role));
+        var ul = el("ul", "pf-pg-list");
+        byRole[role].forEach(function (x) {
+          var li = el("li");
+          li.appendChild(el("span", "pf-pg-name", x.org));
+          if (x.abbr) li.appendChild(el("abbr", "pf-pg-abbr", x.abbr));
+          ul.appendChild(li);
+        });
+        g.appendChild(ul);
+        pb.appendChild(g);
+      });
+      ov.appendChild(pb);
+    }
   }
 
   /* ---------- experience ---------- */

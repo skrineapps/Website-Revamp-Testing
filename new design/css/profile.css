@@ -193,6 +193,54 @@
 .pf-overview p + p { margin-top: 16px; }
 .pf-overview .pf-lede { font: 400 clamp(19px, 1.6vw, 23px)/1.65 var(--font-display); color: var(--ink); }
 
+/* panel memberships under the About write-up (js/profile.js): an editorial list, no card —
+   a red eyebrow like the section labels, roles on the left, institutions in the display serif,
+   short forms as a quiet letter-spaced tag, hairlines only */
+.pf-panels { max-width: 78ch; margin-top: 40px; }
+.pf-panels-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+.pf-overview .pf-panels-eyebrow {
+  max-width: none;
+  font: 700 12px/1 var(--font-body);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.pf-panels-eyebrow::after { content: ""; flex: 1; height: 1px; background: rgba(206, 203, 204, 0.7); }
+.pf-pg {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 8px 28px;
+  padding: 18px 0 6px;
+}
+.pf-pg + .pf-pg { border-top: 1px solid rgba(206, 203, 204, 0.45); }
+.pf-overview .pf-pg-role { padding-top: 12px; font: 700 13px/1.4 var(--font-body); letter-spacing: 0.04em; color: var(--grey-500); }
+.pf-pg-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+}
+.pf-pg-list li + li { border-top: 1px solid rgba(206, 203, 204, 0.45); }
+.pf-pg-name { font: 400 16.5px/1.45 var(--font-display); color: var(--ink); }
+.pf-pg-abbr {
+  flex: none;
+  font: 700 11px/1 var(--font-body);
+  letter-spacing: 0.16em;
+  color: var(--red);
+  text-decoration: none;
+}
+@media (max-width: 640px) {
+  .pf-pg { grid-template-columns: 1fr; gap: 0; }
+  .pf-overview .pf-pg-role { padding-top: 0; }
+  .pf-pg-name { font-size: 15.5px; }
+}
+
 /* experience tabs */
 .pf-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
 .pf-tab {
