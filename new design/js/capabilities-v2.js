@@ -130,7 +130,8 @@
   };
   var NO_PHOTO = document.documentElement.classList.contains("pa-nophoto");
   function quoteBand(quotes) {
-    var hero = el("section", "pa-qband reveal");
+    quotes = quotes.slice(0, 2);   // at most two quotes
+    var hero = el("section", "pa-qband cv2-qband reveal");
     hero.setAttribute("aria-label", "What the directories say");
     var inner = el("div", "pa-qband-inner");
     var mark = el("span", "pa-qband-mark", "“");
@@ -158,7 +159,7 @@
       stage.textContent = "";
       var bq = el("blockquote", "pa-qband-quote" + (q.quote.length > 110 ? " is-long" : ""));
       bq.appendChild(el("p", null, q.quote));
-      bq.appendChild(el("cite", null, q.source));
+      bq.appendChild(el("cite", null, String(q.source).replace(/\s+\d{4}(\s*[\/–-]\s*\d{2,4})?$/, "")));   // no year
       stage.appendChild(bq);
       count.textContent = many ? String(qi + 1).padStart(2, "0") + " / " + String(quotes.length).padStart(2, "0") : "";
       fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = "";
@@ -305,12 +306,15 @@
       page.intro.forEach(function (p) { ov.appendChild(el("p", "pa-overview-text", p)); });
     }
     cols.appendChild(show(ov));
-    var aside = el("aside", "pa-team-box reveal");
-    side.forEach(function (n) { if (n) aside.appendChild(n); });
+    // the side column: Key Contacts in their own box, the Disputes link as a separate card below
+    var aside = el("aside", "cv2-side reveal");
     if (page.contacts.length) {
-      aside.appendChild(el("h2", "pa-section-title", "Key Contacts"));
-      aside.appendChild(teamList(page.contacts));
+      var box = el("div", "pa-team-box");
+      box.appendChild(el("h2", "pa-section-title", "Key Contacts"));
+      box.appendChild(teamList(page.contacts));
+      aside.appendChild(box);
     }
+    side.forEach(function (n) { if (n) aside.appendChild(n); });
     if (aside.children.length) cols.appendChild(show(aside));
     else cols.classList.add("cv2-cols--single");
     root.appendChild(cols);
@@ -627,6 +631,216 @@
   }
 
   /* ---------- practice area / disputes page ---------- */
+  /* ---------- Selected Matters + Insights (practice area / disputes pages, after "Our Work")
+     Matters:  js/practice-deals.js (Transaction News), by the old practice slugs below.
+     Insights: js/alerts-data.js + js/publications-data.js, by practice / topic names below.
+     Styles:   css/capabilities-v2.css (.cv2-matters, .cv2-ins). ---------- */
+  var DEALS = window.SKRINE_PRACTICE_DEALS || [];
+  var ALERTS = window.SKRINE_ALERTS || [];
+  var PUBS = window.SKRINE_PUBLICATIONS || [];
+  var FULL = window.SKRINE_ALERTS_FULL || {};
+  var MATTER_KEYS = {
+    "corporate-and-commercial": ["corporate"],
+    "mergers-and-acquisitions": ["corporate"],
+    "real-estate": ["real-estate"],
+    "construction-engineering-projects-and-infrastructure": ["construction-and-engineering"],
+    "employment": ["employment"],
+    "banking-and-finance": ["banking-and-finance"],
+    "intellectual-property": ["intellectual-property-and-tmt"],
+    "technology-media-and-telecommunications-tmt": ["intellectual-property-and-tmt"],
+    "restructuring-and-insolvency": ["restructuring-and-insolvency"]
+  };
+  // [alert practices, publication topics]
+  var INSIGHT_KEYS = {
+    "arbitration-and-alternative-dispute-resolution": [["Dispute Resolution", "Construction and Arbitration"], ["Litigation and Arbitration"]],
+    "banking-and-finance": [["Banking and Finance", "Fintech"], []],
+    "competition-and-antitrust": [["Competition Law"], []],
+    "construction-engineering-projects-and-infrastructure": [["Construction and Arbitration"], []],
+    "corporate-and-commercial": [["Corporate"], ["Corporate"]],
+    "employment": [["Employment Law"], ["Employment"]],
+    "family-law": [["Family Law"], []],
+    "intellectual-property": [["Intellectual Property"], ["Intellectual Property and TMT"]],
+    "international-trade": [["Trade Remedies", "Trade and Customs"], []],
+    "investigations": [["Compliance and Investigations", "White Collar Crimes"], []],
+    "mergers-and-acquisitions": [["Corporate"], ["Corporate"]],
+    "oil-gas-and-energy": [["Energy"], []],
+    "real-estate": [["Real Estate"], []],
+    "regulatory-compliance-and-white-collar-defence": [["Compliance and Investigations", "White Collar Crimes", "Product Law"], ["Regulatory Compliance"]],
+    "restructuring-and-insolvency": [["Restructuring and Insolvency"], []],
+    "tax-and-revenue": [["Tax"], []],
+    "technology-media-and-telecommunications-tmt": [["Technology, Media and Telecommunications"], ["Intellectual Property and TMT"]],
+    // disputes pages
+    "banking-and-finance-disputes": [["Banking and Finance Litigation"], ["Litigation and Arbitration"]],
+    "construction-engineering-projects-and-infrastructure-disputes": [["Construction and Arbitration"], ["Litigation and Arbitration"]],
+    "regulatory-compliance-and-white-collar-defence-disputes": [["White Collar Crimes"], ["Litigation and Arbitration"]],
+    "_disputes": [["Dispute Resolution", "Banking and Finance Litigation", "Construction and Arbitration"], ["Litigation and Arbitration"]]
+  };
+  var MATTERS_SHOWN = 5, INSIGHTS_MAX = 10;
+  var MONTHS_S = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function shortDate(iso) { var p = String(iso).split("-"); return Number(p[2]) + " " + MONTHS_S[Number(p[1]) - 1] + " " + p[0]; }
+  // same rule as js/alerts.js, for the alert.html?a= links
+  function alertSlug(s) {
+    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[’'.]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80).replace(/-$/, "");
+  }
+
+  function addMatters(root, slug) {
+    var keys = MATTER_KEYS[slug];
+    if (!keys || !DEALS.length) return;
+    var list = DEALS.filter(function (d) { return d.areas.some(function (a) { return keys.indexOf(a) > -1; }); })
+      .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    if (!list.length) return;
+    var sec = el("section", "cv2-matters reveal");
+    var head = el("div", "pa-related-head");
+    head.appendChild(el("h2", "pa-section-title", "Selected Matters"));
+    sec.appendChild(head);
+    var ol = el("ol", "cv2-matters-list");
+    list.forEach(function (d, i) {
+      var li = el("li", "cv2-matter");
+      if (i >= MATTERS_SHOWN) li.hidden = true;
+      var a = el("a", "cv2-matter-link");
+      a.href = d.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.appendChild(el("span", "cv2-matter-date", shortDate(d.date)));
+      a.appendChild(el("span", "cv2-matter-title", d.title));
+      var v = el("span", "cv2-matter-value");
+      if (d.value) {
+        v.appendChild(el("strong", null, d.value.num + (d.value.unit || "")));
+        if (d.value.label) v.appendChild(el("span", null, d.value.label));
+      }
+      a.appendChild(v);
+      a.appendChild(icon("fa-solid fa-arrow-right cv2-matter-go"));
+      li.appendChild(a);
+      ol.appendChild(li);
+    });
+    sec.appendChild(ol);
+    if (list.length > MATTERS_SHOWN) {
+      var more = el("button", "cv2-matters-more");
+      more.type = "button";
+      var label = function (open) {
+        more.textContent = open ? "Show fewer " : "Show all " + list.length + " matters ";
+        more.appendChild(icon("fa-solid fa-chevron-down"));
+        more.classList.toggle("is-open", open);
+        more.setAttribute("aria-expanded", String(open));
+      };
+      label(false);
+      more.addEventListener("click", function () {
+        var open = !more.classList.contains("is-open");
+        ol.querySelectorAll(".cv2-matter").forEach(function (li, i) { if (i >= MATTERS_SHOWN) li.hidden = !open; });
+        label(open);
+        if (!open) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      sec.appendChild(more);
+    }
+    root.appendChild(show(sec));
+  }
+
+  function addInsights(root, slug, isDisputes) {
+    var keys = INSIGHT_KEYS[slug] || (isDisputes ? INSIGHT_KEYS._disputes : null);
+    if (!keys) return;
+    var items = [];
+    ALERTS.forEach(function (a) {
+      if (keys[0].indexOf(a.practice) < 0) return;
+      var s = alertSlug(a.title);
+      items.push({
+        type: a.label || "Alert", date: a.date, title: a.title, by: a.authors || "",
+        img: window.SkrineTopicImage ? window.SkrineTopicImage(a.topic, a.title, a.practice) : "images/hero-palette.jpg",
+        href: FULL[s] ? "alert.html?a=" + encodeURIComponent(s) : "alerts.html?q=" + encodeURIComponent(a.title)
+      });
+    });
+    PUBS.forEach(function (p) {
+      if (keys[1].indexOf(p.topic) < 0) return;
+      items.push({
+        type: "Publication", date: p.date, title: p.title, by: (p.authors || []).join(", "),
+        img: p.cover ? "images/publications/" + p.cover : "images/hero-palette.jpg", cover: !!p.cover,
+        href: p.pdf || "publications.html?q=" + encodeURIComponent(p.title), ext: !!p.pdf
+      });
+    });
+    if (!items.length) return;
+    items.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    items = items.slice(0, INSIGHTS_MAX);
+
+    var sec = el("section", "cv2-ins reveal");
+    sec.setAttribute("aria-roledescription", "carousel");
+    sec.setAttribute("aria-label", "Insights");
+    var head = el("div", "pa-related-head cv2-ins-head");
+    head.appendChild(el("h2", "pa-section-title", "Insights"));
+    var ctr = el("div", "cv2-ins-controls");
+    var prev = el("button", "cv2-ins-btn"); prev.type = "button"; prev.setAttribute("aria-label", "Previous insights"); prev.appendChild(icon("fa-solid fa-arrow-left"));
+    var next = el("button", "cv2-ins-btn"); next.type = "button"; next.setAttribute("aria-label", "Next insights"); next.appendChild(icon("fa-solid fa-arrow-right"));
+    ctr.appendChild(prev);
+    ctr.appendChild(next);
+    head.appendChild(ctr);
+    sec.appendChild(head);
+
+    var track = el("div", "cv2-ins-track");
+    items.forEach(function (it, i) {
+      var card = el("a", "cv2-ins-card");
+      card.href = it.href;
+      if (it.ext) { card.target = "_blank"; card.rel = "noopener"; }
+      card.setAttribute("aria-label", it.title + " (" + (i + 1) + " of " + items.length + ")");
+      var fig = el("span", "cv2-ins-img" + (it.cover ? " is-cover" : ""));
+      var im = el("img");
+      im.src = it.img;
+      im.alt = "";
+      im.loading = "lazy";
+      im.addEventListener("error", function () { im.src = "images/hero-palette.jpg"; fig.classList.remove("is-cover"); });
+      fig.appendChild(im);
+      fig.appendChild(el("span", "cv2-ins-type", it.type));
+      card.appendChild(fig);
+      var bodyEl = el("span", "cv2-ins-body");
+      bodyEl.appendChild(el("span", "cv2-ins-date", shortDate(it.date)));
+      bodyEl.appendChild(el("span", "cv2-ins-title", it.title));
+      if (it.by) bodyEl.appendChild(el("span", "cv2-ins-by", it.by));
+      var more = el("span", "cv2-ins-more", "Read more ");
+      more.appendChild(icon("fa-solid fa-arrow-right"));
+      bodyEl.appendChild(more);
+      card.appendChild(bodyEl);
+      track.appendChild(card);
+    });
+    sec.appendChild(track);
+    var dots = el("div", "cv2-ins-dots");
+    sec.appendChild(dots);
+
+    // one "page" = as many cards as fit; the arrows and dots move a page at a time
+    function step() {
+      var c = track.querySelector(".cv2-ins-card");
+      return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : track.clientWidth;
+    }
+    function perPage() { return Math.max(1, Math.floor((track.clientWidth + 2) / step())); }
+    function pages() { return Math.max(1, Math.ceil((items.length - perPage()) / perPage()) + 1); }
+    function current() {
+      if (track.scrollLeft + track.clientWidth > track.scrollWidth - 4) return pages() - 1;
+      return Math.min(pages() - 1, Math.round(track.scrollLeft / (step() * perPage())));
+    }
+    function goTo(p) { track.scrollTo({ left: p * step() * perPage(), behavior: "smooth" }); }
+    function sync() {
+      var n = pages(), c = current();
+      if (dots.children.length !== n) {
+        dots.textContent = "";
+        for (var i = 0; i < n; i++) (function (i) {
+          var b = el("button", "cv2-ins-dot");
+          b.type = "button";
+          b.setAttribute("aria-label", "Go to page " + (i + 1));
+          b.addEventListener("click", function () { goTo(i); });
+          dots.appendChild(b);
+        })(i);
+      }
+      Array.prototype.forEach.call(dots.children, function (b, i) { b.classList.toggle("is-current", i === c); });
+      var atStart = track.scrollLeft < 4, atEnd = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
+      prev.disabled = atStart;
+      next.disabled = atEnd;
+      sec.classList.toggle("is-static", atStart && atEnd);
+    }
+    prev.addEventListener("click", function () { goTo(Math.max(0, current() - 1)); });
+    next.addEventListener("click", function () { goTo(Math.min(pages() - 1, current() + 1)); });
+    var raf = 0;
+    track.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
+    window.addEventListener("resize", sync);
+    root.appendChild(show(sec));
+    requestAnimationFrame(sync);
+  }
+
   var detail = document.getElementById("paDetailV2");
   if (detail) {
     var q = new URLSearchParams(location.search);
@@ -657,6 +871,7 @@
       addHero(detail, X, true);
       body(detail, X, [], "Overview");
       if (X.groups.length) detail.appendChild(groupsSection(X.groups, "Our Work"));
+      addInsights(detail, X.slug, true);
       // other disputes areas
       var all = D.drList.filter(function (r) { return !r.pending; }).map(function (r) {
         return { slug: r.disputes || r.area, title: r.label, url: r.disputes ? disputesUrl(r.disputes) : areaUrl(r.area) };
@@ -795,6 +1010,8 @@
       addHero(detail, A, false);
       body(detail, A, [A.disputes ? disputesLink(D.disputes[A.disputes]) : null]);
       if (A.groups.length) detail.appendChild(groupsSection(A.groups, "Our Work"));
+      addMatters(detail, A.slug);
+      addInsights(detail, A.slug, A.kind === "disputes-only");
       others(detail, "Other Practice Areas", PRACTICES, A.slug, areaUrl);
     } else {
       detail.appendChild(el("h1", "page-title", "Practice area not found"));
