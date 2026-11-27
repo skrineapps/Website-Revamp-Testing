@@ -285,9 +285,6 @@
   -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.4) 50%, #000 90%);
   mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.4) 50%, #000 90%);
 }
-/* designs 7 and 8: the stock photos carry a watermark about 60% of the way down;
-   show only the top ~55% of the picture so it never appears */
-.skin-7 .st-quote::before,
 /* the founding year, large and faint in the corner, like a date mark in a history book */
 .st-quote::after {
   content: "1963";

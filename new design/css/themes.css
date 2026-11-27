@@ -1,20 +1,17 @@
 /* =========================================================
-   SKRINE — Site designs 2 to 6
-   Switched on by js/design.js: html gets "themed" plus one of
-     .skin-2  Ribbons   images/d2/ribbons.jpg   warm taupe, crimson ribbons
-     .skin-3  Artistic  images/d3/artistic.jpg  palette-knife KL skyline, cream, gold
-     .skin-4  Songket   images/d4/songket.jpg   woven songket, linen, gold thread
-     .skin-6  Peaks     images/d6/peaks.jpg     misty karst mountains
-     .skin-7  Steel     images/d7/metal.jpg     brushed corrugated steel (Getty comp: needs a licence)
-     .skin-9  Heritage  images/d9/heritage.jpg  grey KL painting (clock tower, Twin Towers, Merdeka 118), crimson strokes, gold threads; immersive hero
-   Design 1 (no class) is the original look and is untouched.
+   SKRINE — Site designs
+   Switched on by js/design.js: html always gets "themed" plus
+     Design 1  .skin-2.skin-2-5  Arches    images/d25/arches.jpg   cool greys, one crimson ribbon
+                                 (built on the satin-ribbon rules first written for .skin-2)
+     Design 2  .skin-9           Heritage  images/d9/heritage.jpg  grey KL painting, crimson strokes, gold threads
+   Both use the immersive home hero (html.imm, js/hero-immersive.js).
 
    How this file is laid out
    1. Each design sets its own palette and artwork as variables.
    2. Shared rules (.themed) use only those variables, so every page
       picks up whichever design is chosen without per-page work.
    3. A few rules belong to one design only: where the home hero text
-      sits, and what replaces Design 1's paint strokes.
+      sits, and the satin-ribbon highlights of Design 1.
 
    Branding stays in every design: the brand red #c32030 is the main
    accent (buttons, headings, active states, the logo), Merriweather and
@@ -25,7 +22,7 @@
    1. Palettes and artwork
    ========================================================= */
 .skin-2 {
-  /* Ribbons: warm sand and taupe, crimson ribbons */
+  /* base for Design 1 (.skin-2-5 below overrides the palette and artwork) */
   --red: #c32030;
   --red-dark: #8e1626;
   --red-soft: rgba(142, 22, 38, 0.08);
@@ -53,8 +50,6 @@
   --ribbon: linear-gradient(100deg, #5e0d18 0%, #8e1626 30%, #c32030 62%, #a3182a 100%);
   --rule: linear-gradient(90deg, #5e0d18, #c32030 70%, #e0606c);
 
-  --t-art: url("../images/d2/ribbons.jpg");
-  --t-wash: url("../images/d2/ribbons-wash.jpg");
   --t-hero-pos: 68% 50%;
   --t-field-pos: 80% 50%;
   --t-head-pos: 100% 45%;   /* the ribbons are on the right of the artwork */
@@ -63,88 +58,6 @@
   --t-head-opacity: 0.62;
   --t-foot-dir: 90deg;      /* dark on the left, the art shows on the right */
   --t-foot-pos: 100% 55%;
-}
-
-.skin-3 {
-  /* Artistic: cream canvas, charcoal, burgundy strokes, gold leaf */
-  --red: #c32030;
-  --red-dark: #8a1a2a;
-  --red-soft: rgba(138, 26, 42, 0.08);
-  --wine: #8a1a2a;
-  --wine-deep: #5a0f1a;
-  --accent: #b08d57;        /* gold, from the scales and the gold lines */
-
-  --grey-100: #efe8dc;
-  --grey-300: #d9cdbb;
-  --grey-500: #988c7e;
-  --grey-700: #6b6157;
-  --ink: #2a2522;
-  --ink-soft: #574e47;
-  --white: #fffcf6;
-  --muted-word: #8b8073;
-
-  --canvas: #f6f0e6;
-  --canvas-rgb: 246, 240, 230;
-  --pale-rgb: 237, 228, 212;
-  --tint-rgb: 216, 202, 180;
-  --dark: #2b2522;
-  --dark-rgb: 43, 37, 34;
-  --shade-rgb: 60, 45, 30;
-
-  --ribbon: linear-gradient(100deg, #6a1220 0%, #a01c2c 35%, #c32030 70%, #a8202e 100%);
-  --rule: linear-gradient(90deg, #8a1a2a, #c32030 65%, #b08d57);
-
-  --t-art: url("../images/d3/artistic.jpg");
-  --t-wash: url("../images/d3/artistic-wash.jpg");
-  --t-hero-pos: 0% 50%;
-  --t-field-pos: 0% 60%;
-  --t-head-pos: 0% 40%;     /* the art is on the left of the painting: mirror it to sit behind the right of the heading */
-  --t-head-flip: scaleX(-1);
-  --t-head-mask: radial-gradient(75% 105% at 0% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
-  --t-head-opacity: 0.7;
-  --t-foot-dir: 270deg;     /* dark on the right, the art shows on the left */
-  --t-foot-pos: 0% 60%;
-}
-
-.skin-4 {
-  /* Songket: linen, charcoal cloth, burgundy flowers, gold thread */
-  --red: #c32030;
-  --red-dark: #7e1a26;
-  --red-soft: rgba(126, 26, 38, 0.08);
-  --wine: #7e1a26;
-  --wine-deep: #521019;
-  --accent: #a8895a;        /* gold thread */
-
-  --grey-100: #ece4da;
-  --grey-300: #d6cabc;
-  --grey-500: #968a7f;
-  --grey-700: #685e57;
-  --ink: #29231f;
-  --ink-soft: #564c46;
-  --white: #fdfaf6;
-  --muted-word: #857a71;
-
-  --canvas: #f2ece4;
-  --canvas-rgb: 242, 236, 228;
-  --pale-rgb: 232, 223, 211;
-  --tint-rgb: 210, 196, 180;
-  --dark: #2a2421;
-  --dark-rgb: 42, 36, 33;
-  --shade-rgb: 55, 42, 34;
-
-  --ribbon: linear-gradient(100deg, #521019 0%, #7e1a26 30%, #c32030 65%, #9a1e2c 100%);
-  --rule: linear-gradient(90deg, #7e1a26, #c32030 60%, #a8895a);
-
-  --t-art: url("../images/d4/songket.jpg");
-  --t-wash: url("../images/d4/songket-wash.jpg");
-  --t-hero-pos: 0% 50%;
-  --t-field-pos: 0% 50%;
-  --t-head-pos: 0% 40%;
-  --t-head-flip: scaleX(-1);
-  --t-head-mask: radial-gradient(75% 105% at 0% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
-  --t-head-opacity: 0.75;
-  --t-foot-dir: 270deg;
-  --t-foot-pos: 0% 50%;
 }
 
 .themed {
@@ -256,41 +169,6 @@
 .themed .ht-word,
 .themed .hero-sub { text-shadow: 0 1px 18px rgba(var(--canvas-rgb), 0.65); }
 .themed .ht-word--swatch { text-shadow: none; } /* white on the red band: no glow */
-/* Designs 3 and 4: the art reaches further down before it fades (still fully gone
-   before the hero's clipped edge, so the page stays continuous), and the words
-   need less glow on the plain canvas */
-.skin-3 .hero-bg,
-.skin-4 .hero-bg {
-  -webkit-mask-image: linear-gradient(180deg, #000 66%, rgba(0, 0, 0, 0.55) 78%, rgba(0, 0, 0, 0.15) 86%, transparent 91%);
-  mask-image: linear-gradient(180deg, #000 66%, rgba(0, 0, 0, 0.55) 78%, rgba(0, 0, 0, 0.15) 86%, transparent 91%);
-}
-.skin-3 .hero-shade,
-.skin-4 .hero-shade {
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 94%);
-  mask-image: linear-gradient(180deg, #000 70%, transparent 94%);
-}
-.skin-3 .ht-word,
-.skin-4 .ht-word,
-.skin-3 .hero-sub,
-.skin-4 .hero-sub { text-shadow: 0 1px 10px rgba(var(--canvas-rgb), 0.5); }
-.skin-3 .ht-word--swatch,
-.skin-4 .ht-word--swatch { text-shadow: none; }
-/* Designs 3 and 4: the art is on the left, so the words keep to the right-hand canvas,
-   clear of the skyline / songket flowers */
-.skin-3 .hero-panel,
-.skin-4 .hero-panel {
-  left: auto;
-  right: clamp(24px, 6vw, 112px);
-  width: min(580px, 44vw);
-}
-@media (max-width: 900px) {
-  .skin-3 .hero-panel,
-  .skin-4 .hero-panel { right: clamp(16px, 4vw, 40px); width: min(560px, 62vw); }
-}
-@media (max-width: 760px) {
-  .skin-3 .hero-panel,
-  .skin-4 .hero-panel { left: 24px; right: 24px; width: auto; }
-}
 .themed .hero-eyebrow { color: var(--grey-700); }
 .themed .hero-eyebrow span { background: var(--rule); }
 .themed .ht-word:nth-child(2) { color: var(--muted-word); }
@@ -455,15 +333,11 @@
 
 /* ---------- Review pills ---------- */
 .themed .design-switch,
-.themed .layout-switch,
-.themed .scene-switch,
-.themed .photo-switch { background: rgba(var(--dark-rgb), 0.92); box-shadow: 0 10px 30px -10px rgba(var(--dark-rgb), 0.6); }
+.themed .layout-switch { background: rgba(var(--dark-rgb), 0.92); box-shadow: 0 10px 30px -10px rgba(var(--dark-rgb), 0.6); }
 .themed .design-switch a,
 .themed .layout-switch a { color: rgba(var(--canvas-rgb), 0.8); }
 .themed .design-switch a[aria-current],
-.themed .layout-switch a[aria-current],
-.themed .scene-switch a[aria-current],
-.themed .photo-switch a[aria-current] { background: linear-gradient(120deg, var(--wine), var(--red)); color: #fff; }
+.themed .layout-switch a[aria-current] { background: linear-gradient(120deg, var(--wine), var(--red)); color: #fff; }
 
 /* phones: the artwork runs behind the words, so the light reaches across the lower half */
 @media (max-width: 760px) {
@@ -479,7 +353,7 @@
    3. Per design
    ========================================================= */
 
-/* ---------- Design 2 (Ribbons) ----------
+/* ---------- Design 1 base (.skin-2: layout and satin ribbons) ----------
    The ribbons sweep through the right of the artwork, so the hero text
    moves into the open space on the left. Paint strokes become satin
    crimson ribbons: smooth, slightly slanted, with a sheen and a bright edge. */
@@ -552,255 +426,9 @@ html.skin-2 {
   .skin-2 .ht-swatch, .skin-2 .brush::before { animation: none; transform: skewX(-12deg); }
 }
 
-/* ---------- Design 3 (Artistic) ----------
-   The artwork is a palette-knife painting, so Design 1's brush strokes
-   belong here and stay (in brand red). The art fills the left of the
-   painting, so the hero text keeps its place on the right, over the
-   open cream canvas. Gold from the scales and gold lines is the accent. */
-.skin-3 .hero-shade {
-  background:
-    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 22%),
-    radial-gradient(34% 44% at 70% 52%, rgba(var(--canvas-rgb), 0.28) 0%, rgba(var(--canvas-rgb), 0) 100%);
-}
-.skin-3 .section-title::after { height: 4px; }
-.skin-3 .kit-polaroid::after { background: rgba(195, 32, 48, 0.82); }
-
-/* ---------- Design 4 (Songket) ----------
-   Paint strokes become a songket band: brand crimson edged with
-   gold thread top and bottom and a faint woven diamond pattern,
-   like the border of a kain songket. Square-cut, not slanted. */
-html.skin-4 {
-  --brush-mask: none;
-  --songket-weave:
-    repeating-linear-gradient(45deg, rgba(232, 200, 140, 0.14) 0 1px, transparent 1px 7px),
-    repeating-linear-gradient(-45deg, rgba(232, 200, 140, 0.14) 0 1px, transparent 1px 7px);
-  --songket-band: var(--songket-weave), linear-gradient(100deg, #6a1420 0%, #a01c2c 35%, #c32030 65%, #8e1a26 100%);
-  --songket-edge: inset 0 2px 0 #c9a66b, inset 0 -2px 0 #c9a66b, inset 0 4px 0 rgba(0, 0, 0, 0.18), inset 0 -4px 0 rgba(0, 0, 0, 0.18);
-}
-.skin-4 .hero-shade {
-  background:
-    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.55) 0%, rgba(var(--canvas-rgb), 0) 22%),
-    radial-gradient(34% 44% at 70% 52%, rgba(var(--canvas-rgb), 0.36) 0%, rgba(var(--canvas-rgb), 0) 100%);
-}
-.skin-4 .ht-swatch,
-.skin-4 .brush::before {
-  -webkit-mask: none;
-  mask: none;
-  border-radius: 2px;
-  background: var(--songket-band);
-  box-shadow: var(--songket-edge), 0 12px 24px -12px rgba(82, 16, 25, 0.6);
-}
-.skin-4 .ht-swatch { inset: 0.08em 0 0.04em; }
-.skin-4 .brush--ink::before { background: var(--songket-weave), linear-gradient(100deg, var(--dark), #4a403a 55%, var(--dark)); }
-.skin-4 .brush-tag::before,
-.skin-4 .life-route li.is-world span::before {
-  border-radius: 2px;
-  background: var(--songket-band);
-  box-shadow: inset 0 1.5px 0 #c9a66b, inset 0 -1.5px 0 #c9a66b;
-}
-.skin-4 .kit-polaroid::after {
-  height: 14px;
-  border-radius: 1px;
-  background: var(--songket-band);
-  box-shadow: inset 0 1.5px 0 #c9a66b, inset 0 -1.5px 0 #c9a66b;
-}
-/* heading rule: crimson between two gold threads */
-.skin-4 .section-title::after,
-.skin-4 .life-head .page-title::after {
-  width: 84px;
-  height: 7px;
-  border-radius: 0;
-  background:
-    linear-gradient(var(--accent), var(--accent)) top / 100% 1px no-repeat,
-    linear-gradient(var(--accent), var(--accent)) bottom / 100% 1px no-repeat,
-    linear-gradient(90deg, var(--wine), var(--red)) center / 100% 3px no-repeat;
-}
-.skin-4 .site-header::after,
-.skin-4 .site-footer::before { background: linear-gradient(90deg, var(--accent), var(--red) 30%, var(--wine) 70%, var(--accent)); }
-.skin-4 .pa-tile.is-active,
-.skin-4 .role-tabs button[aria-pressed="true"] { background: var(--songket-band); box-shadow: var(--songket-edge), 0 14px 28px -14px rgba(82, 16, 25, 0.7); }
-
 /* =========================================================
-   Design 6 (Peaks): misty karst mountains
-   Cool mist greys and slate from the photograph, a hint of
-   rainforest green; brand red stays the accent. The words sit
-   on the left, in the clouds, under a soft veil of mist. The
-   highlight is a red band whose ends fade out like mist.
-   ========================================================= */
-.skin-6 {
-  --red: #c32030;
-  --red-dark: #8e1626;
-  --red-soft: rgba(142, 22, 38, 0.07);
-  --wine: #8e1626;
-  --wine-deep: #5a0f18;
-  --accent: #3f5a4c;        /* rainforest green */
-
-  --grey-100: #e9edeb;
-  --grey-300: #cfd6d3;
-  --grey-500: #8c9592;
-  --grey-700: #5f6966;
-  --ink: #1f2523;
-  --ink-soft: #4d5653;
-  --white: #fcfdfc;
-  --muted-word: #6f7a76;
-
-  --canvas: #f2f4f3;
-  --canvas-rgb: 242, 244, 243;
-  --pale-rgb: 230, 234, 232;
-  --tint-rgb: 205, 212, 208;
-  --dark: #1c2321;
-  --dark-rgb: 28, 35, 33;
-  --shade-rgb: 25, 35, 32;
-
-  --ribbon: linear-gradient(100deg, #5a0f18 0%, #8e1626 30%, #c32030 70%, #a81b2a 100%);
-  --rule: linear-gradient(90deg, rgba(195, 32, 48, 0) 0%, #c32030 22%, #c32030 78%, rgba(195, 32, 48, 0) 100%);
-
-  --t-art: url("../images/d6/peaks.jpg");
-  --t-wash: url("../images/d6/peaks-wash.jpg");
-  --t-hero-pos: 50% 30%;
-  --t-field-pos: 50% 40%;
-  --t-head-pos: 60% 22%;
-  --t-head-flip: none;
-  --t-head-mask: radial-gradient(75% 105% at 100% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
-  --t-head-opacity: 0.55;
-  --t-foot-dir: 90deg;
-  --t-foot-pos: 50% 85%;
-}
-
-/* hero: mist veil on the left behind the words */
-.skin-6 .hero-shade {
-  background:
-    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.5) 0%, rgba(var(--canvas-rgb), 0) 22%),
-    radial-gradient(55% 75% at 22% 58%, rgba(var(--canvas-rgb), 0.86) 0%, rgba(var(--canvas-rgb), 0.6) 45%, rgba(var(--canvas-rgb), 0) 100%);
-}
-.skin-6 .hero-panel {
-  left: clamp(20px, 6vw, 104px);
-  right: auto;
-  width: min(600px, calc(100% - 40px));
-}
-.skin-6 .scroll-cue { left: auto; right: clamp(16px, 4vw, 64px); bottom: 150px; color: rgba(255, 255, 255, 0.85); }
-.skin-6 .scroll-cue span { background: rgba(255, 255, 255, 0.6); }
-
-/* highlight: brand red, the ends fading out like mist */
-html.skin-6 { --brush-mask: none; }
-.skin-6 .ht-swatch,
-.skin-6 .brush::before {
-  -webkit-mask: none;
-  mask: none;
-  inset: 0.06em -0.2em 0.02em;
-  border-radius: 0;
-  background: linear-gradient(90deg, rgba(195, 32, 48, 0) 0%, #b51d2d 9%, #c32030 50%, #b51d2d 91%, rgba(195, 32, 48, 0) 100%);
-  box-shadow: none;
-}
-.skin-6 .brush--ink::before { background: linear-gradient(90deg, rgba(var(--dark-rgb), 0) 0%, var(--dark) 9%, var(--dark) 91%, rgba(var(--dark-rgb), 0) 100%); }
-.skin-6 .brush-tag::before,
-.skin-6 .life-route li.is-world span::before { border-radius: 999px; background: var(--red); }
-.skin-6 .kit-polaroid::after { height: 12px; border-radius: 6px; background: rgba(195, 32, 48, 0.85); }
-.skin-6 .section-title::after { width: 110px; }
-@media (max-width: 760px) {
-  .skin-6 .hero-panel { left: 20px; right: 20px; width: auto; }
-}
-
-/* =========================================================
-   Design 7 (Steel): brushed, corrugated steel
-   Cool silver greys from the photograph, a calm near-white
-   canvas, brand red as the one accent. The picture has no
-   empty space, so the words sit on the left under a soft veil
-   of canvas. The highlight is a red band ribbed like the metal.
-   NOTE: images/d7/metal.jpg is a Getty Images comp (watermarked,
-   small). It needs a licence, or a replacement photo, before
-   going live. The watermark sits in the part of the artwork the
-   page fades out.
-   ========================================================= */
-.skin-7 {
-  --red: #c32030;
-  --red-dark: #8e1626;
-  --red-soft: rgba(142, 22, 38, 0.07);
-  --wine: #8e1626;
-  --wine-deep: #5a0f18;
-  --accent: #6b7b88;        /* steel blue-grey */
-
-  --grey-100: #ecedee;
-  --grey-300: #d0d3d6;
-  --grey-500: #8d9297;
-  --grey-700: #5d6368;
-  --ink: #1e2124;
-  --ink-soft: #4c5257;
-  --white: #fcfcfd;
-  --muted-word: #757b80;
-
-  --canvas: #f1f2f3;
-  --canvas-rgb: 241, 242, 243;
-  --pale-rgb: 229, 231, 233;
-  --tint-rgb: 206, 210, 213;
-  --dark: #1d2023;
-  --dark-rgb: 29, 32, 35;
-  --shade-rgb: 28, 32, 36;
-
-  --ribbon: linear-gradient(100deg, #5a0f18 0%, #8e1626 30%, #c32030 70%, #a81b2a 100%);
-  --rule: linear-gradient(90deg, #c32030 0 70%, #8d9297 70% 100%);
-
-  --t-art: url("../images/d7/metal.jpg");
-  --t-wash: url("../images/d7/metal-wash.jpg");
-  --t-hero-pos: 50% 40%;
-  --t-field-pos: 50% 50%;
-  --t-head-pos: 50% 40%;
-  --t-head-flip: none;
-  --t-head-mask: radial-gradient(75% 105% at 100% 0%, #000 30%, rgba(0, 0, 0, 0.5) 55%, transparent 80%);
-  --t-head-opacity: 0.5;
-  --t-foot-dir: 90deg;
-  --t-foot-pos: 50% 12%;   /* high in the picture, clear of the watermark */
-}
-
-/* hero artwork: shown larger and pinned to the top, so the watermark (low in the picture)
-   lands in the part of the hero that fades out. Very wide screens fall back to "cover". */
-.skin-7 .hero-bg { background-size: auto 142%; background-position: 50% 0; }
-@media (min-aspect-ratio: 21/10) {
-  .skin-7 .hero-bg { background-size: cover; }
-}
-
-/* hero: a veil of canvas on the left behind the words, the steel showing on the right */
-.skin-7 .hero-shade {
-  background:
-    linear-gradient(180deg, rgba(var(--canvas-rgb), 0.5) 0%, rgba(var(--canvas-rgb), 0) 22%),
-    radial-gradient(60% 85% at 24% 58%, rgba(var(--canvas-rgb), 0.92) 0%, rgba(var(--canvas-rgb), 0.66) 46%, rgba(var(--canvas-rgb), 0) 100%);
-}
-.skin-7 .hero-panel {
-  left: clamp(20px, 6vw, 104px);
-  right: auto;
-  width: min(600px, calc(100% - 40px));
-}
-.skin-7 .scroll-cue { left: auto; right: clamp(16px, 4vw, 64px); bottom: 150px; color: rgba(255, 255, 255, 0.9); }
-.skin-7 .scroll-cue span { background: rgba(255, 255, 255, 0.65); }
-
-/* highlight: a brand-red band ribbed like corrugated steel, with a bright top edge */
-html.skin-7 {
-  --brush-mask: none;
-  --steel-ribs: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.13) 0 2px, rgba(0, 0, 0, 0.1) 2px 4px);
-}
-.skin-7 .ht-swatch,
-.skin-7 .brush::before {
-  -webkit-mask: none;
-  mask: none;
-  border-radius: 2px;
-  background: var(--steel-ribs), linear-gradient(180deg, #d0283a 0%, #c32030 50%, #a81b2a 100%);
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4), 0 12px 24px -12px rgba(95, 14, 22, 0.6);
-}
-.skin-7 .brush--ink::before { background: var(--steel-ribs), linear-gradient(180deg, #3a3f44, var(--dark)); }
-.skin-7 .brush-tag::before,
-.skin-7 .life-route li.is-world span::before { border-radius: 2px; background: var(--red); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35); }
-.skin-7 .kit-polaroid::after { height: 12px; border-radius: 2px; background: var(--steel-ribs), var(--red); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.35); }
-.skin-7 .section-title::after,
-.skin-7 .life-head .page-title::after { border-radius: 0; }
-.skin-7 .pa-tile.is-active,
-.skin-7 .role-tabs button[aria-pressed="true"] { background: var(--steel-ribs), var(--red); box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.35), 0 14px 28px -14px rgba(95, 14, 22, 0.6); }
-@media (max-width: 760px) {
-  .skin-7 .hero-panel { left: 20px; right: 20px; width: auto; }
-}
-
-/* =========================================================
-   Design 9 (Heritage): an immersive hero on Design 3's painting
-   The palette-knife painting from Design 3 (scales of justice, the
+   Design 2 (Heritage, .skin-9): the immersive hero on a KL painting
+   A palette-knife painting (scales of justice, the
    KL skyline, a domed heritage building). Moving through the values
    zooms slowly into the scales and skyline on the left, while the
    words sit on the open cream canvas on the right.
@@ -901,7 +529,7 @@ html.skin-7 {
 .imm .ht-word::after { display: none; }
 .imm .v9-done .ht-word { filter: none; transform: none; }
 
-/* after the third value: the finished look (as Design 3), Ingenuity on the red band */
+/* after the third value: the finished look, Ingenuity on the red band */
 .imm .v9-done .ht-word { color: var(--ink); }
 .imm .v9-done .ht-word:nth-child(2) { color: var(--muted-word); }
 .imm .v9-done .ht-word--swatch { margin-top: 0.08em; padding: 0.04em 0.28em 0.1em 0.2em; margin-left: -0.2em; }
@@ -937,7 +565,7 @@ html.skin-7 {
   .imm .v9-light { display: none; }
 }
 
-/* ---- Design 9: scroll-through (laptop) and swipe (phone) ---- */
+/* ---- immersive hero: scroll-through (laptop) and swipe (phone) ---- */
 .imm .hero.v9-hero { height: auto; min-height: 0; overflow: visible; perspective: none; }
 .imm .v9-stage { position: relative; height: 100vh; min-height: 620px; overflow: hidden; perspective: 1200px; }
 /* scroll run is a fixed distance (not a multiple of the screen), so it feels the same on every
@@ -983,7 +611,7 @@ html.skin-7 {
 .imm .v9-swipe .v9-stage { touch-action: pan-y; }
 
 /* =========================================================
-   Design pill: nine designs. On phones the pill would run off
+   Design pill. On phones the pill would run off
    the screen, so it drops its "Design" label and tightens up.
    ========================================================= */
 @media (max-width: 520px) {
@@ -1026,71 +654,17 @@ html.imm .v9-done .ht-text { color: #fff; transition: color 0.3s ease 0.5s; }
   html:not(.imm) .ht-text { animation: none; color: #fff; }
 }
 
-/* =========================================================
-   Design 10 (Kuala Lumpur): Design 9's immersive hero and behaviour
-   (html gets skin-9 too) on the bright KL painting, images/d10/kl.jpg:
-   Sultan Abdul Samad's clock tower, the Malaysian flag, the Twin Towers,
-   KL Tower and Merdeka 118 under a pale sky; white plaster, crimson
-   strokes, gold threads. Only the painting and the palette change.
-   ========================================================= */
-html.skin-9.skin-10 {
-  --accent: #b8955a;         /* gold threads */
-
-  /* clean, cool white plaster */
-  --grey-100: #eef0f1;
-  --grey-300: #d5d8db;
-  --grey-500: #949aa0;
-  --grey-700: #6b7178;
-  --ink: #23262a;
-  --ink-soft: #4f545a;
-  --white: #fdfdfd;
-  --muted-word: #8c9298;
-
-  --canvas: #f4f5f6;
-  --canvas-rgb: 244, 245, 246;
-  --pale-rgb: 235, 237, 239;
-  --tint-rgb: 210, 214, 218;
-  --dark: #26292d;
-  --dark-rgb: 38, 41, 45;
-  --shade-rgb: 34, 30, 34;
-
-  /* crimson of the brush strokes and the domes */
-  --ribbon: linear-gradient(100deg, #7a1020 0%, #a3172a 35%, #c32030 72%, #b01c2c 100%);
-  --rule: linear-gradient(90deg, #a3172a, #c32030 65%, #b8955a);
-
-  --t-art: url("../images/d10/kl.jpg");
-  --t-wash: url("../images/d10/kl-wash.jpg");
-}
 /* Merdeka 118 rises right behind the hero words in this painting: a softer, stronger light keeps them clear */
-html.skin-9 .hero-shade {   /* Designs 9 and 10: Merdeka 118 rises behind the words */
+html.skin-9 .hero-shade {
   background:
     linear-gradient(180deg, rgba(var(--canvas-rgb), 0.5) 0%, rgba(var(--canvas-rgb), 0) 22%),
     radial-gradient(44% 58% at 70% 50%, rgba(var(--canvas-rgb), 0.82) 0%, rgba(var(--canvas-rgb), 0.55) 50%, rgba(var(--canvas-rgb), 0) 100%);
 }
 
 /* =========================================================
-   Immersive hero on every design (html.imm, js/hero-immersive.js).
-   The behaviour rules above are shared; each design keeps its own
-   painting, colours and text position. Design 1 has no theme
-   variables, so the hero gets brand-grey defaults here.
-   ========================================================= */
-html.imm:not(.themed) {
-  --canvas: #fbfbfb;
-  --canvas-rgb: 251, 251, 251;
-  --dark-rgb: 42, 42, 42;
-  --muted-word: #757575;
-  --accent: #959897;
-  --rule: linear-gradient(90deg, #9a1825, #c32030);
-}
-/* Design 7: the image carries a watermark low in the picture; show it larger and pinned to
-   the top (as the old hero did) so the watermark stays below the visible area */
-html.imm.skin-7 .v9-layer { background-size: auto 230%; }
-@media (min-aspect-ratio: 21/10) { html.imm.skin-7 .v9-layer { background-size: cover; } }
-
-/* =========================================================
-   Design 2.5 (Arches): Design 2 with its own artwork
-   Same layout and satin-ribbon treatments as Design 2 (the html also
-   carries .skin-2); only the artwork and the palette change: white
+   Design 1 (Arches, .skin-2.skin-2-5)
+   The satin-ribbon layout and treatments of the .skin-2 rules above,
+   with its own artwork and palette: white
    architectural arches and a single crimson ribbon, so the neutrals turn
    cool and clean instead of warm taupe. images/d25/arches.jpg
    ========================================================= */
