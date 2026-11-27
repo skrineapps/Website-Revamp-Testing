@@ -397,10 +397,23 @@
       if (HUB) paGrid.before(show(drFeature(HUB)));
     }
 
+    // Layout 3 (capabilities-v2.html): no preview panel, a tile opens its page straight away
+    var direct = !drSplit;
+
     TILES.forEach(function (x, i) {
       var wrap = el("div", "pa-tile-wrap reveal");
       wrap.setAttribute("role", "listitem");
       wrap.style.setProperty("--delay", (i % 4) * 0.06 + "s");
+      if (direct) {
+        var link = el("a", "pa-tile cv2-tile cv2-tile--link");
+        link.href = areaUrl(x.slug);
+        link.appendChild(el("span", "cv2-tile-name", x.title));
+        if (x.kind === "hub") link.appendChild(el("span", "cv2-tile-tag", D.drList.length + " areas of dispute"));
+        link.appendChild(icon("fa-solid fa-arrow-right pa-tile-chev"));
+        wrap.appendChild(link);
+        paGrid.appendChild(show(wrap));
+        return;
+      }
       var btn = el("button", "pa-tile cv2-tile");
       btn.type = "button";
       btn.id = "tile-" + x.slug;
@@ -416,6 +429,11 @@
       pTiles.push({ wrap: wrap, btn: btn, x: x });
     });
 
+    if (direct) {
+      // old links like capabilities-v2.html#banking-and-finance now go to the page itself
+      var hashed = AREA[location.hash.slice(1)];
+      if (hashed) location.replace(areaUrl(hashed.slug));
+    }
     var colsOf = function () { return getComputedStyle(paGrid).gridTemplateColumns.split(" ").filter(Boolean).length || 1; };
     // the panel sits after the last tile of the clicked tile's row
     var placeP = function (i) {

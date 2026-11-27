@@ -476,3 +476,7 @@ a.cv2-dr-row:hover .cv2-dr-arrow { transform: translateX(4px); }
 .sw-points li { font-size: 14.5px; color: var(--ink-soft); }
 @media (max-width: 760px) { .sw-list { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .sw-row::before { transition: none; } }
+
+/* Layout 3: tiles are plain links to the practice area page (no preview panel) */
+.cv2-tile--link .pa-tile-chev { font-size: 13px; }
+.cv2-tile--link:hover .pa-tile-chev, .cv2-tile--link:focus-visible .pa-tile-chev { color: var(--red); transform: translate(4px, -50%); }

@@ -63,14 +63,9 @@
   var headMode = headAsked || (function () { try { var v = sessionStorage.getItem(HEAD_KEY); return isStyle(v) ? v : null; } catch (e) { return null; } })() || "art";
   var headingPage = !NO_HEADING_ART[hereFile];
 
-  // practice area pages: with or without the practice photos (?photos=off), remembered for the visit
+  // practice area pages are shown without the practice photos (the Photos On/Off pill was dropped after review)
   var PHOTO_PAGES = { "capabilities.html": 1, "capabilities-classic.html": 1, "practice-area.html": 1, "capabilities-v2.html": 1, "capabilities-tiles.html": 1, "practice-area-v2.html": 1 };
-  var photoPage = !!PHOTO_PAGES[hereFile];
-  var photosAsked = params.get("photos");
-  if (photosAsked !== "on" && photosAsked !== "off") photosAsked = null;
-  try { if (photosAsked) sessionStorage.setItem("skrine-pa-photos", photosAsked); } catch (e) {}
-  var photosMode = photosAsked || (function () { try { return sessionStorage.getItem("skrine-pa-photos"); } catch (e) { return null; } })() || "on";
-  if (photoPage && photosMode === "off") html.classList.add("pa-nophoto");
+  if (PHOTO_PAGES[hereFile]) html.classList.add("pa-nophoto");
   if (headingPage && headMode !== "art") { html.classList.add("heading-el"); html.classList.add("el-" + headMode); }
   // the animated styles live in js/heading-fx.js, loaded only when one is chosen
   if (headingPage && headMode !== "art") {
@@ -125,29 +120,6 @@
       nav.appendChild(a);
     });
     document.body.appendChild(nav);
-
-    // photos pill: practice area pages only
-    if (photoPage) {
-      var pp = document.createElement("nav");
-      pp.className = "photo-switch";
-      pp.setAttribute("aria-label", "Practice area photos");
-      pp.innerHTML = '<span class="layout-switch-label">Photos</span>';
-      [["on", "On"], ["off", "Off"]].forEach(function (m) {
-        var a = document.createElement("a");
-        a.textContent = m[1];
-        if (m[0] === photosMode) a.setAttribute("aria-current", "true");
-        var set = function () { var u = new URL(hrefFor(here, null)); u.searchParams.set("photos", m[0]); a.href = u.href; };
-        set();
-        ["pointerdown", "focus"].forEach(function (ev) { a.addEventListener(ev, set); });
-        pp.appendChild(a);
-      });
-      document.body.appendChild(pp);
-      // sits above whichever pills this page already has
-      requestAnimationFrame(function () {
-        var stack = document.querySelectorAll(".layout-switch, .scene-switch").length;
-        pp.style.bottom = (16 + 50 * (stack + 1)) + "px";
-      });
-    }
 
     // heading pill: inner pages only
     if (headingPage) {
