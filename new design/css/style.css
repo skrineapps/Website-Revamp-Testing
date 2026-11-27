@@ -486,7 +486,7 @@ body.header-hidden { --sticky-top: 0px; }
 }
 .hero-rosettes li:nth-child(1) { animation-delay: 1.8s; }
 .hero-rosettes li:nth-child(2) { animation-delay: 1.95s; }
-.hero-rosettes img { height: 58px; width: auto; }
+.hero-rosettes img { height: 72px; width: auto; }
 .hero-rosettes li:nth-child(2) img { border-radius: 4px; box-shadow: var(--shadow-sm); }
 .hero-rosettes li:hover { transform: rotateY(-14deg) translateY(-4px); filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.15)); }
 
@@ -1412,7 +1412,7 @@ main {
   .hero-tagline { font-size: clamp(36px, 11vw, 46px); }
   .hero-actions { gap: 10px; }
   .hero-actions .btn { padding: 11px 18px; font-size: 14px; }
-  .hero-rosettes img { height: 56px; }
+  .hero-rosettes img { height: 64px; }
   .scroll-cue { display: none; }
 
   .carousel-stage { height: 450px; }

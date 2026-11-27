@@ -264,6 +264,12 @@
 }
 .pa-overview-text { font-size: 16.5px; line-height: 1.8; color: var(--ink-soft); }
 .pa-overview-text + .pa-overview-text { margin-top: 16px; }
+/* long write-ups on the practice area and sector pages (overview, the tile preview panel,
+   expanded sub-practices): justified, with hyphenation; the large opening
+   line of the Dispute Resolution overview stays left. Phones: left-aligned (column too narrow) */
+.pa-overview-text, .pa-panel-text, .pa-rel-body p { text-align: justify; -webkit-hyphens: auto; hyphens: auto; }
+.pa-overview-text .cv2-lead { text-align: left; -webkit-hyphens: manual; hyphens: manual; }
+@media (max-width: 560px) { .pa-overview-text, .pa-panel-text, .pa-rel-body p { text-align: left; } }
 
 .pa-team-box {
   position: sticky;
@@ -325,7 +331,8 @@
 .pa-rel[open] .pa-rel-num { color: var(--red); }
 .pa-rel[open] .pa-rel-icon { transform: rotate(45deg); background: var(--red); color: var(--white); }
 
-.pa-rel-body { padding: 0 22px 22px 54px; font-size: 15px; line-height: 1.7; color: var(--ink-soft); }
+/* the text sits between the title on the left and the open/close button on the right */
+.pa-rel-body { padding: 0 54px 22px 54px; font-size: 15px; line-height: 1.7; color: var(--ink-soft); }
 .pa-rel[open] .pa-rel-body { animation: fadeUp 0.4s var(--ease); }
 .pa-rel-body p + p { margin-top: 10px; }
 .pa-rel-points { margin-top: 10px; padding-left: 18px; list-style: disc; }
@@ -366,7 +373,7 @@
   .pa-related-preview { grid-template-columns: 1fr; }
   .pa-team, .pa-team-box .pa-team { grid-template-columns: 1fr; }
   .pa-banner { height: 120px; }
-  .pa-rel-body { padding-left: 22px; }
+  .pa-rel-body { padding-left: 22px; padding-right: 22px; }
 }
 
 /* =========================================================

@@ -713,3 +713,7 @@ html.skin-2.skin-2-5 {
 /* the artwork is light: the scroll cue goes dark instead of white */
 .skin-2-5 .scroll-cue { color: var(--grey-700); }
 .skin-2-5 .scroll-cue span { background: rgba(var(--dark-rgb), 0.35); }
+/* the award rosettes: their own row under the buttons, on the grey left of the artwork
+   (at the end of the button row they sat on the red ribbon and got lost) */
+.skin-2-5 .hero-foot { justify-content: flex-start; }
+.skin-2-5 .hero-rosettes { flex-basis: 100%; }

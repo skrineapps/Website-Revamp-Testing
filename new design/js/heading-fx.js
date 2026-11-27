@@ -83,11 +83,23 @@
     if (window.ResizeObserver) new ResizeObserver(size).observe(layer); else window.addEventListener("resize", size);
     return { ctx: ctx, box: box };
   }
+  // drawn at ~30 frames a second, and held still while the page is scrolling, so the
+  // smooth scroll (js/smooth-scroll.js) always has the frames to itself
+  var scrolling = false, scrollTimer = null;
+  window.addEventListener("scroll", function () {
+    scrolling = true;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function () { scrolling = false; }, 160);
+  }, { passive: true });
   function loop(draw, active) {
-    var t0 = performance.now();
+    var t0 = performance.now(), lastDraw = 0, held = 0;
     if (reduce) { draw(12); return; }
     (function frame(now) {
-      if (active()) draw((now - t0) / 1000);
+      var busy = scrolling || (window.SkrineLenis && window.SkrineLenis.isScrolling);
+      if (busy) held += now - (lastDraw || now);   // the drape picks up where it stopped
+      else if (active() && now - lastDraw >= 33) draw((now - t0 - held) / 1000);
+      if (!busy && now - lastDraw >= 33) lastDraw = now;
+      if (busy) lastDraw = now;
       requestAnimationFrame(frame);
     })(t0);
   }

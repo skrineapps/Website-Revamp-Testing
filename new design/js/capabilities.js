@@ -3,7 +3,7 @@
    - capabilities.html (Design 1): grid of practice areas; clicking one opens a
      the Design 2 panel with a shortened write-up and a deals & transactions carousel
    - capabilities-classic.html (Design 2): the original preview panel
-     (overview, related capabilities preview, team)
+     (overview, related services preview, team)
    - practice-area.html?area=<slug>: full practice area page with every
      related capability
    - sectors.html / sector.html?sector=<slug>: sectors grid and sector page
@@ -19,7 +19,7 @@
   var PHOTO_DIR = "../current design/images/people/";
   // a file name in that folder, or a full URL (WordPress media library)
   function photoUrl(f) { return /^(https?:)?\/\//.test(f) ? f : PHOTO_DIR + encodeURIComponent(f); }
-  var PREVIEW_RELATED = 6; // related capabilities shown in the panel before "View all"
+  var PREVIEW_RELATED = 6; // related services shown in the panel before "View all"
   var PREVIEW_TEAM = 9;
 
   /* ---------- helpers ---------- */
@@ -349,10 +349,10 @@
       left.appendChild(go);
       body.appendChild(left);
 
-      // right: related capabilities preview + team
+      // right: related services preview + team
       var right = el("div", "pa-panel-side");
       if (area.related.length) {
-        right.appendChild(el("h3", "pa-side-title", "Related Capabilities"));
+        right.appendChild(el("h3", "pa-side-title", "Related Services"));
         var ul = el("ul", "pa-related-preview");
         area.related.slice(0, PREVIEW_RELATED).forEach(function (r) {
           var li = el("li");
@@ -366,8 +366,8 @@
         var all = el("a", "pa-view-all");
         all.href = areaUrl(area.slug, "related");
         all.innerHTML = (area.related.length > PREVIEW_RELATED
-          ? "View all " + area.related.length + " related capabilities"
-          : "View related capabilities") + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+          ? "View all " + area.related.length + " related services"
+          : "View related services") + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
         right.appendChild(all);
       }
       if (area.team.length) {
@@ -495,12 +495,12 @@
       var head = el("header", "page-head reveal");
       var crumbs = el("nav", "pa-crumbs");
       crumbs.setAttribute("aria-label", "Breadcrumb");
-      crumbs.innerHTML = '<a href="capabilities.html">Capabilities</a><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><a href="capabilities.html">Practice Areas</a>';
+      crumbs.innerHTML = '<a href="capabilities.html">Services</a><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><a href="capabilities.html">Practice Areas</a>';
       head.appendChild(crumbs);
       head.appendChild(el("h1", "page-title", area.title));
       var stats = el("p", "pa-hero-stats");
       stats.textContent = [
-        area.related.length ? area.related.length + " related capabilities" : null,
+        area.related.length ? area.related.length + " related services" : null,
         area.team.length ? area.team.length + (area.team.length === 1 ? " team member" : " team members") : null
       ].filter(Boolean).join("  ·  ");
       head.appendChild(stats);
@@ -583,12 +583,12 @@
       }
       detail.appendChild(cols);
 
-      // related capabilities (full list)
+      // related services (full list)
       if (area.related.length) {
         var rel = el("section", "pa-related");
         rel.id = "related";
         var head = el("div", "pa-related-head");
-        head.appendChild(el("h2", "pa-section-title", "Related Capabilities"));
+        head.appendChild(el("h2", "pa-section-title", "Related Services"));
         var expandAll = el("button", "pa-expand-all", "Expand all");
         expandAll.type = "button";
         head.appendChild(expandAll);
@@ -763,7 +763,7 @@
       var shead = el("header", "page-head reveal");
       var scrumbs = el("nav", "pa-crumbs");
       scrumbs.setAttribute("aria-label", "Breadcrumb");
-      scrumbs.innerHTML = '<a href="capabilities.html">Capabilities</a><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><a href="sectors.html">Sectors</a>';
+      scrumbs.innerHTML = '<a href="capabilities.html">Services</a><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><a href="sectors.html">Sectors</a>';
       shead.appendChild(scrumbs);
       shead.appendChild(el("h1", "page-title", sector.title));
       if (sector.team.length) shead.appendChild(el("p", "pa-hero-stats", sector.team.length + (sector.team.length === 1 ? " team member" : " team members")));
