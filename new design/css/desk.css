@@ -221,3 +221,66 @@ a.dk-chip:hover { background: var(--red); color: var(--white); }
   .dk-talks a i { display: none; }
   .dk-rel-link { margin-left: 0; }
 }
+
+
+/* =========================================================
+   Desk pages: the profile-style layout (tabs, heading left, content
+   right) with a few touches of their own so the two don't look identical.
+   ========================================================= */
+/* tabs: the active one gets a soft red tint behind it as well as the underline */
+.dk-page .pf-nav-link { border-radius: 10px 10px 0 0; transition: color 0.2s, background 0.25s; }
+.dk-page .pf-nav-link.is-active { background: var(--red-soft); }
+/* section heading: a thin red rule down the left of the heading column instead of the short bar under the title */
+.dk-page .pf-section-head { padding-left: 20px; border-left: 2px solid var(--red); }
+.dk-page .pf-section-title::after { display: none; }
+.dk-page .pf-section-head .eyebrow { color: var(--grey-700); }
+@media (max-width: 860px) { .dk-page .pf-section-head { padding-left: 14px; } }
+
+/* phones: "On this page" menu instead of the tab strip (js/desk.js) */
+.dk-jump { display: none; }
+@media (max-width: 760px) {
+  .dk-page .pf-nav-inner { display: none; }
+  .dk-page .pf-nav { padding: 8px 0; border-bottom: 0; }
+  .dk-jump { display: block; position: relative; }
+  .dk-jump-btn {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "kicker icon" "label icon";
+    align-items: center;
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--grey-100);
+    box-shadow: 0 12px 26px -18px rgba(0, 0, 0, 0.4);
+    text-align: left;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .dk-jump-kicker { grid-area: kicker; font-size: 10.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-700); }
+  .dk-jump-label { grid-area: label; font: 700 16px/1.3 var(--font-display); color: var(--ink); }
+  .dk-jump-btn i { grid-area: icon; color: var(--red); font-size: 13px; transition: transform 0.3s var(--ease); }
+  .dk-jump.is-open .dk-jump-btn i { transform: rotate(180deg); }
+  .dk-jump-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    padding: 6px;
+    border-radius: 14px;
+    background: var(--white);
+    border: 1px solid var(--grey-100);
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.4);
+  }
+  .dk-jump-menu[hidden] { display: none; }
+  .dk-jump-menu a { display: block; padding: 11px 14px; border-radius: 10px; font-size: 15px; font-weight: 600; color: var(--ink); }
+  .dk-jump-menu a.is-active { color: var(--red); background: var(--red-soft); }
+  .themed .dk-jump-btn { background: rgba(var(--canvas-rgb), 0.94); }
+}
+
+/* phones: the section bar crops anything below it (clip-path from the profile styles), which hid
+   the "On this page" menu when it opened; let it show */
+@media (max-width: 760px) {
+  .dk-page .pf-nav { clip-path: none; box-shadow: none; background: transparent; }
+  .dk-jump-menu { z-index: 30; }
+}

@@ -350,7 +350,7 @@
 .themed .kit-panel::before {
   background: linear-gradient(150deg, rgba(var(--canvas-rgb), 0.82), rgba(var(--pale-rgb), 0.68));
   border-left-color: var(--wine);
-  border-radius: 0 22px 22px 0;
+  border-radius: 0;
   box-shadow: 0 24px 50px -20px rgba(var(--dark-rgb), 0.35);
 }
 .themed .kit-painted::before { background-image: var(--t-art); }
@@ -415,7 +415,7 @@
   box-shadow: 0 14px 28px -14px rgba(94, 13, 24, 0.7);
 }
 
-/* cards and quotes with a red edge: the edge stays (brand), the corners soften */
+/* cards and quotes with a red edge: the edge stays straight (no curved red corners) */
 .themed .cr-quote,
 .themed .cr-lead::before,
 .themed .ct-form-wrap::before,
@@ -424,7 +424,7 @@
 .themed .life-lead::before,
 .themed .ne-up {
   border-left-color: var(--wine);
-  border-radius: 4px 22px 22px 4px;
+  border-radius: 0;
 }
 
 /* rule under Life page titles: the same bar as the section headings */

@@ -182,6 +182,50 @@
   }
   function addHero(root, page, isDisputes) { var h = heroFor(page, isDisputes); if (h) root.appendChild(h); }
   // the write-up's sub-headings with their bullet points, as the site's expandable rows
+  /* "Our Work" on a sector page: an editorial list (no numbers). A plain list gives one
+     row per piece of work; a titled group gives a row headed by its title with its
+     work underneath; a group with a title but no work is an umbrella label. */
+  function sectorWork(groups) {
+    var sec = el("section", "sw reveal");
+    var side = el("div", "sw-side");
+    side.appendChild(el("h2", "pa-section-title", "Our Work"));
+    var count = el("p", "sw-count");
+    side.appendChild(count);
+    sec.appendChild(side);
+    var list = el("ol", "sw-list");
+    var n = 0;
+    groups.forEach(function (g) {
+      if (!g.title) {
+        g.items.forEach(function (t) { list.appendChild(row(++n, null, [t])); });
+      } else if (!g.items.length) {
+        list.appendChild(el("li", "sw-label", g.title));
+      } else {
+        list.appendChild(row(++n, g.title, g.items));
+      }
+    });
+    count.textContent = n + (n === 1 ? " area of work" : " areas of work");
+    sec.appendChild(list);
+    function row(i, title, items) {
+      var li = el("li", "sw-row");
+      li.style.setProperty("--i", i);
+      var mk = el("span", "sw-mark");
+      mk.setAttribute("aria-hidden", "true");
+      li.appendChild(mk);
+      var body = el("div", "sw-body");
+      if (title) {
+        body.appendChild(el("h3", "sw-title", title));
+        var ul = el("ul", "sw-points");
+        items.forEach(function (t) { ul.appendChild(el("li", null, t)); });
+        body.appendChild(ul);
+      } else {
+        body.appendChild(el("p", "sw-text", items[0]));
+      }
+      li.appendChild(body);
+      return li;
+    }
+    return show(sec);
+  }
+
   function groupsSection(groups, title) {
     var sec = el("section", "pa-related");
     var head = el("div", "pa-related-head");
@@ -272,6 +316,68 @@
     root.appendChild(cols);
   }
 
+  /* ---------- Layout 5: the Dispute Resolution container (css/capabilities-v2.css .cv2-drf)
+     a light panel: the practice on the left, its areas of dispute as small tiles on the right ---------- */
+  function drFeature(H) {
+    var SHOW = 9;
+    var box = el("section", "cv2-drf reveal");
+    box.setAttribute("aria-labelledby", "drfTitle");
+    var art = el("div", "cv2-drf-art");
+    art.setAttribute("aria-hidden", "true");
+    art.innerHTML = '<svg viewBox="0 0 240 240" fill="none"><circle cx="120" cy="120" r="112" stroke="currentColor"/><circle cx="120" cy="120" r="86" stroke="currentColor"/><circle cx="120" cy="120" r="60" stroke="currentColor"/><circle cx="120" cy="120" r="34" stroke="currentColor"/><circle cx="120" cy="8" r="5" class="cv2-pv-dot"/><circle cx="206" cy="120" r="3.5" class="cv2-pv-dot cv2-pv-dot--soft"/></svg>';
+    box.appendChild(art);
+
+    var lead = el("div", "cv2-drf-lead");
+    lead.appendChild(el("p", "cv2-drf-eyebrow", D.drList.length + " areas of dispute"));
+    var h = el("h2", "cv2-drf-title", H.title);
+    h.id = "drfTitle";
+    lead.appendChild(h);
+    var first = String((H.intro || [])[0] || "").match(/^.+?[.!?](?=\s|$)/);
+    if (first) lead.appendChild(el("p", "cv2-drf-text", first[0]));
+    var go = el("a", "cv2-drf-go", "Explore Dispute Resolution");
+    go.href = areaUrl(H.slug);
+    go.appendChild(icon("fa-solid fa-arrow-right"));
+    lead.appendChild(go);
+    box.appendChild(lead);
+
+    var side = el("div", "cv2-drf-side");
+    var ul = el("ul", "cv2-drf-list");
+    D.drList.forEach(function (r, i) {
+      var li = el("li");
+      if (i >= SHOW) li.className = "is-extra";
+      var t;
+      if (r.pending) {
+        t = el("span", "cv2-drf-tile is-pending");
+        t.appendChild(el("span", "cv2-drf-name", r.label));
+        t.appendChild(el("span", "cv2-drf-soon", "Coming soon"));
+      } else {
+        t = el("a", "cv2-drf-tile");
+        t.href = r.disputes ? disputesUrl(r.disputes) : areaUrl(r.area);
+        t.appendChild(el("span", "cv2-drf-name", r.label));
+        t.appendChild(icon("fa-solid fa-arrow-right cv2-drf-arrow"));
+      }
+      li.appendChild(t);
+      ul.appendChild(li);
+    });
+    side.appendChild(ul);
+    if (D.drList.length > SHOW) {
+      var more = el("button", "cv2-drf-more");
+      more.type = "button";
+      more.setAttribute("aria-expanded", "false");
+      var label = function (open) { more.textContent = open ? "Show fewer" : "Show all " + D.drList.length + " areas "; if (!open) more.appendChild(icon("fa-solid fa-chevron-down")); };
+      label(false);
+      more.addEventListener("click", function () {
+        var open = !box.classList.contains("is-open");
+        box.classList.toggle("is-open", open);
+        more.setAttribute("aria-expanded", String(open));
+        label(open);
+      });
+      side.appendChild(more);
+    }
+    box.appendChild(side);
+    return box;
+  }
+
   /* ---------- Practice areas index: tiles that open a preview panel in place
      (as Layout 1, capabilities.html); the panel links on to the full page ---------- */
   var PREVIEW_ROWS = 6, PREVIEW_TEAM = 6;
@@ -283,7 +389,15 @@
     panel.setAttribute("role", "region");
     panel.hidden = true;
 
-    PRACTICES.forEach(function (x, i) {
+    // Layout 5 (capabilities-tiles.html, data-dr-split): Dispute Resolution gets its own container above the tiles
+    var drSplit = paGrid.hasAttribute("data-dr-split");
+    var TILES = drSplit ? PRACTICES.filter(function (p) { return p.kind !== "hub"; }) : PRACTICES;
+    if (drSplit) {
+      var HUB = PRACTICES.filter(function (p) { return p.kind === "hub"; })[0];
+      if (HUB) paGrid.before(show(drFeature(HUB)));
+    }
+
+    TILES.forEach(function (x, i) {
       var wrap = el("div", "pa-tile-wrap reveal");
       wrap.setAttribute("role", "listitem");
       wrap.style.setProperty("--delay", (i % 4) * 0.06 + "s");
@@ -547,29 +661,106 @@
       heading(detail, capCrumbs, A.title, el("p", "cv2-ways", D.drList.length + " areas of dispute"));
       addHero(detail, A, false);
       body(detail, A, []);
+      // a lighter hub layout (css/capabilities-v2.css .cv2-hub): the overview opens with its first sentence as a lead
+      detail.classList.add("cv2-hub");
+      var firstP = detail.querySelector(".pa-overview-text");
+      if (firstP) {
+        var m = firstP.textContent.match(/^(.+?[.!?])\s+([\s\S]+)$/);
+        if (m) {
+          firstP.textContent = "";
+          firstP.appendChild(el("span", "cv2-lead", m[1]));
+          firstP.appendChild(document.createTextNode(" " + m[2]));
+        }
+      }
+      // Areas of Dispute: an index of names beside a preview that follows the pointer / focus (laptop);
+      // phones get the plain list (the preview is hidden in css)
       var sec = el("section", "cv2-dr reveal");
-      sec.appendChild(el("h2", "pa-section-title", "Areas of Dispute"));
+      var drHead = el("div", "cv2-dr-head");
+      drHead.appendChild(el("h2", "pa-section-title", "Areas of Dispute"));
+      drHead.appendChild(el("p", "cv2-dr-hint", "Point at an area to preview it"));
+      sec.appendChild(drHead);
+      var drWrap = el("div", "cv2-dr-wrap");
       var ul = el("ul", "cv2-dr-list");
+      var pv = el("aside", "cv2-dr-preview");
+      pv.setAttribute("aria-live", "polite");
+      var pvInner = el("div", "cv2-dr-pv");
+      // decoration: soft ripples in brand red and grey that turn a little with each area
+      var art = el("div", "cv2-pv-art");
+      art.setAttribute("aria-hidden", "true");
+      art.innerHTML = '<svg viewBox="0 0 240 240" fill="none">' +
+        '<circle cx="120" cy="120" r="112" stroke="currentColor" stroke-width="1"/>' +
+        '<circle cx="120" cy="120" r="86" stroke="currentColor" stroke-width="1"/>' +
+        '<circle cx="120" cy="120" r="60" stroke="currentColor" stroke-width="1"/>' +
+        '<circle cx="120" cy="120" r="34" stroke="currentColor" stroke-width="1"/>' +
+        '<circle class="cv2-pv-dot" cx="120" cy="8" r="5"/>' +
+        '<circle class="cv2-pv-dot cv2-pv-dot--soft" cx="206" cy="120" r="3.5"/>' +
+        '<circle class="cv2-pv-dot cv2-pv-dot--soft" cx="120" cy="180" r="3"/></svg>';
+      pv.appendChild(art);
+      pv.appendChild(pvInner);
+      var turn = 0;
+      function firstSentence(t) { var m = String(t || "").match(/^.+?[.!?](?=\s|$)/); return m ? m[0] : String(t || ""); }
+      function preview(r, target, where, href) {
+        pvInner.classList.remove("is-in");
+        void pvInner.offsetWidth;   // restart the fade
+        pvInner.textContent = "";
+        pvInner.appendChild(el("p", "cv2-pv-eyebrow", where || "Dispute Resolution"));
+        pvInner.appendChild(el("h3", "cv2-pv-title", r.label));
+        if (!target) {
+          pvInner.appendChild(el("p", "cv2-pv-text", "A page for this area is being prepared. Please contact us to discuss a matter."));
+        } else {
+          // areas without their own write-up borrow the opening line of the practice / sector they belong to
+          var intro = (target.intro || [])[0];
+          if (!intro && target.parent) { var par = parentOf(target); intro = par && (par.intro || [])[0]; }
+          if (intro) pvInner.appendChild(el("p", "cv2-pv-text", firstSentence(intro)));
+          var gs = (target.groups || []).map(function (g) { return g.title; }).filter(Boolean).slice(0, 4);
+          if (gs.length) {
+            pvInner.appendChild(el("p", "cv2-pv-label", "Matters we handle"));
+            var tags = el("ul", "cv2-pv-tags");
+            gs.forEach(function (g) { tags.appendChild(el("li", null, g)); });
+            pvInner.appendChild(tags);
+          }
+          var go = el("a", "cv2-pv-go", "Explore " + r.label);
+          go.href = href;
+          go.appendChild(icon("fa-solid fa-arrow-right"));
+          pvInner.appendChild(go);
+        }
+        pvInner.classList.add("is-in");
+        turn += 40;
+        art.style.setProperty("--turn", turn + "deg");
+      }
+      var rows = [];
       D.drList.forEach(function (r) {
         var li = el("li");
+        var row, target = null, where = "", href = "";
         if (r.pending) {
-          var s = el("span", "cv2-dr-row is-pending");
-          s.appendChild(el("span", "cv2-dr-name", r.label));
-          s.appendChild(el("span", "cv2-dr-where", "Coming soon"));
-          li.appendChild(s);
+          row = el("span", "cv2-dr-row is-pending");
+          row.setAttribute("tabindex", "0");
+          row.appendChild(el("span", "cv2-dr-name", r.label));
+          row.appendChild(el("span", "cv2-dr-where", "Coming soon"));
+          where = "Coming soon";
         } else {
-          var a = el("a", "cv2-dr-row");
-          a.href = r.disputes ? disputesUrl(r.disputes) : areaUrl(r.area);
-          a.appendChild(el("span", "cv2-dr-name", r.label));
-          var target = r.disputes ? D.disputes[r.disputes] : AREA[r.area];
-          var where = r.disputes && target.parent !== "dispute-resolution" ? "Part of " + parentOf(target).title : (r.area ? "Practice area" : "");
-          a.appendChild(el("span", "cv2-dr-where", where));
-          a.appendChild(icon("fa-solid fa-arrow-right cv2-dr-arrow"));
-          li.appendChild(a);
+          row = el("a", "cv2-dr-row");
+          href = row.href = r.disputes ? disputesUrl(r.disputes) : areaUrl(r.area);
+          row.appendChild(el("span", "cv2-dr-name", r.label));
+          target = r.disputes ? D.disputes[r.disputes] : AREA[r.area];
+          where = r.disputes && target.parent !== "dispute-resolution" ? "Part of " + parentOf(target).title : (r.area ? "Practice area" : "");
+          row.appendChild(el("span", "cv2-dr-where", where));
+          row.appendChild(icon("fa-solid fa-arrow-right cv2-dr-arrow"));
         }
+        function pick() {
+          rows.forEach(function (x) { x.classList.toggle("is-current", x === row); });
+          preview(r, target, where, href);
+        }
+        row.addEventListener("pointerenter", pick);
+        row.addEventListener("focus", pick);
+        rows.push(row);
+        li.appendChild(row);
         ul.appendChild(li);
+        if (rows.length === 1) pick();
       });
-      sec.appendChild(ul);
+      drWrap.appendChild(ul);
+      drWrap.appendChild(pv);
+      sec.appendChild(drWrap);
       detail.appendChild(show(sec));
       others(detail, "Other Practice Areas", PRACTICES, A.slug, areaUrl);
     } else if (A) {
@@ -609,7 +800,7 @@
       heading(sdetail, [["Capabilities", "capabilities-v2.html"], ["Sectors", "sectors-v2.html"]], S.title);
       sdetail.appendChild(bannerFor(S.img));
       body(sdetail, S, [S.disputes ? disputesLink(D.disputes[S.disputes]) : null]);
-      if (S.groups.length) sdetail.appendChild(groupsSection(S.groups, "Our Work"));
+      if (S.groups.length) sdetail.appendChild(sectorWork(S.groups));
       // related practice areas (as Layout 1): the ones sharing the most key contacts
       var mine = {};
       S.contacts.concat(S.disputes ? D.disputes[S.disputes].contacts : []).forEach(function (n) { mine[person(n).name] = 1; });

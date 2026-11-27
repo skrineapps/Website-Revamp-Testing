@@ -64,7 +64,7 @@
   var headingPage = !NO_HEADING_ART[hereFile];
 
   // practice area pages: with or without the practice photos (?photos=off), remembered for the visit
-  var PHOTO_PAGES = { "capabilities.html": 1, "capabilities-classic.html": 1, "practice-area.html": 1, "capabilities-v2.html": 1, "practice-area-v2.html": 1 };
+  var PHOTO_PAGES = { "capabilities.html": 1, "capabilities-classic.html": 1, "practice-area.html": 1, "capabilities-v2.html": 1, "capabilities-tiles.html": 1, "practice-area-v2.html": 1 };
   var photoPage = !!PHOTO_PAGES[hereFile];
   var photosAsked = params.get("photos");
   if (photosAsked !== "on" && photosAsked !== "off") photosAsked = null;

@@ -31,11 +31,54 @@
   var links = Array.prototype.slice.call(document.querySelectorAll(".pf-nav-link"));
   var targets = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
   var current = -1;
+
+  // phones: the section bar becomes a compact "On this page" menu (css/desk.css shows it under 760px)
+  var navEl = document.querySelector(".dk-page .pf-nav");
+  var jump = null, jumpLabel = null;
+  if (navEl && links.length) {
+    jump = document.createElement("div");
+    jump.className = "dk-jump";
+    var jb = document.createElement("button");
+    jb.type = "button";
+    jb.className = "dk-jump-btn";
+    jb.setAttribute("aria-expanded", "false");
+    jb.innerHTML = '<span class="dk-jump-kicker">On this page</span><span class="dk-jump-label"></span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i>';
+    jumpLabel = jb.querySelector(".dk-jump-label");
+    jumpLabel.textContent = links[0].textContent;
+    var menu = document.createElement("ul");
+    menu.className = "dk-jump-menu";
+    menu.hidden = true;
+    links.forEach(function (a) {
+      var li = document.createElement("li");
+      var m = document.createElement("a");
+      m.href = a.getAttribute("href");
+      m.textContent = a.textContent;
+      m.addEventListener("click", function () { close(); });
+      li.appendChild(m);
+      menu.appendChild(li);
+    });
+    function close() { menu.hidden = true; jb.setAttribute("aria-expanded", "false"); jump.classList.remove("is-open"); }
+    jb.addEventListener("click", function () {
+      var open = menu.hidden;
+      menu.hidden = !open;
+      jb.setAttribute("aria-expanded", String(open));
+      jump.classList.toggle("is-open", open);
+    });
+    document.addEventListener("click", function (e) { if (!jump.contains(e.target)) close(); });
+    jump.appendChild(jb);
+    jump.appendChild(menu);
+    navEl.appendChild(jump);
+  }
+
   function spy() {
     var line = window.innerHeight * 0.4, idx = -1;
     targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= line) idx = i; });
     if (idx === current) return;
     current = idx;
+    if (jumpLabel) {
+      jumpLabel.textContent = links[Math.max(0, idx)].textContent;
+      Array.prototype.forEach.call(jump.querySelectorAll(".dk-jump-menu a"), function (m, i) { m.classList.toggle("is-active", i === idx); });
+    }
     links.forEach(function (a, i) {
       var on = i === idx;
       a.classList.toggle("is-active", on);
