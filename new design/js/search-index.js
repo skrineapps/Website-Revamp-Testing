@@ -31,7 +31,7 @@
     ["Home", "../index.html", "Skrine — Malaysia's full-service law firm with global insight and local expertise.", "home skrine advocates solicitors awards rankings network lex mundi deals"],
     ["People", "people.html", "Meet Skrine's partners, consultants and associates.", "lawyers team partners consultants associates directory"],
     ["Practice Areas", "capabilities.html", "Skrine's practice areas — litigation, corporate, intellectual property and more.", "capabilities services expertise"],
-    ["Sectors", "sectors.html", "The sectors Skrine serves — aviation, financial institutions, energy and more.", "industries capabilities"],
+    ["Sectors", "sectors.html", "The sectors Skrine serves — aviation, financial institutions, energy and more.", "industries capabilities services"],
     ["Alerts", "alerts.html", "Legal alerts from Skrine on developments in Malaysian law and regulation.", "insights legal updates newsletter subscribe"],
     ["Publications", "publications.html", "Chapters and guides by Skrine lawyers in leading international legal publications.", "insights books guides chapters"],
     ["News & Events", "news-events.html", "The latest news from Skrine, and upcoming events our lawyers are speaking at.", "insights news events press"],
@@ -97,7 +97,7 @@
     var topNames = {};
     practices.forEach(function (a) { topNames[norm(a.title)] = 1; });
     practices.forEach(function (a) {
-      // related capabilities, leaving out ones that are also a practice area of their own
+      // related services, leaving out ones that are also a practice area of their own
       var related = (a.related || []).filter(function (r) { return !topNames[norm(r.name)]; });
       add(out, "practice", {
         title: a.title,

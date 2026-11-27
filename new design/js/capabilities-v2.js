@@ -847,13 +847,13 @@
     var dSlug = q.get("disputes"), aSlug = q.get("area");
     var X = dSlug ? D.disputes[dSlug] : null;
     var A = aSlug ? AREA[aSlug] : null;
-    var capCrumbs = [["Capabilities", "capabilities-v2.html"], ["Practice Areas", "capabilities-v2.html"]];
+    var capCrumbs = [["Services", "capabilities-v2.html"], ["Practice Areas", "capabilities-v2.html"]];
 
     if (X) {
       var parent = parentOf(X);
       document.title = X.title + " | Skrine";
       var isSector = X.parentType === "sector";
-      var crumbs = isSector ? [["Capabilities", "capabilities-v2.html"], ["Sectors", "sectors-v2.html"], [parent.title, parentUrl(X)]]
+      var crumbs = isSector ? [["Services", "capabilities-v2.html"], ["Sectors", "sectors-v2.html"], [parent.title, parentUrl(X)]]
                             : capCrumbs.concat([[parent.title, parentUrl(X)]]);
       // the two ways in to this page
       var ways = el("p", "cv2-ways");
@@ -1032,7 +1032,7 @@
       sdetail.appendChild(sb);
     } else {
       document.title = S.title + " | Skrine";
-      heading(sdetail, [["Capabilities", "capabilities-v2.html"], ["Sectors", "sectors-v2.html"]], S.title);
+      heading(sdetail, [["Services", "capabilities-v2.html"], ["Sectors", "sectors-v2.html"]], S.title);
       sdetail.appendChild(bannerFor(S.img));
       body(sdetail, S, [S.disputes ? disputesLink(D.disputes[S.disputes]) : null]);
       if (S.groups.length) sdetail.appendChild(sectorWork(S.groups));
