@@ -237,7 +237,7 @@
 .themed .life-lead::before,
 .themed .cr-lead::before,
 .themed .ct-address::before { background: rgba(var(--canvas-rgb), 0.9); }
-.themed .alerts-toolbar,
+.themed .alerts-toolbar { --tb-bg: var(--canvas); }
 .themed .pf-nav { background: var(--canvas); box-shadow: 0 0 0 100vmax var(--canvas); }
 .themed .jb-field textarea,
 .themed .jb-drop,

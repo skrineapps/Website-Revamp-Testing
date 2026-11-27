@@ -31,7 +31,7 @@
     ["Home", "../index.html", "Skrine — Malaysia's full-service law firm with global insight and local expertise.", "home skrine advocates solicitors awards rankings network lex mundi deals"],
     ["People", "people.html", "Meet Skrine's partners, consultants and associates.", "lawyers team partners consultants associates directory"],
     ["Practice Areas", "capabilities-v2.html", "Skrine's practice areas — litigation, corporate, intellectual property and more.", "capabilities services expertise"],
-    ["Sectors", "sectors.html", "The sectors Skrine serves — aviation, financial institutions, energy and more.", "industries capabilities services"],
+    ["Sectors", "sectors-v2.html", "The sectors Skrine serves — aviation, financial institutions, energy and more.", "industries capabilities services"],
     ["Alerts", "alerts.html", "Legal alerts from Skrine on developments in Malaysian law and regulation.", "insights legal updates newsletter subscribe"],
     ["Publications", "publications.html", "Chapters and guides by Skrine lawyers in leading international legal publications.", "insights books guides chapters"],
     ["News & Events", "news-events.html", "The latest news from Skrine, and upcoming events our lawyers are speaking at.", "insights news events press"],
@@ -119,12 +119,13 @@
       });
     });
 
-    (W.SKRINE_SECTORS || []).forEach(function (s) {
+    // sectors: the Sectors page (sectors-v2.html) and its sector pages
+    ((W.SKRINE_CAPABILITIES_V2 || {}).sectors || []).forEach(function (s) {
       add(out, "sector", {
         title: s.title,
-        href: "sector.html?sector=" + encodeURIComponent(s.slug),
-        text: words([].concat(s.desc || [])),
-        snippet: first(s.desc),
+        href: "sector-v2.html?sector=" + encodeURIComponent(s.slug),
+        text: words([].concat(s.intro || [])),
+        snippet: first(s.intro),
       });
     });
 

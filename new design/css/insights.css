@@ -126,13 +126,24 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  /* solid, and widened with a shadow so cards never show through or beside it */
-  background: #fbfbfb;
-  box-shadow: 0 0 0 100vmax #fbfbfb;
-  clip-path: inset(0 -100vmax);
+  /* solid, and widened to the window edges (::before) so cards never show through
+     or beside it. The widening sits on its own layer: clipping the bar itself
+     would also cut off the Topic dropdown that hangs below it. */
+  --tb-bg: #fbfbfb;
+  background: var(--tb-bg);
   border-bottom: 1px solid var(--grey-300);
   transition: top 0.35s var(--ease);
   scroll-margin-top: var(--header-h);
+}
+.alerts-toolbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--tb-bg);
+  box-shadow: 0 0 0 100vmax var(--tb-bg);
+  clip-path: inset(0 -100vmax);
+  pointer-events: none;
 }
 
 .alerts-search {
@@ -367,7 +378,7 @@
 
 @media (max-width: 640px) {
   .latest-grid { grid-template-columns: 1fr; }
-  .alerts-toolbar { position: static; padding: 10px 0; }
+  .alerts-toolbar { position: relative; padding: 10px 0; } /* not sticky on phones; relative keeps its ::before in place */
   .alerts-search { flex-basis: 100%; max-width: none; }
   .alerts-results { margin-left: 0; width: 100%; }
   .alert-row { grid-template-columns: 56px minmax(0, 1fr); gap: 14px; }
