@@ -209,9 +209,9 @@
     actions.appendChild(tel);
   }
   // vCard so people can save the contact straight to their phone
-  var vc = el("button", "pf-vcard");
+  var vc = el("button", "btn pf-vcard");
   vc.type = "button";
-  vc.appendChild(icon("fa-regular fa-address-card"));
+  vc.appendChild(icon("fa-solid fa-user-plus"));
   vc.appendChild(document.createTextNode(" Save contact"));
   vc.addEventListener("click", function () {
     var lines = ["BEGIN:VCARD", "VERSION:3.0", "FN:" + P.name, "ORG:Skrine", "TITLE:" + P.role];
@@ -227,17 +227,20 @@
     a.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
   });
-  actions.appendChild(vc);
+  // second row: Save contact + Download profile, always together under email / phone
+  var actions2 = el("div", "pf-actions-sub");
+  actions2.appendChild(vc);
+  actions.appendChild(actions2);
 
   // Download profile (the partner's CV as a PDF). The files are supplied later, on WordPress:
   // set P.cv to the file's URL (e.g. from the media library); until then it points at
   // files/cv/<slug>.pdf, the place to drop each partner's PDF.
-  var cv = el("a", "pf-vcard pf-cv");
+  var cv = el("a", "btn pf-vcard pf-cv");
   cv.href = P.cv || "files/cv/" + slug + ".pdf";
   cv.setAttribute("download", slug + "-skrine-profile.pdf");
-  cv.appendChild(icon("fa-regular fa-file-pdf"));
+  cv.appendChild(icon("fa-solid fa-download"));
   cv.appendChild(document.createTextNode(" Download profile"));
-  actions.appendChild(cv);
+  actions2.appendChild(cv);
 
 
   var fig = document.getElementById("pfPortrait");
@@ -432,13 +435,9 @@
   if (P.credentials.length) {
     var cr = section("credentials", "Credentials", "Qualifications & memberships");
     var grid = el("div", "pf-cred-grid");
-    var ICONS = { qualifications: "fa-solid fa-graduation-cap", directorships: "fa-solid fa-building-columns", mediation: "fa-solid fa-handshake" };
     P.credentials.forEach(function (c) {
       var card = el("article", "pf-cred");
-      var key = c.heading.toLowerCase();
-      var h = el("h3", "pf-cred-title");
-      h.appendChild(icon(ICONS[key] || "fa-solid fa-people-group"));
-      h.appendChild(document.createTextNode(" " + c.heading));
+      var h = el("h3", "pf-cred-title", c.heading);
       card.appendChild(h);
       var ul = el("ul");
       c.items.forEach(function (it) { ul.appendChild(el("li", null, it)); });
@@ -469,12 +468,14 @@
     });
   }
 
-  /* ---------- in the news: a self-moving carousel ----------
-     Only publications, articles (alerts) and speaking engagements / SkrineCast that name this
-     person, newest first (no awards, firm news or community posts).
+  /* ---------- "Insights from <given name>" and "Publications" ----------
+     Insights: articles (alerts) and speaking engagements / SkrineCast that name this person,
+     newest first, back to the start of 2023, in a self-moving carousel; anything older is
+     added to it by "Show earlier insights".
+     Publications: books and publications this person authored, below Insights.
+     (No awards, firm news or community posts.)
      Data: js/publications-data.js, js/alerts-data.js, js/news-data.js
      (+ js/alerts-full-data.js, js/news-full-data.js for links, js/topic-images.js for alert photos). */
-  var NEWS_MAX = 10;
   var STOP = { bin: 1, binti: 1, to: 1, puan: 1, dato: 1, sri: 1 };
   function nameTokens(n) { return String(n).toLowerCase().replace(/[’'.]/g, "").split(/[^a-z]+/).filter(function (t) { return t && !STOP[t]; }); }
   // the same person: every part of the shorter name appears in the longer one ("Charmayne Ong" / "Charmayne Ong Poh Yin")
@@ -510,13 +511,53 @@
       href: NEWS_FULL[s] ? "news.html?n=" + encodeURIComponent(s) : "news-events.html" });
   });
   feed.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
-  feed = feed.slice(0, NEWS_MAX);
 
-  if (feed.length) {
-    var nw = section("news", "In the news", "Publications & speaking");
+  // one card: picture, then type · date · source, the title and a link
+  function newsCard(it) {
+    var a = el("a", "pf-news-card");
+    a.href = it.href;
+    if (it.ext) { a.target = "_blank"; a.rel = "noopener"; }
+    a.setAttribute("aria-label", it.type + ": " + it.title);
+    var media = el("span", "pf-news-media" + (it.cover ? " is-cover" : ""));
+    var img = el("img");
+    img.src = it.img || "images/hero-palette.jpg";
+    img.alt = "";
+    img.loading = "lazy";
+    img.addEventListener("error", function () { img.src = "images/hero-palette.jpg"; media.classList.remove("is-cover"); });
+    media.appendChild(img);
+    a.appendChild(media);
+    var b = el("span", "pf-news-body");
+    // the type travels with the text (not a badge on the photo)
+    var meta = el("span", "pf-news-meta");
+    meta.appendChild(el("span", "pf-news-type pf-news-type--" + it.type.toLowerCase(), it.type));
+    var when = el("span", "pf-news-when", fmtDate(it.date) + (it.sub ? " · " + it.sub : ""));
+    when.title = when.textContent;
+    meta.appendChild(when);
+    b.appendChild(meta);
+    b.appendChild(el("span", "pf-news-title", it.title));
+    var more = el("span", "pf-news-more", it.type === "Publication" ? "Read publication " : "Read more ");
+    more.appendChild(icon("fa-solid fa-arrow-right"));
+    b.appendChild(more);
+    a.appendChild(b);
+    return a;
+  }
+  function newsGrid(target, items, shown, noun) {
+    var grid = el("div", "pf-news-grid");
+    items.forEach(function (it) { grid.appendChild(newsCard(it)); });
+    target.appendChild(grid);
+    var moreBtn = expandable(grid, shown, noun);
+    if (moreBtn) target.appendChild(moreBtn);
+  }
+
+  var given = window.SkrineProfile ? window.SkrineProfile.givenName(P.name) : P.name;
+  var insights = feed.filter(function (it) { return it.type !== "Publication"; });
+  var authored = feed.filter(function (it) { return it.type === "Publication"; });
+
+  if (insights.length) {
+    var nw = section("insights", "Articles & talks", "Insights from " + given);
     var car = el("div", "pf-car");
     car.setAttribute("aria-roledescription", "carousel");
-    car.setAttribute("aria-label", "Publications and speaking engagements");
+    car.setAttribute("aria-label", "Articles and speaking engagements");
     var ctr = el("div", "pf-car-controls");
     var prev = el("button", "pf-car-btn"); prev.type = "button"; prev.setAttribute("aria-label", "Previous"); prev.appendChild(icon("fa-solid fa-arrow-left"));
     var next = el("button", "pf-car-btn"); next.type = "button"; next.setAttribute("aria-label", "Next"); next.appendChild(icon("fa-solid fa-arrow-right"));
@@ -526,29 +567,11 @@
     var newsSec = nw.parentNode;
     newsSec.querySelector(".pf-section-head").appendChild(ctr);
     var track = el("div", "pf-car-track");
-    feed.forEach(function (it, i) {
-      var a = el("a", "pf-news-card");
-      a.href = it.href;
-      if (it.ext) { a.target = "_blank"; a.rel = "noopener"; }
-      a.setAttribute("aria-label", it.type + ": " + it.title + " (" + (i + 1) + " of " + feed.length + ")");
-      var media = el("span", "pf-news-media" + (it.cover ? " is-cover" : ""));
-      var img = el("img");
-      img.src = it.img || "images/hero-palette.jpg";
-      img.alt = "";
-      img.loading = "lazy";
-      img.addEventListener("error", function () { img.src = "images/hero-palette.jpg"; media.classList.remove("is-cover"); });
-      media.appendChild(img);
-      media.appendChild(el("span", "pf-news-type pf-news-type--" + it.type.toLowerCase(), it.type));
-      a.appendChild(media);
-      var b = el("span", "pf-news-body");
-      b.appendChild(el("span", "pf-news-meta", fmtDate(it.date) + (it.sub ? " · " + it.sub : "")));
-      b.appendChild(el("span", "pf-news-title", it.title));
-      var more = el("span", "pf-news-more", it.type === "Publication" ? "Read publication " : "Read more ");
-      more.appendChild(icon("fa-solid fa-arrow-right"));
-      b.appendChild(more);
-      a.appendChild(b);
-      track.appendChild(a);
-    });
+    // from 2023 on in the carousel; anything older is added by "Show earlier insights"
+    var recentIns = insights.filter(function (it) { return it.date >= "2023-01-01"; });
+    if (recentIns.length < 3) recentIns = insights.slice(0, Math.min(3, insights.length));
+    var olderIns = insights.slice(recentIns.length);
+    recentIns.forEach(function (it) { track.appendChild(newsCard(it)); });
     car.appendChild(track);
     var foot = el("div", "pf-car-foot");
     var dots = el("div", "pf-car-dots");
@@ -556,30 +579,81 @@
     foot.appendChild(el("p", "pf-src-note", "Content from skrine.com, shown for design review."));
     car.appendChild(foot);
     nw.appendChild(car);
+    if (olderIns.length) {
+      var earlier = el("button", "pf-more");
+      earlier.type = "button";
+      earlier.appendChild(el("span", null, "Show earlier insights (" + olderIns.length + ")"));
+      earlier.appendChild(icon("fa-solid fa-chevron-right"));
+      earlier.addEventListener("click", function () {
+        dropClones();
+        olderIns.forEach(function (it) { track.appendChild(newsCard(it)); });
+        earlier.remove();
+        requestAnimationFrame(function () { buildClones(); sync(); });
+      });
+      nw.appendChild(earlier);
+    }
 
-    // one card per step; dots show the position
+    /* one card per step, and it never ends: the cards are copied once after the
+       real ones, so after the last card the first comes round again, and when the
+       copies are reached the strip hops back by one set (no visible jump) */
     var step = function () { var c = track.firstElementChild; return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : track.clientWidth; };
-    var maxLeft = function () { return track.scrollWidth - track.clientWidth; };
-    var positions = function () { return Math.max(1, Math.round(maxLeft() / step()) + 1); };
-    var at = function () { return Math.min(positions() - 1, Math.round(track.scrollLeft / step())); };
+    var realCards = function () { return Array.prototype.filter.call(track.children, function (c) { return !c.classList.contains("is-clone"); }); };
+    var count = function () { return realCards().length; };
+    var looping = false;
+    var loopW = function () { return count() * step(); };
+    function dropClones() {
+      Array.prototype.slice.call(track.querySelectorAll(".is-clone")).forEach(function (c) { c.remove(); });
+      looping = false;
+    }
+    function buildClones() {
+      dropClones();
+      // only worth looping when the cards don't all fit
+      if (count() * step() <= track.clientWidth + 4) return;
+      realCards().forEach(function (c) {
+        var k = c.cloneNode(true);
+        k.classList.add("is-clone");
+        k.setAttribute("aria-hidden", "true");
+        k.tabIndex = -1;
+        track.appendChild(k);
+      });
+      looping = true;
+    }
+    // past the real set: hop back by one set, instantly
+    function wrap() {
+      if (!looping) return;
+      var w = loopW();
+      if (track.scrollLeft >= w - 2) {
+        track.style.scrollSnapType = "none";
+        track.scrollLeft -= w;
+        requestAnimationFrame(function () { track.style.scrollSnapType = ""; });
+      }
+    }
+    var at = function () { var n = count(); return ((Math.round(track.scrollLeft / step()) % n) + n) % n; };
     // an eased glide; snapping is off while it runs
     var anim = 0;
     var glide = function (left, dur) {
       cancelAnimationFrame(anim);
-      var from = track.scrollLeft, to = Math.max(0, Math.min(left, maxLeft()));
-      if (Math.abs(to - from) < 2) return;
+      var from = track.scrollLeft, to = Math.max(0, Math.min(left, track.scrollWidth - track.clientWidth));
+      if (Math.abs(to - from) < 2) { anim = 0; return; }
       var t0 = performance.now(), d = dur || 800;
       var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
       track.style.scrollSnapType = "none";
       (function frame(now) {
         var t = Math.min(1, (now - t0) / d);
         track.scrollLeft = from + (to - from) * ease(t);
-        if (t < 1) anim = requestAnimationFrame(frame); else track.style.scrollSnapType = "";
+        if (t < 1) anim = requestAnimationFrame(frame);
+        else { anim = 0; track.style.scrollSnapType = ""; wrap(); }
       })(t0);
     };
-    var goTo = function (i) { glide(i * step()); };
+    var nextCard = function (dur) { wrap(); glide((Math.round(track.scrollLeft / step()) + 1) * step(), dur); };
+    var prevCard = function () {
+      // at the very start: hop to the copy of the first card, then step back onto the last
+      if (looping && track.scrollLeft < step() / 2) { track.style.scrollSnapType = "none"; track.scrollLeft += loopW(); }
+      glide((Math.round(track.scrollLeft / step()) - 1) * step());
+    };
+    var goTo = function (i) { wrap(); glide(i * step()); };
     var sync = function () {
-      var n = positions(), c = at();
+      var n = looping ? count() : Math.max(1, Math.round((track.scrollWidth - track.clientWidth) / step()) + 1), c = at();
       if (dots.children.length !== n) {
         dots.textContent = "";
         for (var i = 0; i < n; i++) (function (i) {
@@ -591,16 +665,23 @@
         })(i);
       }
       Array.prototype.forEach.call(dots.children, function (d, i) { d.classList.toggle("is-current", i === c); });
-      prev.disabled = track.scrollLeft < 4;
-      next.disabled = track.scrollLeft > maxLeft() - 4;
-      newsSec.classList.toggle("is-static", maxLeft() < 4);
+      newsSec.classList.toggle("is-static", track.scrollWidth - track.clientWidth < 4);
     };
-    prev.addEventListener("click", function () { goTo(Math.max(0, at() - 1)); restart(); });
-    next.addEventListener("click", function () { goTo(Math.min(positions() - 1, at() + 1)); restart(); });
+    prev.addEventListener("click", function () { prevCard(); restart(); });
+    next.addEventListener("click", function () { nextCard(); restart(); });
     var raf = 0;
-    track.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
-    window.addEventListener("resize", sync);
-    requestAnimationFrame(sync);
+    track.addEventListener("scroll", function () {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () { if (!anim || hold.touch) wrap(); sync(); });
+    }, { passive: true });
+    var lastW = 0;
+    window.addEventListener("resize", function () {
+      if (track.clientWidth === lastW) return;
+      lastW = track.clientWidth;
+      buildClones();
+      sync();
+    });
+    requestAnimationFrame(function () { lastW = track.clientWidth; buildClones(); sync(); });
 
     // moves on by itself: pauses on hover, keyboard focus, touch, off screen, hidden tab; never with reduced motion
     var EVERY = 1500, timer = 0, touchT = 0;
@@ -610,9 +691,8 @@
       clearInterval(timer);
       if (reduce) return;
       timer = setInterval(function () {
-        if (hold.hover || hold.focus || hold.touch || hold.away || document.hidden || newsSec.classList.contains("is-static")) return;
-        if (track.scrollLeft > maxLeft() - 4) glide(0, 1000);
-        else glide((at() + 1) * step(), 650);
+        if (hold.hover || hold.focus || hold.touch || hold.away || document.hidden || !looping) return;
+        nextCard(650);
       }, EVERY);
     }
     car.addEventListener("mouseenter", function () { hold.hover = true; });
@@ -622,6 +702,7 @@
     ["touchstart", "wheel", "pointerdown"].forEach(function (ev) {
       track.addEventListener(ev, function () {
         cancelAnimationFrame(anim);
+        anim = 0;
         track.style.scrollSnapType = "";
         hold.touch = true;
         clearTimeout(touchT);
@@ -632,6 +713,11 @@
       new IntersectionObserver(function (en) { hold.away = !en[0].isIntersecting; }, { threshold: 0.4 }).observe(track);
     } else hold.away = false;
     restart();
+  }
+
+  if (authored.length) {
+    var pubSec = section("publications", "Publications", "Publications");
+    newsGrid(pubSec, authored, 6, "publications");
   }
 
   /* ---------- contact band + more profiles ---------- */

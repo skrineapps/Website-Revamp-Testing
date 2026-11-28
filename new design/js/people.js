@@ -242,6 +242,14 @@
       if (areas.length > 1) preview.appendChild(el("span", "mini-card-more", "+" + (areas.length - 1)));
     }
     card.appendChild(preview);
+    // cues that the card opens: an expand icon in the corner and "View details"
+    var open = el("span", "mini-card-open");
+    open.setAttribute("aria-hidden", "true");
+    open.innerHTML = '<i class="fa-solid fa-plus"></i>';
+    card.appendChild(open);
+    var cta = el("span", "mini-card-cta", "View details");
+    cta.insertAdjacentHTML("beforeend", ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>');
+    card.appendChild(cta);
     card.addEventListener("click", function () { openModal(p); });
     return card;
   }
