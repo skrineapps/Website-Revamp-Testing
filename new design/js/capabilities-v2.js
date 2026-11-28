@@ -190,8 +190,7 @@
     var sec = el("section", "sw reveal");
     var side = el("div", "sw-side");
     side.appendChild(el("h2", "pa-section-title", "Our Work"));
-    var count = el("p", "sw-count");
-    side.appendChild(count);
+    // (the "N areas of work" count under the heading was removed after partner feedback)
     sec.appendChild(side);
     var list = el("ol", "sw-list");
     var n = 0;
@@ -204,7 +203,6 @@
         list.appendChild(row(++n, g.title, g.items));
       }
     });
-    count.textContent = n + (n === 1 ? " area of work" : " areas of work");
     sec.appendChild(list);
     function row(i, title, items) {
       var li = el("li", "sw-row");
