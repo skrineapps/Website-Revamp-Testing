@@ -522,7 +522,8 @@ a.cv2-dr-row:hover .cv2-dr-arrow { transform: translateX(4px); }
 .cv2-dlink--card .cv2-dlink-label { color: rgba(255, 255, 255, 0.72); }
 .cv2-dlink--card .cv2-dlink-text { color: rgba(255, 255, 255, 0.85); }
 .cv2-dlink--card .cv2-dlink-team { margin-top: 12px; }
-.cv2-dlink--card .cv2-dlink-face { box-shadow: 0 0 0 2px var(--red); background: rgba(255, 255, 255, 0.2); color: var(--white); }
+/* white behind each (cut-out) portrait so the faces stand out on the red; a red ring keeps the overlap readable */
+.cv2-dlink--card .cv2-dlink-face { box-shadow: 0 0 0 2px var(--red); background: var(--white); color: var(--red); }
 .cv2-dlink--card .cv2-dlink-names { color: rgba(255, 255, 255, 0.9); }
 .cv2-dlink--card::after { border-color: rgba(255, 255, 255, 0.7); color: var(--white); }
 .cv2-dlink--card:hover, .cv2-dlink--card:focus-visible { transform: translateY(-2px); box-shadow: 0 24px 48px -22px rgba(0, 0, 0, 0.55); }
