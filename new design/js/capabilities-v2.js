@@ -694,14 +694,49 @@
     if (note) foot.appendChild(el("p", "cv2-src-note", note));
     sec.appendChild(foot);
 
-    // one "page" = as many cards as fit; the arrows and dots move a page at a time
+    /* one "page" = as many cards as fit; the arrows and dots move a page at a time.
+       It never ends: the cards are copied twice after the real ones, so after the last
+       card the first comes round again, and once the strip is into the copies it hops
+       back by one set (no visible jump) instead of running back to the start. */
+    var n = cards.length, looping = false;
     function step() {
       var c = track.firstElementChild;
       return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0) : track.clientWidth;
     }
     function perPage() { return Math.max(1, Math.floor((track.clientWidth + 2) / step())); }
-    function pages() { return Math.max(1, Math.ceil((cards.length - perPage()) / perPage()) + 1); }
+    function dropClones() {
+      Array.prototype.slice.call(track.querySelectorAll(".is-clone")).forEach(function (c) { c.remove(); });
+      looping = false;
+    }
+    function buildClones() {
+      dropClones();
+      if (n * step() <= track.clientWidth + 4) return;   // everything fits: nothing to loop
+      for (var r = 0; r < 2; r++) cards.forEach(function (c) {
+        var k = c.cloneNode(true);
+        k.classList.add("is-clone");
+        k.setAttribute("aria-hidden", "true");
+        k.tabIndex = -1;
+        Array.prototype.forEach.call(k.querySelectorAll("a, button"), function (x) { x.tabIndex = -1; });
+        track.appendChild(k);
+      });
+      looping = true;
+    }
+    function loopW() { return n * step(); }
+    function wrap() {
+      if (!looping) return;
+      if (track.scrollLeft >= loopW() - 2) {
+        track.style.scrollSnapType = "none";
+        track.scrollLeft -= loopW();
+        requestAnimationFrame(function () { track.style.scrollSnapType = ""; });
+      }
+    }
+    function cardAt() { return ((Math.round(track.scrollLeft / step()) % n) + n) % n; }
+    function pages() {
+      if (looping) return Math.ceil(n / perPage());
+      return Math.max(1, Math.ceil((n - perPage()) / perPage()) + 1);
+    }
     function current() {
+      if (looping) return Math.min(pages() - 1, Math.floor(cardAt() / perPage()));
       if (track.scrollLeft + track.clientWidth > track.scrollWidth - 4) return pages() - 1;
       return Math.min(pages() - 1, Math.round(track.scrollLeft / (step() * perPage())));
     }
@@ -710,7 +745,7 @@
     function glide(left, dur) {
       cancelAnimationFrame(anim);
       var from = track.scrollLeft, to = Math.max(0, Math.min(left, track.scrollWidth - track.clientWidth));
-      if (Math.abs(to - from) < 2) return;
+      if (Math.abs(to - from) < 2) { anim = 0; return; }
       var t0 = performance.now(), d = dur || 900;
       var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
       track.style.scrollSnapType = "none";
@@ -718,16 +753,27 @@
         var t = Math.min(1, (now - t0) / d);
         track.scrollLeft = from + (to - from) * ease(t);
         if (t < 1) anim = requestAnimationFrame(frame);
-        else track.style.scrollSnapType = "";
+        else { anim = 0; track.style.scrollSnapType = ""; wrap(); }
       })(t0);
     }
-    function stopGlide() { cancelAnimationFrame(anim); track.style.scrollSnapType = ""; }
-    function goTo(p) { glide(p * step() * perPage()); }
+    function stopGlide() { cancelAnimationFrame(anim); anim = 0; track.style.scrollSnapType = ""; }
+    function by(cardsToMove, dur) {
+      wrap();
+      // going back from the very start: hop onto the copy first
+      if (looping && cardsToMove < 0 && track.scrollLeft < step() * -cardsToMove - 2) {
+        track.style.scrollSnapType = "none";
+        track.scrollLeft += loopW();
+      }
+      var base = Math.round(track.scrollLeft / step());
+      if (!looping) base = Math.max(0, Math.min(base, n - 1));
+      glide((base + cardsToMove) * step(), dur);
+    }
+    function goTo(p) { wrap(); glide(p * perPage() * step()); }
     function sync() {
-      var n = pages(), c = current();
-      if (dots.children.length !== n) {
+      var np = pages(), c = current();
+      if (dots.children.length !== np) {
         dots.textContent = "";
-        for (var i = 0; i < n; i++) (function (i) {
+        for (var i = 0; i < np; i++) (function (i) {
           var b = el("button", "cv2-car-dot");
           b.type = "button";
           b.setAttribute("aria-label", "Go to page " + (i + 1));
@@ -737,19 +783,28 @@
       }
       Array.prototype.forEach.call(dots.children, function (b, i) { b.classList.toggle("is-current", i === c); });
       var atStart = track.scrollLeft < 4, atEnd = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
-      prev.disabled = atStart;
-      next.disabled = atEnd;
-      sec.classList.toggle("is-static", atStart && atEnd);
+      prev.disabled = !looping && atStart;
+      next.disabled = !looping && atEnd;
+      sec.classList.toggle("is-static", !looping && atStart && atEnd);
     }
-    prev.addEventListener("click", function () { goTo(Math.max(0, current() - 1)); });
-    next.addEventListener("click", function () { goTo(Math.min(pages() - 1, current() + 1)); });
+    prev.addEventListener("click", function () { by(-perPage()); });
+    next.addEventListener("click", function () { by(perPage()); });
     var raf = 0;
-    track.addEventListener("scroll", function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }, { passive: true });
-    window.addEventListener("resize", sync);
-    requestAnimationFrame(sync);
+    track.addEventListener("scroll", function () {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(function () { if (!anim) wrap(); sync(); });
+    }, { passive: true });
+    var lastW = 0;
+    window.addEventListener("resize", function () {
+      if (track.clientWidth === lastW) return;
+      lastW = track.clientWidth;
+      buildClones();
+      sync();
+    });
+    requestAnimationFrame(function () { lastW = track.clientWidth; buildClones(); sync(); });
 
-    /* autoplay (opts.autoplay = ms between moves): one card at a time, back to the start at the
-       end; pauses on hover, keyboard focus, touch, while off screen or the tab is hidden,
+    /* autoplay (opts.autoplay = ms between moves): one card at a time, round and round;
+       pauses on hover, keyboard focus, touch, while off screen or the tab is hidden,
        and never runs for people who ask for reduced motion */
     var every = opts && opts.autoplay;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -757,10 +812,8 @@
       var hold = { hover: false, focus: false, touch: false, away: true }, timer = 0, touchTimer = 0;
       var held = function () { return hold.hover || hold.focus || hold.touch || hold.away || document.hidden; };
       var tick = function () {
-        if (held() || sec.classList.contains("is-static")) return;
-        var atEnd = track.scrollLeft + track.clientWidth > track.scrollWidth - 4;
-        if (atEnd) glide(0, 1400);
-        else glide(Math.round((track.scrollLeft + step()) / step()) * step(), 800);
+        if (held() || !looping) return;
+        by(1, 800);
       };
       var restart = function () { clearInterval(timer); timer = setInterval(tick, every); };
       sec.addEventListener("mouseenter", function () { hold.hover = true; sec.classList.add("is-paused"); });
@@ -1094,10 +1147,13 @@
       im.loading = "lazy";
       im.addEventListener("error", function () { im.src = "images/hero-palette.jpg"; fig.classList.remove("is-cover"); });
       fig.appendChild(im);
-      fig.appendChild(el("span", "cv2-ins-type", it.type));
       card.appendChild(fig);
       var bodyEl = el("span", "cv2-ins-body");
-      bodyEl.appendChild(el("span", "cv2-ins-date", shortDate(it.date)));
+      // type pill + date on one line, as on the profile pages' Insights cards
+      var meta = el("span", "cv2-ins-meta");
+      meta.appendChild(el("span", "cv2-ins-type cv2-ins-type--" + String(it.type).toLowerCase(), it.type));
+      meta.appendChild(el("span", "cv2-ins-date", shortDate(it.date)));
+      bodyEl.appendChild(meta);
       bodyEl.appendChild(el("span", "cv2-ins-title", it.title));
       if (it.by) bodyEl.appendChild(el("span", "cv2-ins-by", it.by));
       var more = el("span", "cv2-ins-more", "Read more ");

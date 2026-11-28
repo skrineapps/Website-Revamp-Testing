@@ -637,14 +637,40 @@ a.cv2-dr-row:hover .cv2-dr-arrow { transform: translateX(4px); }
   background: var(--white);
   box-shadow: 0 1px 0 var(--grey-300), 0 10px 26px -18px rgba(0, 0, 0, 0.35);
   overflow: hidden;
+  isolation: isolate;
   transition: transform 0.35s var(--ease), box-shadow 0.35s;
 }
-/* a red rule along the top that runs across on hover */
-.cv2-mt::before { content: ""; position: absolute; left: 26px; top: 0; height: 3px; width: 40px; border-radius: 0 0 3px 3px; background: var(--red); transition: width 0.45s var(--ease); }
+/* a soft grey shade in the top corner (no coloured rule); deepens on hover */
+.cv2-mt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(70% 55% at 100% 0%, rgba(var(--dark-rgb, 40, 40, 44), 0.09) 0%, rgba(var(--dark-rgb, 40, 40, 44), 0) 70%);
+  opacity: 0.55;
+  transition: opacity 0.45s var(--ease);
+  pointer-events: none;
+}
 .cv2-mt:hover { transform: translateY(-4px); box-shadow: 0 1px 0 var(--grey-300), 0 22px 40px -20px rgba(0, 0, 0, 0.4); }
-.cv2-mt:hover::before { width: calc(100% - 52px); }
+.cv2-mt:hover::before { opacity: 1; }
 .cv2-mt-top { display: flex; align-items: center; gap: 14px; }
-.cv2-mt-no { flex: none; font: 900 34px/1 var(--font-display); color: transparent; -webkit-text-stroke: 1.2px var(--red); }
+/* the matter number: a small charcoal-grey pill beside the title (red only on hover) */
+.cv2-mt-no {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: 38px;
+  height: 26px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 72%, #fff);
+  color: #fff;
+  font: 700 12.5px/1 var(--font-body);
+  letter-spacing: 0.06em;
+  box-shadow: 0 6px 14px -9px rgba(0, 0, 0, 0.6);
+  transition: transform 0.35s var(--ease), background 0.35s;
+}
+.cv2-mt:hover .cv2-mt-no { transform: scale(1.06); background: var(--red); }
 /* the matter's own short title (matterTitle() in capabilities-v2.js) */
 .cv2-mt-title {
   font: 700 clamp(17px, 1.3vw, 19px)/1.3 var(--font-display); color: var(--ink);
@@ -687,22 +713,20 @@ a.cv2-dr-row:hover .cv2-dr-arrow { transform: translateX(4px); }
 .cv2-ins-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
 .cv2-ins-img.is-cover img { object-fit: contain; padding: 14px; }
 .cv2-ins-card:hover .cv2-ins-img img { transform: scale(1.05); }
-.cv2-ins-type {
-  position: absolute; left: 14px; top: 14px;
-  padding: 5px 11px; border-radius: 999px;
-  background: var(--red); color: var(--white);
-  font: 700 10.5px var(--font-body); letter-spacing: 0.14em; text-transform: uppercase;
-}
-.cv2-ins-body { display: flex; flex-direction: column; flex: 1; gap: 8px; padding: 18px 20px 20px; }
-.cv2-ins-date { font: 700 11.5px var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-500); }
+/* body: as the Insights cards on the profile pages (pill + date, title, link under a rule) */
+.cv2-ins-body { display: flex; flex-direction: column; flex: 1; gap: 12px; padding: 20px 22px 22px; }
+.cv2-ins-meta { display: flex; flex-wrap: nowrap; align-items: center; gap: 10px; min-width: 0; font: 700 10.5px/1 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-500); }
+.cv2-ins-type { flex: none; padding: 5px 10px; border-radius: 999px; background: var(--red-soft); color: var(--red); font-size: 9.5px; letter-spacing: 0.12em; }
+.cv2-ins-type--publication { background: var(--grey-100); color: var(--ink); }
+.cv2-ins-date { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3; }
 .cv2-ins-title {
-  font: 700 clamp(16px, 1.25vw, 18px)/1.4 var(--font-display);
+  font: 700 16px/1.45 var(--font-display);
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   transition: color 0.25s;
 }
 .cv2-ins-card:hover .cv2-ins-title { color: var(--red); }
 .cv2-ins-by { font-size: 13px; color: var(--grey-700); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-.cv2-ins-more { margin-top: auto; padding-top: 6px; font: 700 13px var(--font-body); color: var(--red); }
+.cv2-ins-more { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--grey-100); font: 700 13px var(--font-body); color: var(--red); }
 .cv2-ins-more i { font-size: 11px; margin-left: 4px; transition: transform 0.25s var(--ease); }
 .cv2-ins-card:hover .cv2-ins-more i { transform: translateX(4px); }
 @media (prefers-reduced-motion: reduce) { .cv2-ins-card, .cv2-ins-img img, .cv2-mt, .cv2-mt::before { transition: none; } }
