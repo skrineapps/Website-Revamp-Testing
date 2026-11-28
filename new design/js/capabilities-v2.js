@@ -276,11 +276,31 @@
   function disputesLink(x) {
     var a = el("a", "cv2-dlink");
     a.href = disputesUrl(x.slug);
-    a.appendChild(el("span", "cv2-dlink-label", "Disputes · a separate team"));
+    a.appendChild(el("span", "cv2-dlink-label", "Disputes"));
     var t = el("span", "cv2-dlink-title", x.title + " ");
     t.appendChild(icon("fa-solid fa-arrow-right"));
     a.appendChild(t);
-    a.appendChild(el("span", "cv2-dlink-text", "Contentious matters in this area are handled by our disputes team. See its partners and work."));
+    // the disputes partners' own faces on the card: different people from the Key Contacts,
+    // so it reads as another team without saying so
+    var team = el("span", "cv2-dlink-team");
+    var faces = el("span", "cv2-dlink-faces");
+    var people = (x.contacts || []).map(person);
+    people.slice(0, 4).forEach(function (p) {
+      var f = el("span", "cv2-dlink-face");
+      var img = el("img");
+      img.src = /^(https?:)?\/\//.test(p.photo) ? p.photo : PHOTO_DIR + encodeURIComponent(p.photo);
+      img.alt = "";
+      img.loading = "lazy";
+      img.addEventListener("error", function () { img.replaceWith(el("span", "cv2-dlink-initials", initials(p.name))); });
+      f.appendChild(img);
+      faces.appendChild(f);
+    });
+    if (people.length > 4) faces.appendChild(el("span", "cv2-dlink-face cv2-dlink-more", "+" + (people.length - 4)));
+    if (people.length) team.appendChild(faces);
+    var names = people.slice(0, 2).map(function (p) { return p.name; }).join(", ");
+    team.appendChild(el("span", "cv2-dlink-names", people.length > 2 ? names + " and " + (people.length - 2) + " more" : people.length ? names : "Our disputes practice"));
+    a.appendChild(team);
+    a.setAttribute("aria-label", x.title + (people.length ? ", with " + people.map(function (p) { return p.name; }).join(", ") : ""));
     return a;
   }
   function others(root, label, items, current, url) {
